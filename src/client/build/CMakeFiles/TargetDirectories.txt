@@ -1,0 +1,3 @@
+/home/chris/delivery/RTYPE/RTypeMirror/src/client/build/CMakeFiles/rebuild_cache.dir
+/home/chris/delivery/RTYPE/RTypeMirror/src/client/build/CMakeFiles/edit_cache.dir
+/home/chris/delivery/RTYPE/RTypeMirror/src/client/build/CMakeFiles/r-type_client.dir

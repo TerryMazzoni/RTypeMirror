@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/r-type_client.dir/Args.cpp.o CMakeFiles/r-type_client.dir/main.cpp.o CMakeFiles/r-type_client.dir/Client.cpp.o -o /home/chris/delivery/RTYPE/RTypeMirror/r-type_client  -lboost_serialization -lpthread 

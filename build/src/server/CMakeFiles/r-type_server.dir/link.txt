@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/r-type_server.dir/Args.cpp.o CMakeFiles/r-type_server.dir/main.cpp.o CMakeFiles/r-type_server.dir/Server.cpp.o -o ../../../r-type_server  -lboost_serialization -lpthread 

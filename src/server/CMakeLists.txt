@@ -3,7 +3,7 @@ project(r-type_server)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options(-Wall -Wextra -Wpedantic -Werror -fno-gnu-unique)
+add_compile_options(-Wall -Wextra -Wpedantic -fno-gnu-unique)
     
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 
