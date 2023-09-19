@@ -1,0 +1,16 @@
+name: Mirror
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push to mirror
+        shell: bash
+        run: |
+          git fetch -p origin
+          git push --mirror
