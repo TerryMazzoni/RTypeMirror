@@ -5,12 +5,19 @@ on:
     branches:
       - main
 
+env:
+  MIRROR_URL: "git@github.com:EpitechPromo2026/B-CPP-500-TLS-5-1-rtype-antonin.laudon.git"
+
 jobs:
-  mirror:
+  MirrorPush:
     runs-on: ubuntu-latest
     steps:
-      - name: Push to mirror
-        shell: bash
-        run: |
-          git fetch -p origin
-          git push --mirror
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Mirror
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repository_url: ${{ env.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
