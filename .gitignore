@@ -37,3 +37,4 @@ RType
 >>>>>>> 489eede (Add basic server and client)
 .vscode
 .clang-format
+Makefile

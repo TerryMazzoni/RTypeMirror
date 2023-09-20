@@ -5,7 +5,7 @@
 ** clientmain
 */
 
-#include "client.hpp"
+#include "Client.hpp"
 
 bool is_running(int flag)
 {
@@ -18,20 +18,22 @@ bool is_running(int flag)
 
 Client::Client(boost::asio::io_service& io_service, const std::string& host,
                const std::string& port)
-    : _io_service(io_service), _socket(io_service, udp::endpoint(udp::v4(), 0))
+    : _io_service(io_service), _socket(io_service, udp::endpoint(udp::v4(), 0)),
+      _endpoint(boost::asio::ip::address::from_string(host), std::stoi(port))
 {
-    udp::resolver resolver(_io_service);
     try
     {
-        _endpoint = *resolver.resolve({udp::v4(), host, port});
+        _socket.connect(_endpoint);
+        _socket.non_blocking(true);
     }
     catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
+        _socket.close();
     }
-    _socket.non_blocking(true);
-    std::cout << "My adress is " << _socket.local_endpoint().address() << ":"
-              << _socket.local_endpoint().port() << std::endl;
+    if (_socket.is_open())
+        std::cout << "My adress is " << _socket.local_endpoint().address()
+                  << ":" << _socket.local_endpoint().port() << std::endl;
 }
 
 Client::~Client()
@@ -64,7 +66,8 @@ std::string Client::receive()
     }
     else
     {
-        std::cerr << "Error: " << error.message() << std::endl;
+        std::cerr << "Error on receive: " << error.message() << std::endl;
+        is_running(1);
         return "";
     }
 }
@@ -85,4 +88,9 @@ void Client::run()
     {
         processMessage(receive());
     }
+}
+
+udp::socket& Client::getSocket()
+{
+    return _socket;
 }

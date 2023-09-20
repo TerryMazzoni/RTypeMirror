@@ -21,6 +21,7 @@ public:
     std::string receive();
     void processMessage(const std::string& msg);
     void run();
+    udp::socket& getSocket();
 
 private:
     boost::asio::io_service& _io_service;

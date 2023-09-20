@@ -5,11 +5,9 @@
 ** client
 */
 
-#include "client.hpp"
-#include <boost/asio.hpp>
-#include <iostream>
+#include "Args.hpp"
+#include "Client.hpp"
 #include <signal.h>
-#include <thread>
 
 std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 {
@@ -22,18 +20,26 @@ std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 
 static void signal_handler(int signal)
 {
-    is_running(1);
+    if (signal == SIGINT)
+        is_running(1);
     client_memory(0, nullptr)->send("quit");
 }
 
-int main()
+int main(int ac, char** av)
 {
+    Args args;
     boost::asio::io_service io_service;
-    std::shared_ptr<Client> client =
-        std::make_shared<Client>(io_service, "127.0.0.1", "8080");
+    std::shared_ptr<Client> client;
 
+    if (int r = args.setArgs(ac, av) != 0)
+        return r - 1;
+    client = std::make_shared<Client>(io_service, args.getIp(),
+                                      std::to_string(args.getPort()));
+    if (client->getSocket().is_open() == false)
+        return 84;
     client_memory(1, client);
     signal(SIGINT, signal_handler);
+    client->receive();
     client->send("Hello");
     client->run();
     return 0;

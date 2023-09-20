@@ -5,12 +5,13 @@
 ** server
 */
 
-#include "server.hpp"
+#include "Server.hpp"
 #include <signal.h>
 
 static void signal_handler(int signal)
 {
-    is_running(1);
+    if (signal == SIGINT)
+        is_running(1);
 }
 
 int main()

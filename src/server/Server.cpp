@@ -5,7 +5,7 @@
 ** server
 */
 
-#include "server.hpp"
+#include "Server.hpp"
 
 bool is_running(int flag)
 {
