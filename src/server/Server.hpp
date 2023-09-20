@@ -20,15 +20,63 @@ using boost::asio::ip::udp;
 class Server
 {
 public:
+    /**
+     * @brief Construct a new Server object
+     *
+     * @param port
+     */
     Server(unsigned short port);
+    /**
+     * @brief Destroy the Server object
+     *
+     */
     ~Server();
+    /**
+     * @brief Run the server
+     *
+     */
     void run();
+    /**
+     * @brief Send a message to a client
+     *
+     * @param msg
+     * @param client
+     */
     void send(const std::string& msg, const udp::endpoint& client);
+    /**
+     * @brief Send a message to all clients
+     *
+     * @param msg
+     */
     void sendToAll(const std::string& msg);
+    /**
+     * @brief Process a message from a client
+     *
+     * @param msg
+     * @param client
+     */
     void processMessage(const std::string& msg, const udp::endpoint& client);
+    /**
+     * @brief Receive a message from a client
+     *
+     * @return std::pair<std::string, udp::endpoint>
+     */
     std::pair<std::string, udp::endpoint> receive();
+    /**
+     * @brief Get the Socket object
+     *
+     * @return udp::socket&
+     */
     void addClient(const udp::endpoint& client);
+    /**
+     * @brief Remove a client
+     *
+     * @param client
+     */
     void removeClient(const udp::endpoint& client);
+    /**
+     * @brief Get the Clients object
+     */
     void close();
 
 private:
