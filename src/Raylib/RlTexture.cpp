@@ -14,6 +14,11 @@ namespace Raylib
         DrawTexture(_texture, x, y, color.getColor());
     }
 
+    void RlTexture::drawEx(Vector2 position, float rotation, float scale, RlColor color)
+    {
+        DrawTextureEx(_texture, position, rotation, scale, color.getColor());
+    }
+
     void RlTexture::unload()
     {
         UnloadTexture(_texture);
