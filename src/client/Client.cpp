@@ -47,6 +47,7 @@ Client::~Client()
 
 void Client::send(const std::string& msg)
 {
+    std::cout << "Sending message: \"" << msg << "\"" << std::endl;
     _socket.send_to(boost::asio::buffer(msg, msg.size()), _endpoint);
     std::cout << "Sending message: \"" << msg
               << "\" to: " << _endpoint.address() << ":" << _endpoint.port()

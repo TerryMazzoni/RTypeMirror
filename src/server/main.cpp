@@ -7,7 +7,6 @@
 
 #include "Args.hpp"
 #include "Server.hpp"
-#include <signal.h>
 
 std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
 {

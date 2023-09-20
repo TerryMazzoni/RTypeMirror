@@ -29,8 +29,6 @@ class Server
 public:
     /**
      * @brief Construct a new Server object
-     *
-     * @param port
      */
     Server(int port);
     /**
@@ -101,7 +99,6 @@ private:
     udp::socket _socket;
     std::set<udp::endpoint> _clients;
     std::string _response_message;
-
 };
 
 bool is_running(int flag);
