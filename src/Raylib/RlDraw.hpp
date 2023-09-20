@@ -12,7 +12,20 @@
 
 namespace Raylib
 {
+    /**
+     * @brief Clear the background
+     *
+     * @param color Color of the background
+     */
     void clear(RlColor color);
+    /**
+     * @brief Begin drawing
+     *
+     */
     void beginDraw();
+    /**
+     * @brief End drawing
+     *
+     */
     void endDraw();
 }

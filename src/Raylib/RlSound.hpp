@@ -19,8 +19,20 @@ namespace Raylib
         RlSound(std::string path);
         ~RlSound();
 
+        /**
+         * @brief Unload the sound
+         *
+         */
         void unload();
+        /**
+         * @brief Play the sound
+         *
+         */
         void play();
+        /**
+         * @brief Set the volume of the sound
+         *
+         */
         void setVolume(float volume);
 
     private:

@@ -19,10 +19,30 @@ namespace Raylib
         RlMusic(std::string path);
         ~RlMusic();
 
+        /**
+         * @brief Unload the music
+         *
+         */
         void unload();
+        /**
+         * @brief Play the music
+         *
+         */
         void play();
+        /**
+         * @brief Stop the music
+         *
+         */
         void stop();
+        /**
+         * @brief Set the volume of the music
+         *
+         */
         void setVolume(float volume);
+        /**
+         * @brief Update the music
+         *
+         */
         void update();
 
     private:

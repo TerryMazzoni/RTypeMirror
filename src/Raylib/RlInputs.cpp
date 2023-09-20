@@ -7,7 +7,8 @@
 
 #include "RlInputs.hpp"
 
-namespace Raylib {
+namespace Raylib
+{
     std::vector<std::tuple<int, int, std::optional<int>>> getInputs()
     {
         std::vector<std::tuple<int, int, std::optional<int>>> inputs;

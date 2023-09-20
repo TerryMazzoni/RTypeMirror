@@ -19,7 +19,16 @@ namespace Raylib
         RlFont(std::string path);
         ~RlFont();
 
+        /**
+         * @brief Unload the font
+         *
+         */
         void unload();
+        /**
+         * @brief Get the Font object
+         *
+         * @return Font
+         */
         Font getFont() const;
 
     private:

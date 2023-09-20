@@ -7,7 +7,8 @@
 
 #include "RlScreen.hpp"
 
-namespace Raylib {
+namespace Raylib
+{
     int getScreenWidth()
     {
         return (GetScreenWidth());

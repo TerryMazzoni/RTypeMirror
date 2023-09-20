@@ -7,7 +7,8 @@
 
 #include "RlWindow.hpp"
 
-namespace Raylib {
+namespace Raylib
+{
     void cursor()
     {
         if (IsCursorHidden())

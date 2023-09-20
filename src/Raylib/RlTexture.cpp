@@ -7,7 +7,8 @@
 
 #include "RlTexture.hpp"
 
-namespace Raylib {
+namespace Raylib
+{
     void RlTexture::draw(int x, int y, RlColor color)
     {
         DrawTexture(_texture, x, y, color.getColor());
