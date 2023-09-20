@@ -43,6 +43,7 @@ Client::~Client()
 
 void Client::send(const std::string& msg)
 {
+    std::cout << "Sending message: \"" << msg << "\"" << std::endl;
     _socket.send_to(boost::asio::buffer(msg, msg.size()), _endpoint);
 }
 
@@ -75,7 +76,7 @@ std::string Client::receive()
 void Client::processMessage(const std::string& msg)
 {
     if (msg != "")
-        std::cout << "Received from server: " << msg << std::endl;
+        std::cout << "Received from server: \"" << msg << "\"" << std::endl;
     if (msg == "quit")
     {
         is_running(1);
@@ -84,6 +85,7 @@ void Client::processMessage(const std::string& msg)
 
 void Client::run()
 {
+    send("Hello");
     while (is_running(0))
     {
         processMessage(receive());

@@ -40,7 +40,6 @@ int main(int ac, char** av)
     client_memory(1, client);
     signal(SIGINT, signal_handler);
     client->receive();
-    client->send("Hello");
     client->run();
     return 0;
 }

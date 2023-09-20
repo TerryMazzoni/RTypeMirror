@@ -22,15 +22,19 @@ class Server
 public:
     /**
      * @brief Construct a new Server object
-     *
-     * @param port
      */
-    Server(unsigned short port);
+    Server();
     /**
      * @brief Destroy the Server object
      *
      */
     ~Server();
+    /**
+     * @brief Set the Server object
+     *
+     * @param port
+     */
+    void setServer(int port);
     /**
      * @brief Run the server
      *
@@ -80,11 +84,11 @@ public:
     void close();
 
 private:
-    boost::asio::io_service io_service;
-    udp::socket socket;
-    std::set<udp::endpoint> clients;
-    std::string response_message;
-    boost::asio::signal_set signals;
+    boost::asio::io_service _io_service;
+    udp::socket _socket;
+    std::set<udp::endpoint> _clients;
+    std::string _response_message;
+    boost::asio::signal_set _signals;
 };
 
 bool is_running(int flag);

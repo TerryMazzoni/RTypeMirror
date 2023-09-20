@@ -16,18 +16,24 @@ bool is_running(int flag)
     return (status);
 }
 
-Server::Server(unsigned short port)
-    : socket(io_service, udp::endpoint(udp::v4(), port)), response_message(""),
-      signals(io_service, SIGINT)
+Server::Server()
+    : _io_service(), _socket(_io_service), _clients(), _response_message(""),
+      _signals(_io_service, SIGINT)
 {
-    socket.non_blocking(true);
-    std::cout << "Server listening on port " << socket.local_endpoint().port()
-              << std::endl;
 }
 
 Server::~Server()
 {
     close();
+}
+
+void Server::setServer(int port)
+{
+    _socket.open(udp::v4());
+    _socket.bind(udp::endpoint(udp::v4(), port));
+    _socket.non_blocking(true);
+    std::cout << "Server listening on port " << _socket.local_endpoint().port()
+              << std::endl;
 }
 
 void Server::run()
@@ -43,39 +49,41 @@ void Server::run()
 
 void Server::send(const std::string& msg, const udp::endpoint& client)
 {
-    std::cout << "Sending message: " << msg << " to " << client << std::endl;
-    socket.send_to(boost::asio::buffer(msg, msg.size()), client);
+    std::cout << "Sending message: \"" << msg << "\" to " << client
+              << std::endl;
+    _socket.send_to(boost::asio::buffer(msg, msg.size()), client);
 }
 
 void Server::sendToAll(const std::string& msg)
 {
-    for (auto& client : clients)
-    {
-        socket.send_to(boost::asio::buffer(msg), client);
-        std::cout << "Sending message: " << msg << " to " << client
-                  << std::endl;
-    }
+    for (auto& client : _clients)
+        send(msg, client);
 }
 
 void Server::processMessage(const std::string& msg, const udp::endpoint& sender)
 {
-    std::cout << "Processing message: " << msg << " from " << sender
+    std::cout << "Processing message: \"" << msg << "\" from " << sender
               << std::endl;
     if (msg == "quit")
     {
-        response_message = "quit";
-        send(response_message, sender);
+        _response_message = "quit";
+        send(_response_message, sender);
         removeClient(sender);
     }
     else if (msg == "close_server")
     {
-        response_message = "quit";
-        sendToAll(response_message);
+        _response_message = "quit";
+        sendToAll(_response_message);
         is_running(1);
+    }
+    else if (msg == "Hello")
+    {
+        _response_message = "ID: " + std::to_string(_clients.size());
+        send(_response_message, sender);
     }
     else
     {
-        response_message = msg;
+        _response_message = msg;
     }
 }
 
@@ -84,14 +92,14 @@ std::pair<std::string, udp::endpoint> Server::receive()
     boost::array<char, 1024> recv_buffer;
     udp::endpoint sender_endpoint;
     boost::system::error_code error;
-    std::size_t bytes_received = socket.receive_from(
+    std::size_t bytes_received = _socket.receive_from(
         boost::asio::buffer(recv_buffer), sender_endpoint, 0, error);
     std::string received_message;
 
     if (!error)
     {
         received_message = std::string(recv_buffer.data(), bytes_received);
-        clients.insert(sender_endpoint);
+        _clients.insert(sender_endpoint);
     }
     else if (error == boost::asio::error::would_block)
     {
@@ -101,19 +109,19 @@ std::pair<std::string, udp::endpoint> Server::receive()
     else
     {
         std::cerr << "Error: " << error.message() << std::endl;
-        response_message = "";
+        _response_message = "";
     }
     return std::make_pair(received_message, sender_endpoint);
 }
 
 void Server::addClient(const udp::endpoint& client)
 {
-    clients.insert(client);
+    _clients.insert(client);
 }
 
 void Server::removeClient(const udp::endpoint& client)
 {
-    clients.erase(client);
+    _clients.erase(client);
 }
 
 void Server::close()
@@ -121,5 +129,5 @@ void Server::close()
     std::cout << "Server closing" << std::endl;
     is_running(1);
     sendToAll("quit");
-    socket.close();
+    _socket.close();
 }

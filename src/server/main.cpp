@@ -5,8 +5,8 @@
 ** server
 */
 
+#include "Args.hpp"
 #include "Server.hpp"
-#include <signal.h>
 
 static void signal_handler(int signal)
 {
@@ -14,10 +14,14 @@ static void signal_handler(int signal)
         is_running(1);
 }
 
-int main()
+int main(int ac, char** av)
 {
-    Server server(8080);
+    Args args;
+    Server server;
 
+    if (int r = args.setArgs(ac, av) != 0)
+        return r - 1;
+    server.setServer(args.getPort());
     signal(SIGINT, signal_handler);
     server.run();
     return 0;
