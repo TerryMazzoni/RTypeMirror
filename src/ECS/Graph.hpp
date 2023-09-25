@@ -18,12 +18,12 @@ class Graph {
         Graph();
         ~Graph();
 
-        std::vector<std::tuple<EventType, int, std::optional<int>>> getInputs() const;
-        int displayEntities(std::vector<std::pair<EntityType, int>> entities);
+        std::vector<Input> getInputs() const;
+        int displayEntities(std::vector<Entity> entities);
 
     protected:
     private:
-        std::vector<std::tuple<EventType, int, std::optional<int>>> _events;
+        std::vector<Input> _events;
 };
 
 #endif /* !GRAPH_HPP_ */

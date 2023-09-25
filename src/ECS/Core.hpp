@@ -15,15 +15,14 @@
 #include "SystemManager.hpp"
 
 namespace ECS {
-    template <typename T>
     class Core {
         public:
             Core();
             ~Core();
+            int run();
 
-        protected:
         private:
-            EntitiesManager<T> _entitiesManager;
+            EntitiesManager _entitiesManager;
             EventManager _eventManager;
             Graph _graph;
             SystemManager _systemManager;

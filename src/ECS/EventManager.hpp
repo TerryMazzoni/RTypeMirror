@@ -19,13 +19,13 @@ namespace ECS {
         public:
             EventManager();
             ~EventManager();
-            std::string getSceneId() const;
-            int executeInputs(std::vector<std::tuple<EventType, int, std::optional<int>>>);
+            SceneType getSceneId() const;
+            int executeInputs(std::vector<Input>);
 
         protected:
         private:
-            std::string _idScene;
-            std::vector<std::tuple<EventType, int, std::optional<int>>> _listEvent;
+            SceneType _scene;
+            std::vector<Input> _listEvent;
     };
 } // namespace ECS
 

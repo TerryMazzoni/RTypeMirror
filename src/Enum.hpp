@@ -8,6 +8,13 @@
 #ifndef ENUM_HPP_
 #define ENUM_HPP_
 
+namespace ECS {
+    #define Entity std::pair<EntityType, int>
+
+    #define Input std::tuple<EventType, int, std::optional<int>>
+
+}
+
 enum EntityType {
     PLAYER,
     ENEMY,
@@ -28,6 +35,14 @@ enum EventInput {
     KEY_RIGHT,
     LEFT_CLICK,
     RIGHT_CLICK
+};
+
+enum SceneType {
+    MENU,
+    GAME,
+    PAUSE,
+    END,
+    UNKNOWN
 };
 
 #endif /* !ENUM_HPP_ */

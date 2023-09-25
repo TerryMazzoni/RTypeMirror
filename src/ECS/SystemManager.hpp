@@ -18,11 +18,11 @@ namespace ECS {
             SystemManager();
             ~SystemManager();
 
-            int execute(std::string idScene);
+            int execute(SceneType scene);
 
         protected:
         private:
-            std::map<std::string, std::vector<void *>> _listSystems; // replace void * with class system
+            std::map<SceneType, std::vector<void *>> _listSystems; // replace void * with class system
     };
 } // namespace ECS
 
