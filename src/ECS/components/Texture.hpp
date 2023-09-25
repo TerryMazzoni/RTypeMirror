@@ -19,11 +19,11 @@ namespace ECS {
             ~Texture();
 
             int setValue(T value);
-            Raylib::RlTexture *getValue() const;
+            Raylib::RlTexture getValue() const;
 
         protected:
         private:
-            Raylib::RlTexture *_texture;
+            Raylib::RlTexture _texture;
     };
 } // namespace ECS
 

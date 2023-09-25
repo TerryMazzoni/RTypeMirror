@@ -19,11 +19,11 @@ namespace ECS {
             ~Color();
 
             int setValue(T value);
-            Raylib::RlColor *getValue() const;
+            Raylib::RlColor getValue() const;
 
         protected:
         private:
-            Raylib::RlColor *_color;
+            Raylib::RlColor _color;
     };
 } // namespace ECS
 

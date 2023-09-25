@@ -10,7 +10,7 @@
 namespace ECS {
     template <typename T>
     Texture<T>::Texture() {
-        _texture = NULL
+        _texture = nullptr
     }
 
     template <typename T>
@@ -24,7 +24,7 @@ namespace ECS {
     }
 
     template <typename T>
-    Raylib::RlTexture *Texture<T>::getValue() const {
+    Raylib::RlTexture Texture<T>::getValue() const {
         return _texture;
     }
 } // namespace ECS

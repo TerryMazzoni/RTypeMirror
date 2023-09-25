@@ -10,7 +10,7 @@
 namespace ECS {
     template <typename T>
     Color<T>::Color() {
-        _color = NULL
+        _color = nullptr
     }
 
     template <typename T>
@@ -24,7 +24,7 @@ namespace ECS {
     }
 
     template <typename T>
-    Raylib::RlColor *Color<T>::getValue() const {
+    Raylib::RlColor Color<T>::getValue() const {
         return _color;
     }
 } // namespace ECS
