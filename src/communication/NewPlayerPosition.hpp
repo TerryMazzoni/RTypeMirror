@@ -8,14 +8,18 @@
 #pragma once
 
 #include "Position.hpp"
+#include "Communication.hpp"
 
-class NewPlayerPosition {
+class NewPlayerPosition : public Communication {
     public:
-        NewPlayerPosition();
-        ~NewPlayerPosition();
+        NewPlayerPosition() : Communication(0) {_type = CommunicationTypes::NewPlayerPosition;};
+        ~NewPlayerPosition() = default;
+        template <class Archive>
+        void serialize(Archive& ar, const unsigned int version) {
+            ar & _position;
+            ar & _code;
+        }
     protected:
     private:
         Position _position;
-        int _code;
-        
 };
