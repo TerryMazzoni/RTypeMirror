@@ -9,40 +9,40 @@
 #define ENUM_HPP_
 
 namespace ECS {
-    #define Entity std::pair<EntityType, int>
+#define Entity std::pair<EntityType, int>
 
-    #define Input std::tuple<EventType, int, std::optional<int>>
+#define Input std::tuple<EventType, int, std::optional<int>>
 
-}
+} // namespace ECS
 
-enum EntityType {
-    PLAYER,
-    ENEMY,
-    BULLET,
-    BACKGROUND,
-    UNKNOWN
+enum class EntityType {
+    Player,
+    Enemy,
+    Bullet,
+    Background,
+    Unknown
 };
 
-enum EventType {
-    MOUSE,
-    KEYBOARD,
+enum class EventType {
+    Mouse,
+    Keyboard,
 };
 
 enum EventInput {
-    KEY_UP,
-    KEY_DOWN,
-    KEY_LEFT,
-    KEY_RIGHT,
-    LEFT_CLICK,
-    RIGHT_CLICK
+    Key_up,
+    Key_down,
+    Key_left,
+    Key_right,
+    Left_click,
+    Right_click
 };
 
-enum SceneType {
-    MENU,
-    GAME,
-    PAUSE,
-    END,
-    UNKNOWN
+enum class SceneType {
+    Menu,
+    Game,
+    Pause,
+    End,
+    Unknown
 };
 
 #endif /* !ENUM_HPP_ */
