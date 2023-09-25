@@ -22,19 +22,15 @@ class Server
 public:
     /**
      * @brief Construct a new Server object
+     *
+     * @param port
      */
-    Server();
+    Server(int port);
     /**
      * @brief Destroy the Server object
      *
      */
     ~Server();
-    /**
-     * @brief Set the Server object
-     *
-     * @param port
-     */
-    void setServer(int port);
     /**
      * @brief Run the server
      *
@@ -65,7 +61,7 @@ public:
      *
      * @return std::pair<std::string, udp::endpoint>
      */
-    std::pair<std::string, udp::endpoint> receive();
+    void receiveAsync();
     /**
      * @brief Get the Socket object
      *
@@ -79,16 +75,25 @@ public:
      */
     void removeClient(const udp::endpoint& client);
     /**
+     * @brief Remove all clients
+     */
+    void removeAllClients();
+    /**
      * @brief Get the Clients object
      */
     void close();
+    /**
+     * @brief Get the Io Service object
+     *
+     * @return boost::asio::io_service&
+     */
+    boost::asio::io_service& getIoService();
 
 private:
     boost::asio::io_service _io_service;
     udp::socket _socket;
     std::set<udp::endpoint> _clients;
     std::string _response_message;
-    boost::asio::signal_set _signals;
 };
 
 bool is_running(int flag);

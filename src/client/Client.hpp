@@ -17,12 +17,10 @@ public:
     /**
      * @brief Construct a new Client object
      *
-     * @param io_service
      * @param host
      * @param port
      */
-    Client(boost::asio::io_service& io_service, const std::string& host,
-           const std::string& port);
+    Client(const std::string& host, const std::string& port);
     /**
      * @brief Destroy the Client object
      */
@@ -35,10 +33,8 @@ public:
     void send(const std::string& msg);
     /**
      * @brief Receive a message from the server
-     *
-     * @return std::string
      */
-    std::string receive();
+    void receiveAsync();
     /**
      * @brief Process a message from the server
      *
@@ -55,9 +51,15 @@ public:
      * @return udp::socket&
      */
     udp::socket& getSocket();
+    /**
+     * @brief Get the Io Service object
+     *
+     * @return boost::asio::io_service&
+     */
+    boost::asio::io_service& getIoService();
 
 private:
-    boost::asio::io_service& _io_service;
+    boost::asio::io_service _io_service;
     udp::socket _socket;
     udp::endpoint _endpoint;
 };

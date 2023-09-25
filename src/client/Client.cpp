@@ -16,13 +16,15 @@ bool is_running(int flag)
     return (status);
 }
 
-Client::Client(boost::asio::io_service& io_service, const std::string& host,
-               const std::string& port)
-    : _io_service(io_service), _socket(io_service, udp::endpoint(udp::v4(), 0)),
+Client::Client(const std::string& host, const std::string& port)
+    : _io_service(), _socket(_io_service),
       _endpoint(boost::asio::ip::address::from_string(host), std::stoi(port))
+
 {
     try
     {
+        _socket.open(udp::v4());
+        _socket.bind(udp::endpoint(udp::v4(), 0));
         _socket.connect(_endpoint);
         _socket.non_blocking(true);
     }
@@ -43,34 +45,36 @@ Client::~Client()
 
 void Client::send(const std::string& msg)
 {
-    std::cout << "Sending message: \"" << msg << "\"" << std::endl;
     _socket.send_to(boost::asio::buffer(msg, msg.size()), _endpoint);
+    std::cout << "Sending message: \"" << msg.c_str()
+              << "\" to: " << _endpoint.address() << ":" << _endpoint.port()
+              << std::endl;
 }
 
-std::string Client::receive()
+void Client::receiveAsync()
 {
     boost::array<char, 1024> recv_buffer;
     udp::endpoint sender_endpoint;
 
-    boost::system::error_code error;
-    std::size_t bytes_received = _socket.receive_from(
-        boost::asio::buffer(recv_buffer), sender_endpoint, 0, error);
-
-    if (!error)
-    {
-        return std::string(recv_buffer.data(), bytes_received);
-    }
-    else if (error == boost::asio::error::would_block)
-    {
-        // Aucune données disponible
-        return "";
-    }
-    else
-    {
-        std::cerr << "Error on receive: " << error.message() << std::endl;
-        is_running(1);
-        return "";
-    }
+    _socket.async_receive_from(
+        boost::asio::buffer(recv_buffer), sender_endpoint,
+        [this, &recv_buffer](const boost::system::error_code& error,
+                             std::size_t bytes_received)
+        {
+            if (!error)
+            {
+                std::string received_data(recv_buffer.data(), bytes_received);
+                processMessage(received_data);
+            }
+            else if (error != boost::asio::error::operation_aborted)
+            {
+                std::cerr << "Error on receive: " << error.message()
+                          << std::endl;
+                this->getIoService().stop();
+                is_running(1);
+            }
+            receiveAsync();
+        });
 }
 
 void Client::processMessage(const std::string& msg)
@@ -79,6 +83,7 @@ void Client::processMessage(const std::string& msg)
         std::cout << "Received from server: \"" << msg << "\"" << std::endl;
     if (msg == "quit")
     {
+        this->getIoService().stop();
         is_running(1);
     }
 }
@@ -86,13 +91,18 @@ void Client::processMessage(const std::string& msg)
 void Client::run()
 {
     send("Hello");
+    std::cout << "Hello" << std::endl;
     while (is_running(0))
     {
-        processMessage(receive());
     }
 }
 
 udp::socket& Client::getSocket()
 {
     return _socket;
+}
+
+boost::asio::io_service& Client::getIoService()
+{
+    return _io_service;
 }
