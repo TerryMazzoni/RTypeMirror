@@ -10,6 +10,8 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "Enum.hpp"
+#include "ISystem.hpp"
 
 namespace ECS {
     class SystemManager {
@@ -21,7 +23,7 @@ namespace ECS {
 
         protected:
         private:
-            std::map<SceneType, std::vector<void *>> _listSystems; // replace void * with class system
+            std::map<SceneType, std::vector<ISystem>> _listSystems;
     };
 } // namespace ECS
 
