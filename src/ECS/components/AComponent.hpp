@@ -15,8 +15,8 @@ namespace ECS {
         public:
             virtual int setValue(T value) = 0;
             virtual T getValue() const = 0;
-            int AddId(Entity);
-            int RemoveId(Entity);
+            int addId(Entity);
+            int removeId(Entity);
 
         protected:
         private:

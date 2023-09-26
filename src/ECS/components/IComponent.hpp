@@ -18,8 +18,8 @@ namespace ECS {
 
             virtual int setValue(T value) = 0;
             virtual T getValue() const = 0;
-            virtual int AddId(Entity) = 0;
-            virtual int RemoveId(Entity) = 0;
+            virtual int addId(Entity) = 0;
+            virtual int removeId(Entity) = 0;
 
         protected:
             std::vector<Entity> _ids;
