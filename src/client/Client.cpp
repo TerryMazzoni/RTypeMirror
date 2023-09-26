@@ -60,12 +60,11 @@ void Client::processMessage(const std::string& msg)
         std::cout << "Received from server: \"" << msg << "\"" << std::endl;
     try
     {
+        // Deserialize the data
         std::istringstream is(msg);
         boost::archive::binary_iarchive ia(is);
-
         Person person;
         ia >> person;
-
         std::cout << "Person: " << person.getName() << " " << person.getAge()
                   << std::endl;
     }
