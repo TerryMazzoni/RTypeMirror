@@ -6,6 +6,9 @@
 */
 
 #include "Client.hpp"
+#include "Person.hpp"
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 bool is_running(int flag)
 {
@@ -46,25 +49,53 @@ Client::~Client()
 void Client::send(const std::string& msg)
 {
     _socket.send_to(boost::asio::buffer(msg, msg.size()), _endpoint);
-    std::cout << "Sending message: \"" << msg.c_str()
+    std::cout << "Sending message: \"" << msg
               << "\" to: " << _endpoint.address() << ":" << _endpoint.port()
               << std::endl;
 }
 
+void Client::processMessage(const std::string& msg)
+{
+    if (msg != "")
+        std::cout << "Received from server: \"" << msg << "\"" << std::endl;
+    try
+    {
+        std::istringstream is(msg);
+        boost::archive::binary_iarchive ia(is);
+
+        Person person;
+        ia >> person;
+
+        std::cout << "Person: " << person.getName() << " " << person.getAge()
+                  << std::endl;
+    }
+    catch (std::exception& e)
+    {
+        if (msg == "quit")
+        {
+            this->getIoService().stop();
+            is_running(1);
+        }
+    }
+}
+
 void Client::receiveAsync()
 {
-    boost::array<char, 1024> recv_buffer;
+    std::vector<char> recv_buffer(1024);
+
     udp::endpoint sender_endpoint;
 
     _socket.async_receive_from(
         boost::asio::buffer(recv_buffer), sender_endpoint,
-        [this, &recv_buffer](const boost::system::error_code& error,
-                             std::size_t bytes_received)
+        [this, &recv_buffer, &sender_endpoint](
+            const boost::system::error_code& error, std::size_t bytes_received)
         {
-            if (!error)
+            if (!is_running(0))
+                return;
+            if (!error && bytes_received > 0)
             {
-                std::string received_data(recv_buffer.data(), bytes_received);
-                processMessage(received_data);
+                processMessage(std::string(
+                    recv_buffer.begin(), recv_buffer.begin() + bytes_received));
             }
             else if (error != boost::asio::error::operation_aborted)
             {
@@ -75,17 +106,7 @@ void Client::receiveAsync()
             }
             receiveAsync();
         });
-}
-
-void Client::processMessage(const std::string& msg)
-{
-    if (msg != "")
-        std::cout << "Received from server: \"" << msg << "\"" << std::endl;
-    if (msg == "quit")
-    {
-        this->getIoService().stop();
-        is_running(1);
-    }
+    getIoService().run();
 }
 
 void Client::run()

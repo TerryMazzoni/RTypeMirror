@@ -43,7 +43,7 @@ public:
      * @param ip
      * @return void
      */
-    void setIp(std::string ip);
+    void setIp(const std::string& ip);
     /**
      * @brief Set the Args object
      * @param ac

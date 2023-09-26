@@ -6,39 +6,10 @@
 */
 
 #include "Server.hpp"
-#include <boost/archive/binary_oarchive.hpp>
+#include "Person.hpp"
+#include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
-
-class Person
-{
-public:
-    Person(std::string name, int age) : _name(name), _age(age)
-    {
-    }
-    Person()
-    {
-    }
-    std::string getName() const
-    {
-        return _name;
-    }
-    int getAge() const
-    {
-        return _age;
-    }
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        (void) version;
-        ar& _name;
-        ar& _age;
-    }
-
-private:
-    std::string _name;
-    int _age;
-};
 
 bool is_running(int flag)
 {
@@ -95,38 +66,42 @@ void Server::sendToAll(const std::string& msg)
 
 void Server::processMessage(const std::string& msg, const udp::endpoint& client)
 {
-    std::cout << "Processing: \"" << msg << "\"" << std::endl;
-    _clients.insert(client);
-    if (msg == "quit")
+    try
     {
-        send("quit", client);
-        removeClient(client);
-        std::cout << "Client disconnected" << std::endl;
-    }
-    else if (msg == "Connect")
-    {
-        send("ID=" + std::to_string(_clients.size()), client);
-    }
-    else if (msg == "person")
-    {
-        std::cout << "Person requested" << std::endl;
-        Person person("John", 42);
-        std::ostringstream archive_stream;
-        boost::archive::binary_oarchive archive(archive_stream);
-        archive << person;
-        std::string person_serialized = archive_stream.str();
-        send(person_serialized, client);
-    }
-    else
-    {
-        std::cout << "Message received: " << msg << std::endl;
+        // Deserialize the data
+        std::istringstream is(msg);
+        boost::archive::binary_iarchive ia(is);
+        Person person;
+        ia >> person;
+        std::cout << "Person: " << person.getName() << " " << person.getAge()
+                  << std::endl;
         send(msg, client);
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "Processing: \"" << msg << "\"" << std::endl;
+        _clients.insert(client);
+        if (msg == "quit")
+        {
+            send("quit", client);
+            removeClient(client);
+            std::cout << "Client disconnected" << std::endl;
+        }
+        else if (msg == "Connect")
+        {
+            send("ID=" + std::to_string(_clients.size()), client);
+        }
+        else
+        {
+            std::cout << "Unknown command" << std::endl;
+        }
     }
 }
 
 void Server::receiveAsync()
 {
-    boost::array<char, 1024> recv_buffer;
+    std::vector<char> recv_buffer(1024);
+
     udp::endpoint sender_endpoint;
 
     _socket.async_receive_from(
@@ -138,12 +113,10 @@ void Server::receiveAsync()
                 return;
             if (!error && bytes_received > 0)
             {
-                std::cout << "Received " << bytes_received << " bytes from "
-                          << sender_endpoint.address() << ":"
-                          << sender_endpoint.port() << std::endl;
-                recv_buffer[bytes_received] = '\0';
-                processMessage(std::string(recv_buffer.data()),
-                               sender_endpoint);
+                processMessage(
+                    std::string(recv_buffer.begin(),
+                                recv_buffer.begin() + bytes_received),
+                    sender_endpoint);
             }
             else if (error != boost::asio::error::operation_aborted)
             {

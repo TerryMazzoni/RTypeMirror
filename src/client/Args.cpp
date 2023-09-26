@@ -33,7 +33,7 @@ void Args::setPort(int port)
     _port = port;
 }
 
-void Args::setIp(std::string ip)
+void Args::setIp(const std::string& ip)
 {
     _ip = ip;
 }

@@ -7,41 +7,13 @@
 
 #include "Args.hpp"
 #include "Client.hpp"
+#include "Person.hpp"
 #include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
 #include <signal.h>
 #include <sstream>
-
-class Person
-{
-public:
-    Person(std::string name, int age) : _name(name), _age(age)
-    {
-    }
-    Person()
-    {
-    }
-    std::string getName() const
-    {
-        return _name;
-    }
-    int getAge() const
-    {
-        return _age;
-    }
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
-        (void) version;
-        ar& _name;
-        ar& _age;
-    }
-
-private:
-    std::string _name;
-    int _age;
-};
 
 std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 {
@@ -74,6 +46,11 @@ int main(int ac, char** av)
     client_memory(1, client);
     signal(SIGINT, signal_handler);
     client->send("Connect");
+
+    std::ostringstream os;
+    boost::archive::binary_oarchive oa(os);
+    oa << person;
+    client->send(os.str());
     client->receiveAsync();
     client->getIoService().run();
     return 0;
