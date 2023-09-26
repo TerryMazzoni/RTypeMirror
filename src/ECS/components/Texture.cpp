@@ -13,6 +13,11 @@ namespace ECS
     {
     }
 
+    Texture::Texture(Raylib::RlTexture value)
+    {
+        _texture = value;
+    }
+
     Texture::~Texture()
     {
     }

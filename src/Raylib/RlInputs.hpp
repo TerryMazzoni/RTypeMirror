@@ -12,6 +12,7 @@
 #include <tuple>
 
 #include "raylib.h"
+#include "Enum.hpp"
 
 namespace Raylib
 {
@@ -20,7 +21,7 @@ namespace Raylib
      *
      * @return std::vector<std::tuple<int, int, std::optional<int>>>
      */
-    std::vector<std::tuple<int, int, std::optional<int>>> getInputs();
+    std::vector<Input> getInputs();
     /**
      * @brief Get the Mouse Position
      *

@@ -27,13 +27,11 @@ ECS::Entity ECS::Factory::createEntity(const std::string &value)
 
 void ECS::Factory::createColor(const std::string &value)
 {
-    std::shared_ptr<ECS::IComponent<std::any>> color = std::make_shared<ECS::Color>();
     int r = std::stoi(value.substr(0, value.find(",")));
     int g = std::stoi(value.substr(value.find(",") + 1, value.find(",", value.find(",") + 1)));
     int b = std::stoi(value.substr(value.find(",", value.find(",") + 1) + 1, value.find(",", value.find(",", value.find(",") + 1) + 1)));
     Raylib::RlColor rlColor(r, g, b);
-    color->setValue(rlColor);
-    _components.push_back(color);
+    _components.push_back(std::make_shared<Color>(rlColor));
 }
 
 void ECS::Factory::createPosition(const std::string &value)

@@ -16,6 +16,7 @@ namespace ECS
     {
     public:
         Texture();
+        Texture(Raylib::RlTexture value);
         ~Texture();
 
         int setValue(Raylib::RlTexture value);

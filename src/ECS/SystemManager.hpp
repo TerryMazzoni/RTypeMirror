@@ -13,17 +13,20 @@
 #include "Enum.hpp"
 #include "ISystem.hpp"
 
-namespace ECS {
-    class SystemManager {
-        public:
-            SystemManager();
-            ~SystemManager();
+#include "Enum.hpp"
 
-            int execute(SceneType scene);
+namespace ECS
+{
+    class SystemManager
+    {
+    public:
+        SystemManager();
+        ~SystemManager();
 
-        protected:
-        private:
-            std::map<SceneType, std::vector<ISystem>> _listSystems;
+        int execute(SceneType scene);
+
+    protected:
+    private:
+        std::map<SceneType, std::vector<void *>> _listSystems; // replace void * with class system
     };
 } // namespace ECS
-

@@ -15,6 +15,7 @@ std::vector<Input> Graph::getInputs() const
 
 int Graph::displayEntities(std::vector<EntityId> entities)
 {
+    (void)entities;
     return 0;
 }
 

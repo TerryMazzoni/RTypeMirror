@@ -29,7 +29,7 @@ namespace ECS
 
         Entity createEntity(const std::string &value);
 
-        std::vector<std::shared_ptr<ECS::IComponent<std::any>>> _components;
+        std::vector<std::shared_ptr<ECS::IComponentBase>> _components;
 
         void createColor(const std::string &value);
         void createPosition(const std::string &value);

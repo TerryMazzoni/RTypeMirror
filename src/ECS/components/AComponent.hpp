@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "IComponent.hpp"
 
 namespace ECS
@@ -17,10 +19,25 @@ namespace ECS
     public:
         virtual int setValue(T value) = 0;
         virtual T getValue() const = 0;
-        int AddId(EntityId);
-        int RemoveId(EntityId);
+        int AddId(EntityId id)
+        {
+            _listEntities.push_back(id);
+            return 0;
+        };
+        int RemoveId(EntityId id)
+        {
+            for (std::size_t i = 0; i < _listEntities.size(); i++)
+            {
+                if (_listEntities[i].first == id.first && _listEntities[i].second == id.second)
+                {
+                    _listEntities.erase(_listEntities.begin() + i);
+                    return 0;
+                }
+            }
+            return 1;
+        };
 
     protected:
         std::vector<EntityId> _listEntities;
-    };
-} // namespace ECS
+    }; // namespace ECS
+}

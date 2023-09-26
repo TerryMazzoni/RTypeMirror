@@ -12,8 +12,13 @@
 
 namespace ECS
 {
+    class IComponentBase
+    {
+    public:
+        virtual ~IComponentBase() = default;
+    };
     template <typename T>
-    class IComponent
+    class IComponent : public IComponentBase
     {
     public:
         virtual ~IComponent() = default;

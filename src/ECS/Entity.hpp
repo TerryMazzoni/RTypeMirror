@@ -18,6 +18,6 @@ namespace ECS
     struct Entity
     {
         EntityId id;
-        std::vector<std::shared_ptr<IComponent<std::any>>> components;
+        std::vector<std::shared_ptr<IComponentBase>> components;
     };
 }

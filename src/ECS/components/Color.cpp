@@ -13,6 +13,11 @@ namespace ECS
     {
     }
 
+    Color::Color(Raylib::RlColor value)
+    {
+        _color = value;
+    }
+
     Color::~Color()
     {
     }
