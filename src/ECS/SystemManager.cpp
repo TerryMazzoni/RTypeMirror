@@ -19,7 +19,7 @@ namespace ECS {
     int SystemManager::execute(SceneType scene)
     {
         for (auto &system : _listSystems[scene]) {
-            system->execute();
+            system.execute();
         }
         return 0;
     }
