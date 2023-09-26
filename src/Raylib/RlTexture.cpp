@@ -34,6 +34,15 @@ namespace Raylib
         return (_texture.height);
     }
 
+    void RlTexture::setTexture(std::string path)
+    {
+        _texture = LoadTexture(path.c_str());
+    }
+
+    RlTexture::RlTexture()
+    {
+    }
+
     RlTexture::RlTexture(std::string path)
     {
         _texture = LoadTexture(path.c_str());

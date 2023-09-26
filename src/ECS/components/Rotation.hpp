@@ -7,20 +7,21 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 
-namespace ECS {
-    template <typename T>
-    class Rotation : public IComponent {
-        public:
-            Rotation();
-            ~Rotation();
+namespace ECS
+{
+    class Rotation : public AComponent<float>
+    {
+    public:
+        Rotation();
+        ~Rotation();
 
-            int setValue(T value);
-            float getValue() const;
+        int setValue(float value);
+        float getValue() const;
 
-        protected:
-        private:
-            float _degree;
+    protected:
+    private:
+        float _degree;
     };
 } // namespace ECS

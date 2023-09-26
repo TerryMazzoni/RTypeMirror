@@ -7,21 +7,22 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 #include "RlText.hpp"
 
-namespace ECS {
-    template <typename T>
-    class Text : public IComponent {
-        public:
-            Text();
-            ~Text();
+namespace ECS
+{
+    class Text : public AComponent<std::string>
+    {
+    public:
+        Text();
+        ~Text();
 
-            int setValue(T value);
-            std::string getValue() const;
+        int setValue(std::string value);
+        std::string getValue() const;
 
-        protected:
-        private:
-            std::string _text;
+    protected:
+    private:
+        std::string _text;
     };
 } // namespace ECS

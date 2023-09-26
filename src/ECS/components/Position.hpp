@@ -7,21 +7,22 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 
-namespace ECS {
-    template <typename T>
-    class Position : public IComponent {
-        public:
-            Position();
-            ~Position();
+namespace ECS
+{
+    class Position : public AComponent<std::pair<float, float>>
+    {
+    public:
+        Position();
+        ~Position();
 
-            int setValue(T value);
-            std::pair<float, float> getValue() const;
+        int setValue(std::pair<float, float> value);
+        std::pair<float, float> getValue() const;
 
-        protected:
-        private:
-            float _x;
-            float _y;
+    protected:
+    private:
+        float _x;
+        float _y;
     };
 } // namespace ECS

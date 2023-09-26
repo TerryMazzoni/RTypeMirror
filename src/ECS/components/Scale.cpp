@@ -7,24 +7,25 @@
 
 #include "Scale.hpp"
 
-namespace ECS {
-    template <typename T>
-    Scale<T>::Scale() {
+namespace ECS
+{
+    Scale::Scale()
+    {
         _scale = 1.0;
     }
 
-    template <typename T>
-    Scale<T>::~Scale() {
+    Scale::~Scale()
+    {
     }
 
-    template <typename T>
-    int Scale<T>::setValue(T value) {
+    int Scale::setValue(float value)
+    {
         _scale = value;
         return 0;
     }
 
-    template <typename T>
-    float Scale<T>::getValue() const {
+    float Scale::getValue() const
+    {
         return _scale;
     }
 } // namespace ECS

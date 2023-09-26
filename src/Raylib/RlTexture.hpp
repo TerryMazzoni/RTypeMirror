@@ -17,6 +17,7 @@ namespace Raylib
     class RlTexture
     {
     public:
+        RlTexture();
         RlTexture(std::string path);
         ~RlTexture();
 
@@ -54,6 +55,12 @@ namespace Raylib
          * @return int
          */
         int getHeight() const;
+        /**
+         * @brief Set the Texture object
+         *
+         * @param path Path to the texture
+         */
+        void setTexture(std::string path);
 
     private:
         Texture2D _texture;

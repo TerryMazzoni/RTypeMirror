@@ -7,17 +7,22 @@
 
 #include "AComponent.hpp"
 
-namespace ECS {
+namespace ECS
+{
     template <typename T>
-    int AComponent<T>::addId(Entity id) {
+    int AComponent<T>::AddId(EntityId id)
+    {
         _listEntities.push_back(id);
         return 0;
     }
 
     template <typename T>
-    int AComponent<T>::removeId(Entity id) {
-        for (int i = 0; i < _listEntities.size(); i++) {
-            if (_listEntities[i].first == id.first && _listEntities[i].second == id.second) {
+    int AComponent<T>::RemoveId(EntityId id)
+    {
+        for (int i = 0; i < _listEntities.size(); i++)
+        {
+            if (_listEntities[i].first == id.first && _listEntities[i].second == id.second)
+            {
                 _listEntities.erase(_listEntities.begin() + i);
                 return 0;
             }

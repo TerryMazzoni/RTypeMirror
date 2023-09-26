@@ -10,18 +10,17 @@
 #include <vector>
 #include "Enum.hpp"
 
-namespace ECS {
+namespace ECS
+{
     template <typename T>
-    class IComponent {
-        public:
-            virtual ~IComponent() = default;
+    class IComponent
+    {
+    public:
+        virtual ~IComponent() = default;
 
-            virtual int setValue(T value) = 0;
-            virtual T getValue() const = 0;
-            virtual int addId(Entity) = 0;
-            virtual int removeId(Entity) = 0;
-
-        protected:
-            std::vector<Entity> _ids;
+        virtual int setValue(T value) = 0;
+        virtual T getValue() const = 0;
+        virtual int AddId(EntityId) = 0;
+        virtual int RemoveId(EntityId) = 0;
     };
 } // namespace ECS

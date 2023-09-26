@@ -7,20 +7,21 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 
-namespace ECS {
-    template <typename T>
-    class Scale : public IComponent {
-        public:
-            Scale();
-            ~Scale();
+namespace ECS
+{
+    class Scale : public AComponent<float>
+    {
+    public:
+        Scale();
+        ~Scale();
 
-            int setValue(T value);
-            float getValue() const;
+        int setValue(float value);
+        float getValue() const;
 
-        protected:
-        private:
-            float _scale;
+    protected:
+    private:
+        float _scale;
     };
 } // namespace ECS

@@ -7,24 +7,24 @@
 
 #include "Text.hpp"
 
-namespace ECS {
-    template <typename T>
-    Text<T>::Text() {
-        _text = NULL
+namespace ECS
+{
+    Text::Text()
+    {
     }
 
-    template <typename T>
-    Text<T>::~Text() {
+    Text::~Text()
+    {
     }
 
-    template <typename T>
-    int Text<T>::setValue(T value) {
+    int Text::setValue(std::string value)
+    {
         _text = value;
         return 0;
     }
 
-    template <typename T>
-    std::string Text<T>::getValue() const {
+    std::string Text::getValue() const
+    {
         return _text;
     }
 } // namespace ECS

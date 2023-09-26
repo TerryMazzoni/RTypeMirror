@@ -9,16 +9,18 @@
 
 #include "IComponent.hpp"
 
-namespace ECS {
+namespace ECS
+{
     template <typename T>
-    class AComponent : public IComponent {
-        public:
-            virtual int setValue(T value) = 0;
-            virtual T getValue() const = 0;
-            int addId(Entity);
-            int removeId(Entity);
+    class AComponent : public IComponent<T>
+    {
+    public:
+        virtual int setValue(T value) = 0;
+        virtual T getValue() const = 0;
+        int AddId(EntityId);
+        int RemoveId(EntityId);
 
-        protected:
-        private:
+    protected:
+        std::vector<EntityId> _listEntities;
     };
 } // namespace ECS

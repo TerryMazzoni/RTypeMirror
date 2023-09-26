@@ -7,26 +7,27 @@
 
 #include "Position.hpp"
 
-namespace ECS {
-    template <typename T>
-    Position<T>::Position() {
+namespace ECS
+{
+    Position::Position()
+    {
         _x = 0;
         _y = 0;
     }
 
-    template <typename T>
-    Position<T>::~Position() {
+    Position::~Position()
+    {
     }
 
-    template <typename T>
-    int Position<T>::setValue(T value) {
+    int Position::setValue(std::pair<float, float> value)
+    {
         _x = value.first;
         _y = value.second;
         return 0;
     }
 
-    template <typename T>
-    std::pair<float, float> Position<T>::getValue() const {
+    std::pair<float, float> Position::getValue() const
+    {
         return std::make_pair(_x, _y);
     }
 } // namespace ECS

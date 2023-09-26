@@ -7,21 +7,22 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 #include "RlColor.hpp"
 
-namespace ECS {
-    template <typename T>
-    class Color : public IComponent {
-        public:
-            Color();
-            ~Color();
+namespace ECS
+{
+    class Color : public AComponent<Raylib::RlColor>
+    {
+    public:
+        Color();
+        ~Color();
 
-            int setValue(T value);
-            Raylib::RlColor getValue() const;
+        int setValue(Raylib::RlColor value);
+        Raylib::RlColor getValue() const;
 
-        protected:
-        private:
-            Raylib::RlColor _color;
+    protected:
+    private:
+        Raylib::RlColor _color;
     };
 } // namespace ECS

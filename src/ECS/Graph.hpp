@@ -12,15 +12,16 @@
 #include <optional>
 #include "Enum.hpp"
 
-class Graph {
-    public:
-        Graph();
-        ~Graph();
+class Graph
+{
+public:
+    Graph();
+    ~Graph();
 
-        std::vector<Input> getInputs() const;
-        int displayEntities(std::vector<Entity> entities);
+    std::vector<Input> getInputs() const;
+    int displayEntities(std::vector<EntityId> entities);
 
-    protected:
-    private:
-        std::vector<Input> _events;
+protected:
+private:
+    std::vector<Input> _events;
 };

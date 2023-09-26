@@ -19,6 +19,11 @@ namespace Raylib
         return _color;
     }
 
+    RlColor::RlColor()
+    {
+        _color = (Color){0, 0, 0, 255};
+    }
+
     RlColor::RlColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
     {
         _color = (Color){r, g, b, a};

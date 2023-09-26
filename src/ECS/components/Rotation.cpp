@@ -7,25 +7,25 @@
 
 #include "Rotation.hpp"
 
-namespace ECS {
-    template <typename T>
-    Rotation<T>::Rotation() {
-        _x = 0;
-        _y = 0;
+namespace ECS
+{
+    Rotation::Rotation()
+    {
+        _degree = 0;
     }
 
-    template <typename T>
-    Rotation<T>::~Rotation() {
+    Rotation::~Rotation()
+    {
     }
 
-    template <typename T>
-    int Rotation<T>::setValue(T value) {
+    int Rotation::setValue(float value)
+    {
         _degree = value;
         return 0;
     }
 
-    template <typename T>
-    float Rotation<T>::getValue() const {
+    float Rotation::getValue() const
+    {
         return _degree;
     }
 } // namespace ECS

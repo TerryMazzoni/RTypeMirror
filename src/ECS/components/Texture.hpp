@@ -7,21 +7,22 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 #include "RlTexture.hpp"
 
-namespace ECS {
-    template <typename T>
-    class Texture : public IComponent {
-        public:
-            Texture();
-            ~Texture();
+namespace ECS
+{
+    class Texture : public AComponent<Raylib::RlTexture>
+    {
+    public:
+        Texture();
+        ~Texture();
 
-            int setValue(T value);
-            Raylib::RlTexture getValue() const;
+        int setValue(Raylib::RlTexture value);
+        Raylib::RlTexture getValue() const;
 
-        protected:
-        private:
-            Raylib::RlTexture _texture;
+    protected:
+    private:
+        Raylib::RlTexture _texture;
     };
 } // namespace ECS
