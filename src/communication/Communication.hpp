@@ -10,7 +10,11 @@
 #include <string>
 
 enum class CommunicationTypes {
-    NewPlayerPosition
+    NewPlayerPosition,
+    NewEnnemiesPosition,
+    NewMissilesPosition,
+    NewMatesPosition,
+    NewHitBetweenElements
 };
 
 class Communication {
