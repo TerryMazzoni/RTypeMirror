@@ -37,3 +37,6 @@ r-type_client
 .vscode
 .clang-format
 Makefile
+build/*
+src/client/build/*
+src/server/build/*
