@@ -108,15 +108,6 @@ void Client::receiveAsync()
     getIoService().run();
 }
 
-void Client::run()
-{
-    send("Hello");
-    std::cout << "Hello" << std::endl;
-    while (is_running(0))
-    {
-    }
-}
-
 udp::socket& Client::getSocket()
 {
     return _socket;

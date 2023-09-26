@@ -42,10 +42,6 @@ public:
      */
     void processMessage(const std::string& msg);
     /**
-     * @brief Run the client
-     */
-    void run();
-    /**
      * @brief Get the Socket object
      *
      * @return udp::socket&

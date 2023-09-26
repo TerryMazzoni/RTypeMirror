@@ -33,14 +33,6 @@ Server::~Server()
 {
 }
 
-void Server::run()
-{
-    std::cout << "Server running" << std::endl;
-    while (is_running(0))
-    {
-    }
-}
-
 void Server::send(const std::string& msg, const udp::endpoint& client)
 {
     try

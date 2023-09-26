@@ -32,11 +32,6 @@ public:
      */
     ~Server();
     /**
-     * @brief Run the server
-     *
-     */
-    void run();
-    /**
      * @brief Send a message to a client
      *
      * @param msg
