@@ -31,10 +31,9 @@
 *.out
 *.app
 
-<<<<<<< HEAD
 RType
-=======
->>>>>>> 489eede (Add basic server and client)
+r-type_server
+r-type_client
 .vscode
 .clang-format
 Makefile
