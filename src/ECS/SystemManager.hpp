@@ -5,8 +5,7 @@
 ** SystemManager
 */
 
-#ifndef SYSTEMMANAGER_HPP_
-#define SYSTEMMANAGER_HPP_
+#pragma once
 
 #include <string>
 #include <map>
@@ -26,4 +25,3 @@ namespace ECS {
     };
 } // namespace ECS
 
-#endif /* !SYSTEMMANAGER_HPP_ */

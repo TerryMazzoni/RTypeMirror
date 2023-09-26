@@ -5,8 +5,7 @@
 ** Scale
 */
 
-#ifndef SCALE_HPP_
-#define SCALE_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 
@@ -25,5 +24,3 @@ namespace ECS {
             float _scale;
     };
 } // namespace ECS
-
-#endif /* !SCALE_HPP_ */

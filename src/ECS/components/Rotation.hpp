@@ -5,8 +5,7 @@
 ** Rotation
 */
 
-#ifndef ROTATION_HPP_
-#define ROTATION_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 
@@ -25,5 +24,3 @@ namespace ECS {
             float _degree;
     };
 } // namespace ECS
-
-#endif /* !ROTATION_HPP_ */

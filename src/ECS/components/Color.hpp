@@ -5,8 +5,7 @@
 ** Color
 */
 
-#ifndef COLOR_HPP_
-#define COLOR_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 #include "RlColor.hpp"
@@ -26,5 +25,3 @@ namespace ECS {
             Raylib::RlColor _color;
     };
 } // namespace ECS
-
-#endif /* !COLOR_HPP_ */

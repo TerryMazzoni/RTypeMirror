@@ -5,9 +5,7 @@
 ** Enum
 */
 
-#ifndef ENUM_HPP_
-#define ENUM_HPP_
-
+#pragma once
 namespace ECS {
 #define Entity std::pair<EntityType, int>
 
@@ -44,5 +42,3 @@ enum class SceneType {
     End,
     Unknown
 };
-
-#endif /* !ENUM_HPP_ */

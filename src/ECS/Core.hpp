@@ -5,8 +5,7 @@
 ** Core
 */
 
-#ifndef CORE_HPP_
-#define CORE_HPP_
+#pragma once
 
 #include "Enum.hpp"
 #include "EntitiesManager.hpp"
@@ -28,5 +27,3 @@ namespace ECS {
             SystemManager _systemManager;
     };
 } // namespace ECS
-
-#endif /* !CORE_HPP_ */

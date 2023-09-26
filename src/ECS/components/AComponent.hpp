@@ -5,8 +5,7 @@
 ** AComponent
 */
 
-#ifndef ACOMPONENT_HPP_
-#define ACOMPONENT_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 
@@ -16,12 +15,10 @@ namespace ECS {
         public:
             virtual int setValue(T value) = 0;
             virtual T getValue() const = 0;
-            int AddId(std::pair<EntityType, int>);
-            int RemoveId(std::pair<EntityType, int>);
+            int AddId(Entity);
+            int RemoveId(Entity);
 
         protected:
         private:
     };
 } // namespace ECS
-
-#endif /* !ACOMPONENT_HPP_ */

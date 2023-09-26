@@ -5,8 +5,7 @@
 ** Graph
 */
 
-#ifndef GRAPH_HPP_
-#define GRAPH_HPP_
+#pragma once
 
 #include <vector>
 #include <tuple>
@@ -25,5 +24,3 @@ class Graph {
     private:
         std::vector<Input> _events;
 };
-
-#endif /* !GRAPH_HPP_ */

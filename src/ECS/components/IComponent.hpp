@@ -5,8 +5,7 @@
 ** IComponent
 */
 
-#ifndef ICOMPONENT_HPP_
-#define ICOMPONENT_HPP_
+#pragma once
 
 #include <vector>
 #include "Enum.hpp"
@@ -19,12 +18,10 @@ namespace ECS {
 
             virtual int setValue(T value) = 0;
             virtual T getValue() const = 0;
-            virtual int AddId(std::pair<EntityType, int>) = 0;
-            virtual int RemoveId(std::pair<EntityType, int>) = 0;
+            virtual int AddId(Entity) = 0;
+            virtual int RemoveId(Entity) = 0;
 
         protected:
-            std::vector<std::pair<EntityType, int>> _ids;
+            std::vector<Entity> _ids;
     };
 } // namespace ECS
-
-#endif /* !ICOMPONENT_HPP_ */

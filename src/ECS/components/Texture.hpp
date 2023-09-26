@@ -5,8 +5,7 @@
 ** Texture
 */
 
-#ifndef TEXTURE_HPP_
-#define TEXTURE_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 #include "RlTexture.hpp"
@@ -26,5 +25,3 @@ namespace ECS {
             Raylib::RlTexture _texture;
     };
 } // namespace ECS
-
-#endif /* !TEXTURE_HPP_ */

@@ -5,8 +5,7 @@
 ** EntitiesManager
 */
 
-#ifndef ENTITIESMANAGER_HPP_
-#define ENTITIESMANAGER_HPP_
+#pragma once
 
 #include <vector>
 #include "Enum.hpp"
@@ -27,5 +26,3 @@ namespace ECS {
             std::vector<Entity> _listEntities;
     };
 } // namespace ECS
-
-#endif /* !ENTITIESMANAGER_HPP_ */

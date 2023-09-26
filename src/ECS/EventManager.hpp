@@ -5,8 +5,7 @@
 ** EventManager
 */
 
-#ifndef EVENTMANAGER_HPP_
-#define EVENTMANAGER_HPP_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -28,5 +27,3 @@ namespace ECS {
             std::vector<Input> _listEvent;
     };
 } // namespace ECS
-
-#endif /* !EVENTMANAGER_HPP_ */

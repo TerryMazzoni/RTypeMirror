@@ -5,8 +5,7 @@
 ** Position
 */
 
-#ifndef POSITION_HPP_
-#define POSITION_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 
@@ -26,5 +25,3 @@ namespace ECS {
             float _y;
     };
 } // namespace ECS
-
-#endif /* !POSITION_HPP_ */

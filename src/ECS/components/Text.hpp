@@ -5,8 +5,7 @@
 ** Text
 */
 
-#ifndef TEXT_HPP_
-#define TEXT_HPP_
+#pragma once
 
 #include "IComponent.hpp"
 #include "RlText.hpp"
@@ -26,5 +25,3 @@ namespace ECS {
             std::string _text;
     };
 } // namespace ECS
-
-#endif /* !TEXT_HPP_ */

@@ -5,9 +5,7 @@
 ** ISystem
 */
 
-#ifndef ISYSTEM_HPP_
-#define ISYSTEM_HPP_
-
+#pragma once
 namespace ECS {
     class ISystem {
         public:
@@ -21,5 +19,3 @@ namespace ECS {
         private:
     };
 } // namespace ECS
-
-#endif /* !ISYSTEM_HPP_ */

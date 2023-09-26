@@ -5,8 +5,7 @@
 ** ASystem
 */
 
-#ifndef ASYSTEM_HPP_
-#define ASYSTEM_HPP_
+#pragma once
 
 #include "ISystem.hpp"
 
@@ -20,5 +19,3 @@ namespace ECS {
         private:
     };
 } // namespace ECS
-
-#endif /* !ASYSTEM_HPP_ */
