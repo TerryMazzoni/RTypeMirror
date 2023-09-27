@@ -47,6 +47,7 @@ class GenericCommunication : public ACommunication {
          */
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _code;
             ar & _type;
             ar & _position;

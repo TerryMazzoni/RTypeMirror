@@ -37,7 +37,6 @@ int main(int ac, char** av)
 {
     Args args;
     std::shared_ptr<Client> client;
-    Person person("John", 42);
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;

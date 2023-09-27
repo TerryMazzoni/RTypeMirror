@@ -25,6 +25,7 @@ class ACommunication {
         virtual CommunicationTypes getType() const { return _type; }
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _type;
             ar & _code;
         }

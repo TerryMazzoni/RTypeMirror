@@ -39,6 +39,7 @@ class Mate {
          */
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _position;
             ar & _id;
         }
@@ -93,6 +94,7 @@ class NewMatesPosition : public ACommunication {
          */
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _mates;
             ar & _code;
             ar & _type;

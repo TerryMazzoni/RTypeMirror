@@ -18,15 +18,6 @@ std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
     return (server_memory);
 }
 
-std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
-{
-    static std::shared_ptr<Server> server_memory = nullptr;
-
-    if (flag == 1)
-        server_memory = server;
-    return (server_memory);
-}
-
 static void signal_handler(int signal)
 {
     if (signal == SIGINT)

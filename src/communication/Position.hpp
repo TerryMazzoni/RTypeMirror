@@ -12,6 +12,7 @@ struct Coords {
     int y;
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
+        (void)version;
         ar & x;
         ar & y;
     }
@@ -69,6 +70,7 @@ class Position {
          */
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _coords;
             ar & _previous_coords;
         }

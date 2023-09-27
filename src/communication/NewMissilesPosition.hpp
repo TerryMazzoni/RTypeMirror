@@ -32,6 +32,7 @@ class Missile {
          */
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _position;
             ar & _direction;
             ar & _rect;
@@ -109,6 +110,7 @@ class NewMissilesPosition : public ACommunication {
          */
         template <class Archive>
         void serialize(Archive& ar, const unsigned int version) {
+            (void)version;
             ar & _missiles;
             ar & _team;
             ar & _code;
