@@ -15,6 +15,7 @@ namespace ECS
     {
     public:
         Position();
+        Position(std::pair<float, float> value);
         ~Position();
 
         int setValue(std::pair<float, float> value);

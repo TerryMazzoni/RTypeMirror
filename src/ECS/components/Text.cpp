@@ -13,6 +13,11 @@ namespace ECS
     {
     }
 
+    Text::Text(const std::string text)
+    {
+        _text = text;
+    }
+
     Text::~Text()
     {
     }

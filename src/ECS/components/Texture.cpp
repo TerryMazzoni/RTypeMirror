@@ -13,6 +13,11 @@ namespace ECS
     {
     }
 
+    Texture::Texture(const std::string texture)
+    {
+        _texture = Raylib::RlTexture(texture);
+    }
+
     Texture::Texture(Raylib::RlTexture value)
     {
         _texture = value;
@@ -20,6 +25,12 @@ namespace ECS
 
     Texture::~Texture()
     {
+    }
+
+    int Texture::setValue(const std::string texture)
+    {
+        _texture = Raylib::RlTexture(texture);
+        return 0;
     }
 
     int Texture::setValue(Raylib::RlTexture value)

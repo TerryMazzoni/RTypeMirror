@@ -14,6 +14,11 @@ namespace ECS
         _scale = 1.0;
     }
 
+    Scale::Scale(float value)
+    {
+        _scale = value;
+    }
+
     Scale::~Scale()
     {
     }

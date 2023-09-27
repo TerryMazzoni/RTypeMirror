@@ -15,6 +15,7 @@ namespace ECS
     {
     public:
         Rotation();
+        Rotation(float value);
         ~Rotation();
 
         int setValue(float value);

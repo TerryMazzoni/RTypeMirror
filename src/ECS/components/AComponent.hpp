@@ -36,8 +36,11 @@ namespace ECS
             }
             return 1;
         };
+        ComponentType getType() const;
+        void setType(ComponentType type);
 
     protected:
         std::vector<EntityId> _listEntities;
+        ComponentType _type;
     }; // namespace ECS
 }

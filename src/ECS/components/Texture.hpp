@@ -16,9 +16,11 @@ namespace ECS
     {
     public:
         Texture();
+        Texture(const std::string texture);
         Texture(Raylib::RlTexture value);
         ~Texture();
 
+        int setValue(const std::string texture);
         int setValue(Raylib::RlTexture value);
         Raylib::RlTexture getValue() const;
 

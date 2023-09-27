@@ -6,27 +6,68 @@
 */
 
 #include "AComponent.hpp"
+#include "RlColor.hpp"
+#include "RlTexture.hpp"
 
 namespace ECS
 {
-    template <typename T>
-    int AComponent<T>::AddId(EntityId id)
+    template <>
+    ComponentType AComponent<Raylib::RlColor>::getType() const
     {
-        _listEntities.push_back(id);
-        return 0;
+        return _type;
     }
 
-    template <typename T>
-    int AComponent<T>::RemoveId(EntityId id)
+    template <>
+    void AComponent<Raylib::RlColor>::setType(ComponentType type)
     {
-        for (int i = 0; i < _listEntities.size(); i++)
-        {
-            if (_listEntities[i].first == id.first && _listEntities[i].second == id.second)
-            {
-                _listEntities.erase(_listEntities.begin() + i);
-                return 0;
-            }
-        }
-        return 1;
+        _type = type;
+    }
+
+    template <>
+    ComponentType AComponent<std::pair<float, float>>::getType() const
+    {
+        return _type;
+    }
+
+    template <>
+    void AComponent<std::pair<float, float>>::setType(ComponentType type)
+    {
+        _type = type;
+    }
+
+    template <>
+    ComponentType AComponent<float>::getType() const
+    {
+        return _type;
+    }
+
+    template <>
+    void AComponent<float>::setType(ComponentType type)
+    {
+        _type = type;
+    }
+
+    template <>
+    ComponentType AComponent<std::string>::getType() const
+    {
+        return _type;
+    }
+
+    template <>
+    void AComponent<std::string>::setType(ComponentType type)
+    {
+        _type = type;
+    }
+
+    template <>
+    ComponentType AComponent<Raylib::RlTexture>::getType() const
+    {
+        return _type;
+    }
+
+    template <>
+    void AComponent<Raylib::RlTexture>::setType(ComponentType type)
+    {
+        _type = type;
     }
 } // namespace ECS

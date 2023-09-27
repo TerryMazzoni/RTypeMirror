@@ -14,6 +14,11 @@ namespace ECS
         _degree = 0;
     }
 
+    Rotation::Rotation(float value)
+    {
+        _degree = value;
+    }
+
     Rotation::~Rotation()
     {
     }

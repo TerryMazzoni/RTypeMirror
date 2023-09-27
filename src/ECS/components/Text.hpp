@@ -16,6 +16,7 @@ namespace ECS
     {
     public:
         Text();
+        Text(const std::string text);
         ~Text();
 
         int setValue(std::string value);

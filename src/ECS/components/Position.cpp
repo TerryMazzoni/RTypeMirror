@@ -15,6 +15,12 @@ namespace ECS
         _y = 0;
     }
 
+    Position::Position(std::pair<float, float> value)
+    {
+        _x = value.first;
+        _y = value.second;
+    }
+
     Position::~Position()
     {
     }

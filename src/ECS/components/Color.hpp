@@ -16,9 +16,11 @@ namespace ECS
     {
     public:
         Color();
+        Color(int r, int g, int b, int a = 255);
         Color(Raylib::RlColor value);
         ~Color();
 
+        int setValue(int r, int g, int b, int a = 255);
         int setValue(Raylib::RlColor value);
         Raylib::RlColor getValue() const;
 

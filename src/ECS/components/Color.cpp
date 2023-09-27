@@ -13,6 +13,11 @@ namespace ECS
     {
     }
 
+    Color::Color(int r, int g, int b, int a)
+    {
+        _color = Raylib::RlColor(r, g, b, a);
+    }
+
     Color::Color(Raylib::RlColor value)
     {
         _color = value;
@@ -20,6 +25,12 @@ namespace ECS
 
     Color::~Color()
     {
+    }
+
+    int Color::setValue(int r, int g, int b, int a)
+    {
+        _color = Raylib::RlColor(r, g, b, a);
+        return 0;
     }
 
     int Color::setValue(Raylib::RlColor value)

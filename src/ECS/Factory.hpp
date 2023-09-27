@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include <memory>
 #include <optional>
 
@@ -29,7 +30,7 @@ namespace ECS
 
         Entity createEntity(const std::string &value);
 
-        std::vector<std::shared_ptr<ECS::IComponentBase>> _components;
+        std::map<int, std::shared_ptr<ECS::IComponentBase>> _components;
 
         void createColor(const std::string &value);
         void createPosition(const std::string &value);

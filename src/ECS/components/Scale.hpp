@@ -15,6 +15,7 @@ namespace ECS
     {
     public:
         Scale();
+        Scale(float value);
         ~Scale();
 
         int setValue(float value);
