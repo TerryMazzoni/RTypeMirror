@@ -6,7 +6,6 @@
 */
 
 #include "Client.hpp"
-#include "Person.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 
@@ -49,9 +48,6 @@ Client::~Client()
 void Client::send(const std::string& msg)
 {
     _socket.send_to(boost::asio::buffer(msg, msg.size()), _endpoint);
-    std::cout << "Sending message: \"" << msg
-              << "\" to: " << _endpoint.address() << ":" << _endpoint.port()
-              << std::endl;
 }
 
 void Client::processMessage(const std::string& msg)
@@ -63,10 +59,6 @@ void Client::processMessage(const std::string& msg)
         // Deserialize the data
         std::istringstream is(msg);
         boost::archive::binary_iarchive ia(is);
-        Person person;
-        ia >> person;
-        std::cout << "Person: " << person.getName() << " " << person.getAge()
-                  << std::endl;
     }
     catch (std::exception& e)
     {

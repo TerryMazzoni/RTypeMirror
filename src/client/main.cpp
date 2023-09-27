@@ -7,7 +7,9 @@
 
 #include "Args.hpp"
 #include "Client.hpp"
-#include "Person.hpp"
+#include "ACommunication.hpp"
+#include "NewPlayerPosition.hpp"
+#include "GenericCommunication.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/string.hpp>
@@ -35,7 +37,6 @@ int main(int ac, char** av)
 {
     Args args;
     std::shared_ptr<Client> client;
-    Person person("John", 42);
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
@@ -47,9 +48,14 @@ int main(int ac, char** av)
     signal(SIGINT, signal_handler);
     client->send("Connect");
 
+    GenericCommunication generic(CommunicationTypes::Type_NewPlayerPosition);
+
+    generic.setPosition(Position(Coords{1, 2}, Coords{3, 4}));
+    generic.setTeam(1);
+
     std::ostringstream os;
     boost::archive::binary_oarchive oa(os);
-    oa << person;
+    oa << generic;
     client->send(os.str());
     client->receiveAsync();
     client->getIoService().run();

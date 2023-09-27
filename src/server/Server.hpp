@@ -14,6 +14,13 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include "ACommunication.hpp"
+#include "NewEnnemiesPosition.hpp"
+#include "NewHitBetweenElements.hpp"
+#include "NewMatesPosition.hpp"
+#include "NewMissilesPosition.hpp"
+#include "NewPlayerPosition.hpp"
+#include "GenericCommunication.hpp"
 
 using boost::asio::ip::udp;
 
@@ -77,6 +84,11 @@ public:
      * @brief Get the Clients object
      */
     void close();
+    /**
+     * @brief 
+     * 
+     */
+    ACommunication createCommunication(CommunicationTypes type);
     /**
      * @brief Get the Io Service object
      *

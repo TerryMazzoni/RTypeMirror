@@ -6,7 +6,7 @@
 */
 
 #include "Server.hpp"
-#include "Person.hpp"
+#include <memory>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
@@ -60,14 +60,48 @@ void Server::processMessage(const std::string& msg, const udp::endpoint& client)
 {
     try
     {
-        // Deserialize the data
         std::istringstream is(msg);
         boost::archive::binary_iarchive ia(is);
-        Person person;
-        ia >> person;
-        std::cout << "Person: " << person.getName() << " " << person.getAge()
-                  << std::endl;
-        send(msg, client);
+        GenericCommunication generic;
+        ia >> generic;
+
+        switch (generic.getType())
+        {
+            case CommunicationTypes::Type_NewPlayerPosition:
+            {
+                NewPlayerPosition player;
+                player.setPosition(generic.getPosition());
+                break;
+            }
+            case CommunicationTypes::Type_NewEnnemiesPosition:
+            {
+                NewEnnemiesPosition ennemies;
+                ennemies.setPositions(generic.getPositions());
+                break;
+            }
+            case CommunicationTypes::Type_NewMatesPosition:
+            {
+                NewMatesPosition mates;
+                mates.setMate(generic.getMatePositions()); 
+                break;
+            }
+            case CommunicationTypes::Type_NewMissilesPosition:
+            {
+                NewMissilesPosition missiles;
+                missiles.setMissiles(generic.getMissiles());
+                break;
+            }
+            case CommunicationTypes::Type_NewHitBetweenElements:
+            {
+                NewHitBetweenElements hit;
+                hit.setFirstColision(generic.getFirstColision());
+                hit.setSecondColision(generic.getSecondColision());
+                hit.setPositions(generic.getPositions());
+                break;
+            }
+            default:
+                break;
+        }
     }
     catch (std::exception& e)
     {
@@ -85,7 +119,7 @@ void Server::processMessage(const std::string& msg, const udp::endpoint& client)
         }
         else
         {
-            std::cout << "Unknown command" << std::endl;
+            std::cout << "Unknown command, " << e.what() << std::endl;
         }
     }
 }
