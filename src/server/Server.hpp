@@ -7,6 +7,13 @@
 
 #pragma once
 
+#include "ACommunication.hpp"
+#include "GenericCommunication.hpp"
+#include "NewEnnemiesPosition.hpp"
+#include "NewHitBetweenElements.hpp"
+#include "NewMatesPosition.hpp"
+#include "NewMissilesPosition.hpp"
+#include "NewPlayerPosition.hpp"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
@@ -14,13 +21,6 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
-#include "ACommunication.hpp"
-#include "NewEnnemiesPosition.hpp"
-#include "NewHitBetweenElements.hpp"
-#include "NewMatesPosition.hpp"
-#include "NewMissilesPosition.hpp"
-#include "NewPlayerPosition.hpp"
-#include "GenericCommunication.hpp"
 
 using boost::asio::ip::udp;
 
@@ -85,8 +85,8 @@ public:
      */
     void close();
     /**
-     * @brief 
-     * 
+     * @brief
+     *
      */
     ACommunication createCommunication(CommunicationTypes type);
     /**

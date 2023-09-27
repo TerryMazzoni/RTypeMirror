@@ -6,8 +6,15 @@
 */
 
 #include "Client.hpp"
+#include "ACommunication.hpp"
+#include "GenericCommunication.hpp"
+#include "NewEnnemiesPosition.hpp"
+#include "NewHitBetweenElements.hpp"
+#include "NewMatesPosition.hpp"
+#include "NewMissilesPosition.hpp"
+#include "NewPlayerPosition.hpp"
 #include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 
 bool is_running(int flag)
 {
@@ -56,9 +63,48 @@ void Client::processMessage(const std::string& msg)
         std::cout << "Received from server: \"" << msg << "\"" << std::endl;
     try
     {
-        // Deserialize the data
         std::istringstream is(msg);
         boost::archive::binary_iarchive ia(is);
+        GenericCommunication generic;
+        ia >> generic;
+
+        switch (generic.getType())
+        {
+            case CommunicationTypes::Type_NewPlayerPosition:
+            {
+                NewPlayerPosition player;
+                player.setPosition(generic.getPosition());
+                break;
+            }
+            case CommunicationTypes::Type_NewEnnemiesPosition:
+            {
+                NewEnnemiesPosition ennemies;
+                ennemies.setPositions(generic.getPositions());
+                break;
+            }
+            case CommunicationTypes::Type_NewMatesPosition:
+            {
+                NewMatesPosition mates;
+                mates.setMate(generic.getMatePositions());
+                break;
+            }
+            case CommunicationTypes::Type_NewMissilesPosition:
+            {
+                NewMissilesPosition missiles;
+                missiles.setMissiles(generic.getMissiles());
+                break;
+            }
+            case CommunicationTypes::Type_NewHitBetweenElements:
+            {
+                NewHitBetweenElements hit;
+                hit.setFirstColision(generic.getFirstColision());
+                hit.setSecondColision(generic.getSecondColision());
+                hit.setPositions(generic.getPositions());
+                break;
+            }
+            default:
+                break;
+        }
     }
     catch (std::exception& e)
     {
@@ -81,8 +127,6 @@ void Client::receiveAsync()
         [this, &recv_buffer, &sender_endpoint](
             const boost::system::error_code& error, std::size_t bytes_received)
         {
-            if (!is_running(0))
-                return;
             if (!error && bytes_received > 0)
             {
                 processMessage(std::string(
@@ -95,6 +139,8 @@ void Client::receiveAsync()
                 this->getIoService().stop();
                 is_running(1);
             }
+            if (!is_running(0))
+                return;
             receiveAsync();
         });
     getIoService().run();
