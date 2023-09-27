@@ -6,10 +6,10 @@
 */
 
 #include "Server.hpp"
-#include <memory>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
+#include <memory>
 
 bool is_running(int flag)
 {
@@ -37,7 +37,8 @@ void Server::send(const std::string& msg, const udp::endpoint& client)
 {
     try
     {
-        _socket.send_to(boost::asio::buffer(msg, msg.size()), client);
+        _socket.send_to(boost::asio::buffer(msg.c_str(), strlen(msg.c_str())),
+                        client);
         std::cout << "Sending message: \"" << msg.c_str()
                   << "\" to: " << client.address() << ":" << client.port()
                   << std::endl;
@@ -82,7 +83,7 @@ void Server::processMessage(const std::string& msg, const udp::endpoint& client)
             case CommunicationTypes::Type_NewMatesPosition:
             {
                 NewMatesPosition mates;
-                mates.setMate(generic.getMatePositions()); 
+                mates.setMate(generic.getMatePositions());
                 break;
             }
             case CommunicationTypes::Type_NewMissilesPosition:
@@ -109,6 +110,7 @@ void Server::processMessage(const std::string& msg, const udp::endpoint& client)
         _clients.insert(client);
         if (msg == "quit")
         {
+            std::cout << "je veux partir" << std::endl;
             send("quit", client);
             removeClient(client);
             std::cout << "Client disconnected" << std::endl;

@@ -11,11 +11,15 @@ add_executable(r-type_server
     Args.cpp
     main.cpp
     Server.cpp
+    game/Ship.cpp
+    game/Bullet.cpp
+    game/Game.cpp
 )
 
 target_include_directories(r-type_server
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../communication/
+        ${CMAKE_CURRENT_SOURCE_DIR}/game/
 )
 
 find_library(SERIALIZATION boost_serialization)

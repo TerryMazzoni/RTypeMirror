@@ -5,11 +5,11 @@
 ** client
 */
 
+#include "ACommunication.hpp"
 #include "Args.hpp"
 #include "Client.hpp"
-#include "ACommunication.hpp"
-#include "NewPlayerPosition.hpp"
 #include "GenericCommunication.hpp"
+#include "NewPlayerPosition.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/string.hpp>
