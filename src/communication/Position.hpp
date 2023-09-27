@@ -10,14 +10,68 @@
 struct Coords {
     int x;
     int y;
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar & x;
+        ar & y;
+    }
 };
 
 class Position {
     public:
-        Position();
+        /**
+         * @brief Construct a new Position object
+         * 
+         */
+        Position() = default;
+        /**
+         * @brief Construct a new Position object
+         * 
+         * @param coords 
+         * @param previous_coords 
+         */
+        Position(Coords coords, Coords previous_coords) : _coords(coords), _previous_coords(previous_coords) {};
+        /**
+         * @brief Destroy the Position object
+         * 
+         */
         ~Position() = default;
+        /**
+         * @brief Get the Coords object
+         * 
+         * @return Coords 
+         */
         Coords getCoords() { return _coords; };
+        /**
+         * @brief Get the Previous Coords object
+         * 
+         * @return Coords 
+         */
         Coords getPreviousCoords() { return _previous_coords; };
+        /**
+         * @brief Set the Coords object
+         * 
+         * @param coords 
+         */
+        void setCoords(Coords coords) { _coords = coords; };
+        /**
+         * @brief Set the Previous Coords object
+         * 
+         * @param coords 
+         */
+        void setPreviousCoords(Coords coords) { _previous_coords = coords; };
+        /**
+         * @brief 
+         * 
+         * @tparam Archive 
+         * @param ar 
+         * @param version 
+         */
+        template <class Archive>
+        void serialize(Archive& ar, const unsigned int version) {
+            ar & _coords;
+            ar & _previous_coords;
+        }
     protected:
     private:
         Coords _coords;

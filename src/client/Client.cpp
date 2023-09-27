@@ -6,7 +6,6 @@
 */
 
 #include "Client.hpp"
-#include "Person.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 
@@ -63,10 +62,6 @@ void Client::processMessage(const std::string& msg)
         // Deserialize the data
         std::istringstream is(msg);
         boost::archive::binary_iarchive ia(is);
-        Person person;
-        ia >> person;
-        std::cout << "Person: " << person.getName() << " " << person.getAge()
-                  << std::endl;
     }
     catch (std::exception& e)
     {
