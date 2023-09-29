@@ -35,13 +35,20 @@ Server::~Server()
 
 void Server::send(const std::string& msg, const udp::endpoint& client)
 {
+    if (msg.empty())
+        return;
     try
     {
-        _socket.send_to(boost::asio::buffer(msg.c_str(), strlen(msg.c_str())),
-                        client);
-        std::cout << "Sending message: \"" << msg.c_str()
-                  << "\" to: " << client.address() << ":" << client.port()
-                  << std::endl;
+        _socket.async_send_to(
+            boost::asio::buffer(msg.c_str(), strlen(msg.c_str())), client,
+            [&msg, &client](const boost::system::error_code& error,
+                            std::size_t bytes_sent)
+            {
+                if (!error && bytes_sent > 0)
+                    std::cout << "Message sent" << std::endl;
+                else
+                    std::cout << error.message() << std::endl;
+            });
     }
     catch (const std::exception& e)
     {
@@ -110,7 +117,6 @@ void Server::processMessage(const std::string& msg, const udp::endpoint& client)
         _clients.insert(client);
         if (msg == "quit")
         {
-            std::cout << "je veux partir" << std::endl;
             send("quit", client);
             removeClient(client);
             std::cout << "Client disconnected" << std::endl;
@@ -137,8 +143,6 @@ void Server::receiveAsync()
         [this, &recv_buffer, &sender_endpoint](
             const boost::system::error_code& error, std::size_t bytes_received)
         {
-            if (!is_running(0))
-                return;
             if (!error && bytes_received > 0)
             {
                 processMessage(
@@ -153,6 +157,8 @@ void Server::receiveAsync()
                 this->getIoService().stop();
                 is_running(1);
             }
+            if (!is_running(0))
+                return;
             receiveAsync();
         });
     getIoService().run();

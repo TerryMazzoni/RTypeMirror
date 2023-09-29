@@ -85,11 +85,6 @@ public:
      */
     void close();
     /**
-     * @brief
-     *
-     */
-    ACommunication createCommunication(CommunicationTypes type);
-    /**
      * @brief Get the Io Service object
      *
      * @return boost::asio::io_service&
