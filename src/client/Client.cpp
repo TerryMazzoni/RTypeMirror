@@ -54,6 +54,8 @@ Client::~Client()
 
 void Client::send(const std::string& msg)
 {
+    if (msg.empty())
+        return;
     _socket.async_send_to(
         boost::asio::buffer(msg, msg.size()), _endpoint,
         [](const boost::system::error_code& error, std::size_t bytes_sent)
