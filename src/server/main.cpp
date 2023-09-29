@@ -31,23 +31,6 @@ static void signal_handler(int signal)
     }
 }
 
-void test(std::shared_ptr<Server> server)
-{
-    boost::asio::deadline_timer t(server->getIoService(),
-                                  boost::posix_time::milliseconds(1000));
-    t.async_wait(
-        [&server](const boost::system::error_code& error)
-        {
-            if (!error)
-            {
-                std::cout << "1 second" << std::endl;
-                server->sendToAll("1 second");
-            }
-            server->getIoService().post([server]() { test(server); });
-        });
-    server->getIoService().run();
-}
-
 int main(int ac, char** av)
 {
     Args args;
