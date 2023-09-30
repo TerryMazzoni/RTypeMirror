@@ -7,14 +7,37 @@
 
 #include "Game.hpp"
 
-Game::Game()
+Game::Game() : _level(0), _score(0)
 {
-    _level = 0;
-    _score = 0;
+    _ships = std::vector<std::shared_ptr<Ship>>();
+    _bullets = std::vector<std::shared_ptr<Bullet>>();
 }
 
 Game::~Game()
 {
+}
+
+void Game::run(std::shared_ptr<Server> server)
+{
+    boost::posix_time::milliseconds ms(100);
+    boost::asio::deadline_timer t(server->getIoService(), ms);
+
+    if (!is_running(0))
+        return;
+    // do things here like update positions, etc.
+    t.expires_at(t.expires_at() + ms);
+    t.async_wait(
+        [this, &server](const boost::system::error_code& error)
+        {
+            if (!error)
+            {
+                server->sendToAll("1 second");
+            }
+            if (!is_running(0))
+                return;
+            this->run(server);
+        });
+    server->getIoService().run();
 }
 
 void Game::addShip(Ship ship)

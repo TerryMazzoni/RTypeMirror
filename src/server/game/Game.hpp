@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Bullet.hpp"
+#include "Server.hpp"
 #include "Ship.hpp"
 #include <memory>
 #include <vector>
@@ -23,6 +24,12 @@ public:
      * @brief Destroy the Game object
      */
     ~Game();
+    /**
+     * @brief Run the game
+     *
+     * @param server
+     */
+    void run(std::shared_ptr<Server> server);
     /**
      * @brief Add a ship to the game
      *
