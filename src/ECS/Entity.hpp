@@ -18,6 +18,8 @@ namespace ECS
     struct Entity
     {
         EntityId id;
-        std::vector<std::shared_ptr<IComponent>> components;
+        std::vector<std::shared_ptr<ECS::IComponent>> components;
+
+        std::shared_ptr<ECS::IComponent> getComponent(ComponentType type);
     };
 }

@@ -8,10 +8,12 @@
 #pragma once
 
 #include <vector>
-#include <any>
+#include <optional>
 #include <map>
 #include <string>
 #include "Enum.hpp"
+#include "Component.hpp"
+#include "Entity.hpp"
 
 namespace ECS
 {
@@ -20,15 +22,19 @@ namespace ECS
     public:
         EntitiesManager();
         ~EntitiesManager();
-        std::vector<EntityId> getEntities();
-        int addEntities(std::vector<EntityId> entitiesToAdd);
-        int removeEntities(std::vector<EntityId> entitiesToRemove);
+        std::vector<Entity> getEntities();
+        int addEntities(std::vector<Entity> entitiesToAdd);
+        int removeEntities(std::vector<Entity> entitiesToRemove);
         int clearEntities();
-        int updateEntities(std::string value, ComponentType compoType, std::vector<EntityId> entitiesToUpdate);
+        int updateEntities(std::any value, ComponentType compoType, std::vector<Entity> entitiesToUpdate);
 
     protected:
     private:
-        std::vector<EntityId> _listEntities;
-        std::map<ComponentType, std::vector<std::any>> _mapComponent;
+        void resizeMapComponent();
+        void addComponentsEntity(Entity entity);
+
+        std::vector<Entity> _listEntities;
+        std::map<ComponentType, std::vector<std::optional<std::shared_ptr<ECS::IComponent>>>> _mapComponent;
+        int _sizeListComponents;
     };
 } // namespace ECS
