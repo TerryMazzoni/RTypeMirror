@@ -22,10 +22,40 @@ namespace ECS
     public:
         EntitiesManager();
         ~EntitiesManager();
+        /**
+         * @brief Get the list of entities
+         * 
+         * @return std::vector<Entity> 
+         */
         std::vector<Entity> getEntities();
+        /**
+         * @brief Add a list of entities in the entity manager
+         * 
+         * @param std::vector<Entity>
+         * @return int
+         */
         int addEntities(std::vector<Entity> entitiesToAdd);
+        /**
+         * @brief Remove a list of entities in the entity manager
+         * 
+         * @param std::vector<Entity>
+         * @return int
+         */
         int removeEntities(std::vector<Entity> entitiesToRemove);
+        /**
+         * @brief Clear the list of entities and set the size as 5 to prevent boutons
+         * 
+         * @return int
+         */
         int clearEntities();
+        /**
+         * @brief Update the value of a component for a list of entities
+         * 
+         * @param std::any
+         * @param ComponentType
+         * @param std::vector<Entity>
+         * @return int
+         */
         int updateEntities(std::any value, ComponentType compoType, std::vector<Entity> entitiesToUpdate);
 
     protected:

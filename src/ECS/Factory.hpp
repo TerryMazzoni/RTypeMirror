@@ -23,6 +23,13 @@ namespace ECS
         Factory(const Factory &) = delete;
         Factory &operator=(const Factory &) = delete;
 
+        /**
+         * @brief Create a component
+         * 
+         * @param type type of the component
+         * @param value value of the component
+         * @return std::shared_ptr<IComponent> 
+         */
         static std::shared_ptr<IComponent> createComponent(ComponentType type, const std::string &value);
 
     private:
