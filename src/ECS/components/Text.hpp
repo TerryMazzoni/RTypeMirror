@@ -9,23 +9,14 @@
 
 #include <string>
 
-#include "AComponent.hpp"
-#include "RlText.hpp"
-
 namespace ECS
 {
-    class Text : public AComponent
+    struct Text
     {
-    public:
-        Text();
-        Text(const std::string text);
-        ~Text();
+        Text() : text("default") {};
+        Text(std::string text) : text(text) {};
 
-        int setValue(std::string value);
-        std::any getValue() const;
-
-    protected:
-    private:
-        std::string _text;
+        std::string text;
     };
+    
 } // namespace ECS

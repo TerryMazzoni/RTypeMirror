@@ -7,24 +7,14 @@
 
 #pragma once
 
-#include <string>
-
-#include "AComponent.hpp"
-
 namespace ECS
 {
-    class Rotation : public AComponent
+    struct Rotation
     {
-    public:
-        Rotation();
-        Rotation(float value);
-        ~Rotation();
+        Rotation() : angle(0) {};
+        Rotation(float angle) : angle(angle) {};
 
-        int setValue(std::string value);
-        std::any getValue() const;
-
-    protected:
-    private:
-        float _degree;
+        float angle;
     };
+    
 } // namespace ECS

@@ -7,26 +7,17 @@
 
 #pragma once
 
-#include <string>
-
-#include "AComponent.hpp"
 #include "RlTexture.hpp"
 
 namespace ECS
 {
-    class Texture : public AComponent
+    struct Texture
     {
-    public:
-        Texture();
-        Texture(const std::string texture);
-        Texture(Raylib::RlTexture value);
-        ~Texture();
+        Texture() : texture() {};
+        Texture(std::string path) : texture(path) {};
+        Texture(Raylib::RlTexture texture) : texture(texture) {};
 
-        int setValue(const std::string texture);
-        std::any getValue() const;
-
-    protected:
-    private:
-        Raylib::RlTexture _texture;
+        Raylib::RlTexture texture;
     };
+    
 } // namespace ECS

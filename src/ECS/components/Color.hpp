@@ -7,27 +7,17 @@
 
 #pragma once
 
-#include <string>
-
-#include "AComponent.hpp"
 #include "RlColor.hpp"
 
 namespace ECS
 {
-    class Color : public AComponent
+    struct Color
     {
-    public:
-        Color();
-        Color(int r, int g, int b, int a = 255);
-        Color(Raylib::RlColor value);
-        ~Color();
+        Color() : color(0, 0, 0, 255) {};
+        Color(int r, int g, int b, int a = 255) : color(r, g, b, a) {};
+        Color(Raylib::RlColor color) : color(color) {};
 
-        int setValue(int r, int g, int b, int a = 255);
-        int setValue(std::string value);
-        std::any getValue() const;
-
-    protected:
-    private:
-        Raylib::RlColor _color;
+        Raylib::RlColor color;
     };
-} // namespace ECS
+    
+} // namespace name

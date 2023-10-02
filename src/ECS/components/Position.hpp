@@ -7,25 +7,18 @@
 
 #pragma once
 
-#include <string>
-
-#include "AComponent.hpp"
+#include <utility>
 
 namespace ECS
 {
-    class Position : public AComponent
+    struct Position
     {
-    public:
-        Position();
-        Position(std::pair<float, float> value);
-        ~Position();
+        Position() : x(0), y(0) {};
+        Position(float x, float y) : x(x), y(y) {};
+        Position(std::pair<float, float> pos) : x(pos.first), y(pos.second) {};
 
-        int setValue(std::string value);
-        std::any getValue() const;
-
-    protected:
-    private:
-        float _x;
-        float _y;
+        float x;
+        float y;
     };
+    
 } // namespace ECS

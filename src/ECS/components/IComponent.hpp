@@ -20,10 +20,8 @@ namespace ECS
     public:
         virtual ~IComponent() = default;
 
-        virtual int setValue(std::string value) = 0;
+        virtual int setValue(std::any value) = 0;
         virtual std::any getValue() const = 0;
-        virtual int AddId(EntityId) = 0;
-        virtual int RemoveId(EntityId) = 0;
         virtual ComponentType getType() const = 0;
         virtual void setType(ComponentType type) = 0;
     };

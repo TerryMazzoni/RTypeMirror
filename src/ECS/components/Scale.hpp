@@ -7,24 +7,15 @@
 
 #pragma once
 
-#include <string>
-
-#include "AComponent.hpp"
 
 namespace ECS
 {
-    class Scale : public AComponent
+    struct Scale
     {
-    public:
-        Scale();
-        Scale(float value);
-        ~Scale();
+        Scale() : scale(1) {};
+        Scale(float scale) : scale(scale) {};
 
-        int setValue(std::string value);
-        std::any getValue() const;
-
-    protected:
-    private:
-        float _scale;
+        float scale;
     };
+    
 } // namespace ECS
