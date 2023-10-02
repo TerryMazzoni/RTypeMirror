@@ -49,10 +49,10 @@ void Server::send(const std::string& msg, const udp::endpoint& client)
             [&msg, &client](const boost::system::error_code& error,
                             std::size_t bytes_sent)
             {
-                // if (!error && bytes_sent > 0)
-                //     std::cout << "Message sent" << std::endl;
-                // else
-                //     std::cout << error.message() << std::endl;
+                if (!error && bytes_sent > 0)
+                    std::cout << "Message sent" << std::endl;
+                else
+                    std::cout << error.message() << std::endl;
             });
     }
     catch (const std::exception& e)
