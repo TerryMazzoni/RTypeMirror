@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+.vscode
+.clang-format
+Makefile
+build/*
+src/client/build/*
+src/server/build/*
+r-type_client
+r-type_server
