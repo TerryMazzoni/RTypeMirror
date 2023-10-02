@@ -41,6 +41,10 @@ class Client {
          */
         void processMessage(const std::string &msg);
         /**
+         * @brief Run the client
+         */
+        void run();
+        /**
          * @brief Get the Socket object
          *
          * @return udp::socket&
@@ -52,11 +56,31 @@ class Client {
          * @return boost::asio::io_service&
          */
         boost::asio::io_service &getIoService();
+        /**
+         * @brief Get the ID object
+         *
+         * @return int
+         */
+        int getId() const;
+        /**
+         * @brief Set the isReady object
+         *
+         * @param id
+         */
+        bool getIsReady() const;
+        /**
+         * @brief Set the isReady object
+         *
+         * @param is_ready
+         */
+        void setIsReady(bool is_ready);
 
     private:
         boost::asio::io_service _io_service;
         udp::socket _socket;
         udp::endpoint _endpoint;
+        int _id;
+        bool _is_ready;
 };
 
 bool is_running(int flag);

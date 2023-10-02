@@ -16,6 +16,7 @@
 #include <boost/serialization/vector.hpp>
 #include <signal.h>
 #include <sstream>
+#include <thread>
 
 std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 {
@@ -37,6 +38,8 @@ int main(int ac, char **av)
 {
     Args args;
     std::shared_ptr<Client> client;
+    std::shared_ptr<std::thread> receiveThread;
+    std::shared_ptr<std::thread> runThread;
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
@@ -58,7 +61,9 @@ int main(int ac, char **av)
     oa << generic;
     client->send(os.str());
     client->send("Not ready");
-    client->receiveAsync();
-    client->getIoService().run();
+    receiveThread = std::make_shared<std::thread>([&client]() { client->receiveAsync(); });
+    runThread = std::make_shared<std::thread>([&client]() { client->run(); });
+    receiveThread->join();
+    runThread->join();
     return 0;
 }
