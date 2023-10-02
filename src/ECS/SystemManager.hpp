@@ -8,8 +8,8 @@
 #pragma once
 
 #include <string>
-#include <map>
 #include <vector>
+#include <map>
 #include "Enum.hpp"
 #include "ISystem.hpp"
 
