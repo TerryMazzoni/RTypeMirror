@@ -25,15 +25,15 @@ namespace ECS
     {
     }
 
-    int Position::setValue(std::pair<float, float> value)
+    int Position::setValue(std::string value)
     {
-        _x = value.first;
-        _y = value.second;
+        _x = std::stof(value.substr(0, value.find(',')));
+        _y = std::stof(value.substr(value.find(',') + 1));
         return 0;
     }
 
-    std::pair<float, float> Position::getValue() const
+    std::any Position::getValue() const
     {
-        return std::make_pair(_x, _y);
+        return std::pair<float, float>(_x, _y);
     }
 } // namespace ECS

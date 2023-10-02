@@ -23,4 +23,14 @@ namespace Raylib
     {
         EndDrawing();
     }
+
+    void draw(RlTexture texture, int x, int y, RlColor color)
+    {
+        DrawTexture(texture.getTexture(), x, y, color.getColor());
+    }
+
+    void drawEx(RlTexture texture, Vector2 position, Vector2 values, RlColor color)
+    {
+        DrawTextureEx(texture.getTexture(), position, values.x, values.y, color.getColor());
+    }
 }

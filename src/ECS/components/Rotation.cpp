@@ -23,13 +23,13 @@ namespace ECS
     {
     }
 
-    int Rotation::setValue(float value)
+    int Rotation::setValue(std::string value)
     {
-        _degree = value;
+        _degree = std::stof(value);
         return 0;
     }
 
-    float Rotation::getValue() const
+    std::any Rotation::getValue() const
     {
         return _degree;
     }

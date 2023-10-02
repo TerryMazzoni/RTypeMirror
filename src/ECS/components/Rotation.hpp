@@ -7,19 +7,21 @@
 
 #pragma once
 
+#include <string>
+
 #include "AComponent.hpp"
 
 namespace ECS
 {
-    class Rotation : public AComponent<float>
+    class Rotation : public AComponent
     {
     public:
         Rotation();
         Rotation(float value);
         ~Rotation();
 
-        int setValue(float value);
-        float getValue() const;
+        int setValue(std::string value);
+        std::any getValue() const;
 
     protected:
     private:

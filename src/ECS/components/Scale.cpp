@@ -23,13 +23,13 @@ namespace ECS
     {
     }
 
-    int Scale::setValue(float value)
+    int Scale::setValue(std::string value)
     {
-        _scale = value;
+        _scale = std::stof(value);
         return 0;
     }
 
-    float Scale::getValue() const
+    std::any Scale::getValue() const
     {
         return _scale;
     }

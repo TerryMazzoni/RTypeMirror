@@ -33,13 +33,17 @@ namespace ECS
         return 0;
     }
 
-    int Color::setValue(Raylib::RlColor value)
+    int Color::setValue(std::string value)
     {
-        _color = value;
+        int r = std::stoi(value.substr(0, value.find(",")));
+        int g = std::stoi(value.substr(value.find(",") + 1, value.find(",", value.find(",") + 1)));
+        int b = std::stoi(value.substr(value.find(",", value.find(",") + 1) + 1, value.find(",", value.find(",", value.find(",") + 1) + 1)));
+
+        _color = Raylib::RlColor(r, g, b);
         return 0;
     }
 
-    Raylib::RlColor Color::getValue() const
+    std::any Color::getValue() const
     {
         return _color;
     }

@@ -13,12 +13,12 @@
 
 namespace ECS
 {
-    template <typename T>
-    class AComponent : public IComponent<T>
+    class AComponent : public IComponent
     {
     public:
-        virtual int setValue(T value) = 0;
-        virtual T getValue() const = 0;
+        ~AComponent() = default;
+        virtual int setValue(std::string value) = 0;
+        virtual std::any getValue() const = 0;
         int AddId(EntityId id)
         {
             _listEntities.push_back(id);

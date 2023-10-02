@@ -22,23 +22,6 @@ namespace Raylib
         ~RlTexture();
 
         /**
-         * @brief Draw the texture
-         *
-         * @param x x position of the texture
-         * @param y y position of the texture
-         * @param color Color of the texture (default: white)
-         */
-        void draw(int x, int y, RlColor color = RlColor(255, 255, 255));
-        /**
-         * @brief Draw the texture with extended parameters
-         *
-         * @param position Vector2 containing the x and y position of the texture
-         * @param rotation Rotation of the texture
-         * @param scale Scaling of the texture
-         * @param color Color of the texture (default: white)
-         */
-        void drawEx(Vector2 position, float rotation, float scale, RlColor color = RlColor(255, 255, 255));
-        /**
          * @brief Unload the texture
          *
          */
@@ -61,6 +44,12 @@ namespace Raylib
          * @param path Path to the texture
          */
         void setTexture(std::string path);
+        /**
+         * @brief Get the Texture object
+         *
+         * @return Texture2D
+         */
+        Texture2D getTexture() const;
 
     private:
         Texture2D _texture;

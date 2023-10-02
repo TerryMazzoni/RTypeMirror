@@ -7,12 +7,14 @@
 
 #pragma once
 
+#include <string>
+
 #include "AComponent.hpp"
 #include "RlTexture.hpp"
 
 namespace ECS
 {
-    class Texture : public AComponent<Raylib::RlTexture>
+    class Texture : public AComponent
     {
     public:
         Texture();
@@ -21,8 +23,7 @@ namespace ECS
         ~Texture();
 
         int setValue(const std::string texture);
-        int setValue(Raylib::RlTexture value);
-        Raylib::RlTexture getValue() const;
+        std::any getValue() const;
 
     protected:
     private:

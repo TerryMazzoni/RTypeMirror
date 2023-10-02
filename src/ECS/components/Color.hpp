@@ -7,12 +7,14 @@
 
 #pragma once
 
+#include <string>
+
 #include "AComponent.hpp"
 #include "RlColor.hpp"
 
 namespace ECS
 {
-    class Color : public AComponent<Raylib::RlColor>
+    class Color : public AComponent
     {
     public:
         Color();
@@ -21,8 +23,8 @@ namespace ECS
         ~Color();
 
         int setValue(int r, int g, int b, int a = 255);
-        int setValue(Raylib::RlColor value);
-        Raylib::RlColor getValue() const;
+        int setValue(std::string value);
+        std::any getValue() const;
 
     protected:
     private:

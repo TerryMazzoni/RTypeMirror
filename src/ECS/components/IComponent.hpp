@@ -8,23 +8,20 @@
 #pragma once
 
 #include <vector>
+#include <any>
+#include <string>
+
 #include "Enum.hpp"
 
 namespace ECS
 {
-    class IComponentBase
-    {
-    public:
-        virtual ~IComponentBase() = default;
-    };
-    template <typename T>
-    class IComponent : public IComponentBase
+    class IComponent
     {
     public:
         virtual ~IComponent() = default;
 
-        virtual int setValue(T value) = 0;
-        virtual T getValue() const = 0;
+        virtual int setValue(std::string value) = 0;
+        virtual std::any getValue() const = 0;
         virtual int AddId(EntityId) = 0;
         virtual int RemoveId(EntityId) = 0;
         virtual ComponentType getType() const = 0;

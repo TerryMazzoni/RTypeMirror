@@ -50,12 +50,11 @@ enum class SceneType
 
 enum class ComponentType
 {
-    Entity,
     Color,
     Position,
     Rotation,
     Scale,
-    Text,
     Texture,
+    Text,
     Unknown
 };

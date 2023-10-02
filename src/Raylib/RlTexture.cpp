@@ -9,16 +9,6 @@
 
 namespace Raylib
 {
-    void RlTexture::draw(int x, int y, RlColor color)
-    {
-        DrawTexture(_texture, x, y, color.getColor());
-    }
-
-    void RlTexture::drawEx(Vector2 position, float rotation, float scale, RlColor color)
-    {
-        DrawTextureEx(_texture, position, rotation, scale, color.getColor());
-    }
-
     void RlTexture::unload()
     {
         UnloadTexture(_texture);
@@ -37,6 +27,11 @@ namespace Raylib
     void RlTexture::setTexture(std::string path)
     {
         _texture = LoadTexture(path.c_str());
+    }
+
+    Texture2D RlTexture::getTexture() const
+    {
+        return (_texture);
     }
 
     RlTexture::RlTexture()

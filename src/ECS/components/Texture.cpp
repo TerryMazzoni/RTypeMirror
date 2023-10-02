@@ -33,13 +33,7 @@ namespace ECS
         return 0;
     }
 
-    int Texture::setValue(Raylib::RlTexture value)
-    {
-        _texture = value;
-        return 0;
-    }
-
-    Raylib::RlTexture Texture::getValue() const
+    std::any Texture::getValue() const
     {
         return _texture;
     }

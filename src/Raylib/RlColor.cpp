@@ -19,6 +19,21 @@ namespace Raylib
         return _color;
     }
 
+    unsigned char RlColor::getR() const
+    {
+        return _color.r;
+    }
+
+    unsigned char RlColor::getG() const
+    {
+        return _color.g;
+    }
+
+    unsigned char RlColor::getB() const
+    {
+        return _color.b;
+    }
+
     RlColor::RlColor()
     {
         _color = (Color){0, 0, 0, 255};

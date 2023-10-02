@@ -9,6 +9,7 @@
 
 #include "raylib.h"
 #include "RlColor.hpp"
+#include "RlTexture.hpp"
 
 namespace Raylib
 {
@@ -28,4 +29,6 @@ namespace Raylib
      *
      */
     void endDraw();
+    void draw(RlTexture texture, int x, int y, RlColor color);
+    void drawEx(RlTexture texture, Vector2 position, Vector2 values, RlColor color);
 }

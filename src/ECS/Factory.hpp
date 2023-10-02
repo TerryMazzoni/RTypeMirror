@@ -23,20 +23,16 @@ namespace ECS
         Factory(const Factory &) = delete;
         Factory &operator=(const Factory &) = delete;
 
-        static std::optional<Entity> createEntity(ComponentType type, const std::string &value);
+        static std::shared_ptr<IComponent> createComponent(ComponentType type, const std::string &value);
 
     private:
         Factory();
 
-        Entity createEntity(const std::string &value);
-
-        std::map<int, std::shared_ptr<ECS::IComponentBase>> _components;
-
-        void createColor(const std::string &value);
-        void createPosition(const std::string &value);
-        void createRotation(const std::string &value);
-        void createScale(const std::string &value);
-        void createText(const std::string &value);
-        void createTexture(const std::string &value);
+        std::shared_ptr<IComponent> createColor(const std::string &value);
+        std::shared_ptr<IComponent> createPosition(const std::string &value);
+        std::shared_ptr<IComponent> createRotation(const std::string &value);
+        std::shared_ptr<IComponent> createScale(const std::string &value);
+        std::shared_ptr<IComponent> createText(const std::string &value);
+        std::shared_ptr<IComponent> createTexture(const std::string &value);
     };
 }

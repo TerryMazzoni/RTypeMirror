@@ -7,12 +7,14 @@
 
 #pragma once
 
+#include <string>
+
 #include "AComponent.hpp"
 #include "RlText.hpp"
 
 namespace ECS
 {
-    class Text : public AComponent<std::string>
+    class Text : public AComponent
     {
     public:
         Text();
@@ -20,7 +22,7 @@ namespace ECS
         ~Text();
 
         int setValue(std::string value);
-        std::string getValue() const;
+        std::any getValue() const;
 
     protected:
     private:

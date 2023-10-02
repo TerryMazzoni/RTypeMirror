@@ -28,7 +28,7 @@ namespace ECS
         return 0;
     }
 
-    std::string Text::getValue() const
+    std::any Text::getValue() const
     {
         return _text;
     }

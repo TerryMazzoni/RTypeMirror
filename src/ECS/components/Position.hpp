@@ -7,19 +7,21 @@
 
 #pragma once
 
+#include <string>
+
 #include "AComponent.hpp"
 
 namespace ECS
 {
-    class Position : public AComponent<std::pair<float, float>>
+    class Position : public AComponent
     {
     public:
         Position();
         Position(std::pair<float, float> value);
         ~Position();
 
-        int setValue(std::pair<float, float> value);
-        std::pair<float, float> getValue() const;
+        int setValue(std::string value);
+        std::any getValue() const;
 
     protected:
     private:

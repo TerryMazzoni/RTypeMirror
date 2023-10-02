@@ -7,19 +7,21 @@
 
 #pragma once
 
+#include <string>
+
 #include "AComponent.hpp"
 
 namespace ECS
 {
-    class Scale : public AComponent<float>
+    class Scale : public AComponent
     {
     public:
         Scale();
         Scale(float value);
         ~Scale();
 
-        int setValue(float value);
-        float getValue() const;
+        int setValue(std::string value);
+        std::any getValue() const;
 
     protected:
     private:
