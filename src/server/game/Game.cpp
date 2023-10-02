@@ -7,7 +7,8 @@
 
 #include "Game.hpp"
 
-Game::Game() : _level(0), _score(0)
+Game::Game()
+    : _level(0), _score(0)
 {
     _ships = std::vector<std::shared_ptr<Ship>>();
     _bullets = std::vector<std::shared_ptr<Bullet>>();
@@ -27,25 +28,19 @@ void Game::run(std::shared_ptr<Server> server)
     // do things here like update positions, etc.
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
-        [this, &server](const boost::system::error_code& error)
-        {
+        [this, &server](const boost::system::error_code &error) {
             static int timer = 25;
             int status = server->getGameStatus();
 
-            if (!error)
-            {
-                if (status == 0)
-                {
+            if (!error) {
+                if (status == 0) {
                     timer = 25;
                     this->run(server);
                 }
-                else if (status == 1)
-                {
-                    server->sendToAll("TIMER:" +
-                                      std::to_string(int(timer / 5)));
+                else if (status == 1) {
+                    server->sendToAll("TIMER:" + std::to_string(int(timer / 5)));
                     timer--;
-                    if (timer == -1)
-                    {
+                    if (timer == -1) {
                         server->setGameStatus(2);
                         timer = 25;
                     }
@@ -82,10 +77,8 @@ void Game::addBullet(std::shared_ptr<Bullet> bullet)
 
 void Game::removeShip(int id)
 {
-    for (auto it = _ships.begin(); it != _ships.end(); it++)
-    {
-        if ((*it)->getId() == id)
-        {
+    for (auto it = _ships.begin(); it != _ships.end(); it++) {
+        if ((*it)->getId() == id) {
             _ships.erase(it);
             return;
         }
@@ -94,10 +87,8 @@ void Game::removeShip(int id)
 
 void Game::removeBullet(int id)
 {
-    for (auto it = _bullets.begin(); it != _bullets.end(); it++)
-    {
-        if ((*it)->getId() == id)
-        {
+    for (auto it = _bullets.begin(); it != _bullets.end(); it++) {
+        if ((*it)->getId() == id) {
             _bullets.erase(it);
             return;
         }

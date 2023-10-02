@@ -23,15 +23,14 @@ std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
 
 static void signal_handler(int signal)
 {
-    if (signal == SIGINT)
-    {
+    if (signal == SIGINT) {
         is_running(1);
         std::shared_ptr<Server> server = server_memory(0, nullptr);
         server->close();
     }
 }
 
-int main(int ac, char** av)
+int main(int ac, char **av)
 {
     Args args;
     std::shared_ptr<Server> server;
