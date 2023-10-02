@@ -33,7 +33,7 @@ static void signal_handler(int signal)
     client_memory(0, nullptr)->send("quit\0");
 }
 
-int main(int ac, char** av)
+int main(int ac, char **av)
 {
     Args args;
     std::shared_ptr<Client> client;

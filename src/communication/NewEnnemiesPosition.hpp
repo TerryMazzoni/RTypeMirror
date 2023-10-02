@@ -15,59 +15,70 @@ class NewEnnemiesPosition : public ACommunication {
     public:
         /**
          * @brief Construct a new New Ennemies Position object
-         * 
+         *
          */
-        NewEnnemiesPosition() {_type = CommunicationTypes::Type_NewEnnemiesPosition;};
+        NewEnnemiesPosition()
+        {
+            _type = CommunicationTypes::Type_NewEnnemiesPosition;
+        };
         /**
          * @brief Construct a new New Ennemies Position object
-         * 
-         * @param position 
+         *
+         * @param position
          */
-        NewEnnemiesPosition(std::vector<Position> position) : _positions(position) {_type = CommunicationTypes::Type_NewEnnemiesPosition;};
+        NewEnnemiesPosition(std::vector<Position> position)
+            : _positions(position)
+        {
+            _type = CommunicationTypes::Type_NewEnnemiesPosition;
+        };
         /**
          * @brief Destroy the New Ennemies Position object
-         * 
+         *
          */
         ~NewEnnemiesPosition() = default;
         /**
          * @brief Get the Type object
-         * 
-         * @return CommunicationTypes 
+         *
+         * @return CommunicationTypes
          */
-        CommunicationTypes getType() const override {
+        CommunicationTypes getType() const override
+        {
             return _type;
         };
         /**
          * @brief Get the Positions object
-         * 
-         * @return std::vector<Position> 
+         *
+         * @return std::vector<Position>
          */
-        std::vector<Position> getPositions() const {
+        std::vector<Position> getPositions() const
+        {
             return _positions;
         }
         /**
          * @brief Set the Positions object
-         * 
-         * @param positions 
+         *
+         * @param positions
          */
-        void setPositions(std::vector<Position> positions) {
+        void setPositions(std::vector<Position> positions)
+        {
             _positions = positions;
         }
         /**
          * @brief Serialize the object for boost
-         * 
-         * @tparam Archive 
-         * @param ar 
-         * @param version 
+         *
+         * @tparam Archive
+         * @param ar
+         * @param version
          */
         template <class Archive>
-        void serialize(Archive& ar, const unsigned int version) {
+        void serialize(Archive &ar, const unsigned int version)
+        {
             (void)version;
             ar & _positions;
             ar & _code;
             ar & _type;
         }
-    protected:
+
     private:
         std::vector<Position> _positions;
 };

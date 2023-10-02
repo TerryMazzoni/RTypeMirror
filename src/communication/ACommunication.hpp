@@ -9,7 +9,7 @@
 
 #include <string>
 
-enum CommunicationTypes {
+enum class CommunicationTypes {
     Type_Unknown,
     Type_NewPlayerPosition,
     Type_NewEnnemiesPosition,
@@ -20,17 +20,28 @@ enum CommunicationTypes {
 
 class ACommunication {
     public:
-        ACommunication() : _type(CommunicationTypes::Type_Unknown), _code(0) {}
+        ACommunication()
+            : _type(CommunicationTypes::Type_Unknown), _code(0)
+        {
+        }
         virtual ~ACommunication() = default;
-        virtual CommunicationTypes getType() const { return _type; }
+        virtual CommunicationTypes getType() const
+        {
+            return _type;
+        }
         template <class Archive>
-        void serialize(Archive& ar, const unsigned int version) {
+        void serialize(Archive &ar, const unsigned int version)
+        {
             (void)version;
             ar & _type;
             ar & _code;
         }
+
     protected:
-        ACommunication(CommunicationTypes type, int code) : _type(type), _code(code) {}
+        ACommunication(CommunicationTypes type, int code)
+            : _type(type), _code(code)
+        {
+        }
         CommunicationTypes _type;
         int _code;
 };

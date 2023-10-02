@@ -15,11 +15,17 @@ enum class CommunicationTypes {
 
 class Communication {
     public:
-        Communication(int code) : _code(code) {};
+        Communication(int code)
+            : _code(code){};
         ~Communication() = default;
-        const CommunicationTypes &getType() { return _type; };
+        const CommunicationTypes &getType()
+        {
+            return _type;
+        };
+
     protected:
         CommunicationTypes _type;
+
     private:
         int _code;
 };

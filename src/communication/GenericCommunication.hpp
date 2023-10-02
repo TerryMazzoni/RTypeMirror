@@ -16,37 +16,45 @@ class GenericCommunication : public ACommunication {
     public:
         /**
          * @brief Construct a new Generic Communication object
-         * 
-         * @param type 
+         *
+         * @param type
          */
-        GenericCommunication(CommunicationTypes type) {_type = type;};
+        GenericCommunication(CommunicationTypes type)
+        {
+            _type = type;
+        };
         /**
          * @brief Construct a new Generic Communication object
-         * 
+         *
          */
-        GenericCommunication() {_type = CommunicationTypes::Type_Unknown;};
+        GenericCommunication()
+        {
+            _type = CommunicationTypes::Type_Unknown;
+        };
         /**
          * @brief Destroy the Generic Communication object
-         * 
+         *
          */
         ~GenericCommunication() = default;
         /**
          * @brief Get the Type object
-         * 
-         * @return CommunicationTypes 
+         *
+         * @return CommunicationTypes
          */
-        CommunicationTypes getType() const override {
+        CommunicationTypes getType() const override
+        {
             return _type;
         };
         /**
          * @brief Serialize the object for boost
-         * 
-         * @tparam Archive 
-         * @param ar 
-         * @param version 
+         *
+         * @tparam Archive
+         * @param ar
+         * @param version
          */
         template <class Archive>
-        void serialize(Archive& ar, const unsigned int version) {
+        void serialize(Archive &ar, const unsigned int version)
+        {
             (void)version;
             ar & _code;
             ar & _type;
@@ -60,119 +68,132 @@ class GenericCommunication : public ACommunication {
         }
         /**
          * @brief Set the Position object
-         * 
-         * @param position 
+         *
+         * @param position
          */
-        void setPosition(Position position) {
+        void setPosition(Position position)
+        {
             _position = position;
         }
         /**
          * @brief Set the Positions object
-         * 
-         * @param positions 
+         *
+         * @param positions
          */
-        void setPositions(std::vector<Position> positions) {
+        void setPositions(std::vector<Position> positions)
+        {
             _positions = positions;
         }
         /**
          * @brief Set the First Colision object
-         * 
-         * @param first_c 
+         *
+         * @param first_c
          */
-        void setFirstColision(Colision first_c) {
+        void setFirstColision(Colision first_c)
+        {
             _first_c = first_c;
         }
         /**
          * @brief Set the Second Colision object
-         * 
-         * @param second_c 
+         *
+         * @param second_c
          */
-        void setSecondColision(Colision second_c) {
+        void setSecondColision(Colision second_c)
+        {
             _second_c = second_c;
         }
         /**
          * @brief Set the Mate Positions object
-         * 
-         * @param Matepositions 
+         *
+         * @param Matepositions
          */
-        void setMatePositions(std::vector<Mate> Matepositions) {
+        void setMatePositions(std::vector<Mate> Matepositions)
+        {
             _Matepositions = Matepositions;
         }
         /**
          * @brief Set the Missiles object
-         * 
-         * @param missiles 
+         *
+         * @param missiles
          */
-        void setMissiles(std::vector<Missile> missiles) {
+        void setMissiles(std::vector<Missile> missiles)
+        {
             _missiles = missiles;
         }
         /**
          * @brief Set the Team object
-         * 
-         * @param team 
+         *
+         * @param team
          */
-        void setTeam(int team) {
+        void setTeam(int team)
+        {
             _team = team;
         }
 
         /**
          * @brief Get the Position object
-         * 
-         * @return Position 
+         *
+         * @return Position
          */
-        Position getPosition() const {
+        Position getPosition() const
+        {
             return _position;
         }
         /**
          * @brief Get the Positions object
-         * 
-         * @return std::vector<Position> 
+         *
+         * @return std::vector<Position>
          */
-        std::vector<Position> getPositions() const {
+        std::vector<Position> getPositions() const
+        {
             return _positions;
         }
         /**
          * @brief Get the First Colision object
-         * 
-         * @return std::pair<ColisionTypes, int> 
+         *
+         * @return std::pair<ColisionTypes, int>
          */
-        Colision getFirstColision() const {
+        Colision getFirstColision() const
+        {
             return _first_c;
         }
         /**
          * @brief Get the Second Colision object
-         * 
-         * @return std::pair<ColisionTypes, int> 
+         *
+         * @return std::pair<ColisionTypes, int>
          */
-        Colision getSecondColision() const {
+        Colision getSecondColision() const
+        {
             return _second_c;
         }
         /**
          * @brief Get the Mate Positions object
-         * 
-         * @return Mate 
+         *
+         * @return Mate
          */
-        std::vector<Mate> getMatePositions() const {
+        std::vector<Mate> getMatePositions() const
+        {
             return _Matepositions;
         }
         /**
          * @brief Get the Missiles object
-         * 
-         * @return std::vector<Missile> 
+         *
+         * @return std::vector<Missile>
          */
-        std::vector<Missile> getMissiles() const {
+        std::vector<Missile> getMissiles() const
+        {
             return _missiles;
         }
         /**
          * @brief Get the Team object
-         * 
-         * @return int 
+         *
+         * @return int
          */
-        int getTeam() const {
+        int getTeam() const
+        {
             return _team;
         }
 
-    protected:
     private:
         Position _position;
         std::vector<Position> _positions;
