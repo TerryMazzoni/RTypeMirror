@@ -42,21 +42,14 @@ void Server::send(const std::string &msg, const udp::endpoint &client)
 {
     if (msg.empty())
         return;
-    try {
-        _socket.async_send_to(
-            boost::asio::buffer(msg.c_str(), strlen(msg.c_str())), client,
-            [&msg, &client](const boost::system::error_code &error, std::size_t bytes_sent) {
-                if (!error && bytes_sent > 0)
-                    std::cout << "Message sent" << std::endl;
-                else
-                    std::cout << error.message() << std::endl;
-            });
-    }
-    catch (const std::exception &e) {
-        std::cout << "Cannot send message: \"" << msg.c_str()
-                  << "\" to: " << client.address() << ":" << client.port()
-                  << std::endl;
-    }
+    _socket.async_send_to(
+        boost::asio::buffer(msg.c_str(), strlen(msg.c_str())), client,
+        [&msg, &client](const boost::system::error_code &error, std::size_t bytes_sent) {
+            if (error)
+                std::cerr << "Error on send: " << error.message() << std::endl;
+            else if (bytes_sent <= 0)
+                std::cerr << "Error on send: bytes_sent <= 0" << std::endl;
+        });
 }
 
 void Server::sendToAll(const std::string &msg)
@@ -77,35 +70,35 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
         ia >> generic;
 
         switch (generic.getType()) {
-        case CommunicationTypes::Type_NewPlayerPosition: {
-            NewPlayerPosition player;
-            player.setPosition(generic.getPosition());
-            break;
-        }
-        case CommunicationTypes::Type_NewEnnemiesPosition: {
-            NewEnnemiesPosition ennemies;
-            ennemies.setPositions(generic.getPositions());
-            break;
-        }
-        case CommunicationTypes::Type_NewMatesPosition: {
-            NewMatesPosition mates;
-            mates.setMate(generic.getMatePositions());
-            break;
-        }
-        case CommunicationTypes::Type_NewMissilesPosition: {
-            NewMissilesPosition missiles;
-            missiles.setMissiles(generic.getMissiles());
-            break;
-        }
-        case CommunicationTypes::Type_NewHitBetweenElements: {
-            NewHitBetweenElements hit;
-            hit.setFirstColision(generic.getFirstColision());
-            hit.setSecondColision(generic.getSecondColision());
-            hit.setPositions(generic.getPositions());
-            break;
-        }
-        default:
-            break;
+            case CommunicationTypes::Type_NewPlayerPosition: {
+                NewPlayerPosition player;
+                player.setPosition(generic.getPosition());
+                break;
+            }
+            case CommunicationTypes::Type_NewEnnemiesPosition: {
+                NewEnnemiesPosition ennemies;
+                ennemies.setPositions(generic.getPositions());
+                break;
+            }
+            case CommunicationTypes::Type_NewMatesPosition: {
+                NewMatesPosition mates;
+                mates.setMate(generic.getMatePositions());
+                break;
+            }
+            case CommunicationTypes::Type_NewMissilesPosition: {
+                NewMissilesPosition missiles;
+                missiles.setMissiles(generic.getMissiles());
+                break;
+            }
+            case CommunicationTypes::Type_NewHitBetweenElements: {
+                NewHitBetweenElements hit;
+                hit.setFirstColision(generic.getFirstColision());
+                hit.setSecondColision(generic.getSecondColision());
+                hit.setPositions(generic.getPositions());
+                break;
+            }
+            default:
+                break;
         }
     }
     catch (std::exception &e) {
@@ -141,7 +134,7 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
             if (!c.getIsReady())
                 all_ready = false;
         }
-        if (all_ready)
+        if (all_ready && _game_status == 0)
             _game_status = 1;
     }
 }
