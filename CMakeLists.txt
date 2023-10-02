@@ -10,6 +10,7 @@ set(SERVER_SOURCES
     ${SERVER_PATH}/Args.cpp
     ${SERVER_PATH}/main.cpp
     ${SERVER_PATH}/Server.cpp
+    ${SERVER_PATH}/Client.cpp
     ${SERVER_PATH}/game/Ship.cpp
     ${SERVER_PATH}/game/Bullet.cpp
     ${SERVER_PATH}/game/Game.cpp

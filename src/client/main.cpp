@@ -57,6 +57,7 @@ int main(int ac, char** av)
     boost::archive::binary_oarchive oa(os);
     oa << generic;
     client->send(os.str());
+    client->send("Not ready");
     client->receiveAsync();
     client->getIoService().run();
     return 0;

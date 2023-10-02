@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ACommunication.hpp"
+#include "Client.hpp"
 #include "GenericCommunication.hpp"
 #include "NewEnnemiesPosition.hpp"
 #include "NewHitBetweenElements.hpp"
@@ -17,10 +18,10 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
-#include <set>
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 using boost::asio::ip::udp;
 
@@ -90,12 +91,27 @@ public:
      * @return boost::asio::io_service&
      */
     boost::asio::io_service& getIoService();
+    /**
+     * @brief Know the status of the game
+     *
+     * @return 0 if the game has not started, 1 if the game is starting, 2 if
+     * the game is running
+     */
+    int getGameStatus() const;
+    /**
+     * @brief Set the Game Status object
+     *
+     * @param status
+     */
+    void setGameStatus(int status);
 
 private:
     boost::asio::io_service _io_service;
     udp::socket _socket;
-    std::set<udp::endpoint> _clients;
+    std::vector<Client> _clients;
     std::string _response_message;
+    int _game_status;
+    std::map<int, bool> _ids;
 };
 
 bool is_running(int flag);
