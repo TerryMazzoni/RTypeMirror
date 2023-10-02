@@ -115,4 +115,5 @@ private:
     int _id;
     int _level;
     ShipType _type;
+    bool _ready;
 };

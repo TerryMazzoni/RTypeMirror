@@ -29,9 +29,29 @@ void Game::run(std::shared_ptr<Server> server)
     t.async_wait(
         [this, &server](const boost::system::error_code& error)
         {
+            static int timer = 25;
+            int status = server->getGameStatus();
+
             if (!error)
             {
-                server->sendToAll("1 second");
+                if (status == 0)
+                {
+                    timer = 25;
+                    this->run(server);
+                }
+                else if (status == 1)
+                {
+                    server->sendToAll("TIMER:" +
+                                      std::to_string(int(timer / 5)));
+                    timer--;
+                    if (timer == -1)
+                    {
+                        server->setGameStatus(2);
+                        timer = 25;
+                    }
+                }
+                if (status == 2)
+                    server->sendToAll("The game has started!");
             }
             if (!is_running(0))
                 return;

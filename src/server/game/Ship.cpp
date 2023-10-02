@@ -15,6 +15,7 @@ Ship::Ship()
     _id = 0;
     _level = 1;
     _type = ShipType::UNKNOW;
+    _ready = false;
 }
 
 Ship::Ship(Coords pos, int id, ShipType type)
