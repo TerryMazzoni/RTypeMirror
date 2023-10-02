@@ -13,19 +13,17 @@
 #include "Graph.hpp"
 // #include "SystemManager.hpp"
 
-namespace ECS
-{
-    class Core
-    {
-    public:
-        Core();
-        ~Core();
-        int run();
+namespace ECS {
+    class Core {
+        public:
+            Core();
+            ~Core();
+            int run();
 
-    private:
-        EntitiesManager _entitiesManager;
-        // EventManager _eventManager;
-        Graph _graph;
-        // SystemManager _systemManager;
+        private:
+            EntitiesManager _entitiesManager;
+            // EventManager _eventManager;
+            Graph _graph;
+            // SystemManager _systemManager;
     };
 } // namespace ECS

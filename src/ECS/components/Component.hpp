@@ -11,7 +11,7 @@
 
 namespace ECS {
 
-    template<typename T>
+    template <typename T>
     class Component : public IComponent {
         public:
             Component(std::any value);
@@ -26,4 +26,4 @@ namespace ECS {
             T _value;
             ComponentType _type;
     };
-}
+} // namespace ECS

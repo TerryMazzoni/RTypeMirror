@@ -23,4 +23,4 @@ namespace ECS {
         }
         return 0;
     }
-}
+} // namespace ECS

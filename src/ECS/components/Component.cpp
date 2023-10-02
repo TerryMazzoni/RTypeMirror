@@ -13,8 +13,7 @@
 #include "Text.hpp"
 #include "Texture.hpp"
 
-namespace ECS
-{
+namespace ECS {
     template <typename T>
     Component<T>::Component(std::any value)
     {

@@ -9,14 +9,14 @@
 
 #include <string>
 
-namespace ECS
-{
-    struct Text
-    {
-        Text() : text("default") {};
-        Text(std::string text) : text(text) {};
+namespace ECS {
+    struct Text {
+            Text()
+                : text("default"){};
+            Text(std::string text)
+                : text(text){};
 
-        std::string text;
+            std::string text;
     };
-    
+
 } // namespace ECS

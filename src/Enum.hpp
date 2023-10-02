@@ -6,16 +6,14 @@
 */
 
 #pragma once
-namespace ECS
-{
+namespace ECS {
 #define EntityId std::pair<EntityType, int>
 
 #define Input std::tuple<EventType, int, std::optional<int>>
 
 } // namespace ECS
 
-enum class EntityType
-{
+enum class EntityType {
     Player,
     Enemy,
     Bullet,
@@ -23,14 +21,12 @@ enum class EntityType
     Unknown
 };
 
-enum class EventType
-{
+enum class EventType {
     Mouse,
     Keyboard,
 };
 
-enum EventInput
-{
+enum class EventInput {
     Key_up,
     Key_down,
     Key_left,
@@ -39,8 +35,7 @@ enum EventInput
     Right_click
 };
 
-enum class SceneType
-{
+enum class SceneType {
     Menu,
     Game,
     Pause,
@@ -48,8 +43,7 @@ enum class SceneType
     Unknown
 };
 
-enum class ComponentType
-{
+enum class ComponentType {
     Color,
     Position,
     Rotation,

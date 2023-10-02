@@ -15,18 +15,16 @@
 
 #include "Enum.hpp"
 
-namespace ECS
-{
-    class SystemManager
-    {
-    public:
-        SystemManager();
-        ~SystemManager();
+namespace ECS {
+    class SystemManager {
+        public:
+            SystemManager();
+            ~SystemManager();
 
-        int execute(SceneType scene);
+            int execute(SceneType scene);
 
-    protected:
-    private:
-        std::map<SceneType, std::vector<void *>> _listSystems; // replace void * with class system
+        protected:
+        private:
+            std::map<SceneType, std::vector<void *>> _listSystems; // replace void * with class system
     };
 } // namespace ECS

@@ -41,7 +41,7 @@ namespace ECS {
             _listEntities.push_back(entityToAdd);
             addComponentsEntity(entityToAdd);
         }
-        return 0;   
+        return 0;
     }
 
     int EntitiesManager::removeEntities(std::vector<Entity> entitiesToRemove)
@@ -86,4 +86,4 @@ namespace ECS {
             _mapComponent[component->getType()][entity.id.second] = component;
         }
     }
-}
+} // namespace ECS

@@ -13,13 +13,11 @@
 
 #include "IComponent.hpp"
 
-namespace ECS
-{
-    struct Entity
-    {
-        EntityId id;
-        std::vector<std::shared_ptr<ECS::IComponent>> components;
+namespace ECS {
+    struct Entity {
+            EntityId id;
+            std::vector<std::shared_ptr<ECS::IComponent>> components;
 
-        std::shared_ptr<ECS::IComponent> getComponent(ComponentType type);
+            std::shared_ptr<ECS::IComponent> getComponent(ComponentType type);
     };
-}
+} // namespace ECS

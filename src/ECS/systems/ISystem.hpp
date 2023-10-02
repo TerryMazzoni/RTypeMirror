@@ -13,9 +13,11 @@ namespace ECS {
 
             virtual int execute() = 0;
             virtual int setActivation(bool state) = 0;
+
         protected:
             int _id;
             bool _isActivated;
+
         private:
     };
 } // namespace ECS

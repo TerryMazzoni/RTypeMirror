@@ -8,7 +8,8 @@
 #include "ASystem.hpp"
 
 namespace ECS {
-    int ASystem::setActivation(bool state) {
+    int ASystem::setActivation(bool state)
+    {
         _isActivated = state;
     }
 } // namespace ECS

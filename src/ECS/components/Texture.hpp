@@ -9,15 +9,16 @@
 
 #include "RlTexture.hpp"
 
-namespace ECS
-{
-    struct Texture
-    {
-        Texture() : texture() {};
-        Texture(std::string path) : texture(path) {};
-        Texture(Raylib::RlTexture texture) : texture(texture) {};
+namespace ECS {
+    struct Texture {
+            Texture()
+                : texture(){};
+            Texture(std::string path)
+                : texture(path){};
+            Texture(Raylib::RlTexture texture)
+                : texture(texture){};
 
-        Raylib::RlTexture texture;
+            Raylib::RlTexture texture;
     };
-    
+
 } // namespace ECS

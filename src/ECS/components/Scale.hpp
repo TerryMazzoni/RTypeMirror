@@ -7,15 +7,14 @@
 
 #pragma once
 
+namespace ECS {
+    struct Scale {
+            Scale()
+                : scale(1){};
+            Scale(float scale)
+                : scale(scale){};
 
-namespace ECS
-{
-    struct Scale
-    {
-        Scale() : scale(1) {};
-        Scale(float scale) : scale(scale) {};
-
-        float scale;
+            float scale;
     };
-    
+
 } // namespace ECS
