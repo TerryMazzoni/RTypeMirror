@@ -24,7 +24,6 @@ namespace Raylib
         std::pair<int, int> mousePos = getMousePos();
 
         for (auto event : inputTypes) {
-            std::cout << "Key: " << (int)event << " -> " << IsKeyReleased(int(event)) << std::endl;
             if (IsKeyReleased((int)event))
                 inputs.erase({EventType::Keyboard, (int)event, std::nullopt});
         }
