@@ -1,6 +1,0 @@
-C:/Users/artig/Test/RTypeMirror/out/build/x64-Debug/CMakeFiles/r-type_server.dir
-C:/Users/artig/Test/RTypeMirror/out/build/x64-Debug/CMakeFiles/r-type_client.dir
-C:/Users/artig/Test/RTypeMirror/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Users/artig/Test/RTypeMirror/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/artig/Test/RTypeMirror/out/build/x64-Debug/boost/CMakeFiles/edit_cache.dir
-C:/Users/artig/Test/RTypeMirror/out/build/x64-Debug/boost/CMakeFiles/rebuild_cache.dir
