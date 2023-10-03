@@ -8,6 +8,8 @@ set(SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(SERVER_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/server)
 
+add_subdirectory("r-type-dependencies/boost" boost)
+
 set(SERVER_SOURCES
     ${SERVER_PATH}/Args.cpp
     ${SERVER_PATH}/main.cpp
