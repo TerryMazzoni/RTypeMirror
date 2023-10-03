@@ -58,7 +58,8 @@ namespace ECS {
                 float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
                 float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
                 if (componentT != nullptr) {
-                    Raylib::draw((std::any_cast<ECS::Texture>(componentT->getValue())).texture, x, y, Raylib::RlColor(255, 255, 255));
+                    ECS::Texture texture = std::any_cast<ECS::Texture>(componentT->getValue());
+                    Raylib::draw(texture.textureList[texture.currentTexture], x, y, Raylib::RlColor(255, 255, 255));
                 }
             }
             Raylib::endDraw();
