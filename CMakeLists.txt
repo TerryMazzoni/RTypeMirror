@@ -82,7 +82,6 @@ target_link_libraries(
 
 # BOOST FETCHING PART
 include(FetchContent)
-<<<<<<< HEAD
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     FetchContent_Declare(
     Boost
@@ -96,22 +95,12 @@ else()
     )
 endif()
 
-=======
-FetchContent_Declare(
-  Boost
-  URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
-)
->>>>>>> b06d959 (Delete gitmodules, used fetchpackage instead.)
 
 set(BOOST_RUNTIME_LINK static)
 
 FetchContent_MakeAvailable(Boost)
 
-<<<<<<< HEAD
 foreach(lib system asio property_tree)
-=======
-foreach(lib system asio serialization)
->>>>>>> b06d959 (Delete gitmodules, used fetchpackage instead.)
     target_link_libraries(
         r-type_server
         PRIVATE
