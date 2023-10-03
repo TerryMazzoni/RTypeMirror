@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <tuple>
 #include <any>
 #include <optional>
@@ -21,7 +22,7 @@ namespace ECS {
             EventManager();
             ~EventManager();
             void setMyPlayer(Entity my);
-            int executeInputs(std::vector<Input>);
+            int executeInputs(std::set<Input>);
             std::vector<Action> getActions() const;
 
         private:

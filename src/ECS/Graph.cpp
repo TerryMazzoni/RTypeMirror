@@ -16,7 +16,7 @@
 #include "Text.hpp"
 #include "Texture.hpp"
 
-std::vector<Input> Graph::getInputs() const
+std::set<Input> Graph::getInputs() const
 {
     return Raylib::getInputs();
 }

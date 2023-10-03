@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <set>
 #include <vector>
 #include <optional>
 #include <tuple>
@@ -21,7 +22,7 @@ namespace Raylib
      *
      * @return std::vector<std::tuple<int, int, std::optional<int>>>
      */
-    std::vector<Input> getInputs();
+    std::set<Input> getInputs();
     /**
      * @brief Get the Mouse Position
      *

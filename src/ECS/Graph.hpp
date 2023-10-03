@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <set>
 #include <tuple>
 #include <optional>
 #include "Enum.hpp"
@@ -18,7 +19,7 @@ class Graph {
         Graph();
         ~Graph();
 
-        std::vector<Input> getInputs() const;
+        std::set<Input> getInputs() const;
         int displayEntities(std::vector<ECS::Entity> entities);
 
     protected:

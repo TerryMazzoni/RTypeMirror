@@ -23,7 +23,7 @@ namespace ECS {
         _myPlayer = my;
     }
 
-    int EventManager::executeInputs(std::vector<Input> listEvent)
+    int EventManager::executeInputs(std::set<Input> listEvent)
     {
         _actions.clear();
         for (auto &event : listEvent) {

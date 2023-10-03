@@ -6,19 +6,32 @@
 */
 
 #include "RlInputs.hpp"
+#include <iostream>
+
+static const std::vector<EventInput> inputTypes = {
+    EventInput::Key_up,
+    EventInput::Key_down,
+    EventInput::Key_left,
+    EventInput::Key_right
+};
 
 namespace Raylib
 {
-    std::vector<Input> getInputs()
+    std::set<Input> getInputs()
     {
-        std::vector<Input> inputs;
+        static std::set<Input> inputs;
         int tmp = 0;
         std::pair<int, int> mousePos = getMousePos();
 
+        for (auto event : inputTypes) {
+            std::cout << "Key: " << (int)event << " -> " << IsKeyReleased(int(event)) << std::endl;
+            if (IsKeyReleased((int)event))
+                inputs.erase({EventType::Keyboard, (int)event, std::nullopt});
+        }
         while ((tmp = GetKeyPressed()))
-            inputs.push_back(std::tuple(EventType::Keyboard, tmp, std::nullopt));
+            inputs.insert(std::tuple(EventType::Keyboard, tmp, std::nullopt));
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-            inputs.push_back(std::tuple(EventType::Mouse, mousePos.first, mousePos.second));
+            inputs.insert(std::tuple(EventType::Mouse, mousePos.first, mousePos.second));
         return inputs;
     }
 
