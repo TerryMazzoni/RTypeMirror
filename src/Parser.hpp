@@ -16,14 +16,13 @@
 #include <any>
 #include <filesystem>
 
-#define PARSER_ALL_ENTITIES "allEntities"
+#define PARSER_ALL_ENTITIES "all_entities"
 #define PARSER_MAP "map"
 #define PARSER_TYPE "type"
-#define PARSER_ENTITY_TEXTURE "texture"
+#define PARSER_TEXTURES "textures"
 #define PARSER_ENTITY_INSTANCE "instance"
-#define PARSER_MAP_TEXTURES "textures"
 #define PARSER_MAP_TILES "tiles"
-#define PARSER_MAP_TILESIZE "tileSize"
+#define PARSER_MAP_TILESIZE "tile_size"
 
 namespace Parser {
     enum class type_t {
@@ -35,7 +34,7 @@ namespace Parser {
 
     typedef struct {
             std::string type;
-            std::string texture;
+            std::vector<std::string> textures;
             std::map<std::string, std::any> instance;
             std::map<std::string, type_t> instanceType;
     } entity_t;
