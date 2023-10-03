@@ -42,3 +42,4 @@ r-type_server
 *.bash
 r-type-dependencies/*
 *.vs
+out/
