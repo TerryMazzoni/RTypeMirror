@@ -12,13 +12,17 @@
 namespace ECS {
     struct Texture {
             Texture()
-                : texture(){};
-            Texture(std::string path)
-                : texture(path){};
-            Texture(Raylib::RlTexture texture)
-                : texture(texture){};
+                : textureList() { currentTexture = 0; }
+            Texture(std::string path) {
+                textureList.push_back(Raylib::RlTexture(path));
+                currentTexture = 0;
+            }
+            Texture(Raylib::RlTexture texture) {
+                textureList.push_back(texture);
+                currentTexture = 0;
+            }
 
-            Raylib::RlTexture texture;
+            std::vector<Raylib::RlTexture> textureList;
+            int currentTexture;
     };
-
 } // namespace ECS
