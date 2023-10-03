@@ -7,6 +7,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 set(SERVER_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/server)
 
 add_subdirectory("r-type-dependencies/boost" boost)
+add_library(boost INTERFACE)
+target_include_directories(boost INTERFACE "r-type-dependencies/boost")
 
 set(SERVER_SOURCES
     ${SERVER_PATH}/Args.cpp
@@ -40,5 +42,5 @@ target_include_directories(r-type_client
         ${CMAKE_CURRENT_SOURCE_DIR}/src/communication/
 )
 
-target_link_libraries(r-type_server PUBLIC boost)
-target_link_libraries(r-type_client PUBLIC boost)
+target_link_libraries(r-type_server PUBLIC boost::boost)
+target_link_libraries(r-type_client PUBLIC boost::boost)
