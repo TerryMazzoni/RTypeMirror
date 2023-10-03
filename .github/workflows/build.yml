@@ -8,10 +8,14 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Install Boost
+      run: |
+        sudo apt-get update
+        sudo apt-get install libboost-all-dev
 
     - name: Set up CMake
       uses: jwlawson/actions-setup-cmake@v1.13
