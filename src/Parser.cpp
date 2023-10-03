@@ -61,17 +61,19 @@ namespace Parser {
     void ParserJson::parseEntity(boost::property_tree::ptree &root)
     {
         std::string typeEntities;
-        std::string textureEntities;
+        std::vector<std::string> textures;
         entity_t newEntity;
         type_t type;
 
         for (auto &entity : root.get_child(PARSER_ALL_ENTITIES)) {
             typeEntities = entity.second.get<std::string>(PARSER_TYPE);
-            textureEntities = entity.second.get<std::string>(PARSER_ENTITY_TEXTURE);
+            textures = {};
+            for (auto &texture : entity.second.get_child(PARSER_TEXTURES))
+                textures.push_back(texture.second.get_value<std::string>());
             for (auto &instance : entity.second.get_child(PARSER_ENTITY_INSTANCE)) {
                 newEntity = {
                     typeEntities,
-                    textureEntities,
+                    textures,
                     {},
                 };
                 for (auto &value : instance.second) {
@@ -92,15 +94,18 @@ namespace Parser {
     void ParserJson::parseMap(boost::property_tree::ptree &root)
     {
         boost::property_tree::ptree tiles = root.get_child(PARSER_MAP).get_child(PARSER_MAP_TILES);
-        boost::property_tree::ptree textures = root.get_child(PARSER_MAP).get_child(PARSER_MAP_TEXTURES);
-        std::map<char, std::string> texturesMap;
+        boost::property_tree::ptree textures = root.get_child(PARSER_MAP).get_child(PARSER_TEXTURES);
+        std::map<char, std::vector<std::string>> texturesMap;
         std::string line;
         entity_t newEntity;
         int tileSize = root.get_child(PARSER_MAP).get<int>(PARSER_MAP_TILESIZE);
         int y = 0;
 
-        for (auto &texture : textures)
-            texturesMap[texture.first[0]] = texture.second.get_value<std::string>();
+        for (auto &texture : textures) {
+            texturesMap[texture.first[0]] = {};
+            for (auto &value : texture.second)
+                texturesMap[texture.first[0]].push_back(value.second.get_value<std::string>());
+        }
         for (auto &tile : tiles) {
             line = tile.second.get_value<std::string>();
             for (int i = 0; i < line.size(); i++) {
