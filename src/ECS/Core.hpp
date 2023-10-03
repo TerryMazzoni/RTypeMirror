@@ -8,9 +8,9 @@
 #pragma once
 
 #include "Enum.hpp"
-#include "EntitiesManager.hpp"
-// #include "EventManager.hpp"
-#include "Graph.hpp"
+#include "ECS.hpp"
+#include "Raylib.hpp"
+// #include "Graph.hpp"
 // #include "SystemManager.hpp"
 
 namespace ECS {
@@ -22,8 +22,8 @@ namespace ECS {
 
         private:
             EntitiesManager _entitiesManager;
-            // EventManager _eventManager;
-            Graph _graph;
+            EventManager _eventManager;
+            // Graph _graph;
             // SystemManager _systemManager;
     };
 } // namespace ECS

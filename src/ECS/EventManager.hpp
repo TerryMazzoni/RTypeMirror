@@ -10,20 +10,24 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <any>
 #include <optional>
 #include "Enum.hpp"
+#include "Entity.hpp"
 
 namespace ECS {
     class EventManager {
         public:
             EventManager();
             ~EventManager();
-            SceneType getSceneId() const;
+            void setMyPlayer(Entity my);
             int executeInputs(std::vector<Input>);
+            std::vector<Action> getActions() const;
 
-        protected:
         private:
-            SceneType _scene;
-            std::vector<Input> _listEvent;
+            void movePlayer(EventInput dir);
+
+            Entity _myPlayer;
+            std::vector<Action> _actions;
     };
 } // namespace ECS
