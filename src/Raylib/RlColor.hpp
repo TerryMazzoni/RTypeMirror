@@ -14,6 +14,7 @@ namespace Raylib
     class RlColor
     {
     public:
+        RlColor();
         RlColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
         ~RlColor();
 
@@ -32,6 +33,24 @@ namespace Raylib
          * @param a Alpha value of the color
          */
         void setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
+        /**
+         * @brief Get the Red value of the color
+         *
+         * @return unsigned char
+         */
+        unsigned char getR() const;
+        /**
+         * @brief Get the Green value of the color
+         *
+         * @return unsigned char
+         */
+        unsigned char getG() const;
+        /**
+         * @brief Get the Blue value of the color
+         *
+         * @return unsigned char
+         */
+        unsigned char getB() const;
 
     private:
         Color _color;
