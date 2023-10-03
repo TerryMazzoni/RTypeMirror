@@ -128,7 +128,31 @@ namespace Parser {
         }
     }
 
-    ParserJson &ParserJson::parse()
+    void ParserJson::displayEntities()
+    {
+        for (auto &entity : _entities) {
+            std::cout << "┓\n┃ " << entity.type << std::endl;
+            std::cout << "┃    Textures: " << std::endl;
+            for (auto &texture : entity.textures)
+                std::cout << "┃      " << texture << std::endl;
+            std::cout << "┃    Instance: " << std::endl;
+            for (auto &instance : entity.instance) {
+                std::cout << "┃      " << instance.first << ": ";
+
+                if (entity.instanceType[instance.first] == Parser::type_t::INT)
+                    std::cout << "int = " << std::any_cast<int>(instance.second) << std::endl;
+                else if (entity.instanceType[instance.first] == Parser::type_t::FLOAT)
+                    std::cout << "float = " << std::any_cast<float>(instance.second) << std::endl;
+                else if (entity.instanceType[instance.first] == Parser::type_t::STRING)
+                    std::cout << "string = " << std::any_cast<std::string>(instance.second) << std::endl;
+                else
+                    std::cout << "unknown" << std::endl;
+            }
+            std::cout << "┛\n" << std::endl;
+        }
+    }
+
+    ParserJson &ParserJson::parse(bool verbose)
     {
         if (_path == "__default__")
             throw Parser::ParserException("No path set");
@@ -145,6 +169,8 @@ namespace Parser {
         catch (Parser::ParserException &e) {
             std::cout << e.what() << std::endl;
         }
+        if (verbose)
+            displayEntities();
         return *this;
     }
 
