@@ -85,10 +85,11 @@ namespace Parser {
             /*
             ** @brief Parse the json file
             **
+            ** @param verbose Display all entities in the json file for debug, default false
             ** @return itself
             ** @throw ParserException if the file is not found / set
             */
-            ParserJson &parse();
+            ParserJson &parse(bool verbose = false);
 
             /*
             ** @brief Get the Entities object
@@ -108,6 +109,11 @@ namespace Parser {
             ** @brief Parse the map in the json file
             */
             void parseMap(boost::property_tree::ptree &map);
+
+            /*
+            ** @brief Display all entities in the json file for debug
+            */
+            void displayEntities();
 
             std::string _path;
             std::vector<entity_t> _entities;
