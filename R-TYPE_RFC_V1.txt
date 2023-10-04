@@ -1,0 +1,78 @@
+September 2023                                                       Tom Laiolo
+EPITECH Toulouse                                                   Luca Deltort
+                                                                 Antonin Laudon
+                                                                  Terry Mazzoni
+                                                            Christopher Artigas
+
+
+                    EPITECH - R-TYPE PROTOCOL (RTP)
+
+Abstract :
+    The R-Type Protocol enables two-way communication between a client running
+    maybe “untrusted code” in a controlled environment to a remote host that has
+    opted-in to communications from that code. The protocol consists of an opening
+    handshake followed by basic message framing, layered over UDP. The goal of
+    this technology is to permit the client and server to work together in order
+    to run the r-type multiplayer game, with clients up to 4.
+
+Status of This Memo : 
+    This memo provides information about the R-TYPE network functioning.
+    Informations should learn how to use the server and client of this project.
+
+
+Table of Contents :
+    1. Introduction..........................................................30
+    2. Architecture..........................................................35
+    3. UDP Protocol..........................................................46
+    4. Game Running Protocol.................................................61
+
+
+1. INTRODUCTION :
+    The goal of this R-Type project is to create an online multiplayer copy of
+    the classic R-Type game (1987).
+
+
+2. ARCHITECTURE :
+    The game is split in multiple executables, making a client-server game
+    architecture, the client which is a graphical  interface connected to a
+    server, they are communicating by UDP method, sending one to the other
+    classes. Using this method, the client is able to display enemies,
+    environment and allies, because every client sends his information to the
+    server, treating them and sending everything needed to play the game.
+    Client also has a prediction algorithm, trying to continue displaying even
+    if interaction with the server takes time.
+
+
+3. UDP PROTOCOL : 
+    Our protocol permits up to 4 connections to the server simultaneously, if 4
+    players are already connected the others trying to connect will receive the ID 0.
+    While the server won’t respond, the clients will send this format message at
+    every LOOP : 
+
+       “Connect”
+
+    Once connected, the server will send to the client his id :
+       “ID=1”
+
+    The client will communicate by serializing structures and sending them.
+    The receiver will remake the structure, and get the informations.
+
+
+4. GAME RUNNING PROTOCOL : 
+    Once the Handshake is made, server and client will start to exchange informations.
+    Using the same GenericCommunication class, containing all informations to
+    every aspect of the game.
+
+    GenericCommunication :
+    {
+        Position _position;
+        std::vector<Position> _positions;
+        Collision _first_c;
+        Collision _second_c;
+        std::vector<Mate> _MatePositions;
+        std::vector<Missile> _missiles;
+    }
+
+    Once sent, the class is serialized in binary, permitting to send more
+    informations, which is important because of the 1500o UDP package limited
+    by Boost library.
