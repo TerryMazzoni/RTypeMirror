@@ -14,16 +14,15 @@
 namespace ECS {
     class ASystem : public ISystem {
         public:
-            ASystem() = default;
             ~ASystem() = default;
 
             virtual std::vector<Action> execute() = 0;
             void setActivation(bool state);
-            void addEntities(std::vector<Entity> listEntities);
-            void removeEntities(std::vector<Entity> listEntities);
+            void setEntity(Entity entity);
+            void removeEntity();
 
         protected:
             bool _isActivated = true;
-            std::vector<std::optional<Entity>> _listEntities;
+            std::optional<Entity> _entity;
     };
 } // namespace ECS
