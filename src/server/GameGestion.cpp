@@ -30,10 +30,10 @@ void GameGestion::initGame(std::string map_path)
     for (auto &entity : _entities) {
         std::cout << "Entity: " << entity.type << std::endl;
     }
-    GenericCommunication new_com = GenericCommunication(CommunicationTypes::Type_NewMap);
-    new_com.setMap(map_path);
-    for (int i = 0; i < _nb_players; i++)
-        _communications.push_back(std::make_pair(i, new_com));
+    // Communication::Input new_com = GenericCommunication(CommunicationTypes::Type_NewMap);
+    // new_com.setMap(map_path);
+    // for (int i = 0; i < _nb_players; i++)
+    //     _communications.push_back(std::make_pair(i, new_com));
 }
 
 void GameGestion::updateGame(std::vector<Communication::Input> communications)

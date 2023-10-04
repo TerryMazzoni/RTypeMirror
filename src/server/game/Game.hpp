@@ -7,9 +7,8 @@
 
 #pragma once
 
-#include "Bullet.hpp"
 #include "Server.hpp"
-#include "Ship.hpp"
+#include "../Parser.hpp"
 #include <memory>
 #include <vector>
 
@@ -29,42 +28,6 @@ class Game {
          * @param server
          */
         void run(std::shared_ptr<Server> server);
-        /**
-         * @brief Add a ship to the game
-         *
-         * @param ship
-         */
-        void addShip(Ship ship);
-        /**
-         * @brief Add a ship to the game
-         *
-         * @param ship
-         */
-        void addShip(std::shared_ptr<Ship> ship);
-        /**
-         * @brief Add a bullet to the game
-         *
-         * @param bullet
-         */
-        void addBullet(Bullet bullet);
-        /**
-         * @brief Add a bullet to the game
-         *
-         * @param bullet
-         */
-        void addBullet(std::shared_ptr<Bullet> bullet);
-        /**
-         * @brief Remove a ship from the game
-         *
-         * @param id
-         */
-        void removeShip(int id);
-        /**
-         * @brief Remove a bullet from the game
-         *
-         * @param id
-         */
-        void removeBullet(int id);
         /**
          * @brief Set the Level object
          *
@@ -90,21 +53,27 @@ class Game {
          */
         int getScore() const;
         /**
-         * @brief Get the Ships object
+         * @brief Init the game and load the map.
          *
-         * @return std::vector<Ship>
+         * @param map_path
          */
-        std::vector<std::shared_ptr<Ship>> getShips() const;
+        void initGame(std::string map_path);
         /**
-         * @brief Get the Bullets object
+         * @brief Update the game with the inputs of the players.
          *
-         * @return std::vector<Bullet>
+         * @param inputs
          */
-        std::vector<std::shared_ptr<Bullet>> getBullets() const;
+        void updateGame(std::vector<Communication::Input>);
+        /**
+         * @brief End the game.
+         *
+         */
+        void endGame();
 
     private:
         int _level;
         int _score;
-        std::vector<std::shared_ptr<Ship>> _ships;
-        std::vector<std::shared_ptr<Bullet>> _bullets;
+        std::vector<Parser::entity_t> _entities;
+        int _nb_players;
+        bool _init;
 };

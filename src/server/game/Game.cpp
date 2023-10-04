@@ -11,8 +11,7 @@
 Game::Game()
     : _level(0), _score(0)
 {
-    _ships = std::vector<std::shared_ptr<Ship>>();
-    _bullets = std::vector<std::shared_ptr<Bullet>>();
+    _init = false;
 }
 
 Game::~Game()
