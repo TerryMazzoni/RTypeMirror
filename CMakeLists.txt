@@ -81,6 +81,7 @@ include(FetchContent)
 FetchContent_Declare(
   Boost
   URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
+  DOWNLOAD_EXTRACT_TIMESTAMP ON
 )
 
 set(BOOST_RUNTIME_LINK static)
