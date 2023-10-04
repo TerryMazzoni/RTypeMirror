@@ -10,7 +10,7 @@
 #include "Enum.hpp"
 #include "ECS.hpp"
 #include "Raylib.hpp"
-// #include "Graph.hpp"
+#include "Graph.hpp"
 // #include "SystemManager.hpp"
 
 namespace ECS {
@@ -23,7 +23,7 @@ namespace ECS {
         private:
             EntitiesManager _entitiesManager;
             EventManager _eventManager;
-            // Graph _graph;
+            Graph _graph;
             // SystemManager _systemManager;
     };
 } // namespace ECS

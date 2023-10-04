@@ -6,14 +6,12 @@
 */
 
 #pragma once
-namespace ECS {
+
 #define EntityId std::pair<EntityType, int>
 
 #define Input std::tuple<EventType, int, std::optional<int>>
 
-#define Action std::tuple<Entity, ActionType, std::any>
-
-} // namespace ECS
+#define Action std::tuple<std::vector<ECS::Entity>, ActionType, std::any>
 
 enum class EntityType {
     Player,

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "EntitiesManager.hpp"
+#include "Position.hpp"
 
 namespace ECS {
     EntitiesManager::EntitiesManager()
@@ -69,6 +70,33 @@ namespace ECS {
 
         for (auto &entity : entitiesToUpdate) {
             list[entity.id.second].value()->setValue(value);
+        }
+        return 0;
+    }
+
+    int EntitiesManager::updateEntities(std::vector<Action> actions)
+    {
+        std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> list;
+    
+        for (auto &action : actions) {
+            switch (std::get<1>(action)) {
+                case ActionType::Move:
+                    list = _mapComponent[ComponentType::Position];
+                    for (auto &entity : std::get<0>(action)) {
+                        std::shared_ptr<ECS::IComponent> componentP = entity.getComponent(ComponentType::Position);
+                        float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
+                        float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
+                        std::pair<int, int> mouv = std::any_cast<std::pair<int, int>>(std::get<2>(action));
+                        list[entity.id.second].value()->setValue(Position(std::make_pair(x + mouv.first, y + mouv.second)));
+                    }
+                    break;
+                case ActionType::Shoot:
+                    break;
+                case ActionType::Unknown:
+                    break;
+                default:
+                    break;
+            }
         }
         return 0;
     }
