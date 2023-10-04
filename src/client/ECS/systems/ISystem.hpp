@@ -18,7 +18,7 @@ namespace ECS {
 
             virtual std::vector<Action> execute() = 0;
             virtual void setActivation(bool state) = 0;
-            virtual void addEntities(std::vector<Entity> listEntities) = 0;
-            virtual void removeEntities(std::vector<Entity> listEntities) = 0;
+            virtual void setEntity(Entity entity) = 0;
+            virtual void removeEntity() = 0;
     };
 } // namespace ECS

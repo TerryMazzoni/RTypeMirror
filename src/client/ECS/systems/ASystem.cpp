@@ -14,20 +14,14 @@ namespace ECS {
         _isActivated = state;
     }
 
-    void ASystem::addEntities(std::vector<Entity> listEntities)
+    void ASystem::setEntity(Entity entity)
     {
-        for (auto &entity : listEntities) {
-            if (entity.id.second > _listEntities.size()) {
-                _listEntities.resize(entity.id.second + 1);
-            }
-            _listEntities[entity.id.second] = entity;
-        }
+        _entity = entity;
     }
 
-    void ASystem::removeEntities(std::vector<Entity> listEntities)
+    void ASystem::removeEntity()
     {
-        for (auto &entity : listEntities) {
-            _listEntities[entity.id.second] = std::nullopt;
-        }
+        _entity = std::nullopt;
     }
+
 } // namespace ECS

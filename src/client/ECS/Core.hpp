@@ -23,7 +23,7 @@ namespace ECS {
         private:
             EntitiesManager _entitiesManager;
             EventManager _eventManager;
+            SystemManager _systemManager;
             Graph _graph;
-            // SystemManager _systemManager;
     };
 } // namespace ECS
