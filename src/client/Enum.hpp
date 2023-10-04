@@ -35,6 +35,7 @@ enum class EventInput {
 enum class ActionType {
     Move,
     Shoot,
+    ChangeTexture,
     Unknown
 };
 

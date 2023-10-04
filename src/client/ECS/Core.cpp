@@ -20,7 +20,7 @@ namespace ECS {
         Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
         Entity entity;
-        std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png");
+        std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/capsule/sprite_capsules0.png,0,1");
         componentT->setType(ComponentType::Texture);
         entity.components.push_back(componentT);
         std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, "300,100");

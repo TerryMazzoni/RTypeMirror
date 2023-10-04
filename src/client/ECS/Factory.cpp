@@ -7,6 +7,7 @@
 
 #include <functional>
 #include <string>
+#include <iostream>
 
 #include "Component.hpp"
 #include "Factory.hpp"
@@ -55,7 +56,38 @@ std::shared_ptr<ECS::IComponent> ECS::Factory::createText(const std::string &val
 
 std::shared_ptr<ECS::IComponent> ECS::Factory::createTexture(const std::string &value)
 {
-    return (std::make_shared<ECS::Component<ECS::Texture>>(ECS::Texture(value)));
+    std::vector<std::string> text;
+    std::vector<std::string> textures;
+    std::vector<int> indexes;
+    int j = 0;
+    bool digit = false;
+
+    for (size_t i = 0; i < value.size(); i++) {
+        if (value[i] == ',') {
+            text.push_back(value.substr(j, i - j));
+            std::cout << value.substr(j, i - j) << std::endl;
+            j = i + 1;
+        }
+    }
+    text.push_back(value.substr(j, value.size()));
+    std::cout << value.substr(j, value.size()) << std::endl;
+    j = 0;
+    for (auto val : text) {
+        std::cout << val << std::endl;
+        for (size_t i = 0; i < val.length(); i++) {
+            if (!(digit = isdigit(val[i]))) {
+                break;
+            }
+        }
+        if (digit == true && val.length() > 0)
+            indexes.push_back(std::stoi(val));
+        else
+            textures.push_back(val);
+        j++;
+    }
+    if (indexes.empty())
+        indexes = {0};
+    return (std::make_shared<ECS::Component<ECS::Texture>>(ECS::Texture(textures, indexes)));
 }
 
 std::shared_ptr<ECS::IComponent> ECS::Factory::createComponent(ComponentType type, const std::string &value)

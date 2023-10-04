@@ -47,7 +47,9 @@ int Graph::displayTexture(ECS::Entity &entity)
         scale = ECS::Scale(1);
     texture = std::any_cast<ECS::Texture>(entity.getComponent(ComponentType::Texture)->getValue());
     position = std::any_cast<ECS::Position>(entity.getComponent(ComponentType::Position)->getValue());
-    Raylib::drawEx(texture.textureList[texture.currentTexture], Vector2({position.x, position.y}), Vector2({rotation.angle, scale.scale}), color.color);
+    for (auto textureID : texture.currentTexture) {
+        Raylib::drawEx(texture.textureList[textureID], Vector2({position.x, position.y}), Vector2({rotation.angle, scale.scale}), color.color);
+    }
     return 0;
 }
 

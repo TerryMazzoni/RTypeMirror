@@ -77,6 +77,7 @@ namespace ECS {
     int EntitiesManager::updateEntities(std::vector<Action> actions)
     {
         std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> list;
+        int idx = 0;
     
         for (auto &action : actions) {
             switch (std::get<1>(action)) {
@@ -91,6 +92,19 @@ namespace ECS {
                     }
                     break;
                 case ActionType::Shoot:
+                    break;
+                case ActionType::ChangeTexture:
+                    list = _mapComponent[ComponentType::Texture];
+                    for (auto &entity : std::get<0>(action)) {
+                        idx = 0;
+                        std::shared_ptr<ECS::IComponent> componentT = entity.getComponent(ComponentType::Texture);
+                        ECS::Texture texture = std::any_cast<ECS::Texture>(componentT->getValue());
+                        for (auto &text : texture.currentTexture) {
+                            text = text + 1 > (texture.textureList.size() % texture.currentTexture.size()) ? (texture.textureList.size() % texture.currentTexture.size()) * idx : text + 1;
+                            idx++;
+                        }
+                        list[entity.id.second].value()->setValue(std::any_cast<std::string>(componentT->getValue()));
+                    }
                     break;
                 case ActionType::Unknown:
                     break;

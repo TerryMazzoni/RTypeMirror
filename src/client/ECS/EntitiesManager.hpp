@@ -47,15 +47,11 @@ namespace ECS {
              */
             int clearEntities();
             /**
-             * @brief Update the value of a component for a list of entities
+             * @brief Update the value of Entity components based on the actions list
              *
-             * @param std::any
-             * @param ComponentType
-             * @param std::vector<Entity>
+             * @param std::vector<Action>
              * @return int
              */
-            int updateEntities(std::any value, ComponentType compoType, std::vector<Entity> entitiesToUpdate);
-
             int updateEntities(std::vector<Action>);
         protected:
         private:
