@@ -90,6 +90,7 @@ void Server::receiveAsync()
         boost::asio::buffer(recv_buffer), sender_endpoint,
         [this, &recv_buffer, &sender_endpoint](
             const boost::system::error_code &error, std::size_t bytes_received) {
+            std::cout << "bytes_received= " << bytes_received << std::endl;
             if (!error && bytes_received > 0)
                 processMessage(std::string(recv_buffer.begin(), recv_buffer.begin() + bytes_received), sender_endpoint);
             else if (error != boost::asio::error::operation_aborted) {
