@@ -6,9 +6,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SERVER_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/server)
 
-add_subdirectory("r-type-dependencies/boost" boost)
-add_library(boost INTERFACE)
-target_include_directories(boost INTERFACE "r-type-dependencies/boost")
+# FIND THE BOOST LIB ( IN r-type-dependencies/boost ) AND ADD IT TO THE PROJECT
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/r-type-dependencies/boost)
+set(BOOST_LIBRARYDIR ${CMAKE_CURRENT_SOURCE_DIR}/r-type-dependencies/boost/lib)
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.75.0 COMPONENTS system thread serialization REQUIRED)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
+endif()
 
 set(SERVER_SOURCES
     ${SERVER_PATH}/Args.cpp
@@ -42,5 +50,7 @@ target_include_directories(r-type_client
         ${CMAKE_CURRENT_SOURCE_DIR}/src/communication/
 )
 
-target_link_libraries(r-type_server PUBLIC boost::boost)
-target_link_libraries(r-type_client PUBLIC boost::boost)
+# LINK THE BOOST LIB TO THE PROJECT
+
+target_link_libraries(r-type_server ${Boost_LIBRARIES})
+target_link_libraries(r-type_client ${Boost_LIBRARIES})
