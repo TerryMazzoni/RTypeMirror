@@ -8,7 +8,7 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
-#include "GenericCommunication.hpp"
+#include "Communication.hpp"
 
 using boost::asio::ip::udp;
 
