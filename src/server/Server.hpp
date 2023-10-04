@@ -7,14 +7,7 @@
 
 #pragma once
 
-#include "ACommunication.hpp"
 #include "Client.hpp"
-#include "GenericCommunication.hpp"
-#include "NewEnnemiesPosition.hpp"
-#include "NewHitBetweenElements.hpp"
-#include "NewMatesPosition.hpp"
-#include "NewMissilesPosition.hpp"
-#include "NewPlayerPosition.hpp"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
@@ -44,13 +37,22 @@ class Server {
          * @param msg
          * @param client
          */
-        void send(const std::string &msg, const udp::endpoint &client);
+        template <typename T>
+        void send(T &data, const udp::endpoint &client)
+        {
+            std::cout << "sended: " << _socket.send_to(boost::asio::buffer(&data, sizeof(data)), client) << " bytes" << std::endl;
+        }
         /**
          * @brief Send a message to all clients
          *
          * @param msg
          */
-        void sendToAll(const std::string &msg);
+        template <typename T>
+        void sendToAll(T &data)
+        {
+            for (auto &client : _clients)
+                _socket.send_to(boost::asio::buffer(&data, sizeof(data)), client.getEndpoint());
+        }
         /**
          * @brief Process a message from a client
          *

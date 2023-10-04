@@ -6,6 +6,7 @@
 */
 
 #include "Game.hpp"
+#include "Communication.hpp"
 
 Game::Game()
     : _level(0), _score(0)
@@ -29,24 +30,27 @@ void Game::run(std::shared_ptr<Server> server)
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {
-            static int timer = 25;
+            static int timerCount = 29;
+            Communication::Timer timer;
             int status = server->getGameStatus();
 
+            timer.time = (int)timerCount / 5;
             if (!error) {
                 if (status == 0) {
-                    timer = 25;
+                    timerCount = 29;
                     this->run(server);
                 }
                 else if (status == 1) {
-                    server->sendToAll("TIMER:" + std::to_string(int(timer / 5)));
-                    timer--;
-                    if (timer == -1) {
+                    std::cout << "Timer: " << timerCount << " " << timer.time << std::endl;
+                    server->sendToAll(timer);
+                    timerCount--;
+                    if (timerCount == 0) {
                         server->setGameStatus(2);
-                        timer = 25;
+                        timerCount = 29;
                     }
                 }
                 if (status == 2)
-                    server->sendToAll("The game has started!");
+                    server->sendToAll(timer);
             }
             if (!is_running(0))
                 return;

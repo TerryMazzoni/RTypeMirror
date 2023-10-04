@@ -7,6 +7,7 @@
 
 #include "Server.hpp"
 #include "Client.hpp"
+#include "Communication.hpp"
 #include <memory>
 
 bool is_running(int flag)
@@ -35,43 +36,42 @@ Server::~Server()
 {
 }
 
-void Server::send(const std::string &msg, const udp::endpoint &client)
-{
-    if (msg.empty())
-        return;
-    _socket.async_send_to(
-        boost::asio::buffer(msg.c_str(), strlen(msg.c_str())), client,
-        [&msg, &client](const boost::system::error_code &error, std::size_t bytes_sent) {
-            if (error)
-                std::cerr << "Error on send: " << error.message() << std::endl;
-            else if (bytes_sent <= 0)
-                std::cerr << "Error on send: bytes_sent <= 0" << std::endl;
-        });
-}
-
-void Server::sendToAll(const std::string &msg)
-{
-    for (auto &client : _clients)
-        send(msg, client.getEndpoint());
-}
-
 void Server::processMessage(const std::string &msg, const udp::endpoint &client)
 {
     char *data = const_cast<char *>(msg.c_str());
-    try {
-        Position2 pos = *reinterpret_cast<Position2 *>(data);
-        std::cout << "x= " << pos.x << " y= " << pos.y << std::endl;
+    Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
+    bool all_ready = true;
+
+    if (!is_running(0))
+        return;
+    addClient(client);
+    if (header->type == Communication::CommunicationTypes::QUIT) {
+        removeClient(client);
+        return;
     }
-    catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
+    else if (header->type == Communication::CommunicationTypes::ID) {
+        Communication::Id id = *reinterpret_cast<Communication::Id *>(data);
+        for (auto &c : _clients) {
+            if (c.getEndpoint() == client)
+                id.id = c.getId();
+        }
+
+        send(id, client);
     }
-    try {
-        GenericCom newCom = *reinterpret_cast<GenericCom *>(data);
-        std::cout << "code= " << newCom.code << " msg= " << newCom.msg << std::endl;
+    else if (header->type == Communication::CommunicationTypes::READY) {
+        Communication::Ready ready = *reinterpret_cast<Communication::Ready *>(data);
+        for (auto &c : _clients)
+            if (c.getEndpoint() == client)
+                c.setIsReady(ready.is_ready);
+        if (!ready.is_ready)
+            _game_status = 0;
     }
-    catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
+    for (auto &c : _clients) {
+        if (!c.getIsReady())
+            all_ready = false;
     }
+    if (all_ready && _game_status == 0)
+        _game_status = 1;
 }
 
 void Server::receiveAsync()
@@ -84,7 +84,6 @@ void Server::receiveAsync()
         boost::asio::buffer(recv_buffer), sender_endpoint,
         [this, &recv_buffer, &sender_endpoint](
             const boost::system::error_code &error, std::size_t bytes_received) {
-            std::cout << "bytes_received= " << bytes_received << std::endl;
             if (!error && bytes_received > 0)
                 processMessage(std::string(recv_buffer.begin(), recv_buffer.begin() + bytes_received), sender_endpoint);
             else if (error != boost::asio::error::operation_aborted) {
@@ -119,10 +118,15 @@ void Server::addClient(const udp::endpoint &client)
 
 void Server::removeClient(const udp::endpoint &client)
 {
+    Communication::Quit quit;
+
     for (auto it = _clients.begin(); it != _clients.end(); it++) {
         if (it->getEndpoint() == client) {
             _ids[it->getId()] = false;
             _clients.erase(it);
+            send(quit, client);
+            _game_status = 0;
+            std::cout << "Client " << client << " removed" << std::endl;
             return;
         }
     }
@@ -130,7 +134,9 @@ void Server::removeClient(const udp::endpoint &client)
 
 void Server::removeAllClients()
 {
-    sendToAll("quit");
+    Communication::Quit quit;
+
+    sendToAll(quit);
     _clients.clear();
     _ids[1] = false;
     _ids[2] = false;
