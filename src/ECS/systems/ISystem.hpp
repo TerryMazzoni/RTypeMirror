@@ -6,18 +6,14 @@
 */
 
 #pragma once
+
+#include "Enum.hpp"
 namespace ECS {
     class ISystem {
         public:
             virtual ~ISystem() = default;
 
-            virtual int execute() = 0;
+            virtual std::vector<Action> execute() = 0;
             virtual int setActivation(bool state) = 0;
-
-        protected:
-            int _id;
-            bool _isActivated;
-
-        private:
     };
 } // namespace ECS

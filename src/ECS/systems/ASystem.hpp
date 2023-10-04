@@ -7,15 +7,19 @@
 
 #pragma once
 
+#include <vector>
 #include "ISystem.hpp"
 
 namespace ECS {
     class ASystem : public ISystem {
         public:
-            virtual int execute() = 0;
+            virtual std::vector<Action> execute() = 0;
             int setActivation(bool state);
+            void addEntities(std::vector<Entity> listEntities);
+            void removeEntities(std::vector<Entity> listEntities);
 
         protected:
-        private:
+            bool _isActivated = true;
+            std::vector<Entity> _listEntities;
     };
 } // namespace ECS
