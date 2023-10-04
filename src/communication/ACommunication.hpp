@@ -15,7 +15,8 @@ enum class CommunicationTypes {
     Type_NewEnnemiesPosition,
     Type_NewMissilesPosition,
     Type_NewMatesPosition,
-    Type_NewHitBetweenElements
+    Type_NewHitBetweenElements,
+    Type_NewMap
 };
 
 class ACommunication {

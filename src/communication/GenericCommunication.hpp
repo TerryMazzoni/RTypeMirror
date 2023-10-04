@@ -185,6 +185,24 @@ class GenericCommunication : public ACommunication {
             return _missiles;
         }
         /**
+         * @brief Get the Map object
+         * 
+         * @return std::string 
+         */
+        std::string getMap() const
+        {
+            return _map;
+        }
+        /**
+         * @brief Set the Map object
+         * 
+         * @param map 
+         */
+        void setMap(std::string map)
+        {
+            _map = map;
+        }
+        /**
          * @brief Get the Team object
          *
          * @return int
@@ -201,5 +219,6 @@ class GenericCommunication : public ACommunication {
         Colision _second_c;
         std::vector<Mate> _Matepositions;
         std::vector<Missile> _missiles;
+        std::string _map;
         int _team;
 };
