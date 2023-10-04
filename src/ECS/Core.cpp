@@ -41,27 +41,10 @@ namespace ECS {
         while (!Raylib::windowShouldClose()) {
             Raylib::clear(Raylib::RlColor(0, 0, 0));
             _eventManager.executeInputs(inputs);
-            for (auto &action : _eventManager.getActions()) {
-                if (std::get<1>(action) == ActionType::Move) {
-                    std::shared_ptr<ECS::IComponent> componentP = std::get<0>(action).getComponent(ComponentType::Position);
-                    float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
-                    float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
-                    std::pair<int, int> mouv = std::any_cast<std::pair<int, int>>(std::get<2>(action));
-                    _entitiesManager.updateEntities(Position(std::make_pair(x + mouv.first, y + mouv.second)), ComponentType::Position, {std::get<0>(action)});
-                }
-            }
+            _entitiesManager.updateEntities(_eventManager.getActions());
             Raylib::beginDraw();
             inputs = Raylib::getInputs();
-            for (auto &entity : _entitiesManager.getEntities()) {
-                std::shared_ptr<ECS::IComponent> componentT = entity.getComponent(ComponentType::Texture);
-                std::shared_ptr<ECS::IComponent> componentP = entity.getComponent(ComponentType::Position);
-                float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
-                float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
-                if (componentT != nullptr) {
-                    ECS::Texture texture = std::any_cast<ECS::Texture>(componentT->getValue());
-                    Raylib::draw(texture.textureList[texture.currentTexture], x, y, Raylib::RlColor(255, 255, 255));
-                }
-            }
+            _graph.displayEntities(_entitiesManager.getEntities());
             Raylib::endDraw();
         }
         return 0;

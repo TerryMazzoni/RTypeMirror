@@ -56,6 +56,7 @@ namespace ECS {
              */
             int updateEntities(std::any value, ComponentType compoType, std::vector<Entity> entitiesToUpdate);
 
+            int updateEntities(std::vector<Action>);
         protected:
         private:
             void resizeMapComponent();

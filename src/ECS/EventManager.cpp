@@ -53,16 +53,16 @@ namespace ECS {
     {
         switch (dir) {
             case EventInput::Key_up:
-                _actions.push_back(std::make_tuple(_myPlayer, ActionType::Move, std::make_pair(0, -10)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, -10)));
                 break;
             case EventInput::Key_down:
-                _actions.push_back(std::make_tuple(_myPlayer, ActionType::Move, std::make_pair(0, 10)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 10)));
                 break;
             case EventInput::Key_left:
-                _actions.push_back(std::make_tuple(_myPlayer, ActionType::Move, std::make_pair(-10, 0)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(-10, 0)));
                 break;
             case EventInput::Key_right:
-                _actions.push_back(std::make_tuple(_myPlayer, ActionType::Move, std::make_pair(10, 0)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(10, 0)));
                 break;
             default:
                 break;
