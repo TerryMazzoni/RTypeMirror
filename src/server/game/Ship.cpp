@@ -9,7 +9,7 @@
 
 Ship::Ship()
 {
-    _pos = Coords{0, 0};
+    _pos = Communication::Position{0, 0};
     _speed = 0;
     _life = 100;
     _id = 0;
@@ -17,7 +17,7 @@ Ship::Ship()
     _type = ShipType::UNKNOW;
 }
 
-Ship::Ship(Coords pos, int id, ShipType type)
+Ship::Ship(Communication::Position pos, int id, ShipType type)
 {
     _pos = pos;
     _speed = 0;
@@ -31,7 +31,7 @@ Ship::~Ship()
 {
 }
 
-void Ship::setPos(Coords pos)
+void Ship::setPos(Communication::Position pos)
 {
     _pos = pos;
 }
@@ -61,7 +61,7 @@ void Ship::setType(ShipType type)
     _type = type;
 }
 
-Coords Ship::getPos() const
+Communication::Position Ship::getPos() const
 {
     return _pos;
 }

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Position.hpp"
+#include "Communication.hpp"
 
 class Bullet {
     public:
@@ -24,7 +24,7 @@ class Bullet {
          * @param damage
          * @param id
          */
-        Bullet(Coords pos, Coords direction, float speed, float damage, int id);
+        Bullet(Communication::Position pos, Communication::Position direction, float speed, float damage, int id);
         /**
          * @brief Destroy the Bullet object
          */
@@ -34,13 +34,13 @@ class Bullet {
          *
          * @param pos
          */
-        void setPos(Coords pos);
+        void setPos(Communication::Position pos);
         /**
          * @brief Set the Direction object
          *
          * @param direction
          */
-        void setDirection(Coords direction);
+        void setDirection(Communication::Position direction);
         /**
          * @brief Set the Speed object
          *
@@ -62,15 +62,15 @@ class Bullet {
         /**
          * @brief Get the Pos object
          *
-         * @return Coords
+         * @return Communication::Position
          */
-        Coords getPos() const;
+        Communication::Position getPos() const;
         /**
          * @brief Get the Direction object
          *
-         * @return Coords
+         * @return Communication::Position
          */
-        Coords getDirection() const;
+        Communication::Position getDirection() const;
         /**
          * @brief Get the Speed object
          *
@@ -91,8 +91,8 @@ class Bullet {
         int getId() const;
 
     private:
-        Coords _pos;
-        Coords _direction;
+        Communication::Position _pos;
+        Communication::Position _direction;
         float _speed;
         float _damage;
         int _id;
