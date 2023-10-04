@@ -10,7 +10,6 @@
 #include <vector>
 #include <any>
 #include <string>
-
 #include "Enum.hpp"
 
 namespace ECS {

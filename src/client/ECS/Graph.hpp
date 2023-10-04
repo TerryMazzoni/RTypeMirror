@@ -13,6 +13,8 @@
 #include <optional>
 #include "Enum.hpp"
 #include "Entity.hpp"
+#include "ECS.hpp"
+#include "Raylib.hpp"
 
 class Graph {
     public:

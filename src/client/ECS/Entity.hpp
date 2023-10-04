@@ -13,6 +13,8 @@
 
 #include "IComponent.hpp"
 
+#define Action std::tuple<std::vector<ECS::Entity>, ActionType, std::any>
+
 namespace ECS {
     struct Entity {
             EntityId id;

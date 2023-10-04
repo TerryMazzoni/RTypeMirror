@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "Entity.hpp"
 #include "Color.hpp"
 #include "Position.hpp"
 #include "Rotation.hpp"
@@ -19,3 +18,4 @@
 
 #include "EntitiesManager.hpp"
 #include "EventManager.hpp"
+#include "SystemManager.hpp"

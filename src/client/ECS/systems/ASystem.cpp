@@ -9,20 +9,25 @@
 #include "ASystem.hpp"
 
 namespace ECS {
-    int ASystem::setActivation(bool state)
+    void ASystem::setActivation(bool state)
     {
         _isActivated = state;
     }
 
     void ASystem::addEntities(std::vector<Entity> listEntities)
     {
-        _listEntities.insert(_listEntities.end(), listEntities.begin(), listEntities.end());
+        for (auto &entity : listEntities) {
+            if (entity.id.second > _listEntities.size()) {
+                _listEntities.resize(entity.id.second + 1);
+            }
+            _listEntities[entity.id.second] = entity;
+        }
     }
 
     void ASystem::removeEntities(std::vector<Entity> listEntities)
     {
         for (auto &entity : listEntities) {
-            _listEntities.erase(std::remove(_listEntities.begin(), _listEntities.end(), entity), _listEntities.end());
+            _listEntities[entity.id.second] = std::nullopt;
         }
     }
 } // namespace ECS

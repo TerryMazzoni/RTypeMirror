@@ -11,8 +11,6 @@
 
 #define Input std::tuple<EventType, int, std::optional<int>>
 
-#define Action std::tuple<std::vector<ECS::Entity>, ActionType, std::any>
-
 enum class EntityType {
     Player,
     Enemy,

@@ -9,32 +9,26 @@
 
 
 namespace ECS {
-    SystemManager::SystemManager()
-    {
-    }
-
-    SystemManager::~SystemManager()
-    {
-    }
 
     std::vector<Action> SystemManager::execute()
     {
+        std::vector<Action> result;
+    
         _listActions.clear();
         for (auto &system : _listSystems) {
-            system.execute();
+            result = system->execute();
+            for (auto &action : result) {
+                _listActions.push_back(action);
+            }
         }
         return _listActions;
     }
 
-    void SystemManager::addSystems(std::vector<ISystem> listSystems)
-    {
-        _listSystems.insert(_listSystems.end(), listSystems.begin(), listSystems.end());
-    }
-
-    void SystemManager::removeSystems(std::vector<ISystem> listSystems)
+    void SystemManager::addSystems(std::vector<std::shared_ptr<ISystem>> listSystems)
     {
         for (auto &system : listSystems) {
-            _listSystems.erase(std::remove(_listSystems.begin(), _listSystems.end(), system), _listSystems.end());
+            _listSystems.push_back(system);
         }
     }
+
 } // namespace ECS
