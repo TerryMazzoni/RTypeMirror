@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Position.hpp"
+#include "Communication.hpp"
 
 enum class ShipType {
     UNKNOW,
@@ -28,7 +28,7 @@ class Ship {
          * @param id
          * @param type
          */
-        Ship(Coords pos, int id, ShipType type);
+        Ship(Communication::Position pos, int id, ShipType type);
         /**
          * @brief Destroy the Ship object
          */
@@ -38,7 +38,7 @@ class Ship {
          *
          * @param pos
          */
-        void setPos(Coords pos);
+        void setPos(Communication::Position pos);
         /**
          * @brief Set the Speed object
          *
@@ -72,9 +72,9 @@ class Ship {
         /**
          * @brief Get the Pos object
          *
-         * @return Coords
+         * @return Communication::Position
          */
-        Coords getPos() const;
+        Communication::Position getPos() const;
         /**
          * @brief Get the Speed object
          *
@@ -107,7 +107,7 @@ class Ship {
         ShipType getType() const;
 
     private:
-        Coords _pos;
+        Communication::Position _pos;
         float _speed;
         float _life;
         int _id;

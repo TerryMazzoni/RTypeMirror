@@ -8,8 +8,11 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "Communication.hpp"
 
 using boost::asio::ip::udp;
+
+bool is_running(int flag);
 
 class Client {
     public:
@@ -27,9 +30,19 @@ class Client {
         /**
          * @brief Send a message to the server
          *
-         * @param msg
+         * @param data The struct to send
          */
-        void send(const std::string &msg);
+        template <typename T>
+        void send(T &data)
+        {
+            try {
+                _socket.send(boost::asio::buffer(&data, sizeof(data)));
+            }
+            catch (const std::exception &e) {
+                is_running(1);
+                std::cout << "Error on send" << std::endl;
+            }
+        }
         /**
          * @brief Receive a message from the server
          */
@@ -81,6 +94,5 @@ class Client {
         udp::endpoint _endpoint;
         int _id;
         bool _is_ready;
+        bool _game_started;
 };
-
-bool is_running(int flag);

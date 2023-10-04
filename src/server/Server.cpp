@@ -7,9 +7,7 @@
 
 #include "Server.hpp"
 #include "Client.hpp"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/vector.hpp>
+#include "Communication.hpp"
 #include <memory>
 
 bool is_running(int flag)
@@ -38,110 +36,47 @@ Server::~Server()
 {
 }
 
-void Server::send(const std::string &msg, const udp::endpoint &client)
-{
-    if (msg.empty())
-        return;
-    _socket.async_send_to(
-        boost::asio::buffer(msg.c_str(), strlen(msg.c_str())), client,
-        [&msg, &client](const boost::system::error_code &error, std::size_t bytes_sent) {
-            if (error)
-                std::cerr << "Error on send: " << error.message() << std::endl;
-            else if (bytes_sent <= 0)
-                std::cerr << "Error on send: bytes_sent <= 0" << std::endl;
-        });
-}
-
-void Server::sendToAll(const std::string &msg)
-{
-    for (auto &client : _clients)
-        send(msg, client.getEndpoint());
-}
-
 void Server::processMessage(const std::string &msg, const udp::endpoint &client)
 {
+    char *data = const_cast<char *>(msg.c_str());
+    Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
     bool all_ready = true;
 
+    if (!is_running(0))
+        return;
     addClient(client);
-    try {
-        std::istringstream is(msg);
-        boost::archive::binary_iarchive ia(is);
-        GenericCommunication generic;
-        ia >> generic;
-
-        switch (generic.getType()) {
-            case CommunicationTypes::Type_NewPlayerPosition: {
-                NewPlayerPosition player;
-                player.setPosition(generic.getPosition());
-                break;
-            }
-            case CommunicationTypes::Type_NewEnnemiesPosition: {
-                NewEnnemiesPosition ennemies;
-                ennemies.setPositions(generic.getPositions());
-                break;
-            }
-            case CommunicationTypes::Type_NewMatesPosition: {
-                NewMatesPosition mates;
-                mates.setMate(generic.getMatePositions());
-                break;
-            }
-            case CommunicationTypes::Type_NewMissilesPosition: {
-                NewMissilesPosition missiles;
-                missiles.setMissiles(generic.getMissiles());
-                break;
-            }
-            case CommunicationTypes::Type_NewHitBetweenElements: {
-                NewHitBetweenElements hit;
-                hit.setFirstColision(generic.getFirstColision());
-                hit.setSecondColision(generic.getSecondColision());
-                hit.setPositions(generic.getPositions());
-                break;
-            }
-            default:
-                break;
-        }
+    if (header->type == Communication::CommunicationTypes::QUIT) {
+        removeClient(client);
+        return;
     }
-    catch (std::exception &e) {
-        std::cout << "Processing: \"" << msg << "\"" << std::endl;
-        if (msg == "quit") {
-            send("quit", client);
-            removeClient(client);
-            std::cout << "Client disconnected" << std::endl;
-        }
-        else if (msg == "Connect") {
-            int id = 0;
-            for (auto &c : _clients) {
-                if (c.getEndpoint() == client)
-                    id = c.getId();
-            }
-            send("ID=" + std::to_string(id), client);
-        }
-        else if (msg == "Ready") {
-            for (auto &c : _clients)
-                if (c.getEndpoint() == client)
-                    c.setIsReady(true);
-        }
-        else if (msg == "Not ready") {
-            for (auto &c : _clients)
-                if (c.getEndpoint() == client)
-                    c.setIsReady(false);
-            _game_status = 0;
-        }
-        else {
-            std::cout << "Unknown command, " << e.what() << std::endl;
-        }
+    else if (header->type == Communication::CommunicationTypes::ID) {
+        Communication::Id id = *reinterpret_cast<Communication::Id *>(data);
         for (auto &c : _clients) {
-            if (!c.getIsReady())
-                all_ready = false;
+            if (c.getEndpoint() == client)
+                id.id = c.getId();
         }
-        if (all_ready && _game_status == 0)
-            _game_status = 1;
+
+        send(id, client);
     }
+    else if (header->type == Communication::CommunicationTypes::READY) {
+        Communication::Ready ready = *reinterpret_cast<Communication::Ready *>(data);
+        for (auto &c : _clients)
+            if (c.getEndpoint() == client)
+                c.setIsReady(ready.is_ready);
+        if (!ready.is_ready)
+            _game_status = 0;
+    }
+    for (auto &c : _clients) {
+        if (!c.getIsReady())
+            all_ready = false;
+    }
+    if (all_ready && _game_status == 0)
+        _game_status = 1;
 }
 
 void Server::receiveAsync()
 {
-    std::vector<char> recv_buffer(1024);
+    std::vector<char> recv_buffer(1500);
 
     udp::endpoint sender_endpoint;
 
@@ -183,10 +118,15 @@ void Server::addClient(const udp::endpoint &client)
 
 void Server::removeClient(const udp::endpoint &client)
 {
+    Communication::Quit quit;
+
     for (auto it = _clients.begin(); it != _clients.end(); it++) {
         if (it->getEndpoint() == client) {
             _ids[it->getId()] = false;
             _clients.erase(it);
+            send(quit, client);
+            _game_status = 0;
+            std::cout << "Client " << client << " removed" << std::endl;
             return;
         }
     }
@@ -194,7 +134,9 @@ void Server::removeClient(const udp::endpoint &client)
 
 void Server::removeAllClients()
 {
-    sendToAll("quit");
+    Communication::Quit quit;
+
+    sendToAll(quit);
     _clients.clear();
     _ids[1] = false;
     _ids[2] = false;
