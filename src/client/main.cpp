@@ -5,28 +5,12 @@
 ** client
 */
 
-<<<<<<< HEAD
 #include "Args.hpp"
 #include "Client.hpp"
 #include <signal.h>
 #include <thread>
 #include <any>
 #include "Communication.hpp"
-=======
-#include "ACommunication.hpp"
-#include "Args.hpp"
-#include "Client.hpp"
-#include "GenericCommunication.hpp"
-#include "NewPlayerPosition.hpp"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/vector.hpp>
-#include <signal.h>
-#include <sstream>
-#include <thread>
-#include <any>
->>>>>>> 917f3c6 (Add start of refacto, I can send everything)
 
 std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 {
