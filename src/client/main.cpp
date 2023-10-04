@@ -17,6 +17,7 @@
 #include <signal.h>
 #include <sstream>
 #include <thread>
+#include <any>
 
 std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 {
@@ -31,7 +32,8 @@ static void signal_handler(int signal)
 {
     if (signal == SIGINT)
         is_running(1);
-    client_memory(0, nullptr)->send("quit\0");
+    // client_memory(0, nullptr)->send("quit\0");
+    exit(1);
 }
 
 int main(int ac, char **av)
@@ -49,18 +51,15 @@ int main(int ac, char **av)
         return 84;
     client_memory(1, client);
     signal(SIGINT, signal_handler);
-    client->send("Connect");
 
-    GenericCommunication generic(CommunicationTypes::Type_NewPlayerPosition);
+    GenericCom data = {16, "Connect"};
+    Position2 pos = {16, 32, 63};
 
-    generic.setPosition(Position(Coords{1, 2}, Coords{3, 4}));
-    generic.setTeam(1);
+    std::cout << "data size: " << sizeof(data) << std::endl;
+    std::cout << "pos size: " << sizeof(pos) << std::endl;
 
-    std::ostringstream os;
-    boost::archive::binary_oarchive oa(os);
-    oa << generic;
-    client->send(os.str());
-    client->send("Not ready");
+    client->send(data);
+    client->send(pos);
     receiveThread = std::make_shared<std::thread>([&client]() { client->receiveAsync(); });
     runThread = std::make_shared<std::thread>([&client]() { client->run(); });
     receiveThread->join();

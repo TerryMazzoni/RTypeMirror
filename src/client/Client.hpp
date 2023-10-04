@@ -8,6 +8,7 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "GenericCommunication.hpp"
 
 using boost::asio::ip::udp;
 
@@ -29,7 +30,11 @@ class Client {
          *
          * @param msg
          */
-        void send(const std::string &msg);
+        template <typename T>
+        void send(T &data)
+        {
+            _socket.send(boost::asio::buffer(&data, sizeof(data)));
+        }
         /**
          * @brief Receive a message from the server
          */
