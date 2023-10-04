@@ -5,19 +5,12 @@
 ** client
 */
 
-#include "ACommunication.hpp"
 #include "Args.hpp"
 #include "Client.hpp"
-#include "GenericCommunication.hpp"
-#include "NewPlayerPosition.hpp"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/vector.hpp>
 #include <signal.h>
-#include <sstream>
 #include <thread>
 #include <any>
+#include "Communication.hpp"
 
 std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 {
@@ -71,10 +64,11 @@ std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
 
 static void signal_handler(int signal)
 {
+    Communication::Quit quit;
+
     if (signal == SIGINT)
         is_running(1);
-    // client_memory(0, nullptr)->send("quit\0");
-    exit(1);
+    client_memory(0, nullptr)->send(quit);
 }
 
 int main(int ac, char **av)
@@ -92,15 +86,6 @@ int main(int ac, char **av)
         return 84;
     client_memory(1, client);
     signal(SIGINT, signal_handler);
-
-    GenericCom data = {16, "Connect"};
-    Position2 pos = {16, 32, 63};
-
-    std::cout << "data size: " << sizeof(data) << std::endl;
-    std::cout << "pos size: " << sizeof(pos) << std::endl;
-
-    client->send(data);
-    client->send(pos);
     receiveThread = std::make_shared<std::thread>([&client]() { client->receiveAsync(); });
     runThread = std::make_shared<std::thread>([&client]() { client->run(); });
     receiveThread->join();
