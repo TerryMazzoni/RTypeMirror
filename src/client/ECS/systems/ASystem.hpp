@@ -14,6 +14,7 @@
 namespace ECS {
     class ASystem : public ISystem {
         public:
+<<<<<<< HEAD
             ~ASystem() = default;
 
             /**
@@ -50,5 +51,18 @@ namespace ECS {
         protected:
             bool _isActivated = true;
             std::optional<Entity> _entity;
+=======
+            ASystem() = default;
+            ~ASystem() = default;
+
+            virtual std::vector<Action> execute() = 0;
+            void setActivation(bool state);
+            void addEntities(std::vector<Entity> listEntities);
+            void removeEntities(std::vector<Entity> listEntities);
+
+        protected:
+            bool _isActivated = true;
+            std::vector<std::optional<Entity>> _listEntities;
+>>>>>>> 0fbc961 (Fix: compil with cmake)
     };
 } // namespace ECS
