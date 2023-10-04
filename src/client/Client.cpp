@@ -13,8 +13,6 @@
 #include "NewMatesPosition.hpp"
 #include "NewMissilesPosition.hpp"
 #include "NewPlayerPosition.hpp"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/serialization/vector.hpp>
 
 bool is_running(int flag)
 {
@@ -50,86 +48,37 @@ Client::~Client()
     _socket.close();
 }
 
-void Client::send(const std::string &msg)
-{
-    if (msg.empty())
-        return;
-    _socket.async_send_to(
-        boost::asio::buffer(msg, msg.size()), _endpoint,
-        [](const boost::system::error_code &error, std::size_t bytes_sent) {
-            if (error)
-                std::cerr << "Error on send: " << error.message() << std::endl;
-            else if (bytes_sent <= 0)
-                std::cerr << "Error on send: bytes_sent <= 0" << std::endl;
-        });
-}
+// void Client::send(std::any &data)
+// {
+//     _socket.send(boost::asio::buffer(&data, sizeof(data)));
+// }
 
 void Client::processMessage(const std::string &msg)
 {
-    try {
-        std::istringstream is(msg);
-        boost::archive::binary_iarchive ia(is);
-        GenericCommunication generic;
-        ia >> generic;
-
-        switch (generic.getType()) {
-            case CommunicationTypes::Type_NewPlayerPosition: {
-                NewPlayerPosition player;
-                player.setPosition(generic.getPosition());
-                break;
-            }
-            case CommunicationTypes::Type_NewEnnemiesPosition: {
-                NewEnnemiesPosition ennemies;
-                ennemies.setPositions(generic.getPositions());
-                break;
-            }
-            case CommunicationTypes::Type_NewMatesPosition: {
-                NewMatesPosition mates;
-                mates.setMate(generic.getMatePositions());
-                break;
-            }
-            case CommunicationTypes::Type_NewMissilesPosition: {
-                NewMissilesPosition missiles;
-                missiles.setMissiles(generic.getMissiles());
-                break;
-            }
-            case CommunicationTypes::Type_NewHitBetweenElements: {
-                NewHitBetweenElements hit;
-                hit.setFirstColision(generic.getFirstColision());
-                hit.setSecondColision(generic.getSecondColision());
-                hit.setPositions(generic.getPositions());
-                break;
-            }
-            default:
-                break;
-        }
+    if (msg == "quit") {
+        this->getIoService().stop();
+        is_running(1);
     }
-    catch (std::exception &e) {
-        if (msg == "quit") {
-            this->getIoService().stop();
+    else if (msg.rfind("ID=", 0) == 0) {
+        std::string idStr = msg.substr(3);
+        if (idStr.find_first_not_of("0123456789") != std::string::npos)
+            return;
+        _id = std::stoi(idStr);
+        if (_id <= 0 || _id > 4) {
+            std::cout << "Invalid ID or not enough places remaining" << std::endl;
             is_running(1);
+            return;
         }
-        else if (msg.rfind("ID=", 0) == 0) {
-            std::string idStr = msg.substr(3);
-            if (idStr.find_first_not_of("0123456789") != std::string::npos)
-                return;
-            _id = std::stoi(idStr);
-            if (_id <= 0 || _id > 4) {
-                std::cout << "Invalid ID or not enough places remaining" << std::endl;
-                is_running(1);
-                return;
-            }
-            std::cout << "My ID is " << _id << std::endl;
-        }
-        else if (msg.rfind("TIMER:", 0) == 0) {
-            static std::string lastTimer = "";
-            std::string timerStr = msg.substr(6);
-            if (timerStr.find_first_not_of("0123456789") != std::string::npos)
-                return;
-            if (timerStr != lastTimer)
-                std::cout << "Timer: " << timerStr << std::endl;
-            lastTimer = timerStr;
-        }
+        std::cout << "My ID is " << _id << std::endl;
+    }
+    else if (msg.rfind("TIMER:", 0) == 0) {
+        static std::string lastTimer = "";
+        std::string timerStr = msg.substr(6);
+        if (timerStr.find_first_not_of("0123456789") != std::string::npos)
+            return;
+        if (timerStr != lastTimer)
+            std::cout << "Timer: " << timerStr << std::endl;
+        lastTimer = timerStr;
     }
 }
 
@@ -170,12 +119,12 @@ void Client::run()
     t.async_wait(
         [this](const boost::system::error_code &error) {
             if (!error) {
-                if (this->getId() == 0)
-                    this->send("Connect");
-                if (this->getIsReady())
-                    this->send("Ready");
-                else
-                    this->send("Not ready");
+                // if (this->getId() == 0)
+                //     this->send("Connect");
+                // if (this->getIsReady())
+                //     this->send("Ready");
+                // else
+                //     this->send("Not ready");
             }
             if (!is_running(0))
                 return;

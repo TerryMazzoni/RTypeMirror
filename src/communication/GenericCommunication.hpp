@@ -203,3 +203,14 @@ class GenericCommunication : public ACommunication {
         std::vector<Missile> _missiles;
         int _team;
 };
+
+typedef struct Position2 {
+        int x;
+        int y;
+        int z;
+} Position2;
+
+typedef struct GenericCom {
+        int code;
+        char msg[32];
+} GenericCom;

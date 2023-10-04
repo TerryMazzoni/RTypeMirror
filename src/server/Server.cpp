@@ -7,9 +7,6 @@
 
 #include "Server.hpp"
 #include "Client.hpp"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/vector.hpp>
 #include <memory>
 
 bool is_running(int flag)
@@ -60,88 +57,26 @@ void Server::sendToAll(const std::string &msg)
 
 void Server::processMessage(const std::string &msg, const udp::endpoint &client)
 {
-    bool all_ready = true;
-
-    addClient(client);
+    char *data = const_cast<char *>(msg.c_str());
     try {
-        std::istringstream is(msg);
-        boost::archive::binary_iarchive ia(is);
-        GenericCommunication generic;
-        ia >> generic;
-
-        switch (generic.getType()) {
-            case CommunicationTypes::Type_NewPlayerPosition: {
-                NewPlayerPosition player;
-                player.setPosition(generic.getPosition());
-                break;
-            }
-            case CommunicationTypes::Type_NewEnnemiesPosition: {
-                NewEnnemiesPosition ennemies;
-                ennemies.setPositions(generic.getPositions());
-                break;
-            }
-            case CommunicationTypes::Type_NewMatesPosition: {
-                NewMatesPosition mates;
-                mates.setMate(generic.getMatePositions());
-                break;
-            }
-            case CommunicationTypes::Type_NewMissilesPosition: {
-                NewMissilesPosition missiles;
-                missiles.setMissiles(generic.getMissiles());
-                break;
-            }
-            case CommunicationTypes::Type_NewHitBetweenElements: {
-                NewHitBetweenElements hit;
-                hit.setFirstColision(generic.getFirstColision());
-                hit.setSecondColision(generic.getSecondColision());
-                hit.setPositions(generic.getPositions());
-                break;
-            }
-            default:
-                break;
-        }
+        Position2 pos = *reinterpret_cast<Position2 *>(data);
+        std::cout << "x= " << pos.x << " y= " << pos.y << std::endl;
     }
-    catch (std::exception &e) {
-        std::cout << "Processing: \"" << msg << "\"" << std::endl;
-        if (msg == "quit") {
-            send("quit", client);
-            removeClient(client);
-            std::cout << "Client disconnected" << std::endl;
-        }
-        else if (msg == "Connect") {
-            int id = 0;
-            for (auto &c : _clients) {
-                if (c.getEndpoint() == client)
-                    id = c.getId();
-            }
-            send("ID=" + std::to_string(id), client);
-        }
-        else if (msg == "Ready") {
-            for (auto &c : _clients)
-                if (c.getEndpoint() == client)
-                    c.setIsReady(true);
-        }
-        else if (msg == "Not ready") {
-            for (auto &c : _clients)
-                if (c.getEndpoint() == client)
-                    c.setIsReady(false);
-            _game_status = 0;
-        }
-        else {
-            std::cout << "Unknown command, " << e.what() << std::endl;
-        }
-        for (auto &c : _clients) {
-            if (!c.getIsReady())
-                all_ready = false;
-        }
-        if (all_ready && _game_status == 0)
-            _game_status = 1;
+    catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+    try {
+        GenericCom newCom = *reinterpret_cast<GenericCom *>(data);
+        std::cout << "code= " << newCom.code << " msg= " << newCom.msg << std::endl;
+    }
+    catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
     }
 }
 
 void Server::receiveAsync()
 {
-    std::vector<char> recv_buffer(1024);
+    std::vector<char> recv_buffer(1500);
 
     udp::endpoint sender_endpoint;
 
@@ -149,6 +84,7 @@ void Server::receiveAsync()
         boost::asio::buffer(recv_buffer), sender_endpoint,
         [this, &recv_buffer, &sender_endpoint](
             const boost::system::error_code &error, std::size_t bytes_received) {
+            std::cout << "bytes_received= " << bytes_received << std::endl;
             if (!error && bytes_received > 0)
                 processMessage(std::string(recv_buffer.begin(), recv_buffer.begin() + bytes_received), sender_endpoint);
             else if (error != boost::asio::error::operation_aborted) {
