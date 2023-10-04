@@ -5,16 +5,8 @@
 ** Graph
 */
 
-#include "Color.hpp"
+#include <set>
 #include "Graph.hpp"
-#include "Position.hpp"
-#include "RlDraw.hpp"
-#include "RlInputs.hpp"
-#include "RlText.hpp"
-#include "Rotation.hpp"
-#include "Scale.hpp"
-#include "Text.hpp"
-#include "Texture.hpp"
 
 std::set<Input> Graph::getInputs() const
 {

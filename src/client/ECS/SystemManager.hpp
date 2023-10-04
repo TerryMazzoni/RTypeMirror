@@ -18,16 +18,15 @@
 namespace ECS {
     class SystemManager {
         public:
-            SystemManager();
-            ~SystemManager();
+            SystemManager() = default;
+            ~SystemManager() = default;
 
             std::vector<Action> execute();
-            void addSystems(std::vector<ISystem> listSystems);
-            void removeSystems(std::vector<ISystem> listSystems);
+            void addSystems(std::vector<std::shared_ptr<ISystem>> listSystems);
 
         protected:
         private:
-            std::vector<ISystem> _listSystems;
+            std::vector<std::shared_ptr<ISystem>> _listSystems;
             std::vector<Action> _listActions;
     };
 } // namespace ECS

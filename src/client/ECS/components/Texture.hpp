@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <vector>
 #include "RlTexture.hpp"
 
 namespace ECS {
