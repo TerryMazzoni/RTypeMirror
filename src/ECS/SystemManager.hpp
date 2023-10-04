@@ -12,7 +12,7 @@
 #include <map>
 #include "Enum.hpp"
 #include "ISystem.hpp"
-
+#include "Entity.hpp"
 #include "Enum.hpp"
 
 namespace ECS {
@@ -21,10 +21,13 @@ namespace ECS {
             SystemManager();
             ~SystemManager();
 
-            int execute(SceneType scene);
+            std::vector<Action> execute();
+            void addSystems(std::vector<ISystem> listSystems);
+            void removeSystems(std::vector<ISystem> listSystems);
 
         protected:
         private:
-            std::map<SceneType, std::vector<void *>> _listSystems; // replace void * with class system
+            std::vector<ISystem> _listSystems;
+            std::vector<Action> _listActions;
     };
 } // namespace ECS
