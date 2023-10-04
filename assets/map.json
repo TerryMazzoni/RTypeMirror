@@ -12,28 +12,65 @@
     ],
     "tile_size": 64,
     "textures": {
-      "S": ["walls/Wall_S.png"],
-      "N": ["walls/Wall_N.png"],
-      "E": ["walls/Wall_E.png"],
-      "W": ["walls/Wall_W.png"],
-      "1": ["walls/Wall_SN.png"],
-      "2": ["walls/Wall_EW.png"],
-      "3": ["walls/Wall_SE.png"],
-      "4": ["walls/Wall_SW.png"],
-      "5": ["walls/Wall_NE.png"],
-      "6": ["walls/Wall_NW.png"],
-      "7": ["walls/Wall_SNE.png"],
-      "8": ["walls/Wall_SNW.png"],
-      "9": ["walls/Wall_SEW.png"],
-      "0": ["walls/Wall_NEW.png"],
-      ".": ["walls/Wall_NESW.png"],
-      "#": ["walls/Wall.png"]
+      "S": [
+        "walls/Wall_S.png"
+      ],
+      "N": [
+        "walls/Wall_N.png"
+      ],
+      "E": [
+        "walls/Wall_E.png"
+      ],
+      "W": [
+        "walls/Wall_W.png"
+      ],
+      "1": [
+        "walls/Wall_SN.png"
+      ],
+      "2": [
+        "walls/Wall_EW.png"
+      ],
+      "3": [
+        "walls/Wall_SE.png"
+      ],
+      "4": [
+        "walls/Wall_SW.png"
+      ],
+      "5": [
+        "walls/Wall_NE.png"
+      ],
+      "6": [
+        "walls/Wall_NW.png"
+      ],
+      "7": [
+        "walls/Wall_SNE.png"
+      ],
+      "8": [
+        "walls/Wall_SNW.png"
+      ],
+      "9": [
+        "walls/Wall_SEW.png"
+      ],
+      "0": [
+        "walls/Wall_NEW.png"
+      ],
+      ".": [
+        "walls/Wall_NESW.png"
+      ],
+      "#": [
+        "walls/Wall.png"
+      ]
     }
   },
   "all_entities": [
     {
       "type": "__player__",
-      "textures": ["player/Player1.png", "player/Player2.png", "player/Player3.png", "player/Player4.png"],
+      "textures": [
+        "player/Player1.png",
+        "player/Player2.png",
+        "player/Player3.png",
+        "player/Player4.png"
+      ],
       "instance": [
         {
           "x": 256,

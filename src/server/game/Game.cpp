@@ -22,10 +22,9 @@ void Game::run(std::shared_ptr<Server> server)
 {
     boost::posix_time::milliseconds ms(100);
     boost::asio::deadline_timer t(server->getIoService(), ms);
-
     if (!is_running(0))
         return;
-    // do things here like update positions, etc.
+    //_gamegestion->updateGame();
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {

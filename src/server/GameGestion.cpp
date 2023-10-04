@@ -10,8 +10,11 @@
 GameGestion::GameGestion(int nb_players, std::vector<Parser::entity_t> player_info, std::string map_path)
 {
     _nb_players = nb_players;
+    std::cout << "test" << std::endl;
     Parser::ParserJson parser = Parser::ParserJson(map_path);
+    std::cout << "test2" << std::endl;
     parser.parse();
+    std::cout << "test3" << std::endl;
     if (parser.getEntities().size() == 0)
         throw std::runtime_error("Error: no entities in map");
     _entities = parser.getEntities();
@@ -61,7 +64,7 @@ void GameGestion::updateGame(std::vector<Communication::Input> communications)
                     }
                 }
             }
-        }
+        } 
     }
 }
 
@@ -69,3 +72,11 @@ std::vector<Communication::Input> GameGestion::getCommunications() const
 {
     return _communications;
 }
+
+std::chrono::duration<double> GameGestion::getElapsedTime() const
+{
+    // Get elapsed time with start and end time
+    _start = std::chrono::system_clock::now();
+    return std::chrono::duration_cast<std::chrono::duration<double>>(_end - _start);
+}
+

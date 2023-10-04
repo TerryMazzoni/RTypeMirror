@@ -11,6 +11,7 @@
 #include "../Parser.hpp"
 #include <memory>
 #include <vector>
+#include "../GameGestion.hpp"
 
 class Game {
     public:
