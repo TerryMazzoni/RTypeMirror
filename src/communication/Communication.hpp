@@ -9,23 +9,13 @@
 
 #include <string>
 
-enum class CommunicationTypes {
-    NewPlayerPosition
-};
-
-class Communication {
-    public:
-        Communication(int code)
-            : _code(code){};
-        ~Communication() = default;
-        const CommunicationTypes &getType()
-        {
-            return _type;
-        };
-
-    protected:
-        CommunicationTypes _type;
-
-    private:
-        int _code;
+enum class Communication {
+    ID,
+    QUIT,
+    TIMER,
+    POSITION,
+    NEW_MATES_POSITION,
+    NEW_MISSILES_POSITION,
+    NEW_HIT_BETWEEN_ELEMENTS,
+    UNKNOWN
 };
