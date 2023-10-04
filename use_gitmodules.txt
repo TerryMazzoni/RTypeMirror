@@ -3,3 +3,5 @@ cd r-type-dependencies/
 git submodule update --init
 cd boost
 git submodule update --init
+
+git submodule update --init --recursive
