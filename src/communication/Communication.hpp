@@ -17,26 +17,49 @@ namespace Communication {
         TIMER,
         READY,
         POSITION,
-        NEW_MATES_POSITION,
-        NEW_MISSILES_POSITION,
-        NEW_HIT_BETWEEN_ELEMENTS,
+        MATES_POSITION,
+        ENNEMIES_POSITION,
+        MISSILES_POSITION,
+        COLISION_ENTITIES,
     };
 
     typedef struct Header {
             CommunicationTypes type;
     } Header;
 
+    typedef struct Position {
+            float x;
+            float y;
+    } Position;
+
+    typedef struct MatesPosition {
+            CommunicationTypes code = CommunicationTypes::MATES_POSITION;
+            Position position[4];
+            size_t nbrItems;
+    } MatesPosition;
+
+    typedef struct Ennemy {
+            Position position;
+            int id;
+    } Ennemy;
+
+    typedef struct EnnemiesPosition {
+            CommunicationTypes code = CommunicationTypes::ENNEMIES_POSITION;
+            Ennemy ennemy[64];
+            size_t nbrItems;
+    } EnnemiesPosition;
+
     typedef struct Id {
-            CommunicationTypes type = CommunicationTypes::ID;
-            int id = 0;
+            CommunicationTypes code = CommunicationTypes::ID;
+            int id;
     } Id;
 
     typedef struct Quit {
-            CommunicationTypes type = CommunicationTypes::QUIT;
+            CommunicationTypes code = CommunicationTypes::QUIT;
     } Quit;
 
     typedef struct Timer {
-            CommunicationTypes type = CommunicationTypes::TIMER;
+            CommunicationTypes code = CommunicationTypes::TIMER;
             int time = 0;
     } Timer;
 
@@ -44,5 +67,27 @@ namespace Communication {
             CommunicationTypes type = CommunicationTypes::READY;
             bool is_ready = false;
     } Ready;
+
+    typedef struct Missile {
+            Position position;
+            Position direction;
+            Position rect;
+            float speed;
+            int damage;
+            int team_id;
+            int id;
+    } Missile;
+
+    typedef struct MissilesPosition {
+            CommunicationTypes code = CommunicationTypes::MISSILES_POSITION;
+            Missile missile[32];
+            size_t nbrItems;
+    } MissilesPosition;
+
+    typedef struct CollisionEntities {
+            CommunicationTypes code = CommunicationTypes::COLISION_ENTITIES;
+            int id1;
+            int id2;
+    } CollisionEntities;
 
 } // namespace Communication
