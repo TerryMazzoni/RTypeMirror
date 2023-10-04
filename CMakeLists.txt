@@ -8,18 +8,6 @@ set(SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(SERVER_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/server)
 
-# FIND THE BOOST LIB ( IN r-type-dependencies/boost ) AND ADD IT TO THE PROJECT
-set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/r-type-dependencies/boost)
-set(BOOST_LIBRARYDIR ${CMAKE_CURRENT_SOURCE_DIR}/r-type-dependencies/boost/lib)
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.75.0 COMPONENTS system thread serialization REQUIRED)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-    link_directories(${Boost_LIBRARY_DIRS})
-endif()
-
 set(SERVER_SOURCES
     ${SERVER_PATH}/Args.cpp
     ${SERVER_PATH}/main.cpp
