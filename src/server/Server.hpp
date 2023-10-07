@@ -106,6 +106,7 @@ class Server {
          * @param status
          */
         void setGameStatus(int status);
+        std::vector<Communication::Input> &getInput() const;
 
     private:
         boost::asio::io_service _io_service;
@@ -114,6 +115,7 @@ class Server {
         std::string _response_message;
         int _game_status;
         std::map<int, bool> _ids;
+        std::vector<Communication::Input> _inputs;
 };
 
 bool is_running(int flag);

@@ -66,6 +66,8 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
         if (!ready.is_ready)
             _game_status = 0;
     }
+    else if (header->type == Communication::CommunicationTypes::INPUT) {
+    }
     for (auto &c : _clients) {
         if (!c.getIsReady())
             all_ready = false;
@@ -166,4 +168,9 @@ int Server::getGameStatus() const
 void Server::setGameStatus(int status)
 {
     _game_status = status;
+}
+
+std::vector<Communication::Input> &Server::getInput() const
+{
+    return _inputs;
 }

@@ -11,7 +11,6 @@
 #include "../Parser.hpp"
 #include <memory>
 #include <vector>
-#include "../GameGestion.hpp"
 
 class Game {
     public:
@@ -64,7 +63,7 @@ class Game {
          *
          * @param inputs
          */
-        void updateGame(std::vector<Communication::Input>);
+        void updateGame(std::vector<Communication::Input>, std::shared_ptr<Server> server);
         /**
          * @brief End the game.
          *
