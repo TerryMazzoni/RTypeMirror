@@ -40,3 +40,4 @@ src/server/build/*
 r-type_client
 r-type_server
 *.bash
+out/
