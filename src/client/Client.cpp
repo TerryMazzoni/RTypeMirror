@@ -116,6 +116,11 @@ void Client::run()
     t.async_wait(
         [this](const boost::system::error_code &error) {
             if (!error) {
+                Communication::Input input;
+                input.nbrItems = 1;
+                input.event[0] = Communication::EventInput::Key_up;
+                input.type = Communication::CommunicationTypes::INPUT;
+                this->send(input);
                 if (this->getId() == 0) {
                     Communication::Id id;
                     this->send(id);

@@ -63,7 +63,7 @@ class Game {
          *
          * @param inputs
          */
-        void updateGame(std::vector<Communication::Input>, std::shared_ptr<Server> server);
+        void updateGame(std::shared_ptr<Server> server);
         /**
          * @brief End the game.
          *

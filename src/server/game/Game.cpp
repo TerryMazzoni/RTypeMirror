@@ -24,7 +24,7 @@ void Game::run(std::shared_ptr<Server> server)
     boost::asio::deadline_timer t(server->getIoService(), ms);
     if (!is_running(0))
         return;
-    updateGame(server->getInput(), server);
+    updateGame(server);
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {
@@ -93,19 +93,21 @@ void Game::initGame(std::string map_path)
     }
 }
 
-void Game::updateGame(std::vector<Communication::Input> communications, std::shared_ptr<Server> server)
+void Game::updateGame(std::shared_ptr<Server> server)
 {
     for (auto &entity : _entities) {
-        std::cout << "entity : " << entity.type << std::endl;
         if (entity.type != "player") {
             entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) + 1;
-            std::cout << "Entity: " << entity.type << " x: " << std::any_cast<int>(entity.instance["x"]) << std::endl;
         }
-        for (auto &communication : communications) {
+        for (auto &communication : server->getInput()) {
+            for (int i = 0; i < communication.second.nbrItems; i++) {
+                std::cout << "Client : " << communication.first << ", Communication : " << (int)communication.second.event[i] << std::endl;
+            }
             //if (std::any_cast<int>(entity.instance["id"]) == communication.) {
             //    // HANDLE PLAYER POSITION OR ACTION
             //}
         }
+        server->clearInput();
         if (entity.type != "__tile__") {
             for (auto &entity_colision : _entities) {
                 if (entity_colision.type == "__tile__") {

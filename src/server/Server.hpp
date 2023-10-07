@@ -109,10 +109,14 @@ class Server {
         void setGameStatus(int status);
         /**
          * @brief Get the Input object
-         * 
-         * @return std::vector<Communication::Input>
+         *
+         * @return std::vector<Communication::Input>&
          */
-        std::vector<Communication::Input> getInput() const;
+        std::vector<std::pair<int, Communication::Input>> getInput() const;
+        /**
+         * @brief Clear the input
+         */
+        void clearInput();
 
     private:
         boost::asio::io_service _io_service;
@@ -121,7 +125,7 @@ class Server {
         std::string _response_message;
         int _game_status;
         std::map<int, bool> _ids;
-        std::vector<Communication::Input> _inputs;
+        std::vector<std::pair<int, Communication::Input>> _inputs;
 };
 
 bool is_running(int flag);

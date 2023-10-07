@@ -101,9 +101,9 @@ namespace Communication {
     } CollisionEntities;
 
     typedef struct Input {
-            CommunicationTypes code = CommunicationTypes::INPUT;
+            CommunicationTypes type = CommunicationTypes::INPUT;
             EventInput event[16];
-            int id;
+            size_t nbrItems;
     } Input;
 
 } // namespace Communication
