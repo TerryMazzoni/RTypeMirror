@@ -93,17 +93,18 @@ void Game::initGame(std::string map_path)
     }
 }
 
-void Game::updateGame(std::vector<Communication::Input>, std::shared_ptr<Server> server)
+void Game::updateGame(std::vector<Communication::Input> communications, std::shared_ptr<Server> server)
 {
     for (auto &entity : _entities) {
+        std::cout << "entity : " << entity.type << std::endl;
         if (entity.type != "player") {
             entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) + 1;
             std::cout << "Entity: " << entity.type << " x: " << std::any_cast<int>(entity.instance["x"]) << std::endl;
         }
         for (auto &communication : communications) {
-            if (std::any_cast<int>(entity.instance["id"]) == communication.first) {
-                // HANDLE PLAYER POSITION OR ACTION
-            }
+            //if (std::any_cast<int>(entity.instance["id"]) == communication.) {
+            //    // HANDLE PLAYER POSITION OR ACTION
+            //}
         }
         if (entity.type != "__tile__") {
             for (auto &entity_colision : _entities) {
@@ -113,7 +114,6 @@ void Game::updateGame(std::vector<Communication::Input>, std::shared_ptr<Server>
                         std::cout << "COLISION" << std::endl;
                         if (std::any_cast<int>(entity.instance["hp"]) != 0) {
                             entity.instance["hp"] = std::any_cast<int>(entity.instance["hp"]) - 1;
-                            GenericCommunication new_com = GenericCommunication(CommunicationTypes::Type_NewHitBetweenElements);
                         }
                     }
                 }

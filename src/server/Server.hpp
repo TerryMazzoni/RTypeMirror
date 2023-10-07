@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Client.hpp"
+#include "Communication.hpp"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
@@ -106,7 +107,12 @@ class Server {
          * @param status
          */
         void setGameStatus(int status);
-        std::vector<Communication::Input> &getInput() const;
+        /**
+         * @brief Get the Input object
+         * 
+         * @return std::vector<Communication::Input>
+         */
+        std::vector<Communication::Input> getInput() const;
 
     private:
         boost::asio::io_service _io_service;
