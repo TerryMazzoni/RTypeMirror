@@ -13,125 +13,6 @@ Game::Game()
 {
     _ships = std::vector<std::shared_ptr<Ship>>();
     _bullets = std::vector<std::shared_ptr<Bullet>>();
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
-    _ships.push_back(std::make_shared<Ship>(Communication::Position{0, 0}, 0, ShipType::PLAYER));
 }
 
 Game::~Game()
@@ -170,6 +51,7 @@ void Game::run(std::shared_ptr<Server> server)
                 if (status == 2) {
                     std::cout << "Game started" << std::endl;
                     sendShips(server);
+                    sendBullets(server);
                     server->sendToAll(timer);
                 }
             }
@@ -264,14 +146,14 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
         shipsPosition.nbrItems++;
         if (shipsPosition.nbrItems == 32) {
-            std::cout << "sending" << shipsPosition.nbrItems << "ships" << std::endl;
             server->sendToAll(shipsPosition);
             shipsPosition.nbrItems = 0;
             memset(&shipsPosition.ship, 0, sizeof(shipsPosition.ship));
         }
     }
-    if (shipsPosition.nbrItems > 0)
+    if (shipsPosition.nbrItems > 0) {
         server->sendToAll(shipsPosition);
+    }
 }
 
 void Game::sendBullets(std::shared_ptr<Server> server)
@@ -295,6 +177,7 @@ void Game::sendBullets(std::shared_ptr<Server> server)
             memset(&missilesPosition.missile, 0, sizeof(missilesPosition.missile));
         }
     }
-    if (missilesPosition.nbrItems > 0)
+    if (missilesPosition.nbrItems > 0) {
         server->sendToAll(missilesPosition);
+    }
 }
