@@ -23,6 +23,7 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/main.cpp
     ${CLIENT_PATH}/Client.cpp
 )
+
 add_executable(r-type_server ${SERVER_SOURCES})
 add_executable(r-type_client ${CLIENT_SOURCES})
 
@@ -38,8 +39,54 @@ target_include_directories(r-type_client
         ${CMAKE_CURRENT_SOURCE_DIR}/src/communication/
 )
 
-find_library(SERIALIZATION boost_serialization)
-find_library(THREAD pthread)
+# GET THREADS
 
-target_link_libraries(r-type_server PUBLIC ${SERIALIZATION} ${THREAD})
-target_link_libraries(r-type_client PUBLIC ${SERIALIZATION} ${THREAD})
+find_package(Threads REQUIRED)
+target_link_libraries(
+    r-type_client
+    PRIVATE
+    Threads::Threads
+)
+
+# BOOST FETCHING PART
+include(FetchContent)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    FetchContent_Declare(
+    Boost
+    URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    )
+else()
+    FetchContent_Declare(
+    Boost
+    URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
+    )
+endif()
+
+
+set(BOOST_RUNTIME_LINK static)
+
+FetchContent_MakeAvailable(Boost)
+
+foreach(lib system asio)
+    target_link_libraries(
+        r-type_server
+        PRIVATE
+        Boost::${lib}
+    )
+    target_link_libraries(
+        r-type_client
+        PRIVATE
+        Boost::${lib}
+    )
+    target_include_directories(
+        r-type_server
+        PRIVATE
+        Boost::${lib}
+    )
+    target_include_directories(
+        r-type_client
+        PRIVATE
+        Boost::${lib}
+    )
+endforeach()
