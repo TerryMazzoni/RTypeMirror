@@ -47,6 +47,11 @@ target_link_libraries(
     PRIVATE
     Threads::Threads
 )
+target_link_libraries(
+    r-type_server
+    PRIVATE
+    Threads::Threads
+)
 
 # BOOST FETCHING PART
 include(FetchContent)
@@ -59,7 +64,7 @@ set(BOOST_RUNTIME_LINK static)
 
 FetchContent_MakeAvailable(Boost)
 
-foreach(lib system asio serialization)
+foreach(lib system asio)
     target_link_libraries(
         r-type_server
         PRIVATE
