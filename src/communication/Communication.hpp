@@ -10,6 +10,15 @@
 #include <string>
 
 namespace Communication {
+
+    enum class EventInput {
+        Key_up,
+        Key_down,
+        Key_left,
+        Key_right,
+        Left_click
+    };
+
     enum class CommunicationTypes {
         UNKNOWN,
         ID,
@@ -21,6 +30,7 @@ namespace Communication {
         ENNEMIES_POSITION,
         MISSILES_POSITION,
         COLISION_ENTITIES,
+        INPUT
     };
 
     typedef struct Header {
@@ -89,5 +99,11 @@ namespace Communication {
             int id1;
             int id2;
     } CollisionEntities;
+
+    typedef struct Input {
+            CommunicationTypes code = CommunicationTypes::INPUT;
+            EventInput event[16];
+            int id;
+    } Input;
 
 } // namespace Communication

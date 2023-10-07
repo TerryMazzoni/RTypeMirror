@@ -167,7 +167,7 @@ namespace Parser {
             parseMap(root);
         }
         catch (Parser::ParserException &e) {
-            std::cout << e.what() << std::endl;
+            std::cout << e.what() <<  std::endl;
         }
         if (verbose)
             displayEntities();
