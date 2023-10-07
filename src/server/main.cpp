@@ -10,6 +10,10 @@
 #include "Server.hpp"
 #include <signal.h>
 #include <thread>
+<<<<<<< HEAD
+=======
+#include "GameGestion.hpp"
+>>>>>>> b270d1b51e7b0b146bbabcd7440d28b208665313
 #include "../Parser.hpp"
 
 std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
