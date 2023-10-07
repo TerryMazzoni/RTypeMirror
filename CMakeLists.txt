@@ -47,18 +47,22 @@ target_link_libraries(
     PRIVATE
     Threads::Threads
 )
-target_link_libraries(
-    r-type_server
-    PRIVATE
-    Threads::Threads
-)
 
 # BOOST FETCHING PART
 include(FetchContent)
-FetchContent_Declare(
-  Boost
-  URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
-)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    FetchContent_Declare(
+    Boost
+    URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
+    )
+else()
+    FetchContent_Declare(
+    Boost
+    URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
+    )
+endif()
+
 
 set(BOOST_RUNTIME_LINK static)
 

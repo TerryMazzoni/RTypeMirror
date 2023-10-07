@@ -40,4 +40,9 @@ src/server/build/*
 r-type_client
 r-type_server
 *.bash
+<<<<<<< HEAD
+=======
+r-type-dependencies/*
+*.vs
+>>>>>>> 620a6dba1c49545c0a4e58ce9ee94cfc351143f5
 out/
