@@ -2,12 +2,18 @@
 ** EPITECH PROJECT, 2023
 ** RTypeMirror
 ** File description:
-** ICommunication
+** Communication
 */
 
 #pragma once
 
 #include <string>
+
+enum class ShipType {
+    UNKNOW,
+    PLAYER,
+    ENEMY
+};
 
 namespace Communication {
     enum class CommunicationTypes {
@@ -16,11 +22,9 @@ namespace Communication {
         QUIT,
         TIMER,
         READY,
-        POSITION,
-        MATES_POSITION,
-        ENNEMIES_POSITION,
-        MISSILES_POSITION,
-        COLISION_ENTITIES,
+        SHIPS,
+        MISSILES,
+        COLISION,
     };
 
     typedef struct Header {
@@ -32,22 +36,19 @@ namespace Communication {
             float y;
     } Position;
 
-    typedef struct MatesPosition {
-            CommunicationTypes code = CommunicationTypes::MATES_POSITION;
-            Position position[4];
-            size_t nbrItems;
-    } MatesPosition;
-
-    typedef struct Ennemy {
+    typedef struct SpaceShip {
             Position position;
             int id;
-    } Ennemy;
+            float life;
+            int level;
+            ShipType type;
+    } SpaceShip;
 
-    typedef struct EnnemiesPosition {
-            CommunicationTypes code = CommunicationTypes::ENNEMIES_POSITION;
-            Ennemy ennemy[64];
+    typedef struct ShipsPosition {
+            CommunicationTypes code = CommunicationTypes::SHIPS;
+            SpaceShip ship[32];
             size_t nbrItems;
-    } EnnemiesPosition;
+    } ShipsPosition;
 
     typedef struct Id {
             CommunicationTypes code = CommunicationTypes::ID;
@@ -71,7 +72,6 @@ namespace Communication {
     typedef struct Missile {
             Position position;
             Position direction;
-            Position rect;
             float speed;
             int damage;
             int team_id;
@@ -79,15 +79,14 @@ namespace Communication {
     } Missile;
 
     typedef struct MissilesPosition {
-            CommunicationTypes code = CommunicationTypes::MISSILES_POSITION;
+            CommunicationTypes code = CommunicationTypes::MISSILES;
             Missile missile[32];
             size_t nbrItems;
     } MissilesPosition;
 
-    typedef struct CollisionEntities {
-            CommunicationTypes code = CommunicationTypes::COLISION_ENTITIES;
+    typedef struct Colision {
+            CommunicationTypes code = CommunicationTypes::COLISION;
             int id1;
             int id2;
-    } CollisionEntities;
-
+    } Colision;
 } // namespace Communication
