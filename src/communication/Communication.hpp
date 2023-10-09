@@ -16,6 +16,15 @@ enum class ShipType {
 };
 
 namespace Communication {
+
+    enum class EventInput {
+        Key_up,
+        Key_down,
+        Key_left,
+        Key_right,
+        Left_click
+    };
+
     enum class CommunicationTypes {
         UNKNOWN,
         ID,

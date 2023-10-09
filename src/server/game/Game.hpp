@@ -10,6 +10,7 @@
 #include "Server.hpp"
 #include "../Parser.hpp"
 #include "Bullet.hpp"
+#include "Ship.cpp"
 #include <memory>
 #include <vector>
 
@@ -90,4 +91,6 @@ class Game {
         std::vector<Parser::entity_t> _entities;
         int _nb_players;
         bool _init;
+        std::vector<std::shared_ptr<Bullet>> _bullets;
+        std::vector<std::shared_ptr<Ship>> _ships;
 };
