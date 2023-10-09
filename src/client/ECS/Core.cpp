@@ -20,6 +20,16 @@ namespace ECS {
 
         Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
+        Entity background;
+        std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Texture, "assets/starfield.png");
+        componentBT->setType(ComponentType::Texture);
+        background.components.push_back(componentBT);
+        std::shared_ptr<ECS::IComponent> componentBP = ECS::Factory::createComponent(ComponentType::Position, "0,0");
+        componentBP->setType(ComponentType::Position);
+        background.components.push_back(componentBP);
+        background.id = {EntityType::Background, 2};
+
+
         Entity entity;
         std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4");
         componentT->setType(ComponentType::Texture);
@@ -48,7 +58,7 @@ namespace ECS {
 
         _systemManager.addSystems({mouvement});
         _systemManager.addSystems({changeTexture});
-        _entitiesManager.addEntities({entity, entity2});
+        _entitiesManager.addEntities({background, entity, entity2});
     }
 
     Core::~Core()
