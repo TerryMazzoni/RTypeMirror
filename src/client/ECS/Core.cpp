@@ -76,6 +76,9 @@ namespace ECS
         {
             Raylib::clear(Raylib::RlColor(0, 0, 0));
             _eventManager.executeInputs(inputs);
+            std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
+            _entitiesManager.removeEntities(entitiesToDelete);
+            _systemManager.removeSystems(entitiesToDelete);
             _entitiesManager.updateEntities(_eventManager.getActions());
             _entitiesManager.updateEntities(_systemManager.execute());
             createEntities();

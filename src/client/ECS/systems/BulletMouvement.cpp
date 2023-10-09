@@ -13,7 +13,6 @@ namespace ECS
 {
     BulletMouvement::BulletMouvement()
     {
-        _name = "BulletMouvement";
     }
 
     std::vector<Action> BulletMouvement::execute()

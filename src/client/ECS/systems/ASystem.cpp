@@ -17,7 +17,6 @@ namespace ECS {
     void ASystem::setEntity(Entity entity)
     {
         _entity = entity;
-        _name = _name + "_" + std::to_string(entity.id.second);
     }
 
     void ASystem::removeEntity()
@@ -25,9 +24,9 @@ namespace ECS {
         _entity = std::nullopt;
     }
 
-    std::string ASystem::getName() const
+    std::optional<Entity> ASystem::getEntity() const
     {
-        return _name;
+        return _entity;
     }
 
 } // namespace ECS

@@ -13,7 +13,6 @@ namespace ECS
 
     Shoot::Shoot()
     {
-        _name = "Shoot";
         _count = 0;
     }
 

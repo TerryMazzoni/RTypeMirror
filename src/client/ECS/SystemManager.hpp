@@ -33,6 +33,12 @@ namespace ECS {
              * @param std::vector<std::shared_ptr<ISystem>>
              */
             void addSystems(std::vector<std::shared_ptr<ISystem>> listSystems);
+            /**
+             * @brief Remove systems atached on the entities removed
+             * 
+             * @param entitiesToRemove 
+             */
+            void removeSystems(std::vector<Entity> entitiesToRemove);
 
         protected:
         private:
