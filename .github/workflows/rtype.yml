@@ -1,4 +1,4 @@
-name: Mirror
+name: Compilation test
 
 on:
   push:

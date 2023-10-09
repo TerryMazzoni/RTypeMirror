@@ -47,12 +47,10 @@ target_include_directories(r-type_client
 # GET THREADS
 
 find_package(Threads REQUIRED)
-find_package(raylib)
 target_link_libraries(
     r-type_client
     PRIVATE
     Threads::Threads
-    raylib
 )
 
 # BOOST FETCHING PART
