@@ -63,6 +63,7 @@ target_include_directories(r-type_server
 
 target_include_directories(r-type_client
     PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/communication/
         ${CMAKE_CURRENT_SOURCE_DIR}/src/
         ${CLIENT_PATH}/Raylib/
         ${CLIENT_PATH}/ECS/systems/
