@@ -35,4 +35,4 @@ USAGE: ./r-type_client -p port -i ip [-m]
     m       if present, mute the gui
 "
 
-return 0
+exit 0
