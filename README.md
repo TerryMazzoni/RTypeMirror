@@ -28,4 +28,9 @@ To create the client and the server, use:
         ip      is the ip of the server; localhost by default
         m       if present, mute the gui
 
+## Documentation
+
+    doxygen Doxyfile
+    firefox html/index.html
+
 Made by: Antonin Laudon - Luca Deltort - Terry Mazzoni - Christopher Artigas - Tom Laiolo
