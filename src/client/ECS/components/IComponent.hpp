@@ -19,7 +19,7 @@ namespace ECS {
             /**
              * @brief Set the value of the component
              *
-             * @param value
+             * @param std::any
              * @return int
              */
             virtual int setValue(std::any value) = 0;
@@ -38,7 +38,7 @@ namespace ECS {
             /**
              * @brief Set the type of the component
              *
-             * @param type
+             * @param ComponentType
              */
             virtual void setType(ComponentType type) = 0;
     };

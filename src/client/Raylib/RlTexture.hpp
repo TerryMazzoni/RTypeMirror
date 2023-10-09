@@ -41,7 +41,7 @@ namespace Raylib
         /**
          * @brief Set the Texture object
          *
-         * @param path Path to the texture
+         * @param std::string Path to the texture
          */
         void setTexture(std::string path);
         /**

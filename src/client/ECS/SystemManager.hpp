@@ -21,7 +21,17 @@ namespace ECS {
             SystemManager() = default;
             ~SystemManager() = default;
 
+            /**
+             * @brief Execute systems
+             * 
+             * @return std::vector<Action> 
+             */
             std::vector<Action> execute();
+            /**
+             * @brief Add a system to the system manager
+             * 
+             * @param std::vector<std::shared_ptr<ISystem>>
+             */
             void addSystems(std::vector<std::shared_ptr<ISystem>> listSystems);
 
         protected:
