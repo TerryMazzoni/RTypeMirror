@@ -47,7 +47,7 @@ int Args::setArgs(int ac, char **av)
         if (std::string(av[i]) == "-h" || std::string(av[i]) == "--help") {
             std::cout << "USAGE: " << av[0] << " -p port -i ip [-m]"
                       << std::endl;
-            std::cout << "\tport\tis the port number" << std::endl;
+            std::cout << "\tport\tis the port number\t8080 by default" << std::endl;
             std::cout << "\tip\tis the ip of the server; localhost by default"
                       << std::endl;
             std::cout << "\tm\tif present, mute the gui" << std::endl;

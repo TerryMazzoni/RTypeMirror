@@ -33,7 +33,7 @@ int Args::setArgs(int ac, char **av)
     for (int i = 1; i < ac; ++i) {
         if (std::string(av[i]) == "-h" || std::string(av[i]) == "--help") {
             std::cout << "USAGE: " << av[0] << " -p port" << std::endl;
-            std::cout << "\tport\tis the port number" << std::endl;
+            std::cout << "\tport\tis the port number\t8080 by default" << std::endl;
             return 1;
         }
     }
