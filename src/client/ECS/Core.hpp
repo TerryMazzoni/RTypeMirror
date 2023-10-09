@@ -26,6 +26,9 @@ namespace ECS {
             int run();
 
         private:
+            void createEntities();
+            void createBullet(Entity entity);
+
             EntitiesManager _entitiesManager;
             EventManager _eventManager;
             SystemManager _systemManager;

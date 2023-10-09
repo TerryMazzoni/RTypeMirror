@@ -14,6 +14,7 @@ namespace ECS
     Mouvement::Mouvement()
     {
         _goRight = true;
+        _name = "Mouvement";
     }
 
     std::vector<Action> Mouvement::execute()
@@ -27,9 +28,12 @@ namespace ECS
             entities.push_back(_entity.value());
             std::shared_ptr<ECS::IComponent> componentP = _entity.value().getComponent(ComponentType::Position);
             float x = std::any_cast<Position>(componentP->getValue()).x;
-            if (x <= -64 && !_goRight) {
+            if (x <= -64 && !_goRight)
+            {
                 _goRight = true;
-            } else if (x >= 1984 && _goRight) {
+            }
+            else if (x >= 1984 && _goRight)
+            {
                 _goRight = false;
             }
             mouv = _goRight ? std::make_pair(10, 0) : std::make_pair(-10, 0);

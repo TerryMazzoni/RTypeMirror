@@ -37,6 +37,8 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/ECS/systems/ASystem.cpp
     ${CLIENT_PATH}/ECS/systems/Mouvement.cpp
     ${CLIENT_PATH}/ECS/systems/ChangeTexture.cpp
+    ${CLIENT_PATH}/ECS/systems/Shoot.cpp
+    ${CLIENT_PATH}/ECS/systems/BulletMouvement.cpp
     ${CLIENT_PATH}/Raylib/RlAudio.cpp
     ${CLIENT_PATH}/Raylib/RlColor.cpp
     ${CLIENT_PATH}/Raylib/RlDraw.cpp

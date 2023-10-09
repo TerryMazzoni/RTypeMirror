@@ -12,7 +12,7 @@
 namespace ECS {
     class ChangeTexture : public ASystem {
         public:
-            ChangeTexture() = default;
+            ChangeTexture();
             ~ChangeTexture() = default;
 
             /**
