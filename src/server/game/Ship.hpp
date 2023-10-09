@@ -9,12 +9,6 @@
 
 #include "Communication.hpp"
 
-enum class ShipType {
-    UNKNOW,
-    PLAYER,
-    ENEMY
-};
-
 class Ship {
     public:
         /**
