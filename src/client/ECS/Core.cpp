@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Core.hpp"
 #include "Mouvement.hpp"
+#include "ChangeTexture.hpp"
 
 namespace ECS {
 
@@ -20,14 +21,19 @@ namespace ECS {
         Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
         Entity entity;
-        std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/capsule/sprite_capsules0.png,0,1");
+        std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4");
         componentT->setType(ComponentType::Texture);
         entity.components.push_back(componentT);
         std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, "300,100");
         componentP->setType(ComponentType::Position);
         entity.components.push_back(componentP);
+        std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, "3");
+        componentS->setType(ComponentType::Scale);
+        entity.components.push_back(componentS);
         entity.id = {EntityType::Player, 0};
         _eventManager.setMyPlayer(entity);
+        std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
+        changeTexture->setEntity(entity);
 
         Entity entity2;
         std::shared_ptr<ECS::IComponent> component2T = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png");
@@ -41,6 +47,7 @@ namespace ECS {
         mouvement->setEntity(entity2);
 
         _systemManager.addSystems({mouvement});
+        _systemManager.addSystems({changeTexture});
         _entitiesManager.addEntities({entity, entity2});
     }
 
