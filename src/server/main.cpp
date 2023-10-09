@@ -10,7 +10,7 @@
 #include "Server.hpp"
 #include <signal.h>
 #include <thread>
-#include "../Parser.hpp"
+#include "Parser.hpp"
 
 std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
 {

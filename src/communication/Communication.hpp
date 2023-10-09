@@ -34,6 +34,7 @@ namespace Communication {
         SHIPS,
         MISSILES,
         COLISION_ENTITIES,
+        INPUT
     };
 
     typedef struct Header {
@@ -53,7 +54,7 @@ namespace Communication {
             ShipType type;
     } SpaceShip;
 
-    typedef struct Ships {
+    typedef struct ShipsList {
             CommunicationTypes code = CommunicationTypes::SHIPS;
             SpaceShip ship[32];
             size_t nbrItems;
@@ -98,4 +99,10 @@ namespace Communication {
             int id1;
             int id2;
     } CollisionEntities;
+
+    typedef struct Input {
+            CommunicationTypes type = CommunicationTypes::INPUT;
+            EventInput event[16];
+            size_t nbrItems;
+    } Input;
 } // namespace Communication

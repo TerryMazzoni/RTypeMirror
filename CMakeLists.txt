@@ -15,6 +15,8 @@ set(SERVER_SOURCES
     ${SERVER_PATH}/Server.cpp
     ${SERVER_PATH}/Client.cpp
     ${SERVER_PATH}/game/Game.cpp
+    ${SERVER_PATH}/game/Bullet.cpp
+    ${SERVER_PATH}/game/Ship.cpp
     ${SRC_PATH}/Parser.cpp
 )
 
@@ -34,6 +36,7 @@ target_include_directories(r-type_server
         ${CMAKE_CURRENT_SOURCE_DIR}/src/communication/
         ${SERVER_PATH}/game/
         ${SERVER_PATH}/
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/
 )
 
 target_include_directories(r-type_client

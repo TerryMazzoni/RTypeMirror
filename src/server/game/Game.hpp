@@ -8,9 +8,9 @@
 #pragma once
 
 #include "Server.hpp"
-#include "../Parser.hpp"
+#include "Parser.hpp"
 #include "Bullet.hpp"
-#include "Ship.cpp"
+#include "Ship.hpp"
 #include <memory>
 #include <vector>
 
