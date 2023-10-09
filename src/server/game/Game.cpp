@@ -39,7 +39,6 @@ void Game::run(std::shared_ptr<Server> server)
                     this->run(server);
                 }
                 else if (status == 1) {
-                    std::cout << "Timer: " << timerCount << " " << timer.time << std::endl;
                     server->sendToAll(timer);
                     timerCount--;
                     if (timerCount == 0) {
@@ -172,4 +171,54 @@ void Game::updateGame(std::shared_ptr<Server> server)
 
 void Game::endGame()
 {
+}
+
+void Game::sendShips(std::shared_ptr<Server> server)
+{
+    Communication::ShipsPosition shipsPosition;
+
+    shipsPosition.nbrItems = 0;
+    for (int i = 0; _ships.size() > i; i++) {
+        shipsPosition.ship[shipsPosition.nbrItems].id = _ships[i]->getId();
+        shipsPosition.ship[shipsPosition.nbrItems].life = _ships[i]->getLife();
+        shipsPosition.ship[shipsPosition.nbrItems].level = _ships[i]->getLevel();
+        shipsPosition.ship[shipsPosition.nbrItems].position.x = _ships[i]->getPos().x;
+        shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
+        shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
+        shipsPosition.nbrItems++;
+        if (shipsPosition.nbrItems == 32) {
+            server->sendToAll(shipsPosition);
+            shipsPosition.nbrItems = 0;
+            memset(&shipsPosition.ship, 0, sizeof(shipsPosition.ship));
+        }
+    }
+    if (shipsPosition.nbrItems > 0) {
+        server->sendToAll(shipsPosition);
+    }
+}
+
+void Game::sendBullets(std::shared_ptr<Server> server)
+{
+    Communication::MissilesPosition missilesPosition;
+
+    missilesPosition.nbrItems = 0;
+    for (int i = 0; _bullets.size() > i; i++) {
+        missilesPosition.missile[missilesPosition.nbrItems].id = _bullets[i]->getId();
+        missilesPosition.missile[missilesPosition.nbrItems].position.x = _bullets[i]->getPos().x;
+        missilesPosition.missile[missilesPosition.nbrItems].position.y = _bullets[i]->getPos().y;
+        missilesPosition.missile[missilesPosition.nbrItems].direction.x = _bullets[i]->getDirection().x;
+        missilesPosition.missile[missilesPosition.nbrItems].direction.y = _bullets[i]->getDirection().y;
+        missilesPosition.missile[missilesPosition.nbrItems].speed = _bullets[i]->getSpeed();
+        missilesPosition.missile[missilesPosition.nbrItems].damage = _bullets[i]->getDamage();
+        missilesPosition.missile[missilesPosition.nbrItems].team_id = _bullets[i]->getTeam();
+        missilesPosition.nbrItems++;
+        if (missilesPosition.nbrItems == 32) {
+            server->sendToAll(missilesPosition);
+            missilesPosition.nbrItems = 0;
+            memset(&missilesPosition.missile, 0, sizeof(missilesPosition.missile));
+        }
+    }
+    if (missilesPosition.nbrItems > 0) {
+        server->sendToAll(missilesPosition);
+    }
 }

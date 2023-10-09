@@ -9,6 +9,7 @@
 
 #include "Server.hpp"
 #include "../Parser.hpp"
+#include "Bullet.hpp"
 #include <memory>
 #include <vector>
 
@@ -69,6 +70,19 @@ class Game {
          *
          */
         void endGame();
+        std::vector<std::shared_ptr<Bullet>> getBullets() const;
+        /**
+         * @brief Send the ships to the clients
+         *
+         * @param server
+         */
+        void sendShips(std::shared_ptr<Server> server);
+        /**
+         * @brief Send the bullets to the clients
+         *
+         * @param server
+         */
+        void sendBullets(std::shared_ptr<Server> server);
 
     private:
         int _level;

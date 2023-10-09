@@ -89,4 +89,4 @@ namespace Communication {
             int id1;
             int id2;
     } CollisionEntities;
-}
+} // namespace Communication
