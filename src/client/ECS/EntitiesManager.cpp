@@ -8,6 +8,7 @@
 #include <iostream>
 #include "EntitiesManager.hpp"
 #include "Position.hpp"
+#include "Texture.hpp"
 
 namespace ECS {
     EntitiesManager::EntitiesManager()
@@ -64,16 +65,6 @@ namespace ECS {
         return 0;
     }
 
-    int EntitiesManager::updateEntities(std::any value, ComponentType compoType, std::vector<Entity> entitiesToUpdate)
-    {
-        std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> &list = _mapComponent[compoType];
-
-        for (auto &entity : entitiesToUpdate) {
-            list[entity.id.second].value()->setValue(value);
-        }
-        return 0;
-    }
-
     int EntitiesManager::updateEntities(std::vector<Action> actions)
     {
         std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> list;
@@ -100,10 +91,13 @@ namespace ECS {
                         std::shared_ptr<ECS::IComponent> componentT = entity.getComponent(ComponentType::Texture);
                         ECS::Texture texture = std::any_cast<ECS::Texture>(componentT->getValue());
                         for (auto &text : texture.currentTexture) {
-                            text = text + 1 > (texture.textureList.size() % texture.currentTexture.size()) ? (texture.textureList.size() % texture.currentTexture.size()) * idx : text + 1;
+                            std::cout << text + 1 << ">" << texture.textureList.size() / texture.currentTexture.size() * (idx + 1) - 1 << std::endl;
+                            text = text + 1 > texture.textureList.size() / texture.currentTexture.size() * (idx + 1) - 1 ? texture.textureList.size() / texture.currentTexture.size() * idx : text + 1;
                             idx++;
+                            std::cout << text << std::endl;
                         }
-                        list[entity.id.second].value()->setValue(std::any_cast<std::string>(componentT->getValue()));
+                        std::cout << std::endl;
+                        list[entity.id.second].value()->setValue(std::any_cast<ECS::Texture>(texture));
                     }
                     break;
                 case ActionType::Unknown:
