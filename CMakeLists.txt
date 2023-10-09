@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.11)
 
 project(r-type)
 
@@ -22,8 +22,8 @@ set(SERVER_SOURCES
 set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/client)
 
 set(CLIENT_SOURCES
-    # ${CLIENT_PATH}/Args.cpp
-    # ${CLIENT_PATH}/Client.cpp
+    ${CLIENT_PATH}/Args.cpp
+    ${CLIENT_PATH}/Client.cpp
     ${CLIENT_PATH}/main.cpp
     ${CLIENT_PATH}/ECS/Core.cpp
     ${CLIENT_PATH}/ECS/EntitiesManager.cpp
@@ -75,6 +75,7 @@ target_include_directories(r-type_client
 # GET THREADS
 
 find_package(Threads REQUIRED)
+find_package(raylib 4.5.0 QUIET)
 target_link_libraries(
     r-type_client
     PRIVATE
@@ -95,7 +96,6 @@ else()
     URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
     )
 endif()
-
 
 set(BOOST_RUNTIME_LINK static)
 
@@ -123,3 +123,10 @@ foreach(lib system asio property_tree)
         Boost::${lib}
     )
 endforeach()
+
+FetchContent_Declare(
+    raylib
+    DOWNLOAD_EXTRACT_TIMESTAMP OFF
+    URL https://github.com/raysan5/raylib/archive/refs/tags/4.5.0.tar.gz
+)
+target_link_libraries(r-type_client PRIVATE raylib)
