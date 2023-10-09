@@ -8,6 +8,7 @@
 #pragma once
 
 #include <any>
+#include <optional>
 #include "Enum.hpp"
 #include "Entity.hpp"
 
@@ -41,10 +42,10 @@ namespace ECS {
              */
             virtual void removeEntity() = 0;
             /**
-             * @brief Get the Name object
+             * @brief Get the Entity of the system
              * 
              * @return std::string 
              */
-            virtual std::string getName() const = 0;
+            virtual std::optional<Entity> getEntity() const = 0;
     };
 } // namespace ECS

@@ -61,6 +61,12 @@ namespace ECS
          * @return std::vector<EntityType>
          */
         std::vector<std::pair<std::vector<Entity>, EntityType>> getEntitiesToCreate();
+        /**
+         * @brief Get the Entities To be Deleted
+         * 
+         * @return std::vector<int> 
+         */
+        std::vector<Entity> getEntitiesToDelete();
 
     protected:
     private:
@@ -70,6 +76,7 @@ namespace ECS
         std::vector<Entity> _listEntities;
         std::map<ComponentType, std::vector<std::optional<std::shared_ptr<ECS::IComponent>>>> _mapComponent;
         std::vector<std::pair<std::vector<Entity>, EntityType>> _entitiesToCreate;
+        std::vector<Entity> _entitiesToDelete;
         int _sizeListComponents;
     };
 } // namespace ECS

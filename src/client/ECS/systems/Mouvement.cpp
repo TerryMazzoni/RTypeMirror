@@ -14,7 +14,6 @@ namespace ECS
     Mouvement::Mouvement()
     {
         _goRight = true;
-        _name = "Mouvement";
     }
 
     std::vector<Action> Mouvement::execute()

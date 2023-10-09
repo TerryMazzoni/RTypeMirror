@@ -93,7 +93,7 @@ namespace ECS
                 }
                 break;
             case ActionType::Shoot:
-                _entitiesToCreate.push_back(std::make_pair(std::get<0>(action) ,EntityType::Bullet));
+                _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), EntityType::Bullet));
                 break;
             case ActionType::ChangeTexture:
                 list = _mapComponent[ComponentType::Texture];
@@ -138,5 +138,22 @@ namespace ECS
     std::vector<std::pair<std::vector<Entity>, EntityType>> EntitiesManager::getEntitiesToCreate()
     {
         return _entitiesToCreate;
+    }
+
+    std::vector<Entity> EntitiesManager::getEntitiesToDelete()
+    {
+        _entitiesToDelete.clear();
+        for (auto &entity : _listEntities)
+        {
+            std::shared_ptr<ECS::IComponent> position = entity.getComponent(ComponentType::Position);
+            float x = std::any_cast<ECS::Position>(position->getValue()).x;
+            float y = std::any_cast<ECS::Position>(position->getValue()).y;
+
+            if (x < -100 || y < -100 || x > 2020 || y > 1180)
+            {
+                _entitiesToDelete.push_back(entity);
+            }
+        }
+        return _entitiesToDelete;
     }
 } // namespace ECS
