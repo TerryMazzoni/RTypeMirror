@@ -43,7 +43,7 @@ Table of Contents :
 
 Tom                             Standards Track                        [Page 1]
 
-RFC 7938                        R-TYPE PROTOCOL                  September 2023
+RFC 9999                        R-TYPE PROTOCOL                  September 2023
 
 2. ARCHITECTURE :
 
@@ -89,7 +89,7 @@ RFC 7938                        R-TYPE PROTOCOL                  September 2023
 
 Tom                             Standards Track                        [Page 2]
 
-RFC 7938                        R-TYPE PROTOCOL                  September 2023
+RFC 9999                        R-TYPE PROTOCOL                  September 2023
 
 4. UDP PROTOCOL :
 
