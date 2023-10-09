@@ -33,7 +33,7 @@ namespace Communication {
         READY,
         SHIPS,
         MISSILES,
-        COLISION_ENTITIES,
+        COLISION,
         INPUT
     };
 
@@ -94,8 +94,8 @@ namespace Communication {
             size_t nbrItems;
     } MissilesPosition;
 
-    typedef struct CollisionEntities {
-            CommunicationTypes code = CommunicationTypes::COLISION_ENTITIES;
+    typedef struct Colision {
+            CommunicationTypes code = CommunicationTypes::COLISION;
             int id1;
             int id2;
     } CollisionEntities;

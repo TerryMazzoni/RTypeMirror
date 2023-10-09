@@ -167,13 +167,13 @@ void Game::updateGame(std::shared_ptr<Server> server)
             entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) - 1;
         }
         if (entity.type == "missile") {
-            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{std::any_cast<int>(entity.instance["x"]), std::any_cast<int>(entity.instance["y"])}, 1, Communication::Position{std::any_cast<float>(entity.instance["direction_x"]), std::any_cast<float>(entity.instance["direction_y"])}, std::any_cast<float>(entity.instance["speed"]), 1, 1));
+            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, Communication::Position{std::any_cast<float>(entity.instance["direction_x"]), std::any_cast<float>(entity.instance["direction_y"])}, std::any_cast<float>(entity.instance["speed"]), 1, 1));
         }
         else if (entity.type == "player") {
-            _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<int>(entity.instance["x"]), std::any_cast<int>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::PLAYER));
+            _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::PLAYER));
         }
         else if (entity.type == "enemy") {
-            _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<int>(entity.instance["x"]), std::any_cast<int>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
+            _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
         }
     }
     sendShips(server);

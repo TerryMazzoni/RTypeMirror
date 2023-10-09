@@ -77,6 +77,38 @@ void Client::processMessage(const std::string &msg)
         else
             std::cout << "Not ready" << std::endl;
     }
+    else if (header->type == Communication::CommunicationTypes::SHIPS) {
+        Communication::ShipsPosition *ships = reinterpret_cast<Communication::ShipsPosition *>(data);
+        std::cout << "Ships: " << ships->nbrItems << std::endl;
+        for (int i = 0; i < ships->nbrItems; i++) {
+            std::cout << "Ship " << i << ": " << std::endl;
+            std::cout << "ID: " << ships->ship[i].id << std::endl;
+            std::cout << "Life: " << ships->ship[i].life << std::endl;
+            std::cout << "Level: " << ships->ship[i].level << std::endl;
+            std::cout << "Type: " << static_cast<int>(ships->ship[i].type) << std::endl;
+            std::cout << "Position: " << std::endl;
+            std::cout << "       X: " << ships->ship[i].position.x << std::endl;
+            std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
+        }
+    }
+    else if (header->type == Communication::CommunicationTypes::MISSILES) {
+        Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
+        std::cout << "Missiles: " << missiles->nbrItems << std::endl;
+        for (int i = 0; i < missiles->nbrItems; i++) {
+            std::cout << "Missile " << i << ": " << std::endl;
+            std::cout << "ID: " << missiles->missile[i].id << std::endl;
+            std::cout << "Position: " << std::endl;
+            std::cout << "X: " << missiles->missile[i].position.x << std::endl;
+            std::cout << "Y: " << missiles->missile[i].position.y << std::endl;
+        }
+    }
+    else if (header->type == Communication::CommunicationTypes::COLISION) {
+        Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
+        std::cout << "Colisions between: " << colision->id1 << " and " << colision->id2 << std::endl;
+    }
+    else {
+        std::cout << "Unknown message" << std::endl;
+    }
 }
 
 void Client::receiveAsync()
