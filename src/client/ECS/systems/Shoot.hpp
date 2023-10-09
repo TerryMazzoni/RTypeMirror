@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** RTypeMirror
 ** File description:
-** Mouvement
+** Shoot
 */
 
 #pragma once
@@ -11,22 +11,19 @@
 
 namespace ECS
 {
-
-    class Mouvement : public ASystem
+    class Shoot : public ASystem
     {
     public:
-        Mouvement();
-        ~Mouvement() = default;
+        Shoot();
+        ~Shoot() = default;
 
         /**
-         * @brief Execute the system logic
-         *
-         * @return std::vector<Action>
+         * @brief Execute the Shoot system for the spaceship
+         * 
+         * @return std::vector<Action> 
          */
         std::vector<Action> execute();
-
     private:
-        bool _goRight;
+        int _count;
     };
-
 }

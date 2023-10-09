@@ -10,6 +10,11 @@
 
 namespace ECS
 {
+    ChangeTexture::ChangeTexture()
+    {
+        _name = "ChangeTexture";
+    }
+
     std::vector<Action> ChangeTexture::execute()
     {
         std::vector<Action> actions = {};

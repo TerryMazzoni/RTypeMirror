@@ -40,9 +40,16 @@ namespace ECS {
              * @return bool 
              */
             void removeEntity();
+            /**
+             * @brief Get the Name object
+             * 
+             * @return std::string 
+             */
+            std::string getName() const;
 
         protected:
             bool _isActivated = true;
+            std::string _name;
             std::optional<Entity> _entity;
     };
 } // namespace ECS

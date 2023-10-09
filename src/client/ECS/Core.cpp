@@ -7,10 +7,13 @@
 
 #include <iostream>
 #include "Core.hpp"
+#include "BulletMouvement.hpp"
 #include "Mouvement.hpp"
+#include "Shoot.hpp"
 #include "ChangeTexture.hpp"
 
-namespace ECS {
+namespace ECS
+{
 
     Core::Core()
     {
@@ -29,7 +32,6 @@ namespace ECS {
         background.components.push_back(componentBP);
         background.id = {EntityType::Background, 2};
 
-
         Entity entity;
         std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4");
         componentT->setType(ComponentType::Texture);
@@ -44,6 +46,8 @@ namespace ECS {
         _eventManager.setMyPlayer(entity);
         std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
         changeTexture->setEntity(entity);
+        std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
+        shoot->setEntity(entity);
 
         Entity entity2;
         std::shared_ptr<ECS::IComponent> component2T = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png");
@@ -56,8 +60,7 @@ namespace ECS {
         std::shared_ptr<ISystem> mouvement = std::make_shared<Mouvement>(Mouvement());
         mouvement->setEntity(entity2);
 
-        _systemManager.addSystems({mouvement});
-        _systemManager.addSystems({changeTexture});
+        _systemManager.addSystems({mouvement, changeTexture, shoot});
         _entitiesManager.addEntities({background, entity, entity2});
     }
 
@@ -69,16 +72,59 @@ namespace ECS {
     int Core::run()
     {
         std::set<Input> inputs;
-        while (!Raylib::windowShouldClose()) {
+        while (!Raylib::windowShouldClose())
+        {
             Raylib::clear(Raylib::RlColor(0, 0, 0));
             _eventManager.executeInputs(inputs);
             _entitiesManager.updateEntities(_eventManager.getActions());
             _entitiesManager.updateEntities(_systemManager.execute());
+            createEntities();
             Raylib::beginDraw();
             inputs = Raylib::getInputs();
             _graph.displayEntities(_entitiesManager.getEntities());
             Raylib::endDraw();
         }
         return 0;
+    }
+
+    void Core::createEntities()
+    {
+        std::vector<std::pair<std::vector<Entity>, EntityType>> entities =  _entitiesManager.getEntitiesToCreate();
+        
+        for (auto &entities : entities)
+        {   
+            switch (entities.second)
+            {
+            case EntityType::Bullet:
+                for (Entity entity : entities.first) {
+                    createBullet(entity);
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    void Core::createBullet(Entity entity)
+    {
+        Entity bullet;
+
+        std::shared_ptr<ECS::IComponent> texture = ECS::Factory::createComponent(ComponentType::Texture, "assets/bullet/ammu1.png");
+        texture->setType(ComponentType::Texture);
+        bullet.components.push_back(texture);
+        std::shared_ptr<ECS::IComponent> componentP = entity.getComponent(ComponentType::Position);
+        float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
+        float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
+        std::shared_ptr<ECS::IComponent> position = ECS::Factory::createComponent(ComponentType::Position, std::to_string(x + 64 * 3) + "," + std::to_string(y + 32 * 3));
+        position->setType(ComponentType::Position);
+        bullet.components.push_back(position);
+        bullet.id = {EntityType::Bullet, _entitiesManager.getEntities().size()};
+
+        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
+        bulletMouvement->setEntity(bullet);
+        
+        _entitiesManager.addEntities({bullet});
+        _systemManager.addSystems({bulletMouvement});
     }
 } // namespace ECS

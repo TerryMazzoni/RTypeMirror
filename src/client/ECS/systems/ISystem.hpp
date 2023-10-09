@@ -40,5 +40,11 @@ namespace ECS {
              * @return bool 
              */
             virtual void removeEntity() = 0;
+            /**
+             * @brief Get the Name object
+             * 
+             * @return std::string 
+             */
+            virtual std::string getName() const = 0;
     };
 } // namespace ECS

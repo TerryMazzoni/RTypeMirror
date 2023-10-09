@@ -65,15 +65,12 @@ std::shared_ptr<ECS::IComponent> ECS::Factory::createTexture(const std::string &
     for (size_t i = 0; i < value.size(); i++) {
         if (value[i] == ',') {
             text.push_back(value.substr(j, i - j));
-            std::cout << value.substr(j, i - j) << std::endl;
             j = i + 1;
         }
     }
     text.push_back(value.substr(j, value.size()));
-    std::cout << value.substr(j, value.size()) << std::endl;
     j = 0;
     for (auto val : text) {
-        std::cout << val << std::endl;
         for (size_t i = 0; i < val.length(); i++) {
             if (!(digit = isdigit(val[i]))) {
                 break;
