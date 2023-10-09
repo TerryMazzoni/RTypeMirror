@@ -1,8 +1,17 @@
 mkdir -p build
 cd build
 cmake ..
-cmake --build . -- -j 3
+
+if cmake --build . -- -j 3; then
+    echo "Compilation successful!"
+    result=0
+else
+    echo "Compilation failed!"
+    result=1
+fi
+
 cd ..
+
 echo "
 Done!
 Launch with:
@@ -17,3 +26,5 @@ USAGE: ./r-type_client -p port -i ip [-m]
     ip      is the ip of the server; localhost by default
     m       if present, mute the gui
 "
+
+exit $result
