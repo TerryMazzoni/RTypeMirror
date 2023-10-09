@@ -69,11 +69,12 @@ namespace ECS
         Raylib::closeWindow();
     }
 
-    int Core::run()
+    int Core::run(std::shared_ptr<Client> client)
     {
+        Communication::Quit quit;
         std::set<Input> inputs;
-        while (!Raylib::windowShouldClose())
-        {
+
+        while (!Raylib::windowShouldClose() and is_running(0)) {
             Raylib::clear(Raylib::RlColor(0, 0, 0));
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
@@ -87,6 +88,8 @@ namespace ECS
             _graph.displayEntities(_entitiesManager.getEntities());
             Raylib::endDraw();
         }
+        is_running(1);
+        client->send(quit);
         return 0;
     }
 

@@ -11,7 +11,7 @@
 #include "ECS.hpp"
 #include "Raylib.hpp"
 #include "Graph.hpp"
-// #include "SystemManager.hpp"
+#include "Client.hpp"
 
 namespace ECS {
     class Core {
@@ -21,9 +21,10 @@ namespace ECS {
             /**
              * @brief Run the client loop
              * 
+             * @param std::shared_ptr<Client> 
              * @return int 
              */
-            int run();
+            int run(std::shared_ptr<Client>);
 
         private:
             void createEntities();
