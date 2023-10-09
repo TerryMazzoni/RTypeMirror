@@ -54,6 +54,11 @@ void Bullet::setId(int id)
     _id = id;
 }
 
+void Bullet::setTeam(int team)
+{
+    _team = team;
+}
+
 Communication::Position Bullet::getPos() const
 {
     return _pos;
@@ -77,4 +82,9 @@ float Bullet::getDamage() const
 int Bullet::getId() const
 {
     return _id;
+}
+
+int Bullet::getTeam() const
+{
+    return _team;
 }

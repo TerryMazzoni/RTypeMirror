@@ -16,6 +16,15 @@ enum class ShipType {
 };
 
 namespace Communication {
+
+    enum class EventInput {
+        Key_up,
+        Key_down,
+        Key_left,
+        Key_right,
+        Left_click
+    };
+
     enum class CommunicationTypes {
         UNKNOWN,
         ID,
@@ -25,6 +34,7 @@ namespace Communication {
         SHIPS,
         MISSILES,
         COLISION,
+        INPUT
     };
 
     typedef struct Header {
@@ -44,7 +54,7 @@ namespace Communication {
             ShipType type;
     } SpaceShip;
 
-    typedef struct ShipsPosition {
+    typedef struct ShipsList {
             CommunicationTypes code = CommunicationTypes::SHIPS;
             SpaceShip ship[32];
             size_t nbrItems;
@@ -88,5 +98,11 @@ namespace Communication {
             CommunicationTypes code = CommunicationTypes::COLISION;
             int id1;
             int id2;
-    } Colision;
+    } CollisionEntities;
+
+    typedef struct Input {
+            CommunicationTypes type = CommunicationTypes::INPUT;
+            EventInput event[16];
+            size_t nbrItems;
+    } Input;
 } // namespace Communication
