@@ -101,11 +101,50 @@ void Game::updateGame(std::shared_ptr<Server> server)
         }
         for (auto &communication : server->getInput()) {
             for (int i = 0; i < communication.second.nbrItems; i++) {
-                std::cout << "Client : " << communication.first << ", Communication : " << (int)communication.second.event[i] << std::endl;
+                if (entity.type == "player" && std::any_cast<int>(entity.instance["id"]) == communication.first) {
+                    if (entity.instance.find("speed") == entity.instance.end())
+                        entity.instance["speed"] = 1;
+                    for (int i = 0; i < communication.second.nbrItems; i++) {
+                        switch (communication.second.event[i]) {
+                            case Communication::EventInput::Key_up:
+                                entity.instance["y"] = std::any_cast<float>(entity.instance["y"]) - 1 * std::any_cast<float>(entity.instance["speed"]);
+                                break;
+                            case Communication::EventInput::Key_down:
+                                entity.instance["y"] = std::any_cast<float>(entity.instance["y"]) + 1 * std::any_cast<float>(entity.instance["speed"]);
+                                break;
+                            case Communication::EventInput::Key_left:
+                                entity.instance["x"] = std::any_cast<float>(entity.instance["x"]) - 1 * std::any_cast<float>(entity.instance["speed"]);
+                                break;
+                            case Communication::EventInput::Key_right:
+                                entity.instance["x"] = std::any_cast<float>(entity.instance["x"]) + 1 * std::any_cast<float>(entity.instance["speed"]);
+                                break;
+                            case Communication::EventInput::Left_click:
+                                _entities.push_back(static_cast<Parser::entity_t>(
+                                    Parser::entity_t({"missile",
+                                                      {std::vector<std::string>({})},
+                                                      std::map<std::string, std::any>{
+                                                          {"x", std::any_cast<int>(entity.instance["x"])},
+                                                          {"y", std::any_cast<int>(entity.instance["y"])},
+                                                          {"speed", 2},
+                                                          {"id", std::any_cast<int>(entity.instance["id"])},
+                                                          {"direction_x", 1.0},
+                                                          {"direction_y", 0.0}},
+                                                      std::map<std::string, Parser::type_t>{
+                                                          {"x", Parser::type_t::INT},
+                                                          {"y", Parser::type_t::INT},
+                                                          {"speed", Parser::type_t::FLOAT},
+                                                          {"id", Parser::type_t::INT},
+                                                          {"direction_x", Parser::type_t::FLOAT},
+                                                          {"direction_y", Parser::type_t::FLOAT}}})));
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
-            //if (std::any_cast<int>(entity.instance["id"]) == communication.) {
-            //    // HANDLE PLAYER POSITION OR ACTION
-            //}
+            // if (std::any_cast<int>(entity.instance["id"]) == communication.) {
+            //     // HANDLE PLAYER POSITION OR ACTION
+            // }
         }
         server->clearInput();
         if (entity.type != "__tile__") {
@@ -115,11 +154,18 @@ void Game::updateGame(std::shared_ptr<Server> server)
                     if (std::any_cast<int>(entity.instance["x"]) == std::any_cast<int>(entity_colision.instance["x"]) && std::any_cast<int>(entity.instance["y"]) == std::any_cast<int>(entity_colision.instance["y"])) {
                         std::cout << "COLISION" << std::endl;
                         if (std::any_cast<int>(entity.instance["hp"]) != 0) {
-                            entity.instance["hp"] = std::any_cast<int>(entity.instance["hp"]) - 1;
+                            entity.instance["hp"] = 0;
                         }
                     }
                 }
             }
+        }
+        if (entity.type == "missile") {
+            entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) + std::any_cast<float>(entity.instance["direction_x"]) * std::any_cast<float>(entity.instance["speed"]);
+            entity.instance["y"] = std::any_cast<int>(entity.instance["y"]) + std::any_cast<float>(entity.instance["direction_y"]) * std::any_cast<float>(entity.instance["speed"]);
+        }
+        if (entity.type != "player" || entity.type != "missile") {
+            entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) - 1;
         }
     }
 }

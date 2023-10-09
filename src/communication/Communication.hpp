@@ -25,7 +25,6 @@ namespace Communication {
         QUIT,
         TIMER,
         READY,
-        POSITION,
         MATES_POSITION,
         ENNEMIES_POSITION,
         MISSILES_POSITION,
