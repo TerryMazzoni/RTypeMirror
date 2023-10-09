@@ -1,19 +1,27 @@
+if ! command -v nproc &>/dev/null; then
+    num_threads=4
+else
+    num_threads=$(nproc)
+fi
+
+threads_to_use=$((num_threads - 1))
+
+echo "Using $threads_to_use threads to compile"
+
 mkdir -p build
 cd build
 cmake ..
 
-if cmake --build . -- -j 3; then
+if cmake --build . -- -j $threads_to_use; then
     echo "Compilation successful!"
-    result=0
 else
     echo "Compilation failed!"
-    result=1
+    exit 1
 fi
 
 cd ..
 
 echo "
-Done!
 Launch with:
 
 ./r-type_server
@@ -27,4 +35,4 @@ USAGE: ./r-type_client -p port -i ip [-m]
     m       if present, mute the gui
 "
 
-exit $result
+exit 0
