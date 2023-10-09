@@ -16,6 +16,11 @@ namespace ECS {
             Mouvement();
             ~Mouvement() = default;
 
+            /**
+             * @brief Execute the system logic
+             * 
+             * @return std::vector<Action> 
+             */
             std::vector<Action> execute();
 
         private:

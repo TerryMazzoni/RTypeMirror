@@ -16,9 +16,29 @@ namespace ECS {
         public:
             ~ASystem() = default;
 
+            /**
+             * @brief Execute the system logic
+             * 
+             * @return std::vector<Action> 
+             */
             virtual std::vector<Action> execute() = 0;
+            /**
+             * @brief Set the system activation
+             * 
+             * @param bool
+             */
             void setActivation(bool state);
+            /**
+             * @brief Set the entity of the system
+             * 
+             * @param Entity 
+             */
             void setEntity(Entity entity);
+            /**
+             * @brief Remove the entity from the system
+             * 
+             * @return bool 
+             */
             void removeEntity();
 
         protected:

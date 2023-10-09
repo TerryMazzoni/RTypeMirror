@@ -21,11 +21,33 @@ namespace ECS {
         public:
             EventManager();
             ~EventManager();
+
+            /**
+             * @brief Set the My Player object
+             * 
+             * @param Entity
+             */
             void setMyPlayer(Entity my);
+            /**
+             * @brief Execute player inputs
+             * 
+             * @param std::set<Input>
+             * @return int 
+             */
             int executeInputs(std::set<Input>);
+            /**
+             * @brief Get the Actions object
+             * 
+             * @return std::vector<Action> 
+             */
             std::vector<Action> getActions() const;
 
         private:
+            /**
+             * @brief Move the player entity
+             * 
+             * @param EventInput
+             */
             void movePlayer(EventInput dir);
 
             Entity _myPlayer;

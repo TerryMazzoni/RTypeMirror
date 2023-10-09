@@ -18,6 +18,11 @@ namespace ECS {
         public:
             Core();
             ~Core();
+            /**
+             * @brief Run the client loop
+             * 
+             * @return int 
+             */
             int run();
 
         private:

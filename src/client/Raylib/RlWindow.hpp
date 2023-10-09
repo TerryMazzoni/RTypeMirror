@@ -15,10 +15,10 @@ namespace Raylib
     /**
      * @brief Init the window
      *
-     * @param width Width of the window
-     * @param height Height of the window
-     * @param title Title of the window
-     * @param fps Framerate of the window
+     * @param int Width of the window
+     * @param int Height of the window
+     * @param std::string Title of the window
+     * @param int Framerate of the window
      */
     void initWindow(int width, int height, const std::string title, int fps);
     /**

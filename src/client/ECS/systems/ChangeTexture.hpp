@@ -15,6 +15,11 @@ namespace ECS {
             ChangeTexture() = default;
             ~ChangeTexture() = default;
 
+            /**
+             * @brief Execute the system logic
+             * 
+             * @return std::vector<Action> 
+             */
             std::vector<Action> execute();
     };
 }

@@ -20,6 +20,12 @@ namespace ECS {
             EntityId id;
             std::vector<std::shared_ptr<ECS::IComponent>> components;
 
+            /**
+             * @brief Get a shared pointer to the Component object
+             * 
+             * @param ComponentType
+             * @return std::shared_ptr<ECS::IComponent> 
+             */
             std::shared_ptr<ECS::IComponent> getComponent(ComponentType type);
     };
 } // namespace ECS
