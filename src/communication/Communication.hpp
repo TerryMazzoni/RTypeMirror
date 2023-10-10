@@ -100,9 +100,9 @@ namespace Communication {
             int id2;
     } CollisionEntities;
 
-    typedef struct Input {
+    typedef struct Inputs {
             CommunicationTypes type = CommunicationTypes::INPUT;
             EventInput event[16];
             size_t nbrItems;
-    } Input;
+    } Inputs;
 } // namespace Communication

@@ -66,10 +66,10 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
             _game_status = 0;
     }
     else if (header->type == Communication::CommunicationTypes::INPUT) {
-        Communication::Input input = *reinterpret_cast<Communication::Input *>(data);
+        Communication::Inputs input = *reinterpret_cast<Communication::Inputs *>(data);
         for (auto &c : _clients) {
             if (c.getEndpoint() == client)
-                _inputs.push_back(std::pair<int, Communication::Input>(c.getId(), input));
+                _inputs.push_back(std::pair<int, Communication::Inputs>(c.getId(), input));
         }
     }
     for (auto &c : _clients) {
@@ -174,7 +174,7 @@ void Server::setGameStatus(int status)
     _game_status = status;
 }
 
-std::vector<std::pair<int, Communication::Input>> Server::getInput() const
+std::vector<std::pair<int, Communication::Inputs>> Server::getInput() const
 {
     return _inputs;
 }
