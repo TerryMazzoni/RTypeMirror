@@ -12,8 +12,7 @@
 #include "Shoot.hpp"
 #include "ChangeTexture.hpp"
 
-namespace ECS
-{
+namespace ECS {
 
     Core::Core()
     {
@@ -85,6 +84,7 @@ namespace ECS
             createEntities();
             Raylib::beginDraw();
             inputs = Raylib::getInputs();
+            client->setEvents(transformInputsForClient(inputs));
             _graph.displayEntities(_entitiesManager.getEntities());
             Raylib::endDraw();
         }
@@ -93,21 +93,30 @@ namespace ECS
         return 0;
     }
 
+    std::vector<EventInput> Core::transformInputsForClient(std::set<Input> inputs)
+    {
+        std::vector<EventInput> eventInputs;
+
+        for (auto input : inputs)
+        {
+            eventInputs.push_back((EventInput)std::get<1>(input));
+        }
+        return eventInputs;
+    }
+
     void Core::createEntities()
     {
-        std::vector<std::pair<std::vector<Entity>, EntityType>> entities =  _entitiesManager.getEntitiesToCreate();
-        
-        for (auto &entities : entities)
-        {   
-            switch (entities.second)
-            {
-            case EntityType::Bullet:
-                for (Entity entity : entities.first) {
-                    createBullet(entity);
-                }
-                break;
-            default:
-                break;
+        std::vector<std::pair<std::vector<Entity>, EntityType>> entities = _entitiesManager.getEntitiesToCreate();
+
+        for (auto &entities : entities) {
+            switch (entities.second) {
+                case EntityType::Bullet:
+                    for (Entity entity : entities.first) {
+                        createBullet(entity);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -129,7 +138,7 @@ namespace ECS
 
         std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
         bulletMouvement->setEntity(bullet);
-        
+
         _entitiesManager.addEntities({bullet});
         _systemManager.addSystems({bulletMouvement});
     }

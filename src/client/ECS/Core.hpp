@@ -27,6 +27,7 @@ namespace ECS {
             int run(std::shared_ptr<Client>);
 
         private:
+            std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
             void createEntities();
             void createBullet(Entity entity);
 

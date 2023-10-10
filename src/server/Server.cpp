@@ -68,8 +68,9 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
     else if (header->type == Communication::CommunicationTypes::INPUT) {
         Communication::Inputs input = *reinterpret_cast<Communication::Inputs *>(data);
         for (auto &c : _clients) {
-            if (c.getEndpoint() == client)
+            if (c.getEndpoint() == client) {
                 _inputs.push_back(std::pair<int, Communication::Inputs>(c.getId(), input));
+            }
         }
     }
     for (auto &c : _clients) {
