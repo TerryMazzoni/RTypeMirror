@@ -75,15 +75,32 @@ target_include_directories(r-type_client
 # GET THREADS
 
 find_package(Threads REQUIRED)
-find_package(raylib 4.5.0 QUIET)
 target_link_libraries(
     r-type_client
     PRIVATE
     Threads::Threads
 )
 
-# BOOST FETCHING PART
+
 include(FetchContent)
+find_package(raylib 4.5.0 QUIET)
+if (NOT raylib_FOUND)
+    FetchContent_Declare(
+        raylib
+        URL https://github.com/raysan5/raylib/archive/refs/tags/4.5.0.tar.gz
+        # DOWNLOAD_EXTRACT_TIMESTAMP ON
+    )
+    FetchContent_GetProperties(raylib)
+    if (NOT raylib_POPULATED)
+        FetchContent_Populate(raylib)
+        set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+        add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+    endif()
+endif()
+
+target_link_libraries(r-type_client PRIVATE raylib)
+
+# BOOST FETCHING PART
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     FetchContent_Declare(
     Boost
@@ -94,6 +111,7 @@ else()
     FetchContent_Declare(
     Boost
     URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
+    # DOWNLOAD_EXTRACT_TIMESTAMP ON
     )
 endif()
 
@@ -123,10 +141,3 @@ foreach(lib system asio property_tree)
         Boost::${lib}
     )
 endforeach()
-
-FetchContent_Declare(
-    raylib
-    DOWNLOAD_EXTRACT_TIMESTAMP OFF
-    URL https://github.com/raysan5/raylib/archive/refs/tags/4.5.0.tar.gz
-)
-target_link_libraries(r-type_client PRIVATE raylib)
