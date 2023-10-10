@@ -29,7 +29,7 @@ namespace ECS {
         std::shared_ptr<ECS::IComponent> componentBP = ECS::Factory::createComponent(ComponentType::Position, "0,0");
         componentBP->setType(ComponentType::Position);
         background.components.push_back(componentBP);
-        background.id = {EntityType::Background, 2};
+        background.id = {EntityType::Background, 0};
 
         Entity entity;
         std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4");
@@ -41,7 +41,7 @@ namespace ECS {
         std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, "3");
         componentS->setType(ComponentType::Scale);
         entity.components.push_back(componentS);
-        entity.id = {EntityType::Player, 0};
+        entity.id = {EntityType::Background, 1};
         _eventManager.setMyPlayer(entity);
         std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
         changeTexture->setEntity(entity);
@@ -55,7 +55,7 @@ namespace ECS {
         std::shared_ptr<ECS::IComponent> component2P = ECS::Factory::createComponent(ComponentType::Position, "300,100");
         component2P->setType(ComponentType::Position);
         entity2.components.push_back(component2P);
-        entity2.id = {EntityType::Player, 1};
+        entity2.id = {EntityType::Player, 2};
         std::shared_ptr<ISystem> mouvement = std::make_shared<Mouvement>(Mouvement());
         mouvement->setEntity(entity2);
 
