@@ -10,6 +10,7 @@
 #include "Server.hpp"
 #include <signal.h>
 #include <thread>
+#include "Parser.hpp"
 
 std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
 {
@@ -36,6 +37,7 @@ int main(int ac, char **av)
     std::thread receiveThread;
     std::thread runThread;
     std::shared_ptr<Game> game = std::make_shared<Game>();
+    std::vector<Parser::entity_t> players = {};
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;

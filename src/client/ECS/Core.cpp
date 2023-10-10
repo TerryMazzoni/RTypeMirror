@@ -20,7 +20,7 @@ namespace ECS
     Core::Core()
     {
         std::vector<Parser::entity_t> entities;
-        int id = 0;
+        int id = 6;
 
         try {
             entities = Parser::ParserJson("assets/test.json").parse().getEntities();
@@ -40,7 +40,7 @@ namespace ECS
         std::shared_ptr<ECS::IComponent> componentBP = ECS::Factory::createComponent(ComponentType::Position, "0,0");
         componentBP->setType(ComponentType::Position);
         background.components.push_back(componentBP);
-        background.id = {EntityType::Background, 2};
+        background.id = {EntityType::Background, 5};
 
         _entitiesManager.addEntities({background});
 
@@ -118,6 +118,7 @@ namespace ECS
             createEntities();
             Raylib::beginDraw();
             inputs = Raylib::getInputs();
+            client->setEvents(transformInputsForClient(inputs));
             _graph.displayEntities(_entitiesManager.getEntities());
             Raylib::endDraw();
         }
@@ -126,21 +127,29 @@ namespace ECS
         return 0;
     }
 
+    std::vector<EventInput> Core::transformInputsForClient(std::set<Input> inputs)
+    {
+        std::vector<EventInput> eventInputs;
+
+        for (auto input : inputs) {
+            eventInputs.push_back((EventInput)std::get<1>(input));
+        }
+        return eventInputs;
+    }
+
     void Core::createEntities()
     {
-        std::vector<std::pair<std::vector<Entity>, EntityType>> entities =  _entitiesManager.getEntitiesToCreate();
-        
-        for (auto &entities : entities)
-        {   
-            switch (entities.second)
-            {
-            case EntityType::Bullet:
-                for (Entity entity : entities.first) {
-                    createBullet(entity);
-                }
-                break;
-            default:
-                break;
+        std::vector<std::pair<std::vector<Entity>, EntityType>> entities = _entitiesManager.getEntitiesToCreate();
+
+        for (auto &entities : entities) {
+            switch (entities.second) {
+                case EntityType::Bullet:
+                    for (Entity entity : entities.first) {
+                        createBullet(entity);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -162,7 +171,6 @@ namespace ECS
 
         std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
         bulletMouvement->setEntity(bullet);
-        
         _entitiesManager.addEntities({bullet});
         _systemManager.addSystems({bulletMouvement});
     }

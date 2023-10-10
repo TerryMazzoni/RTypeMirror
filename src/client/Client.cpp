@@ -139,7 +139,7 @@ void Client::receiveAsync()
 
 void Client::run()
 {
-    boost::posix_time::milliseconds ms(500);
+    boost::posix_time::milliseconds ms(50);
     boost::asio::deadline_timer t(getIoService(), ms);
 
     if (!is_running(0))
@@ -161,6 +161,18 @@ void Client::run()
                     Communication::Ready ready;
                     ready.is_ready = false;
                     this->send(ready);
+                }
+                if (_game_started) {
+                    Communication::Inputs input;
+
+                    input.nbrItems = _events.size() > 16 ? 16 : _events.size();
+                    for (size_t i = 0; i < input.nbrItems; i++) {
+                        input.event[i] = (Communication::EventInput)_events[i];
+                    }
+                    input.type = Communication::CommunicationTypes::INPUT;
+                    if (input.nbrItems > 0)
+                        this->send(input);
+                    _events.clear();
                 }
             }
             if (!is_running(0))
@@ -193,4 +205,9 @@ bool Client::getIsReady() const
 void Client::setIsReady(bool is_ready)
 {
     _is_ready = is_ready;
+}
+
+void Client::setEvents(std::vector<EventInput> events)
+{
+    _events = events;
 }

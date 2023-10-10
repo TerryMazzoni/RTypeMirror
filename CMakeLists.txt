@@ -2,7 +2,11 @@ cmake_minimum_required(VERSION 3.11)
 
 project(r-type)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(SERVER_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/server)
 
@@ -11,9 +15,10 @@ set(SERVER_SOURCES
     ${SERVER_PATH}/main.cpp
     ${SERVER_PATH}/Server.cpp
     ${SERVER_PATH}/Client.cpp
-    ${SERVER_PATH}/game/Ship.cpp
-    ${SERVER_PATH}/game/Bullet.cpp
     ${SERVER_PATH}/game/Game.cpp
+    ${SERVER_PATH}/game/Bullet.cpp
+    ${SERVER_PATH}/game/Ship.cpp
+    ${SRC_PATH}/Parser.cpp
 )
 
 set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/client)
@@ -56,6 +61,7 @@ target_include_directories(r-type_server
         ${CMAKE_CURRENT_SOURCE_DIR}/src/communication/
         ${SERVER_PATH}/game/
         ${SERVER_PATH}/
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/
 )
 
 target_include_directories(r-type_client

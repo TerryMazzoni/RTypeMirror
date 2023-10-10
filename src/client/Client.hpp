@@ -10,6 +10,7 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "Enum.hpp"
 #include "Communication.hpp"
 
 using boost::asio::ip::udp;
@@ -89,6 +90,12 @@ class Client {
          * @param is_ready
          */
         void setIsReady(bool is_ready);
+        /**
+         * @brief Set the Events Input for the server
+         * 
+         * @param events 
+         */
+        void setEvents(std::vector<EventInput> events);
 
     private:
         boost::asio::io_service _io_service;
@@ -97,4 +104,5 @@ class Client {
         int _id;
         bool _is_ready;
         bool _game_started;
+        std::vector<EventInput> _events;
 };

@@ -23,33 +23,33 @@ class Graph {
 
         /**
          * @brief Get the Inputs list
-         * 
-         * @return std::set<Input> 
+         *
+         * @return std::set<Input>
          */
         std::set<Input> getInputs() const;
         /**
          * @brief Display the entity vector
-         * 
+         *
          * @param std::vector<Entity>
          * @return int
          */
-        int displayEntities(std::vector<ECS::Entity> entities);
+        int displayEntities(std::vector<std::optional<ECS::Entity>> entities);
 
     protected:
     private:
         /**
          * @brief Display a texture entity
-         * 
-         * @param Entity 
-         * @return int 
+         *
+         * @param Entity
+         * @return int
          */
         int displayTexture(ECS::Entity &entity);
         /**
          * @brief Display a text entity
-         * 
-         * @param Entity 
+         *
+         * @param Entity
          * @return int
-        */
+         */
         int displayText(ECS::Entity &entity);
         std::vector<Input> _events;
 };

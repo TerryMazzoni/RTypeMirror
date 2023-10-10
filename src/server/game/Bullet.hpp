@@ -60,6 +60,12 @@ class Bullet {
          */
         void setId(int id);
         /**
+         * @brief Set the Id of the Team
+         *
+         * @param team
+         */
+        void setTeam(int team);
+        /**
          * @brief Get the Pos object
          *
          * @return Communication::Position
@@ -89,6 +95,12 @@ class Bullet {
          * @return int
          */
         int getId() const;
+        /**
+         * @brief Get the Id of the Team
+         *
+         * @return int
+         */
+        int getTeam() const;
 
     private:
         Communication::Position _pos;
@@ -96,4 +108,5 @@ class Bullet {
         float _speed;
         float _damage;
         int _id;
+        int _team;
 };

@@ -9,24 +9,22 @@
 
 #include "ASystem.hpp"
 
-namespace ECS
-{
+namespace ECS {
 
-    class Mouvement : public ASystem
-    {
-    public:
-        Mouvement();
-        ~Mouvement() = default;
+    class Mouvement : public ASystem {
+        public:
+            Mouvement();
+            ~Mouvement() = default;
 
-        /**
-         * @brief Execute the system logic
-         *
-         * @return std::vector<Action>
-         */
-        std::vector<Action> execute();
+            /**
+             * @brief Execute the system logic
+             *
+             * @return std::vector<Action>
+             */
+            std::vector<Action> execute();
 
-    private:
-        bool _goRight;
+        private:
+            bool _goRight;
     };
 
-}
+} // namespace ECS

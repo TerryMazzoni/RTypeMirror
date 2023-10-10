@@ -7,7 +7,6 @@
 
 #include "Server.hpp"
 #include "Client.hpp"
-#include "Communication.hpp"
 #include <memory>
 
 bool is_running(int flag)
@@ -65,6 +64,14 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
                 c.setIsReady(ready.is_ready);
         if (!ready.is_ready)
             _game_status = 0;
+    }
+    else if (header->type == Communication::CommunicationTypes::INPUT) {
+        Communication::Inputs input = *reinterpret_cast<Communication::Inputs *>(data);
+        for (auto &c : _clients) {
+            if (c.getEndpoint() == client) {
+                _inputs.push_back(std::pair<int, Communication::Inputs>(c.getId(), input));
+            }
+        }
     }
     for (auto &c : _clients) {
         if (!c.getIsReady())
@@ -166,4 +173,14 @@ int Server::getGameStatus() const
 void Server::setGameStatus(int status)
 {
     _game_status = status;
+}
+
+std::vector<std::pair<int, Communication::Inputs>> Server::getInput() const
+{
+    return _inputs;
+}
+
+void Server::removeInputAt(int index)
+{
+    _inputs.erase(_inputs.begin() + index);
 }

@@ -13,13 +13,16 @@ std::set<Input> Graph::getInputs() const
     return Raylib::getInputs();
 }
 
-int Graph::displayEntities(std::vector<ECS::Entity> entities)
+int Graph::displayEntities(std::vector<std::optional<ECS::Entity>> entities)
 {
-    for (ECS::Entity &entity : entities) {
-        if (entity.getComponent(ComponentType::Texture) != nullptr && entity.getComponent(ComponentType::Position) != nullptr) {
-            displayTexture(entity);
-        } else if (entity.getComponent(ComponentType::Text) != nullptr && entity.getComponent(ComponentType::Position) != nullptr) {
-            displayText(entity);
+    for (std::optional<ECS::Entity> &entity : entities) {
+        if (entity.has_value()) {
+            if (entity.value().getComponent(ComponentType::Texture) != nullptr && entity.value().getComponent(ComponentType::Position) != nullptr) {
+                displayTexture(entity.value());
+            }
+            else if (entity.value().getComponent(ComponentType::Text) != nullptr && entity.value().getComponent(ComponentType::Position) != nullptr) {
+                displayText(entity.value());
+            }
         }
     }
     return 0;
