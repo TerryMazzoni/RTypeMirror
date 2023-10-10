@@ -116,7 +116,7 @@ class Server {
         /**
          * @brief Clear the input
          */
-        void clearInput();
+        void removeInputAt(int index);
 
     private:
         boost::asio::io_service _io_service;

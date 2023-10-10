@@ -180,7 +180,7 @@ std::vector<std::pair<int, Communication::Inputs>> Server::getInput() const
     return _inputs;
 }
 
-void Server::clearInput()
+void Server::removeInputAt(int index)
 {
-    _inputs.clear();
+    _inputs.erase(_inputs.begin() + index);
 }
