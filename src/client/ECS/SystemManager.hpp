@@ -23,20 +23,20 @@ namespace ECS {
 
             /**
              * @brief Execute systems
-             * 
-             * @return std::vector<Action> 
+             *
+             * @return std::vector<Action>
              */
             std::vector<Action> execute();
             /**
              * @brief Add a system to the system manager
-             * 
+             *
              * @param std::vector<std::shared_ptr<ISystem>>
              */
             void addSystems(std::vector<std::shared_ptr<ISystem>> listSystems);
             /**
              * @brief Remove systems atached on the entities removed
-             * 
-             * @param entitiesToRemove 
+             *
+             * @param entitiesToRemove
              */
             void removeSystems(std::vector<Entity> entitiesToRemove);
 

@@ -29,7 +29,7 @@ enum class EventInput {
     Key_down = 264,
     Key_left = 263,
     Key_right = 262,
-    Left_click
+    Left_click = 0
 };
 
 enum class ActionType {

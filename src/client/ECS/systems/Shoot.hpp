@@ -9,21 +9,20 @@
 
 #include "ASystem.hpp"
 
-namespace ECS
-{
-    class Shoot : public ASystem
-    {
-    public:
-        Shoot();
-        ~Shoot() = default;
+namespace ECS {
+    class Shoot : public ASystem {
+        public:
+            Shoot();
+            ~Shoot() = default;
 
-        /**
-         * @brief Execute the Shoot system for the spaceship
-         * 
-         * @return std::vector<Action> 
-         */
-        std::vector<Action> execute();
-    private:
-        int _count;
+            /**
+             * @brief Execute the Shoot system for the spaceship
+             *
+             * @return std::vector<Action>
+             */
+            std::vector<Action> execute();
+
+        private:
+            int _count;
     };
-}
+} // namespace ECS

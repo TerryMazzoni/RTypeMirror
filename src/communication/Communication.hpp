@@ -18,11 +18,11 @@ enum class ShipType {
 namespace Communication {
 
     enum class EventInput {
-        Key_up,
-        Key_down,
-        Key_left,
-        Key_right,
-        Left_click
+        Key_up = 265,
+        Key_down = 264,
+        Key_left = 263,
+        Key_right = 262,
+        Left_click = 0
     };
 
     enum class CommunicationTypes {

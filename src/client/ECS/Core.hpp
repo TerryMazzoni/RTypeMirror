@@ -20,13 +20,14 @@ namespace ECS {
             ~Core();
             /**
              * @brief Run the client loop
-             * 
-             * @param std::shared_ptr<Client> 
-             * @return int 
+             *
+             * @param std::shared_ptr<Client>
+             * @return int
              */
             int run(std::shared_ptr<Client>);
 
         private:
+            std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
             void createEntities();
             void createBullet(Entity entity);
 

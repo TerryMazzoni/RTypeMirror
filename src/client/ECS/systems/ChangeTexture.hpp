@@ -17,9 +17,9 @@ namespace ECS {
 
             /**
              * @brief Execute the system logic
-             * 
-             * @return std::vector<Action> 
+             *
+             * @return std::vector<Action>
              */
             std::vector<Action> execute();
     };
-}
+} // namespace ECS

@@ -18,32 +18,32 @@ namespace ECS {
 
             /**
              * @brief Execute the system logic
-             * 
-             * @return std::vector<Action> 
+             *
+             * @return std::vector<Action>
              */
             virtual std::vector<Action> execute() = 0;
             /**
              * @brief Set the system activation
-             * 
+             *
              * @param bool
              */
             void setActivation(bool state);
             /**
              * @brief Set the entity of the system
-             * 
-             * @param Entity 
+             *
+             * @param Entity
              */
             void setEntity(Entity entity);
             /**
              * @brief Remove the entity from the system
-             * 
-             * @return bool 
+             *
+             * @return bool
              */
             void removeEntity();
             /**
              * @brief Get the entity of the system
-             * 
-             * @return std::string 
+             *
+             * @return std::string
              */
             std::optional<Entity> getEntity() const;
 
