@@ -33,3 +33,31 @@ jobs:
         with:
           target_repo_url: ${{ env.MIRROR_URL }}
           ssh_private_key: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
+
+  CreateReleaseDev:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/RT-99-create-release-of-the-project'
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Semantic Release
+      run: npx semantic-release
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          ./r-type_server
+          ./r-type_client
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
