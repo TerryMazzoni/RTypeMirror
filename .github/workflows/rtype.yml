@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: timeout 10m ./install.sh
+        run: timeout 30m ./install.sh
 
   MirrorPush:
     runs-on: ubuntu-latest
@@ -33,3 +33,4 @@ jobs:
         with:
           target_repo_url: ${{ env.MIRROR_URL }}
           ssh_private_key: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
+
