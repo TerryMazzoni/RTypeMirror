@@ -11,7 +11,6 @@
 #include <memory>
 #include <any>
 #include <tuple>
-
 #include "IComponent.hpp"
 
 namespace ECS {

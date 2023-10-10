@@ -23,16 +23,14 @@ namespace ECS
         int id = 0;
 
         try {
-            entities = Parser::ParserJson("assets/test.json").parse(true).getEntities();
+            entities = Parser::ParserJson("assets/test.json").parse().getEntities();
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
         }
-
         _entitiesManager = EntitiesManager();
         _eventManager = EventManager();
         _systemManager = SystemManager();
-
         Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
         Entity background;
@@ -46,7 +44,6 @@ namespace ECS
 
         for (Parser::entity_t &entityData : entities) {
             Entity entity;
-
             std::ostringstream textureostring;
             std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));
             std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
@@ -57,11 +54,19 @@ namespace ECS
                 componentT->setType(ComponentType::Texture);
                 entity.components.push_back(componentT);
 
-                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (std::to_string(std::any_cast<float>(entityData.instance["x"])) + "," + std::to_string(std::any_cast<float>(entityData.instance["y"])).c_str()));
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0 || entityData.instanceType["x"] != Parser::type_t::FLOAT || entityData.instanceType["y"]!= Parser::type_t::FLOAT)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid position");
+                float x = std::any_cast<float>(entityData.instance["x"]);
+                float y = std::any_cast<float>(entityData.instance["y"]);
+                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (std::to_string(x) + "," + std::to_string(y)));
                 componentP->setType(ComponentType::Position);
                 entity.components.push_back(componentP);
 
-                std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, std::to_string(std::any_cast<int>(entityData.instance["scale"])));
+                std::cout << "la " << (int)(entityData.instanceType["scale"]) << std::endl;
+
+                if (entityData.instance.count("scale") == 0 || entityData.instanceType["scale"] != Parser::type_t::FLOAT)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid scale");
+                std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, std::to_string(std::any_cast<float>(entityData.instance["scale"])));
                 componentS->setType(ComponentType::Scale);
                 entity.components.push_back(componentS);
 
