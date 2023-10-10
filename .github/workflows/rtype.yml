@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: echo "Build"
+        run: timeout 10m ./install.sh
 
   MirrorPush:
     runs-on: ubuntu-latest
@@ -43,9 +43,6 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "TESTING"
+          automatic_release_tag: "Release"
           prerelease: true
-          title: "Development Build"
-          files: |
-            ./r-type_server1
-            ./r-type_client1
+          title: "R-Type v${{ github.run_number }}"
