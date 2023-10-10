@@ -42,6 +42,8 @@ namespace ECS
         background.components.push_back(componentBP);
         background.id = {EntityType::Background, 2};
 
+        _entitiesManager.addEntities({background});
+
         for (Parser::entity_t &entityData : entities) {
             Entity entity;
             std::ostringstream textureostring;
@@ -62,8 +64,6 @@ namespace ECS
                 componentP->setType(ComponentType::Position);
                 entity.components.push_back(componentP);
 
-                std::cout << "la " << (int)(entityData.instanceType["scale"]) << std::endl;
-
                 if (entityData.instance.count("scale") == 0 || entityData.instanceType["scale"] != Parser::type_t::FLOAT)
                     throw std::runtime_error("ERROR: entity __player__ have invalid scale");
                 std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, std::to_string(std::any_cast<float>(entityData.instance["scale"])));
@@ -79,7 +79,7 @@ namespace ECS
                 std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
                 shoot->setEntity(entity);
 
-                _systemManager.addSystems({changeTexture});
+                _systemManager.addSystems({changeTexture, shoot});
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
