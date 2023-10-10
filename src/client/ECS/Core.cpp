@@ -6,17 +6,29 @@
 */
 
 #include <iostream>
+#include <vector>
 #include "Core.hpp"
 #include "BulletMouvement.hpp"
 #include "Mouvement.hpp"
 #include "Shoot.hpp"
 #include "ChangeTexture.hpp"
+#include "Parser.hpp"
 
 namespace ECS
 {
 
     Core::Core()
     {
+        std::vector<Parser::entity_t> entities;
+        int id = 0;
+
+        try {
+            entities = Parser::ParserJson("assets/test.json").parse(true).getEntities();
+        }
+        catch (Parser::ParserException &e) {
+            throw std::runtime_error(e.what());
+        }
+
         _entitiesManager = EntitiesManager();
         _eventManager = EventManager();
         _systemManager = SystemManager();
@@ -32,36 +44,52 @@ namespace ECS
         background.components.push_back(componentBP);
         background.id = {EntityType::Background, 2};
 
-        Entity entity;
-        std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4");
-        componentT->setType(ComponentType::Texture);
-        entity.components.push_back(componentT);
-        std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, "300,100");
-        componentP->setType(ComponentType::Position);
-        entity.components.push_back(componentP);
-        std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, "3");
-        componentS->setType(ComponentType::Scale);
-        entity.components.push_back(componentS);
-        entity.id = {EntityType::Player, 0};
-        _eventManager.setMyPlayer(entity);
-        std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
-        changeTexture->setEntity(entity);
-        std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
-        shoot->setEntity(entity);
+        for (Parser::entity_t &entityData : entities) {
+            Entity entity;
 
-        Entity entity2;
-        std::shared_ptr<ECS::IComponent> component2T = ECS::Factory::createComponent(ComponentType::Texture, "assets/spaceship/sprite_spaceships0.png");
-        component2T->setType(ComponentType::Texture);
-        entity2.components.push_back(component2T);
-        std::shared_ptr<ECS::IComponent> component2P = ECS::Factory::createComponent(ComponentType::Position, "300,100");
-        component2P->setType(ComponentType::Position);
-        entity2.components.push_back(component2P);
-        entity2.id = {EntityType::Player, 1};
-        std::shared_ptr<ISystem> mouvement = std::make_shared<Mouvement>(Mouvement());
-        mouvement->setEntity(entity2);
+            std::ostringstream textureostring;
+            std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));
+            std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
+            std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
-        _systemManager.addSystems({mouvement, changeTexture, shoot});
-        _entitiesManager.addEntities({background, entity, entity2});
+            if (entityData.type == "__player__") {
+                std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
+                componentT->setType(ComponentType::Texture);
+                entity.components.push_back(componentT);
+
+                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (std::to_string(std::any_cast<float>(entityData.instance["x"])) + "," + std::to_string(std::any_cast<float>(entityData.instance["y"])).c_str()));
+                componentP->setType(ComponentType::Position);
+                entity.components.push_back(componentP);
+
+                std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, std::to_string(std::any_cast<int>(entityData.instance["scale"])));
+                componentS->setType(ComponentType::Scale);
+                entity.components.push_back(componentS);
+
+                entity.id = {EntityType::Player, id};
+                _eventManager.setMyPlayer(entity);
+
+                std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
+                changeTexture->setEntity(entity);
+
+                std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
+                shoot->setEntity(entity);
+
+                _systemManager.addSystems({changeTexture});
+            }
+            else if (entityData.type == "__tile__") {
+                std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
+                componentT->setType(ComponentType::Texture);
+                entity.components.push_back(componentT);
+
+                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (std::to_string(std::any_cast<float>(entityData.instance["x"])) + "," + std::to_string(std::any_cast<float>(entityData.instance["y"])).c_str()));
+                componentP->setType(ComponentType::Position);
+                entity.components.push_back(componentP);
+
+                entity.id = {EntityType::Background, id};
+            }
+            id++;
+            _entitiesManager.addEntities({entity});
+        }
     }
 
     Core::~Core()

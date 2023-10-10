@@ -23,6 +23,7 @@
 #define PARSER_ENTITY_INSTANCE "instance"
 #define PARSER_MAP_TILES "tiles"
 #define PARSER_MAP_TILESIZE "tile_size"
+#define PARSER_INDEX_TEXTURES "index_textures"
 
 namespace Parser {
     enum class type_t {
@@ -34,7 +35,7 @@ namespace Parser {
 
     typedef struct {
             std::string type;
-            std::vector<std::string> textures;
+            std::pair<std::vector<std::string>, std::vector<int>> textures;
             std::map<std::string, std::any> instance;
             std::map<std::string, type_t> instanceType;
     } entity_t;

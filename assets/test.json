@@ -1,0 +1,65 @@
+{
+  "map": {
+    "tiles": [
+      "#SSSSSSSSSSSSSSSSSSSSSSSSSSSS#",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E                            W",
+      "E              65            W",
+      "E             6##5           W",
+      "E            6####5          W",
+      "E            4####3          W",
+      "E             4##3           W",
+      "E              43            W",
+      "#NNNNNNNNNNNNNNNNNNNNNNNNNNNN#"
+    ],
+    "tile_size": 64,
+    "textures": {
+      "S": ["assets/walls/Wall_S.png"],
+      "N": ["assets/walls/Wall_N.png"],
+      "E": ["assets/walls/Wall_E.png"],
+      "W": ["assets/walls/Wall_W.png"],
+      "1": ["assets/walls/Wall_SN.png"],
+      "2": ["assets/walls/Wall_EW.png"],
+      "3": ["assets/walls/Wall_SE.png"],
+      "4": ["assets/walls/Wall_SW.png"],
+      "5": ["assets/walls/Wall_NE.png"],
+      "6": ["assets/walls/Wall_NW.png"],
+      "7": ["assets/walls/Wall_SNE.png"],
+      "8": ["assets/walls/Wall_SNW.png"],
+      "9": ["assets/walls/Wall_SEW.png"],
+      "0": ["assets/walls/Wall_NEW.png"],
+      ".": ["assets/walls/Wall_NSEW.png"],
+      "#": ["assets/walls/Wall.png"]
+    }
+  },
+  "all_entities": [
+    {
+      "type": "__player__",
+      "textures": [
+        "assets/spaceship/sprite_spaceships0.png",
+        "assets/spaceship/sprite_spaceships1.png",
+        "assets/spaceship/sprite_spaceships2.png",
+        "assets/spaceship/sprite_spaceships3.png",
+        "assets/capsule/sprite_capsules0.png",
+        "assets/capsule/sprite_capsules1.png",
+        "assets/capsule/sprite_capsules2.png",
+        "assets/capsule/sprite_capsules3.png"
+      ],
+      "index_textures": [0, 4],
+      "instance": [
+        {
+          "x": 256.0,
+          "y": 256.0,
+          "scale": 3
+        }
+      ]
+    }
+  ]
+}

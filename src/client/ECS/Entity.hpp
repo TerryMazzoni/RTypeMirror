@@ -10,10 +10,9 @@
 #include <vector>
 #include <memory>
 #include <any>
+#include <tuple>
 
 #include "IComponent.hpp"
-
-#define Action std::tuple<std::vector<ECS::Entity>, ActionType, std::any>
 
 namespace ECS {
     struct Entity {
@@ -28,4 +27,7 @@ namespace ECS {
              */
             std::shared_ptr<ECS::IComponent> getComponent(ComponentType type);
     };
+    
+    using Action = std::tuple<std::vector<ECS::Entity>, ActionType, std::any>;
+
 } // namespace ECS

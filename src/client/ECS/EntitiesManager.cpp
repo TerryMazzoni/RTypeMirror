@@ -121,8 +121,7 @@ namespace ECS
 
     void EntitiesManager::resizeMapComponent()
     {
-        for (auto &list : _mapComponent)
-        {
+        for (auto &list : _mapComponent) {
             list.second.resize(_sizeListComponents + 1);
         }
     }
