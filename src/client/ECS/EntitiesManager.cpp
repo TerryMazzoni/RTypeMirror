@@ -22,13 +22,14 @@ namespace ECS {
         _mapComponent[ComponentType::Texture] = {};
         _sizeListComponents = 5;
         resizeMapComponent();
+        _listEntities.resize(_sizeListComponents + 1);
     }
 
     EntitiesManager::~EntitiesManager()
     {
     }
 
-    std::vector<Entity> EntitiesManager::getEntities()
+    std::vector<std::optional<Entity>> EntitiesManager::getEntities()
     {
         return _listEntities;
     }
@@ -39,9 +40,10 @@ namespace ECS {
             if (entityToAdd.id.second >= _sizeListComponents) {
                 _sizeListComponents = entityToAdd.id.second;
                 resizeMapComponent();
+                _listEntities.resize(_sizeListComponents + 1);
             }
-            _listEntities.push_back(entityToAdd);
             addComponentsEntity(entityToAdd);
+            _listEntities[entityToAdd.id.second] = entityToAdd;
         }
         return 0;
     }
@@ -52,6 +54,7 @@ namespace ECS {
             for (auto &list : _mapComponent) {
                 list.second[entity.id.second] = std::nullopt;
             }
+            _listEntities[entity.id.second] = std::nullopt;
         }
         return 0;
     }
@@ -131,12 +134,14 @@ namespace ECS {
     {
         _entitiesToDelete.clear();
         for (auto &entity : _listEntities) {
-            std::shared_ptr<ECS::IComponent> position = entity.getComponent(ComponentType::Position);
-            float x = std::any_cast<ECS::Position>(position->getValue()).x;
-            float y = std::any_cast<ECS::Position>(position->getValue()).y;
+            if (entity.has_value()) {
+                std::shared_ptr<ECS::IComponent> position = entity.value().getComponent(ComponentType::Position);
+                float x = std::any_cast<ECS::Position>(position->getValue()).x;
+                float y = std::any_cast<ECS::Position>(position->getValue()).y;
 
-            if (x < -100 || y < -100 || x > 2020 || y > 1180) {
-                _entitiesToDelete.push_back(entity);
+                if ((x < -100 || y < -100 || x > 2020 || y > 1180) and entity.value().id.first != EntityType::Player) {
+                    _entitiesToDelete.push_back(entity.value());
+                }
             }
         }
         return _entitiesToDelete;

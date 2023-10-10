@@ -25,7 +25,7 @@ namespace ECS {
              *
              * @return std::vector<Entity>
              */
-            std::vector<Entity> getEntities();
+            std::vector<std::optional<Entity>> getEntities();
             /**
              * @brief Add a list of entities in the entity manager
              *
@@ -71,7 +71,7 @@ namespace ECS {
             void resizeMapComponent();
             void addComponentsEntity(Entity entity);
 
-            std::vector<Entity> _listEntities;
+            std::vector<std::optional<Entity>> _listEntities;
             std::map<ComponentType, std::vector<std::optional<std::shared_ptr<ECS::IComponent>>>> _mapComponent;
             std::vector<std::pair<std::vector<Entity>, EntityType>> _entitiesToCreate;
             std::vector<Entity> _entitiesToDelete;

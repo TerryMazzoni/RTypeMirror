@@ -33,7 +33,7 @@ class Graph {
          * @param std::vector<Entity>
          * @return int
          */
-        int displayEntities(std::vector<ECS::Entity> entities);
+        int displayEntities(std::vector<std::optional<ECS::Entity>> entities);
 
     protected:
     private:
