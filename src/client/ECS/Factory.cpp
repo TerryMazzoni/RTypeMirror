@@ -98,7 +98,7 @@ std::shared_ptr<ECS::IComponent> ECS::Factory::createComponent(ComponentType typ
         &ECS::Factory::createTexture,
         &ECS::Factory::createText,
     };
-    if (type >= ComponentType::Color and type <= ComponentType::Texture)
+    if (type <= static_cast<ComponentType>(5))
         return funcs[static_cast<int>(type)](singleton, value);
     else
         return nullptr;

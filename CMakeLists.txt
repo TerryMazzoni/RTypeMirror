@@ -50,6 +50,7 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/Raylib/RlText.cpp
     ${CLIENT_PATH}/Raylib/RlTexture.cpp
     ${CLIENT_PATH}/Raylib/RlWindow.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser.cpp
 )
 
 add_executable(r-type_server ${SERVER_SOURCES})
@@ -121,7 +122,7 @@ set(BOOST_RUNTIME_LINK static)
 
 FetchContent_MakeAvailable(Boost)
 
-foreach(lib system asio property_tree)
+foreach(lib system asio json)
     target_link_libraries(
         r-type_server
         PRIVATE

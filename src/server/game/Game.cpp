@@ -87,9 +87,6 @@ void Game::initGame(std::string map_path)
     if (parser.getEntities().size() == 0)
         throw std::runtime_error("Error: no entities in map");
     _entities = parser.getEntities();
-    for (auto &entity : _entities) {
-        std::cout << "Entity: " << entity.type << std::endl;
-    }
 }
 
 void Game::updateGame(std::shared_ptr<Server> server)
@@ -142,7 +139,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
         for (auto &entity_colision : _entities) {
             if (entity_colision.type == "__tile__") {
                 // HANDLE COLLISION
-                if (std::any_cast<int>(entity.instance["x"]) == std::any_cast<int>(entity_colision.instance["x"]) && std::any_cast<int>(entity.instance["y"]) == std::any_cast<int>(entity_colision.instance["y"])) {
+                if (std::any_cast<float>(entity.instance["x"]) == std::any_cast<float>(entity_colision.instance["x"]) && std::any_cast<float>(entity.instance["y"]) == std::any_cast<float>(entity_colision.instance["y"])) {
                     std::cout << "COLISION" << std::endl;
                     if (std::any_cast<int>(entity.instance["hp"]) != 0) {
                         entity.instance["hp"] = 0;
@@ -151,7 +148,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
             }
             else if (entity_colision.type == "missile" && entity.type != "missile") {
                 if (std::any_cast<int>(entity.instance["id"]) != std::any_cast<int>(entity_colision.instance["id"])) {
-                    if (std::any_cast<int>(entity.instance["x"]) == std::any_cast<int>(entity_colision.instance["x"]) && std::any_cast<int>(entity.instance["y"]) == std::any_cast<int>(entity_colision.instance["y"])) {
+                    if (std::any_cast<int>(entity.instance["x"]) == std::any_cast<float>(entity_colision.instance["x"]) && std::any_cast<float>(entity.instance["y"]) == std::any_cast<float>(entity_colision.instance["y"])) {
                         std::cout << "COLISION" << std::endl;
                         if (std::any_cast<int>(entity.instance["hp"]) != 0) {
                             entity.instance["hp"] = 0;
@@ -166,28 +163,28 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
 void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entity)
 {
     if (entity.type == "missile") {
-        entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) + std::any_cast<int>(entity.instance["direction_x"]) * std::any_cast<int>(entity.instance["speed"]);
-        entity.instance["y"] = std::any_cast<int>(entity.instance["y"]) + std::any_cast<int>(entity.instance["direction_y"]) * std::any_cast<int>(entity.instance["speed"]);
+        entity.instance["x"] = std::any_cast<float>(entity.instance["x"]) + std::any_cast<float>(entity.instance["direction_x"]) * std::any_cast<float>(entity.instance["speed"]);
+        entity.instance["y"] = std::any_cast<float>(entity.instance["y"]) + std::any_cast<float>(entity.instance["direction_y"]) * std::any_cast<float>(entity.instance["speed"]);
     }
     if (entity.type != "player" || entity.type != "missile") {
-        entity.instance["x"] = std::any_cast<int>(entity.instance["x"]) - 1;
+        entity.instance["x"] = std::any_cast<float>(entity.instance["x"]) - 1;
     }
     if (entity.type == "player") {
         _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<float>(entity.instance["id"]), ShipType::PLAYER));
 
         _entities.push_back(static_cast<Parser::entity_t>(
             Parser::entity_t({"missile",
-                              {std::vector<std::string>({})},
+                              {{}, {}},
                               std::map<std::string, std::any>{
-                                  {"x", std::any_cast<int>(entity.instance["x"]) + 1},
-                                  {"y", std::any_cast<int>(entity.instance["y"])},
+                                  {"x", std::any_cast<float>(entity.instance["x"]) + 1},
+                                  {"y", std::any_cast<float>(entity.instance["y"])},
                                   {"speed", 2},
                                   {"id", std::any_cast<int>(entity.instance["id"])},
                                   {"direction_x", 1.0},
                                   {"direction_y", 0.0}},
                               std::map<std::string, Parser::type_t>{
-                                  {"x", Parser::type_t::INT},
-                                  {"y", Parser::type_t::INT},
+                                  {"x", Parser::type_t::FLOAT},
+                                  {"y", Parser::type_t::FLOAT},
                                   {"speed", Parser::type_t::FLOAT},
                                   {"id", Parser::type_t::INT},
                                   {"direction_x", Parser::type_t::FLOAT},
