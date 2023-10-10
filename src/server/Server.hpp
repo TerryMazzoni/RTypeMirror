@@ -112,7 +112,7 @@ class Server {
          *
          * @return std::vector<Communication::Input>&
          */
-        std::vector<std::pair<int, Communication::Input>> getInput() const;
+        std::vector<std::pair<int, Communication::Inputs>> getInput() const;
         /**
          * @brief Clear the input
          */
@@ -125,7 +125,7 @@ class Server {
         std::string _response_message;
         int _game_status;
         std::map<int, bool> _ids;
-        std::vector<std::pair<int, Communication::Input>> _inputs;
+        std::vector<std::pair<int, Communication::Inputs>> _inputs;
 };
 
 bool is_running(int flag);

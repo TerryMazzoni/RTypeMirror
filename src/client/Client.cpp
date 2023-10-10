@@ -148,7 +148,7 @@ void Client::run()
     t.async_wait(
         [this](const boost::system::error_code &error) {
             if (!error) {
-                Communication::Input input;
+                Communication::Inputs input;
                 input.nbrItems = 1;
                 input.event[0] = Communication::EventInput::Key_up;
                 input.type = Communication::CommunicationTypes::INPUT;
