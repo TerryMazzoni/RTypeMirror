@@ -18,7 +18,8 @@ int Graph::displayEntities(std::vector<ECS::Entity> entities)
     for (ECS::Entity &entity : entities) {
         if (entity.getComponent(ComponentType::Texture) != nullptr && entity.getComponent(ComponentType::Position) != nullptr) {
             displayTexture(entity);
-        } else if (entity.getComponent(ComponentType::Text) != nullptr && entity.getComponent(ComponentType::Position) != nullptr) {
+        }
+        else if (entity.getComponent(ComponentType::Text) != nullptr && entity.getComponent(ComponentType::Position) != nullptr) {
             displayText(entity);
         }
     }

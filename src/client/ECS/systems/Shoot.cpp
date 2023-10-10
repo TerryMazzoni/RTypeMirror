@@ -8,8 +8,7 @@
 #include <iostream>
 #include "Shoot.hpp"
 
-namespace ECS
-{
+namespace ECS {
 
     Shoot::Shoot()
     {
@@ -18,8 +17,7 @@ namespace ECS
 
     std::vector<Action> Shoot::execute()
     {
-        if (_isActivated && _entity.has_value() && _count == 3)
-        {
+        if (_isActivated && _entity.has_value() && _count == 3) {
             _count = 0;
             std::vector<Entity> entities = {_entity.value()};
             return {std::make_tuple(entities, ActionType::Shoot, 0)};
@@ -27,4 +25,4 @@ namespace ECS
         _count++;
         return {};
     }
-}
+} // namespace ECS

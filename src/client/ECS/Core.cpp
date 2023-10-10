@@ -97,8 +97,7 @@ namespace ECS {
     {
         std::vector<EventInput> eventInputs;
 
-        for (auto input : inputs)
-        {
+        for (auto input : inputs) {
             eventInputs.push_back((EventInput)std::get<1>(input));
         }
         return eventInputs;
