@@ -1,0 +1,125 @@
+September 2023                                                       Tom Laiolo
+EPITECH Toulouse                                                   Luca Deltort
+                                                                 Antonin Laudon
+                                                                  Terry Mazzoni
+                                                            Christopher Artigas
+
+
+                    EPITECH - R-TYPE PROTOCOL (RTP)
+
+Abstract :
+
+    The R-Type Protocol enables two-way communication between a client running
+    maybe “untrusted code” in a controlled environment to a remote host that
+    has opted-in to communications from that code. The protocol consists of an
+    opening handshake followed by basic message framing, layered over UDP. The
+    goal of this technology is to permit the client and server to work together
+    in order to run the r-type multiplayer game, with clients up to 4.
+
+Status of This Memo :
+
+    This memo provides information about the R-TYPE network functioning.
+    Informations should learn how to use the server and client of this project.
+
+
+Table of Contents :
+
+    1. Introduction...........................................................1
+    2. Architecture...........................................................2
+    3. Communication..........................................................2
+    4. UDP Protocol...........................................................3
+    4a. Connection............................................................3
+    4b. Status of the game....................................................3
+    4c. Game running..........................................................3
+
+
+1. INTRODUCTION :
+
+    The goal of this R-Type project is to create an online multiplayer copy of
+    the classic R-Type game (1987).
+
+    The game is a side-scrolling shoot-em-up where the player controls a
+    spaceship, trying to avoid obstacles and destroy ennemies.
+
+Tom                             Standards Track                        [Page 1]
+
+RFC 9999                        R-TYPE PROTOCOL                  September 2023
+
+2. ARCHITECTURE :
+
+    The game is split in multiple executables, making a client-server game
+    architecture, the client which is a graphical  interface connected to a
+    server, they are communicating by UDP method, sending one to the other
+    structures. Using this method, the client is able to display enemies,
+    environment and allies, because every client sends his information to the
+    server, treating them and sending everything needed to play the game.
+    Client also has a prediction algorithm, trying to continue displaying even
+    if interaction with the server takes time.
+
+3. COMMUNICATION :
+
+    The communication between the client and the server is made by sending
+    structures containing all informations needed to play the game. The
+    structures are serialized in binary, and sent by UDP protocol. The server
+    is listening on a specific port, and the client is sending to this port.
+    The differents communications are listed in the CommunicationTypes enum :
+
+    enum class CommunicationTypes {
+        UNKNOWN,
+        ID,
+        QUIT,
+        TIMER,
+        READY,
+        POSITION,
+        SHIPS,
+        MISSILES,
+        COLISION_ENTITIES,
+    };
+
+    Each communications are sent in a specific format. One structure exists for
+    each communication type, and they all have their type at the top of the
+    structure, permitting to the receiver to know what he is receiving by
+    casting the structure to the right type.
+    Example of a structure :
+
+    typedef struct Ready {
+            CommunicationTypes type = CommunicationTypes::READY;
+            bool is_ready = false;
+    } Ready;
+
+Tom                             Standards Track                        [Page 2]
+
+RFC 9999                        R-TYPE PROTOCOL                  September 2023
+
+4. UDP PROTOCOL :
+
+    4a. Connection :
+
+        Our protocol permits up to 4 connections to the server simultaneously,
+        if 4 players are already connected the others trying to connect will
+        receive the ID 0. If a client get the ID 0, he disconnects from the
+        server and close. While he don't have his ID, the clients will send the
+        structure ID at every loop, waiting for the server to respond. When the
+        server receive the ID structure, it will send the ID of the client,
+        permitting him to know his ID.
+
+    4b. Status of the game :
+            
+        Each clients are sending the READY structure at every loop, permitting
+        the server to know if the client is ready to play. When all clients are
+        ready, the server will send the TIMER structure, containing the time
+        before the game starts. When the TIMER is at 0, the game starts.
+
+    4c. Game running :
+
+        When the game starts, the server will send these structures :
+        SHIPS
+        MISSILES
+        COLISION_ENTITIES
+
+        The SHIPS structure contains all the ships of the game (allies and
+        enemies with a type), the MISSILES structure contains all the missiles
+        of the game, and the COLISION_ENTITIES contains the two IDs of the
+        entities that collided.
+
+Tom                             Standards Track                        [Page 3]
