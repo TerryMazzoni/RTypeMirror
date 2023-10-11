@@ -24,7 +24,6 @@ void Game::run(std::shared_ptr<Server> server)
     boost::asio::deadline_timer t(server->getIoService(), ms);
     if (!is_running(0))
         return;
-    updateGame(server);
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {

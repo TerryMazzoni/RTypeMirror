@@ -12,22 +12,54 @@
     ],
     "tile_size": 64,
     "textures": {
-      "S": ["assets/walls/Wall_S.png"],
-      "N": ["assets/walls/Wall_N.png"],
-      "E": ["assets/walls/Wall_E.png"],
-      "W": ["assets/walls/Wall_W.png"],
-      "1": ["assets/walls/Wall_SN.png"],
-      "2": ["assets/walls/Wall_EW.png"],
-      "3": ["assets/walls/Wall_SE.png"],
-      "4": ["assets/walls/Wall_SW.png"],
-      "5": ["assets/walls/Wall_NE.png"],
-      "6": ["assets/walls/Wall_NW.png"],
-      "7": ["assets/walls/Wall_SNE.png"],
-      "8": ["assets/walls/Wall_SNW.png"],
-      "9": ["assets/walls/Wall_SEW.png"],
-      "0": ["assets/walls/Wall_NEW.png"],
-      ".": ["assets/walls/Wall_NSEW.png"],
-      "#": ["assets/walls/Wall.png"]
+      "S": [
+        "assets/walls/Wall_S.png"
+      ],
+      "N": [
+        "assets/walls/Wall_N.png"
+      ],
+      "E": [
+        "assets/walls/Wall_E.png"
+      ],
+      "W": [
+        "assets/walls/Wall_W.png"
+      ],
+      "1": [
+        "assets/walls/Wall_SN.png"
+      ],
+      "2": [
+        "assets/walls/Wall_EW.png"
+      ],
+      "3": [
+        "assets/walls/Wall_SE.png"
+      ],
+      "4": [
+        "assets/walls/Wall_SW.png"
+      ],
+      "5": [
+        "assets/walls/Wall_NE.png"
+      ],
+      "6": [
+        "assets/walls/Wall_NW.png"
+      ],
+      "7": [
+        "assets/walls/Wall_SNE.png"
+      ],
+      "8": [
+        "assets/walls/Wall_SNW.png"
+      ],
+      "9": [
+        "assets/walls/Wall_SEW.png"
+      ],
+      "0": [
+        "assets/walls/Wall_NEW.png"
+      ],
+      ".": [
+        "assets/walls/Wall_NSEW.png"
+      ],
+      "#": [
+        "assets/walls/Wall.png"
+      ]
     }
   },
   "all_entities": [
@@ -44,6 +76,30 @@
           "x": 256.0,
           "y": 256.0,
           "scale": 3
+        }
+      ]
+    },
+    {
+      "type": "enemy",
+      "textures": [
+        "assets/player/Player1.png"
+      ],
+      "instance": [
+        {
+          "x": 100.0,
+          "y": 256.0
+        },
+        {
+          "x": 200.0,
+          "y": 256.0
+        },
+        {
+          "x": 300.0,
+          "y": 256.0
+        },
+        {
+          "x": 400.0,
+          "y": 256.0
         }
       ]
     }
