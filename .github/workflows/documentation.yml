@@ -22,7 +22,8 @@ jobs:
         run: doxygen Doxyfile
 
       - name: Put R-TYPE_RFC_V1.txt into documentation
-        run: | 
+        run: |
+        mkdir docs
         cp R-TYPE_RFC_V1.txt docs/RFC.txt
         echo "<object data=\"RFC.txt\" width=\"100%\" height=\"100%\"/>" > docs/RFC.html
 
