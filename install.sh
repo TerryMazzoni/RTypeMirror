@@ -10,7 +10,7 @@ echo "Using $threads_to_use threads to compile"
 
 mkdir -p build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Debug
 
 if cmake --build . -- -j $threads_to_use; then
     echo "Compilation successful!"
