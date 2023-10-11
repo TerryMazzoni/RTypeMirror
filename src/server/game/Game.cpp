@@ -81,11 +81,17 @@ int Game::getScore() const
 void Game::initGame(std::string map_path)
 {
     _init = true;
+    int _last_entity_id = 0;
     Parser::ParserJson parser = Parser::ParserJson(map_path);
     parser.parse();
     if (parser.getEntities().size() == 0)
         throw std::runtime_error("Error: no entities in map");
     _entities = parser.getEntities();
+    for (auto &entity : _entities) {
+        if (entity.instance.find("id") != entity.instance.end() && std::any_cast<int>(entity.instance["id"]) > _last_entity_id) {
+            _last_entity_id = std::any_cast<int>(entity.instance["id"]);
+        }
+    }
 }
 
 void Game::updateGame(std::shared_ptr<Server> server)
@@ -178,7 +184,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
                                   {"x", std::any_cast<float>(entity.instance["x"]) + 1},
                                   {"y", std::any_cast<float>(entity.instance["y"])},
                                   {"speed", 2},
-                                  {"id", std::any_cast<int>(entity.instance["id"])},
+                                  {"id", _last_entity_id++},
                                   {"direction_x", 1.0},
                                   {"direction_y", 0.0}},
                               std::map<std::string, Parser::type_t>{

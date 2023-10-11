@@ -114,4 +114,5 @@ class Game {
         bool _init;
         std::vector<std::shared_ptr<Bullet>> _bullets;
         std::vector<std::shared_ptr<Ship>> _ships;
+        int _last_entity_id;
 };
