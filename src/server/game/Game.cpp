@@ -102,6 +102,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
         updateEntities(server, entity);
     }
     sendShips(server);
+    _bullets.clear();
     // sendBullets(server);
 }
 
