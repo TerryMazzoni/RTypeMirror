@@ -7,105 +7,112 @@
 
 #pragma once
 
-#include "Bullet.hpp"
 #include "Server.hpp"
+#include "Parser.hpp"
+#include "Bullet.hpp"
 #include "Ship.hpp"
 #include <memory>
 #include <vector>
 
-class Game
-{
-public:
-    /**
-     * @brief Construct a new Game object
-     */
-    Game();
-    /**
-     * @brief Destroy the Game object
-     */
-    ~Game();
-    /**
-     * @brief Run the game
-     *
-     * @param server
-     */
-    void run(std::shared_ptr<Server> server);
-    /**
-     * @brief Add a ship to the game
-     *
-     * @param ship
-     */
-    void addShip(Ship ship);
-    /**
-     * @brief Add a ship to the game
-     *
-     * @param ship
-     */
-    void addShip(std::shared_ptr<Ship> ship);
-    /**
-     * @brief Add a bullet to the game
-     *
-     * @param bullet
-     */
-    void addBullet(Bullet bullet);
-    /**
-     * @brief Add a bullet to the game
-     *
-     * @param bullet
-     */
-    void addBullet(std::shared_ptr<Bullet> bullet);
-    /**
-     * @brief Remove a ship from the game
-     *
-     * @param id
-     */
-    void removeShip(int id);
-    /**
-     * @brief Remove a bullet from the game
-     *
-     * @param id
-     */
-    void removeBullet(int id);
-    /**
-     * @brief Set the Level object
-     *
-     * @param level
-     */
-    void setLevel(int level);
-    /**
-     * @brief Set the Score object
-     *
-     * @param score
-     */
-    void setScore(int score);
-    /**
-     * @brief Get the Level object
-     *
-     * @return int
-     */
-    int getLevel() const;
-    /**
-     * @brief Get the Score object
-     *
-     * @return int
-     */
-    int getScore() const;
-    /**
-     * @brief Get the Ships object
-     *
-     * @return std::vector<Ship>
-     */
-    std::vector<std::shared_ptr<Ship>> getShips() const;
-    /**
-     * @brief Get the Bullets object
-     *
-     * @return std::vector<Bullet>
-     */
-    std::vector<std::shared_ptr<Bullet>> getBullets() const;
+class Game {
+    public:
+        /**
+         * @brief Construct a new Game object
+         */
+        Game();
+        /**
+         * @brief Destroy the Game object
+         */
+        ~Game();
+        /**
+         * @brief Run the game
+         *
+         * @param server
+         */
+        void run(std::shared_ptr<Server> server);
+        /**
+         * @brief Set the Level object
+         *
+         * @param level
+         */
+        void setLevel(int level);
+        /**
+         * @brief Set the Score object
+         *
+         * @param score
+         */
+        void setScore(int score);
+        /**
+         * @brief Get the Level object
+         *
+         * @return int
+         */
+        int getLevel() const;
+        /**
+         * @brief Get the Score object
+         *
+         * @return int
+         */
+        int getScore() const;
+        /**
+         * @brief Init the game and load the map.
+         *
+         * @param map_path
+         */
+        void initGame(std::string map_path);
+        /**
+         * @brief Update the game with the inputs of the players.
+         *
+         * @param inputs
+         */
+        void updateGame(std::shared_ptr<Server> server);
+        /**
+         * @brief Update the ships position depending on the inputs.
+         *
+         * @param server
+         * @param entity
+         */
+        void updateShips(std::shared_ptr<Server> server, Parser::entity_t entity);
+        /**
+         * @brief Update the colisions between the ships and the bullets.
+         *
+         * @param server
+         * @param entity
+         */
+        void updateColisions(std::shared_ptr<Server> server, Parser::entity_t entity);
+        /**
+         * @brief Update the entities and push it to the vectors.
+         *
+         * @param server
+         * @param entity
+         */
+        void updateEntities(std::shared_ptr<Server> server, Parser::entity_t entity);
+        /**
+         * @brief End the game.
+         *
+         */
+        void endGame();
+        std::vector<std::shared_ptr<Bullet>> getBullets() const;
+        /**
+         * @brief Send the ships to the clients
+         *
+         * @param server
+         */
+        void sendShips(std::shared_ptr<Server> server);
+        /**
+         * @brief Send the bullets to the clients
+         *
+         * @param server
+         */
+        void sendBullets(std::shared_ptr<Server> server);
 
-private:
-    int _level;
-    int _score;
-    std::vector<std::shared_ptr<Ship>> _ships;
-    std::vector<std::shared_ptr<Bullet>> _bullets;
+    private:
+        int _level;
+        int _score;
+        std::vector<Parser::entity_t> _entities;
+        int _nb_players;
+        bool _init;
+        std::vector<std::shared_ptr<Bullet>> _bullets;
+        std::vector<std::shared_ptr<Ship>> _ships;
+        int _last_entity_id;
 };

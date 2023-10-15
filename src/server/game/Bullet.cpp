@@ -9,14 +9,14 @@
 
 Bullet::Bullet()
 {
-    _pos = Coords{0, 0};
-    _direction = Coords{0, 0};
+    _pos = Communication::Position{0, 0};
+    _direction = Communication::Position{0, 0};
     _speed = 0;
     _damage = 0;
     _id = 0;
 }
 
-Bullet::Bullet(Coords pos, Coords direction, float speed, float damage, int id)
+Bullet::Bullet(Communication::Position pos, Communication::Position direction, float speed, float damage, int id)
 {
     _pos = pos;
     _direction = direction;
@@ -29,12 +29,12 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::setPos(Coords pos)
+void Bullet::setPos(Communication::Position pos)
 {
     _pos = pos;
 }
 
-void Bullet::setDirection(Coords direction)
+void Bullet::setDirection(Communication::Position direction)
 {
     _direction = direction;
 }
@@ -54,12 +54,17 @@ void Bullet::setId(int id)
     _id = id;
 }
 
-Coords Bullet::getPos() const
+void Bullet::setTeam(int team)
+{
+    _team = team;
+}
+
+Communication::Position Bullet::getPos() const
 {
     return _pos;
 }
 
-Coords Bullet::getDirection() const
+Communication::Position Bullet::getDirection() const
 {
     return _direction;
 }
@@ -77,4 +82,9 @@ float Bullet::getDamage() const
 int Bullet::getId() const
 {
     return _id;
+}
+
+int Bullet::getTeam() const
+{
+    return _team;
 }
