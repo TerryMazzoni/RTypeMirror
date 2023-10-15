@@ -32,7 +32,7 @@ To create the client and the server, use:
 
 You can check the documentation [here](https://terrymazzoni.github.io/RTypeMirror/).
 
-You can also check the RFC [here](https://dougyom.github.io/)
+You can also download the RFC [here](https://terrymazzoni.github.io/RTypeMirror/RFC)
 
 
 Made by: Antonin Laudon - Luca Deltort - Terry Mazzoni - Christopher Artigas - Tom Laiolo
