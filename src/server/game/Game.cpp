@@ -81,11 +81,17 @@ int Game::getScore() const
 void Game::initGame(std::string map_path)
 {
     _init = true;
+    int _last_entity_id = 0;
     Parser::ParserJson parser = Parser::ParserJson(map_path);
     parser.parse();
     if (parser.getEntities().size() == 0)
         throw std::runtime_error("Error: no entities in map");
     _entities = parser.getEntities();
+    for (auto &entity : _entities) {
+        if (entity.instance.find("id") != entity.instance.end() && std::any_cast<int>(entity.instance["id"]) > _last_entity_id) {
+            _last_entity_id = std::any_cast<int>(entity.instance["id"]);
+        }
+    }
 }
 
 void Game::updateGame(std::shared_ptr<Server> server)
@@ -96,6 +102,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
         updateEntities(server, entity);
     }
     sendShips(server);
+    _bullets.clear();
     // sendBullets(server);
 }
 
@@ -166,19 +173,21 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         entity.instance["y"] = std::any_cast<float>(entity.instance["y"]) + std::any_cast<float>(entity.instance["direction_y"]) * std::any_cast<float>(entity.instance["speed"]);
     }
     if (entity.type != "player" || entity.type != "missile") {
-        entity.instance["x"] = std::any_cast<float>(entity.instance["x"]) - 1;
+        entity.instance["x"] = std::any_cast<float>(entity.instance["x"]) - 1.0;
     }
     if (entity.type == "player") {
+        std::cout << "Player1" << std::endl;
         _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<float>(entity.instance["id"]), ShipType::PLAYER));
 
+        std::cout << "Player2" << std::endl;
         _entities.push_back(static_cast<Parser::entity_t>(
             Parser::entity_t({"missile",
                               {{}, {}},
                               std::map<std::string, std::any>{
-                                  {"x", std::any_cast<float>(entity.instance["x"]) + 1},
+                                  {"x", std::any_cast<float>(entity.instance["x"]) + 1.0},
                                   {"y", std::any_cast<float>(entity.instance["y"])},
-                                  {"speed", 2},
-                                  {"id", std::any_cast<int>(entity.instance["id"])},
+                                  {"speed", 2.0},
+                                  {"id", _last_entity_id++},
                                   {"direction_x", 1.0},
                                   {"direction_y", 0.0}},
                               std::map<std::string, Parser::type_t>{
@@ -190,11 +199,17 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
                                   {"direction_y", Parser::type_t::FLOAT}}})));
     }
     else if (entity.type == "missile") {
+        std::cout << "Missile" << std::endl;
         _bullets.push_back(std::make_shared<Bullet>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, Communication::Position{std::any_cast<float>(entity.instance["direction_x"]), std::any_cast<float>(entity.instance["direction_y"])}, std::any_cast<float>(entity.instance["speed"]), 1, 1));
     }
     else if (entity.type == "enemy") {
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
+        std::cout << "Enemy" << std::endl;
+        if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end() || entity.instance.find("id") == entity.instance.end())
+            return;
+        //_ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
+        _ships.push_back(std::make_shared<Ship>(Communication::Position{200.0, 200.0}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
     }
+    std::cout << "Entities updated..." << std::endl;
 }
 
 void Game::endGame()

@@ -122,7 +122,7 @@ set(BOOST_RUNTIME_LINK static)
 
 FetchContent_MakeAvailable(Boost)
 
-foreach(lib system asio json)
+foreach(lib system asio json property_tree)
     target_link_libraries(
         r-type_server
         PRIVATE
