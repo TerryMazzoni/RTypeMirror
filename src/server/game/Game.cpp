@@ -206,7 +206,8 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         std::cout << "Enemy" << std::endl;
         if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end() || entity.instance.find("id") == entity.instance.end())
             return;
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
+        //_ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
+        _ships.push_back(std::make_shared<Ship>(Communication::Position{200.0, 200.0}, std::any_cast<int>(entity.instance["id"]), ShipType::ENEMY));
     }
     std::cout << "Entities updated..." << std::endl;
 }
