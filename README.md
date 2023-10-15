@@ -30,7 +30,9 @@ To create the client and the server, use:
 
 ## Documentation
 
-    doxygen Doxyfile
-    firefox html/index.html
+You can check the documentation [here](https://terrymazzoni.github.io/RTypeMirror/).
+
+You can also download the RFC [here](https://terrymazzoni.github.io/RTypeMirror/RFC)
+
 
 Made by: Antonin Laudon - Luca Deltort - Terry Mazzoni - Christopher Artigas - Tom Laiolo
