@@ -3,7 +3,7 @@ name: Documentation
 on:
   push:
     branches:
-      - "dev"
+      - "*"
 
 jobs:
   
@@ -22,7 +22,11 @@ jobs:
         run: doxygen Doxyfile
 
       - name: Put R-TYPE_RFC.txt into documentation
-        run: cp R-TYPE_RFC.txt docs/RFC
+        run: |
+          mkdir docs
+          echo "<object data=\"RFC.txt\" width=\"100%\" height=\"100%\"/>" > docs/RFC.html 
+          cp R-TYPE_RFC.txt docs/RFC.txt
+
 
       - name: Deploy Documentation
         uses: peaceiris/actions-gh-pages@v3
