@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['client_2',['Client',['../classClient.html',1,'Client'],['../classClient.html#a3c9f279f910f5eb19010852639165831',1,'Client::Client(const std::string &amp;host, const std::string &amp;port)'],['../classClient.html#a3319b0e05aec6045e51cd63f76e231ab',1,'Client::Client(udp::endpoint endpoint, int id)']]],
-  ['close_3',['close',['../classServer.html#ad1a4b1650214d156491a98ff6b96d787',1,'Server']]]
+  ['bullet_5',['Bullet',['../classBullet.html',1,'Bullet'],['../classBullet.html#acd7befc0bc18907cc1d871d37bbdddeb',1,'Bullet::Bullet()'],['../classBullet.html#a39bab976b4930f48d61ff853d47eda1f',1,'Bullet::Bullet(Communication::Position pos, Communication::Position direction, float speed, float damage, int id)']]],
+  ['bulletmouvement_6',['BulletMouvement',['../classECS_1_1BulletMouvement.html',1,'ECS']]]
 ];
