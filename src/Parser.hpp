@@ -33,11 +33,59 @@ namespace Parser {
         STRING,
     };
 
+    class Any {
+        public:
+            /*
+            ** @brief constructs a Any object, the type of the object is set depending on the argument
+            **
+            ** @param value: the value of the Any object
+            */
+            Any(int i);
+            Any(float f);
+            Any(std::string s);
+            Any(double d);
+            Any();
+
+            /*
+            ** @brief get the type of the value stored
+            **
+            ** @returns the type of the value stored
+            */
+            Parser::type_t getType() const;
+
+            /*
+            ** @brief get the value
+            **
+            ** @returns the value stored as an int, if the value cannot be converted to an int, std::numeric_limits<int>::infinity() ir returned
+            */
+            int getInt() const;
+            
+            /*
+            ** @brief get the value
+            **
+            ** @returns the value stored as an float, if the value cannot be converted to a float, std::numeric_limits<float>::infinity() ir returned
+            */
+            float getFloat() const;
+
+            /*
+            ** @brief get the value
+            **
+            ** @returns the value stored as an string
+            */
+            std::string getString() const;
+
+        protected:
+        private:
+            int _i;
+            float _f;
+            std::string _s;
+            Parser::type_t _type;
+    };
+
     typedef struct {
             std::string type;
             std::pair<std::vector<std::string>, std::vector<int>> textures;
-            std::map<std::string, std::any> instance;
-            std::map<std::string, type_t> instanceType;
+            std::unordered_map<std::string, Parser::Any> instance;
     } entity_t;
 
     class ParserException : public std::exception {
@@ -119,5 +167,4 @@ namespace Parser {
             std::string _path;
             std::vector<entity_t> _entities;
     };
-
 } // namespace Parser
