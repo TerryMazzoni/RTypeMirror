@@ -56,19 +56,20 @@ namespace ECS
                 componentT->setType(ComponentType::Texture);
                 entity.components.push_back(componentT);
 
-                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0 || entityData.instanceType["x"] != Parser::type_t::FLOAT || entityData.instanceType["y"]!= Parser::type_t::FLOAT)
+
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
-                float x = std::any_cast<float>(entityData.instance["x"]);
-                float y = std::any_cast<float>(entityData.instance["y"]);
-                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (std::to_string(x) + "," + std::to_string(y)));
+                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (entityData.instance["x"].getString() + "," + entityData.instance["y"].getString()));
                 componentP->setType(ComponentType::Position);
                 entity.components.push_back(componentP);
 
-                if (entityData.instance.count("scale") == 0 || entityData.instanceType["scale"] != Parser::type_t::FLOAT)
+                if (entityData.instance.count("scale") == 0)
                     throw std::runtime_error("ERROR: entity __player__ have invalid scale");
-                std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, std::to_string(std::any_cast<float>(entityData.instance["scale"])));
+                std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, entityData.instance["scale"].getString());
                 componentS->setType(ComponentType::Scale);
                 entity.components.push_back(componentS);
+
+
 
                 entity.id = {EntityType::Player, id};
                 _eventManager.setMyPlayer(entity);
@@ -86,7 +87,7 @@ namespace ECS
                 componentT->setType(ComponentType::Texture);
                 entity.components.push_back(componentT);
 
-                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (std::to_string(std::any_cast<float>(entityData.instance["x"])) + "," + std::to_string(std::any_cast<float>(entityData.instance["y"])).c_str()));
+                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (entityData.instance["x"].getString() + "," + entityData.instance["y"].getString()));
                 componentP->setType(ComponentType::Position);
                 entity.components.push_back(componentP);
 
