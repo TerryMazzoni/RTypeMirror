@@ -168,6 +168,9 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
 void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entity)
 {
     if (entity.type == "missile") {
+        // TODO: check if entity.instance["x"].getFloat() return infinity, if yes, throw exception
+        // same for int
+
         entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat()) + (entity.instance["direction_x"].getFloat()) * (entity.instance["speed"].getFloat()))});
         entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat()) + (entity.instance["direction_y"].getFloat()) * (entity.instance["speed"].getFloat()))});
     }
@@ -175,22 +178,22 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat() - 1.0))});
     }
     if (entity.type == "player") {
-        std::cout << "Player1" << std::endl;
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, (entity.instance["id"].getInt()), ShipType::PLAYER));
+        // std::cout << "Player1" << std::endl;
+        // _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, (entity.instance["id"].getInt()), ShipType::PLAYER));
 
-        std::cout << "Player2" << std::endl;
-        _entities.push_back(static_cast<Parser::entity_t>(
-            Parser::entity_t({
-                "missile",
-                {{}, {}},
-                std::unordered_map<std::string, Parser::Any>{
-                    {"x", Parser::Any((entity.instance["x"].getFloat()) + 1.0)},
-                    {"y", Parser::Any(entity.instance["y"].getFloat())},
-                    {"speed", Parser::Any(2.0)},
-                    {"id", Parser::Any(_last_entity_id++)},
-                    {"direction_x", Parser::Any(1.0)},
-                    {"direction_y", Parser::Any(0.0)}},
-            })));
+        // std::cout << "Player2" << std::endl;
+        // _entities.push_back(static_cast<Parser::entity_t>(
+        //     Parser::entity_t({
+        //         "missile",
+        //         {{}, {}},
+        //         std::unordered_map<std::string, Parser::Any>{
+        //             {"x", Parser::Any((entity.instance["x"].getFloat()) + 1.0)},
+        //             {"y", Parser::Any(entity.instance["y"].getFloat())},
+        //             {"speed", Parser::Any(2.0)},
+        //             {"id", Parser::Any(_last_entity_id++)},
+        //             {"direction_x", Parser::Any(1.0)},
+        //             {"direction_y", Parser::Any(0.0)}},
+        //     })));
     }
     else if (entity.type == "missile") {
         std::cout << "Missile" << std::endl;

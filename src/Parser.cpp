@@ -12,12 +12,14 @@ namespace Parser {
     {
         _path = path;
         _entities = {};
+        _lastId = 1;
     }
 
     ParserJson::ParserJson()
     {
         _path = "__default__";
         _entities = {};
+        _lastId = 1;
     }
 
     ParserJson::~ParserJson()
@@ -80,6 +82,7 @@ namespace Parser {
             if (entity.second.count(PARSER_ENTITY_INSTANCE) != 0) {
                 for (auto &instance : entity.second.get_child(PARSER_ENTITY_INSTANCE)) {
                     newEntity = {
+                        _lastId++,
                         typeEntities,
                         {textures, indexes},
                     };
@@ -146,6 +149,7 @@ namespace Parser {
                         throw Parser::ParserException("Texture not found for char: '" + std::string(1, line[i]) + "' at x: " + std::to_string(i) + " y: " + std::to_string(y));
                     }
                     newEntity = {
+                        _lastId++,
                         "__tile__",
                         {texturesMap[line[i]], indexesMap[line[i]]},
                     };
@@ -162,6 +166,7 @@ namespace Parser {
     {
         for (auto &entity : _entities) {
             std::cout << "┓\n┃ " << entity.type << std::endl;
+            std::cout << "┃    ID: " << entity.id << std::endl;
             std::cout << "┃    Textures: " << std::endl;
             std::cout << "┃      Indexes:" << std::endl;
             for (auto &index : entity.textures.second)

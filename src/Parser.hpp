@@ -59,7 +59,7 @@ namespace Parser {
             ** @returns the value stored as an int, if the value cannot be converted to an int, std::numeric_limits<int>::infinity() ir returned
             */
             int getInt() const;
-            
+
             /*
             ** @brief get the value
             **
@@ -83,6 +83,7 @@ namespace Parser {
     };
 
     typedef struct {
+            int id;
             std::string type;
             std::pair<std::vector<std::string>, std::vector<int>> textures;
             std::unordered_map<std::string, Parser::Any> instance;
@@ -166,5 +167,6 @@ namespace Parser {
 
             std::string _path;
             std::vector<entity_t> _entities;
+            int _lastId;
     };
 } // namespace Parser
