@@ -117,20 +117,22 @@ $(function() {
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classServer.html#aed1eeeaf8b0cd034acadc48d7272ea59">setGameStatus</a>(<span class="keywordtype">int</span> status);</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        std::vector&lt;std::pair&lt;int, Communication::Inputs&gt;&gt; <a class="code" href="classServer.html#a4a313b2a790561ecd4bf9a8d475d929d">getInput</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classServer.html#af5f9e1e8177f98f4cbdc78c35e8bd2b8">removeInputAt</a>(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        boost::asio::io_service _io_service;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        udp::socket _socket;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        std::vector&lt;Client&gt; _clients;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        std::string _response_message;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keywordtype">int</span> _game_status;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        std::map&lt;int, bool&gt; _ids;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        std::vector&lt;std::pair&lt;int, Communication::Inputs&gt;&gt; _inputs;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;};</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keywordtype">bool</span> is_running(<span class="keywordtype">int</span> flag);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        std::map&lt;int, bool&gt; <a class="code" href="classServer.html#a07114bd9530edc46597f7267b3163ea4">getIds</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        boost::asio::io_service _io_service;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        udp::socket _socket;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        std::vector&lt;Client&gt; _clients;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        std::string _response_message;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keywordtype">int</span> _game_status;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        std::map&lt;int, bool&gt; _ids;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        std::vector&lt;std::pair&lt;int, Communication::Inputs&gt;&gt; _inputs;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;};</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keywordtype">bool</span> is_running(<span class="keywordtype">int</span> flag);</div>
 <div class="ttc" id="aclassServer_html"><div class="ttname"><a href="classServer.html">Server</a></div><div class="ttdef"><b>Definition:</b> Server.hpp:23</div></div>
 <div class="ttc" id="aclassServer_html_a050309497dab628564e509abf8b6514b"><div class="ttname"><a href="classServer.html#a050309497dab628564e509abf8b6514b">Server::removeClient</a></div><div class="ttdeci">void removeClient(const udp::endpoint &amp;client)</div><div class="ttdoc">Remove a client.</div><div class="ttdef"><b>Definition:</b> Server.cpp:126</div></div>
+<div class="ttc" id="aclassServer_html_a07114bd9530edc46597f7267b3163ea4"><div class="ttname"><a href="classServer.html#a07114bd9530edc46597f7267b3163ea4">Server::getIds</a></div><div class="ttdeci">std::map&lt; int, bool &gt; getIds() const</div><div class="ttdoc">Get the Response Message object.</div><div class="ttdef"><b>Definition:</b> Server.cpp:188</div></div>
 <div class="ttc" id="aclassServer_html_a14b3a6212615e4db350658cd598fc0e0"><div class="ttname"><a href="classServer.html#a14b3a6212615e4db350658cd598fc0e0">Server::getIoService</a></div><div class="ttdeci">boost::asio::io_service &amp; getIoService()</div><div class="ttdoc">Get the Io Service object.</div><div class="ttdef"><b>Definition:</b> Server.cpp:163</div></div>
 <div class="ttc" id="aclassServer_html_a4a313b2a790561ecd4bf9a8d475d929d"><div class="ttname"><a href="classServer.html#a4a313b2a790561ecd4bf9a8d475d929d">Server::getInput</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; int, Communication::Inputs &gt; &gt; getInput() const</div><div class="ttdoc">Get the Input object.</div><div class="ttdef"><b>Definition:</b> Server.cpp:178</div></div>
 <div class="ttc" id="aclassServer_html_a4b3aa2579cb1c8cd1d069582c14d0fa6"><div class="ttname"><a href="classServer.html#a4b3aa2579cb1c8cd1d069582c14d0fa6">Server::~Server</a></div><div class="ttdeci">~Server()</div><div class="ttdoc">Destroy the Server object.</div><div class="ttdef"><b>Definition:</b> Server.cpp:34</div></div>
