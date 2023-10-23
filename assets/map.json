@@ -97,7 +97,12 @@
     {
       "type": "enemy_1",
       "textures": [
-        "assets/player/Player1.png"
+        "assets/enemies/Enemy1/0.png",
+        "assets/enemies/Enemy1/1.png",
+        "assets/enemies/Enemy1/2.png",
+        "assets/enemies/Enemy1/3.png",
+        "assets/enemies/Enemy1/4.png",
+        "assets/enemies/Enemy1/5.png"
       ],
       "instance": [
         {
@@ -112,7 +117,12 @@
     {
       "type": "enemy_2",
       "textures": [
-        "assets/player/Player1.png"
+        "assets/enemies/Enemy2/0.png",
+        "assets/enemies/Enemy2/1.png",
+        "assets/enemies/Enemy2/2.png",
+        "assets/enemies/Enemy2/3.png",
+        "assets/enemies/Enemy2/4.png",
+        "assets/enemies/Enemy2/5.png"
       ],
       "instance": [
         {
