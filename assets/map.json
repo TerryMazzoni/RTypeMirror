@@ -95,26 +95,47 @@
       ]
     },
     {
-      "type": "enemy",
+      "type": "enemy_1",
       "textures": [
         "assets/player/Player1.png"
       ],
       "instance": [
         {
           "x": 100.0,
-          "y": 256.0
-        },
+          "y": 256.0,
+          "damage": 10,
+          "speed": 5,
+          "health": 50
+        }
+      ]
+    },
+    {
+      "type": "enemy_2",
+      "textures": [
+        "assets/player/Player1.png"
+      ],
+      "instance": [
         {
-          "x": 200.0,
-          "y": 256.0
-        },
+          "x": 100.0,
+          "y": 256.0,
+          "damage": 6,
+          "speed": 15,
+          "health": 30
+        }
+      ]
+    },
+    {
+      "type": "boss_1",
+      "textures": [
+        "assets/player/Player1.png"
+      ],
+      "instance": [
         {
-          "x": 300.0,
-          "y": 256.0
-        },
-        {
-          "x": 400.0,
-          "y": 256.0
+          "x": 100.0,
+          "y": 256.0,
+          "damage": 3,
+          "speed": 3,
+          "health": 200
         }
       ]
     }
