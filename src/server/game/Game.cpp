@@ -179,7 +179,8 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat() - 1.0))});
     }
     if (entity.type == "__player__") {
-        if (entity.instance.find("x") != entity.instance.end() && entity.instance.find("y") != entity.instance.end())
+        if (entity.instance.find("x") != entity.instance.end() && entity.instance.find("y") != entity.instance.end() &&
+            entity.id != 0 && server->getIds()[entity.id] == true)
             _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::PLAYER));
 
         // std::cout << "Player2" << std::endl;

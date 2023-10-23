@@ -184,3 +184,8 @@ void Server::removeInputAt(int index)
 {
     _inputs.erase(_inputs.begin() + index);
 }
+
+std::map<int, bool> Server::getIds() const
+{
+    return _ids;
+}

@@ -117,6 +117,13 @@ class Server {
          * @brief Clear the input
          */
         void removeInputAt(int index);
+        /**
+         * @brief Get the Response Message object
+         *
+         * @return std::map<int, bool>& ids the ID of the client, bool if the
+         * id is used or not
+         */
+        std::map<int, bool> getIds() const;
 
     private:
         boost::asio::io_service _io_service;
