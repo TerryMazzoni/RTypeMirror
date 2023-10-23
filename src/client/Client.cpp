@@ -139,47 +139,6 @@ void Client::receiveAsync()
 
 void Client::run()
 {
-    // boost::posix_time::milliseconds ms(50);
-    // boost::asio::deadline_timer t(getIoService(), ms);
-
-    // if (!is_running(0))
-    //     return;
-    // t.expires_at(t.expires_at() + ms);
-    // t.async_wait(
-    //     [this](const boost::system::error_code &error) {
-    //         if (!error) {
-    //             if (this->getId() == 0) {
-    //                 Communication::Id id;
-    //                 this->send(id);
-    //             }
-    //             if (this->getIsReady()) {
-    //                 Communication::Ready ready;
-    //                 ready.is_ready = true;
-    //                 this->send(ready);
-    //             }
-    //             else {
-    //                 Communication::Ready ready;
-    //                 ready.is_ready = false;
-    //                 this->send(ready);
-    //             }
-    //             if (_game_started) {
-    //                 Communication::Inputs input;
-
-    //                 input.nbrItems = _events.size() > 16 ? 16 : _events.size();
-    //                 for (size_t i = 0; i < input.nbrItems; i++) {
-    //                     input.event[i] = (Communication::EventInput)_events[i];
-    //                 }
-    //                 input.type = Communication::CommunicationTypes::INPUT;
-    //                 if (input.nbrItems > 0)
-    //                     this->send(input);
-    //                 _events.clear();
-    //             }
-    //         }
-    //         if (!is_running(0))
-    //             return;
-    //         this->run();
-    //     });
-    // getIoService().run();
     unsigned long start, end = 0;
     unsigned long elapsed_seconds = 0;
 
