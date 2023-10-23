@@ -102,6 +102,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
     }
     sendShips(server);
     _bullets.clear();
+    _ships.clear();
     // sendBullets(server);
 }
 
@@ -200,13 +201,12 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         _bullets.push_back(std::make_shared<Bullet>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, Communication::Position{std::any_cast<float>(entity.instance["direction_x"]), std::any_cast<float>(entity.instance["direction_y"])}, std::any_cast<float>(entity.instance["speed"]), 1, 1));
     }
     else if (entity.type == "enemy") {
-        std::cout << "Enemy" << std::endl;
+        // std::cout << "Enemy" << std::endl;
         if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end() || entity.instance.find("id") == entity.instance.end())
             return;
         //_ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, (entity.instance["id"].getInt()), ShipType::ENEMY));
         _ships.push_back(std::make_shared<Ship>(Communication::Position{200.0, 200.0}, (entity.instance["id"].getInt()), ShipType::ENEMY));
     }
-    std::cout << "Entities updated..." << std::endl;
 }
 
 void Game::endGame()

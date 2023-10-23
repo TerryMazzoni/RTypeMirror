@@ -80,16 +80,16 @@ void Client::processMessage(const std::string &msg)
     else if (header->type == Communication::CommunicationTypes::SHIPS) {
         Communication::ShipsPosition *ships = reinterpret_cast<Communication::ShipsPosition *>(data);
         std::cout << "Ships: " << ships->nbrItems << std::endl;
-        for (int i = 0; i < ships->nbrItems; i++) {
-            std::cout << "Ship " << i << ": " << std::endl;
-            std::cout << "ID: " << ships->ship[i].id << std::endl;
-            std::cout << "Life: " << ships->ship[i].life << std::endl;
-            std::cout << "Level: " << ships->ship[i].level << std::endl;
-            std::cout << "Type: " << static_cast<int>(ships->ship[i].type) << std::endl;
-            std::cout << "Position: " << std::endl;
-            std::cout << "       X: " << ships->ship[i].position.x << std::endl;
-            std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
-        }
+        // for (int i = 0; i < ships->nbrItems; i++) {
+        //     std::cout << "Ship " << i << ": " << std::endl;
+        //     std::cout << "ID: " << ships->ship[i].id << std::endl;
+        //     std::cout << "Life: " << ships->ship[i].life << std::endl;
+        //     std::cout << "Level: " << ships->ship[i].level << std::endl;
+        //     std::cout << "Type: " << static_cast<int>(ships->ship[i].type) << std::endl;
+        //     std::cout << "Position: " << std::endl;
+        //     std::cout << "       X: " << ships->ship[i].position.x << std::endl;
+        //     std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
+        // }
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
@@ -139,47 +139,86 @@ void Client::receiveAsync()
 
 void Client::run()
 {
-    boost::posix_time::milliseconds ms(50);
-    boost::asio::deadline_timer t(getIoService(), ms);
+    // boost::posix_time::milliseconds ms(50);
+    // boost::asio::deadline_timer t(getIoService(), ms);
 
-    if (!is_running(0))
-        return;
-    t.expires_at(t.expires_at() + ms);
-    t.async_wait(
-        [this](const boost::system::error_code &error) {
-            if (!error) {
-                if (this->getId() == 0) {
-                    Communication::Id id;
-                    this->send(id);
-                }
-                if (this->getIsReady()) {
-                    Communication::Ready ready;
-                    ready.is_ready = true;
-                    this->send(ready);
-                }
-                else {
-                    Communication::Ready ready;
-                    ready.is_ready = false;
-                    this->send(ready);
-                }
-                if (_game_started) {
-                    Communication::Inputs input;
+    // if (!is_running(0))
+    //     return;
+    // t.expires_at(t.expires_at() + ms);
+    // t.async_wait(
+    //     [this](const boost::system::error_code &error) {
+    //         if (!error) {
+    //             if (this->getId() == 0) {
+    //                 Communication::Id id;
+    //                 this->send(id);
+    //             }
+    //             if (this->getIsReady()) {
+    //                 Communication::Ready ready;
+    //                 ready.is_ready = true;
+    //                 this->send(ready);
+    //             }
+    //             else {
+    //                 Communication::Ready ready;
+    //                 ready.is_ready = false;
+    //                 this->send(ready);
+    //             }
+    //             if (_game_started) {
+    //                 Communication::Inputs input;
 
-                    input.nbrItems = _events.size() > 16 ? 16 : _events.size();
-                    for (size_t i = 0; i < input.nbrItems; i++) {
-                        input.event[i] = (Communication::EventInput)_events[i];
-                    }
-                    input.type = Communication::CommunicationTypes::INPUT;
-                    if (input.nbrItems > 0)
-                        this->send(input);
-                    _events.clear();
-                }
+    //                 input.nbrItems = _events.size() > 16 ? 16 : _events.size();
+    //                 for (size_t i = 0; i < input.nbrItems; i++) {
+    //                     input.event[i] = (Communication::EventInput)_events[i];
+    //                 }
+    //                 input.type = Communication::CommunicationTypes::INPUT;
+    //                 if (input.nbrItems > 0)
+    //                     this->send(input);
+    //                 _events.clear();
+    //             }
+    //         }
+    //         if (!is_running(0))
+    //             return;
+    //         this->run();
+    //     });
+    // getIoService().run();
+    unsigned long start, end = 0;
+    unsigned long elapsed_seconds = 0;
+
+    while (is_running(0)) {
+        start = std::chrono::system_clock::now().time_since_epoch().count();
+        if (elapsed_seconds >= 100000000) {
+            if (this->getId() == 0) {
+                Communication::Id id;
+                this->send(id);
             }
-            if (!is_running(0))
-                return;
-            this->run();
-        });
-    getIoService().run();
+            if (this->getIsReady()) {
+                Communication::Ready ready;
+                ready.is_ready = true;
+                this->send(ready);
+            }
+            else {
+                Communication::Ready ready;
+                ready.is_ready = false;
+                this->send(ready);
+            }
+            if (_game_started) {
+                Communication::Inputs input;
+
+                input.nbrItems = _events.size() > 16 ? 16 : _events.size();
+                for (size_t i = 0; i < input.nbrItems; i++) {
+                    input.event[i] = (Communication::EventInput)_events[i];
+                }
+                input.type = Communication::CommunicationTypes::INPUT;
+                if (input.nbrItems > 0)
+                    this->send(input);
+                _events.clear();
+            }
+            elapsed_seconds -= 100000000;
+        }
+        for (int i = 0; i < 10000; i++)
+            ;
+        end = std::chrono::system_clock::now().time_since_epoch().count();
+        elapsed_seconds += (end - start);
+    }
 }
 
 udp::socket &Client::getSocket()
