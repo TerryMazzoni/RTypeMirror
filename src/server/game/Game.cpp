@@ -83,8 +83,7 @@ void Game::initGame(std::string map_path)
     _init = true;
     int _last_entity_id = 0;
     Parser::ParserJson parser = Parser::ParserJson(map_path).parse();
-    if (parser.getEntities().size() == 0)
-        _entities = parser.getEntities();
+    _entities = parser.getEntities();
     for (auto &entity : _entities) {
         if (entity.instance.find("id") != entity.instance.end() && (entity.instance["id"].getInt()) > _last_entity_id) {
             _last_entity_id = entity.instance["id"].getInt();
@@ -146,7 +145,6 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
             if (entity_colision.type == "__tile__") {
                 // HANDLE COLLISION
                 if ((entity.instance["x"].getFloat()) == (entity_colision.instance["x"].getFloat()) && (entity.instance["y"].getFloat()) == (entity_colision.instance["y"].getFloat())) {
-                    std::cout << "COLISION" << std::endl;
                     if ((entity.instance["hp"].getInt()) != 0) {
                         entity.instance["hp"] = 0;
                     }
@@ -155,7 +153,6 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
             else if (entity_colision.type == "missile" && entity.type != "missile") {
                 if ((entity.instance["id"].getInt()) != (entity_colision.instance["id"].getInt())) {
                     if ((entity.instance["x"].getFloat()) == (entity_colision.instance["x"].getFloat()) && (entity.instance["y"].getFloat()) == (entity_colision.instance["y"].getFloat())) {
-                        std::cout << "COLISION" << std::endl;
                         if ((entity.instance["hp"].getInt()) != 0) {
                             entity.instance.insert({"hp", Parser::Any(0)});
                         }
@@ -176,8 +173,9 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat()) + (entity.instance["direction_y"].getFloat()) * (entity.instance["speed"].getFloat()))});
     }
     if (entity.type != "__player__" || entity.type != "missile") {
-        if (entity.type.substr(0, 4) != "boss")
+        if (entity.type.substr(0, 4) != "boss" && entity.instance.find("x") != entity.instance.end() && entity.instance.find("speed") != entity.instance.end()) {
             entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat() - 1.0 * (entity.instance["speed"].getFloat() / 10.0)))});
+        }
         if (entity.type == "enemy2" || entity.type == "boss1") {
             if (entity.instance.find("y_status") == entity.instance.end())
                 entity.instance.insert({"y_status", Parser::Any(0)});
