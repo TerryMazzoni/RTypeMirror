@@ -218,7 +218,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
             return;
         _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(entity.instance["direction_x"].getFloat()), (entity.instance["direction_y"].getFloat())}, (entity.instance["speed"].getFloat()), 1, 1));
     }
-    else if (entity.type == "enemy") {
+    else if (entity.type == "enemy_1" || entity.type == "enemy_2" || entity.type == "boss_1") {
         if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end())
             return;
         _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::ENEMY));
