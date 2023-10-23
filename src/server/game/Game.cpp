@@ -84,8 +84,7 @@ void Game::initGame(std::string map_path)
     int _last_entity_id = 0;
     Parser::ParserJson parser = Parser::ParserJson(map_path).parse();
     if (parser.getEntities().size() == 0)
-        throw std::runtime_error("Error: no entities in map");
-    _entities = parser.getEntities();
+        _entities = parser.getEntities();
     for (auto &entity : _entities) {
         if (entity.instance.find("id") != entity.instance.end() && (entity.instance["id"].getInt()) > _last_entity_id) {
             _last_entity_id = entity.instance["id"].getInt();
@@ -112,8 +111,9 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t entity)
     for (auto &communication : server->getInput()) {
         for (int i = 0; i < communication.second.nbrItems; i++) {
             if (entity.type == "player" && (entity.instance["id"].getInt()) == communication.first) {
-                if (entity.instance.find("speed") == entity.instance.end())
+                if (entity.instance.find("speed") == entity.instance.end()) {
                     entity.instance.insert({"speed", Parser::Any(1)});
+                }
                 for (int i = 0; i < communication.second.nbrItems; i++) {
                     switch (communication.second.event[i]) {
                         case Communication::EventInput::Key_up:
