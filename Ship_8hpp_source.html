@@ -83,15 +83,15 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classShip.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classShip.html">Ship</a> {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classShip.html#ab7608fcfc4d27c678aacaf9bfd68a462">Ship</a>();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classShip.html#ab7608fcfc4d27c678aacaf9bfd68a462">Ship</a>(Communication::Position pos, <span class="keywordtype">int</span> <span class="keywordtype">id</span>, ShipType type);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classShip.html#ab7608fcfc4d27c678aacaf9bfd68a462">Ship</a>(<a class="code" href="structCommunication_1_1Position.html">Communication::Position</a> pos, <span class="keywordtype">int</span> <span class="keywordtype">id</span>, ShipType type);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classShip.html#a43cd6eeaffc11b49239b091621963a65">~Ship</a>();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#a44493848831147cc7f74d01153982a23">setPos</a>(Communication::Position pos);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#a44493848831147cc7f74d01153982a23">setPos</a>(<a class="code" href="structCommunication_1_1Position.html">Communication::Position</a> pos);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#a48984ed999c081fd1750306f6dfa8d21">setSpeed</a>(<span class="keywordtype">float</span> speed);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#ab9c1c8febaf1e8f52c3fd6b7aee9a89b">setLife</a>(<span class="keywordtype">float</span> life);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#a6fa7db19030d4398f98f847cd148485c">setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#aef045b3530bebc16264143a020281f2f">setLevel</a>(<span class="keywordtype">int</span> level);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classShip.html#a0cbaccbe15ee297f48bc0a1b577144af">setType</a>(ShipType type);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        Communication::Position <a class="code" href="classShip.html#a199678608cde8195b4a46d333e952f00">getPos</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="structCommunication_1_1Position.html">Communication::Position</a> <a class="code" href="classShip.html#a199678608cde8195b4a46d333e952f00">getPos</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classShip.html#acd08bd5623a472cf16858217a38c5787">getSpeed</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classShip.html#ab39ff19a5febba9b307fcc007857ef4f">getLife</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classShip.html#a65c18ec389de004f7369ecd0d8bcfc87">getId</a>() <span class="keyword">const</span>;</div>
@@ -99,7 +99,7 @@ $(function() {
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        ShipType <a class="code" href="classShip.html#ae7bb8637200262f31ee1734355542026">getType</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        Communication::Position _pos;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="structCommunication_1_1Position.html">Communication::Position</a> _pos;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">float</span> _speed;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordtype">float</span> _life;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordtype">int</span> _id;</div>
@@ -121,6 +121,7 @@ $(function() {
 <div class="ttc" id="aclassShip_html_acff53c7625d54f11fe9f886069183edb"><div class="ttname"><a href="classShip.html#acff53c7625d54f11fe9f886069183edb">Ship::getLevel</a></div><div class="ttdeci">int getLevel() const</div><div class="ttdoc">Get the Level object.</div><div class="ttdef"><b>Definition:</b> Ship.cpp:84</div></div>
 <div class="ttc" id="aclassShip_html_ae7bb8637200262f31ee1734355542026"><div class="ttname"><a href="classShip.html#ae7bb8637200262f31ee1734355542026">Ship::getType</a></div><div class="ttdeci">ShipType getType() const</div><div class="ttdoc">Get the Type object.</div><div class="ttdef"><b>Definition:</b> Ship.cpp:89</div></div>
 <div class="ttc" id="aclassShip_html_aef045b3530bebc16264143a020281f2f"><div class="ttname"><a href="classShip.html#aef045b3530bebc16264143a020281f2f">Ship::setLevel</a></div><div class="ttdeci">void setLevel(int level)</div><div class="ttdoc">Set the Level object.</div><div class="ttdef"><b>Definition:</b> Ship.cpp:54</div></div>
+<div class="ttc" id="astructCommunication_1_1Position_html"><div class="ttname"><a href="structCommunication_1_1Position.html">Communication::Position</a></div><div class="ttdef"><b>Definition:</b> Communication.hpp:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

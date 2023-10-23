@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['rlcolor_157',['RlColor',['../classRaylib_1_1RlColor.html',1,'Raylib']]],
-  ['rlfont_158',['RlFont',['../classRaylib_1_1RlFont.html',1,'Raylib']]],
-  ['rlmusic_159',['RlMusic',['../classRaylib_1_1RlMusic.html',1,'Raylib']]],
-  ['rlsound_160',['RlSound',['../classRaylib_1_1RlSound.html',1,'Raylib']]],
-  ['rltexture_161',['RlTexture',['../classRaylib_1_1RlTexture.html',1,'Raylib']]],
-  ['rotation_162',['Rotation',['../structECS_1_1Rotation.html',1,'ECS']]]
+  ['parserexception_173',['ParserException',['../classParser_1_1ParserException.html',1,'Parser']]],
+  ['parserjson_174',['ParserJson',['../classParser_1_1ParserJson.html',1,'Parser']]],
+  ['position_175',['Position',['../structCommunication_1_1Position.html',1,'Communication::Position'],['../structECS_1_1Position.html',1,'ECS::Position']]]
 ];
