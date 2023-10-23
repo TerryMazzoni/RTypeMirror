@@ -51,7 +51,8 @@ int main(int ac, char **av)
     while (is_running(0)) {
         start = std::chrono::system_clock::now().time_since_epoch().count();
         if (elapsed_seconds >= 100000000) {
-            game->updateGame(server);
+            if (server->getGameStatus() == 2)
+                game->updateGame(server);
             elapsed_seconds -= 100000000;
         }
         for (int i = 0; i < 10000; i++)

@@ -82,8 +82,7 @@ int main(int ac, char **av)
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
-    client =
-        std::make_shared<Client>(args.getIp(), std::to_string(args.getPort()));
+    client = std::make_shared<Client>(args.getIp(), std::to_string(args.getPort()));
     if (!client->getSocket().is_open())
         return 84;
     client_memory(1, client);

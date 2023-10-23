@@ -92,8 +92,8 @@ class Client {
         void setIsReady(bool is_ready);
         /**
          * @brief Set the Events Input for the server
-         * 
-         * @param events 
+         *
+         * @param events
          */
         void setEvents(std::vector<EventInput> events);
 
