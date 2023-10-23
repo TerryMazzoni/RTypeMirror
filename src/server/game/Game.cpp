@@ -95,9 +95,6 @@ void Game::initGame(std::string map_path)
 void Game::updateGame(std::shared_ptr<Server> server)
 {
     for (auto &entity : _entities) {
-        for (auto &elem : server->getInput()) {
-            std::cout << "ID: " << elem.first << std::endl;
-        }
         updateShips(server, entity);
         updateColisions(server, entity);
         updateEntities(server, entity);
