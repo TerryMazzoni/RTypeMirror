@@ -82,7 +82,7 @@ void Game::initGame(std::string map_path)
 {
     _init = true;
     int _last_entity_id = 0;
-    Parser::ParserJson parser = Parser::ParserJson(map_path);
+    Parser::ParserJson parser = Parser::ParserJson(map_path).parse();
     if (parser.getEntities().size() == 0)
         throw std::runtime_error("Error: no entities in map");
     _entities = parser.getEntities();
@@ -175,12 +175,12 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat()) + (entity.instance["direction_x"].getFloat()) * (entity.instance["speed"].getFloat()))});
         entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat()) + (entity.instance["direction_y"].getFloat()) * (entity.instance["speed"].getFloat()))});
     }
-    if (entity.type != "player" || entity.type != "missile") {
+    if (entity.type != "__player__" || entity.type != "missile") {
         entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat() - 1.0))});
     }
-    if (entity.type == "player") {
-        // std::cout << "Player1" << std::endl;
-        // _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, (entity.instance["id"].getInt()), ShipType::PLAYER));
+    if (entity.type == "__player__") {
+        if (entity.instance.find("x") != entity.instance.end() && entity.instance.find("y") != entity.instance.end())
+            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::PLAYER));
 
         // std::cout << "Player2" << std::endl;
         // _entities.push_back(static_cast<Parser::entity_t>(
@@ -198,14 +198,14 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
     }
     else if (entity.type == "missile") {
         std::cout << "Missile" << std::endl;
-        _bullets.push_back(std::make_shared<Bullet>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, Communication::Position{std::any_cast<float>(entity.instance["direction_x"]), std::any_cast<float>(entity.instance["direction_y"])}, std::any_cast<float>(entity.instance["speed"]), 1, 1));
+        if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end() && entity.instance.find("direction_x") == entity.instance.end() || entity.instance.find("direction_y") == entity.instance.end() && entity.instance.find("speed") == entity.instance.end())
+            return;
+        _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(entity.instance["direction_x"].getFloat()), (entity.instance["direction_y"].getFloat())}, (entity.instance["speed"].getFloat()), 1, 1));
     }
     else if (entity.type == "enemy") {
-        // std::cout << "Enemy" << std::endl;
-        if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end() || entity.instance.find("id") == entity.instance.end())
+        if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end())
             return;
-        //_ships.push_back(std::make_shared<Ship>(Communication::Position{std::any_cast<float>(entity.instance["x"]), std::any_cast<float>(entity.instance["y"])}, (entity.instance["id"].getInt()), ShipType::ENEMY));
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{200.0, 200.0}, (entity.instance["id"].getInt()), ShipType::ENEMY));
+        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::ENEMY));
     }
 }
 

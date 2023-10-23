@@ -80,16 +80,16 @@ void Client::processMessage(const std::string &msg)
     else if (header->type == Communication::CommunicationTypes::SHIPS) {
         Communication::ShipsPosition *ships = reinterpret_cast<Communication::ShipsPosition *>(data);
         std::cout << "Ships: " << ships->nbrItems << std::endl;
-        // for (int i = 0; i < ships->nbrItems; i++) {
-        //     std::cout << "Ship " << i << ": " << std::endl;
-        //     std::cout << "ID: " << ships->ship[i].id << std::endl;
-        //     std::cout << "Life: " << ships->ship[i].life << std::endl;
-        //     std::cout << "Level: " << ships->ship[i].level << std::endl;
-        //     std::cout << "Type: " << static_cast<int>(ships->ship[i].type) << std::endl;
-        //     std::cout << "Position: " << std::endl;
-        //     std::cout << "       X: " << ships->ship[i].position.x << std::endl;
-        //     std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
-        // }
+        for (int i = 0; i < ships->nbrItems; i++) {
+            std::cout << "Ship " << i << ": " << std::endl;
+            std::cout << "ID: " << ships->ship[i].id << std::endl;
+            std::cout << "Life: " << ships->ship[i].life << std::endl;
+            std::cout << "Level: " << ships->ship[i].level << std::endl;
+            std::cout << "Type: " << static_cast<int>(ships->ship[i].type) << std::endl;
+            std::cout << "Position: " << std::endl;
+            std::cout << "       X: " << ships->ship[i].position.x << std::endl;
+            std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
+        }
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
