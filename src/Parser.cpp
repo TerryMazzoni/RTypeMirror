@@ -264,7 +264,7 @@ namespace Parser {
         float f = 0.0;
 
         if (_type == Parser::type_t::INT)
-            f = static_cast<float>(_f);
+            f = static_cast<float>(_i);
         if (_type == Parser::type_t::FLOAT)
             f = _f;
         if (_type == Parser::type_t::STRING) {
