@@ -43,58 +43,51 @@ namespace ECS
 
         _entitiesManager.addEntities({background});
 
-        // for (Parser::entity_t &entityData : entities) {
-        //     Entity entity;
-        //     std::ostringstream textureostring;
-        //     std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));
-        //     std::copy(entityData.etextures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
-        //     std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
+        for (Parser::entity_t &entityData : entities) {
+            Entity entity;
+            std::ostringstream textureostring;
+            std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));
+            std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
+            std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
-        //     if (entityData.type == "__player__") {
-        //         std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
-        //         componentT->setType(ComponentType::Texture);
-        //         entity.components.push_back(componentT);
+            if (entityData.type == "__player__") {
 
+                std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid position");
+                sprite->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
+                if (entityData.instance.count("scale") == 0)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid scale");
+                sprite->setScale(entityData.instance["scale"].getFloat());
+                sprite->setScale(3);
+                sprite->setType(ComponentType::Sprite);
+                entity.components.push_back(sprite);
 
-        //         if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
-        //             throw std::runtime_error("ERROR: entity __player__ have invalid position");
-        //         std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (entityData.instance["x"].getString() + "," + entityData.instance["y"].getString()));
-        //         componentP->setType(ComponentType::Position);
-        //         entity.components.push_back(componentP);
+                entity.id = {EntityType::Player, id};
+                _eventManager.setMyPlayer(entity);
 
-        //         if (entityData.instance.count("scale") == 0)
-        //             throw std::runtime_error("ERROR: entity __player__ have invalid scale");
-        //         std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, entityData.instance["scale"].getString());
-        //         componentS->setType(ComponentType::Scale);
-        //         entity.components.push_back(componentS);
+                std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
+                changeTexture->setEntity(entity);
 
+                std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
+                shoot->setEntity(entity);
 
+                _systemManager.addSystems({changeTexture, shoot});
+            }
+            else if (entityData.type == "__tile__") {
+                std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid position");
+                sprite->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
 
-        //         entity.id = {EntityType::Player, id};
-        //         _eventManager.setMyPlayer(entity);
+                sprite->setType(ComponentType::Sprite);
+                entity.components.push_back(sprite);
 
-        //         std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
-        //         changeTexture->setEntity(entity);
-
-        //         std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
-        //         shoot->setEntity(entity);
-
-        //         _systemManager.addSystems({changeTexture, shoot});
-        //     }
-        //     else if (entityData.type == "__tile__") {
-        //         std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
-        //         componentT->setType(ComponentType::Texture);
-        //         entity.components.push_back(componentT);
-
-        //         std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (entityData.instance["x"].getString() + "," + entityData.instance["y"].getString()));
-        //         componentP->setType(ComponentType::Position);
-        //         entity.components.push_back(componentP);
-
-        //         entity.id = {EntityType::Background, id};
-        //     }
-        //     id++;
-        //     _entitiesManager.addEntities({entity});
-        // }
+                entity.id = {EntityType::Background, id};
+            }
+            id++;
+            _entitiesManager.addEntities({entity});
+        }
     }
 
     Core::~Core()
