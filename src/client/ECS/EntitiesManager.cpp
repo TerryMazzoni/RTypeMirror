@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <map>
 #include "EntitiesManager.hpp"
 #include "Sprite.hpp"
 
@@ -64,11 +65,17 @@ namespace ECS {
 
     int EntitiesManager::updateEntities(std::vector<Action> actions)
     {
+        static std::map<EntityType, const std::string> entityPaths = {
+            {EntityType::Bullet, ""},
+            {EntityType::Enemy, "assets/player/Player1.png"},
+            {EntityType::Player, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4"},
+        };
         std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> list;
         int idx = 0;
 
         _entitiesToCreate.clear();
         for (auto &action : actions) {
+            // std::cout << "Action " << (int) std::get<1>(action) << std::endl;
             switch (std::get<1>(action)) {
                 case ActionType::Move:
                     list = _mapComponent[ComponentType::Sprite];

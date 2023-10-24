@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "Enum.hpp"
 #include "ECS.hpp"
 #include "Graph.hpp"
@@ -24,6 +26,20 @@ namespace ECS {
              * @return int 
              */
             int run(std::shared_ptr<Client>);
+            /**
+             * @brief Execute the Server Actions object
+             * 
+             * @param Communication::ShipsPosition
+             * @return int 
+             */
+            int executeServerActions(Communication::ShipsPosition);
+            /**
+             * @brief Execute the Server Actions object
+             * 
+             * @param Communication::MissilesPosition
+             * @return int 
+             */
+            int executeServerActions(Communication::MissilesPosition);
 
         private:
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);

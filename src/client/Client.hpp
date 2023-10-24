@@ -10,8 +10,13 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+
 #include "Enum.hpp"
 #include "Communication.hpp"
+
+namespace ECS {
+    class Core;
+}
 
 using boost::asio::ip::udp;
 
@@ -48,14 +53,16 @@ class Client {
         }
         /**
          * @brief Receive a message from the server
+         * 
+         * @param ECS::Core
          */
-        void receiveAsync();
+        void receiveAsync(ECS::Core &core);
         /**
          * @brief Process a message from the server
          *
          * @param msg
          */
-        void processMessage(const std::string &msg);
+        void processMessage(const std::string &msg, ECS::Core &core);
         /**
          * @brief Run the client
          */

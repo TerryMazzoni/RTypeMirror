@@ -16,7 +16,6 @@
 
 namespace ECS
 {
-
     Core::Core()
     {
         std::vector<Parser::entity_t> entities;
@@ -102,6 +101,7 @@ namespace ECS
             _entitiesManager.removeEntities(entitiesToDelete);
             _systemManager.removeSystems(entitiesToDelete);
             _entitiesManager.updateEntities(_eventManager.getActions());
+            _eventManager.clear();
             _entitiesManager.updateEntities(_systemManager.execute());
             createEntities();
             inputs = _graph.getInputs();
@@ -110,6 +110,18 @@ namespace ECS
         }
         is_running(1);
         client->send(quit);
+        return 0;
+    }
+
+    int Core::executeServerActions(Communication::ShipsPosition ships)
+    {
+        _eventManager.executeServerActions(ships);
+        return 0;
+    }
+
+    int Core::executeServerActions(Communication::MissilesPosition missiles)
+    {
+        _eventManager.executeServerActions(missiles);
         return 0;
     }
 
