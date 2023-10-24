@@ -167,7 +167,7 @@ void Client::run()
             if (_game_started) {
                 Communication::Inputs input;
 
-                input.nbrItems = _events.size() > 16 ? 16 : _events.size();
+                input.nbrItems = _events.size() > 15 ? 15 : _events.size();
                 for (size_t i = 0; i < input.nbrItems; i++) {
                     input.event[i] = (Communication::EventInput)_events[i];
                 }

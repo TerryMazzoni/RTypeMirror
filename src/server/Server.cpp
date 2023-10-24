@@ -183,7 +183,8 @@ std::vector<std::pair<int, Communication::Inputs>> Server::getInput() const
 
 void Server::removeInputAt(int index)
 {
-    _inputs.erase(_inputs.begin() + index);
+    if (_inputs.size() > index)
+        _inputs.erase(_inputs.begin() + index);
 }
 
 std::map<int, bool> Server::getIds() const
