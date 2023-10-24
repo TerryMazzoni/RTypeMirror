@@ -34,7 +34,7 @@ namespace ECS
         Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
         Entity background;
-        std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Texture, "assets/starfield.png");
+        std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Texture, "assets/background/road1.png");
         componentBT->setType(ComponentType::Texture);
         background.components.push_back(componentBT);
         std::shared_ptr<ECS::IComponent> componentBP = ECS::Factory::createComponent(ComponentType::Position, "0,0");

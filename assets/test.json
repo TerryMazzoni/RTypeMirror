@@ -43,21 +43,37 @@
     {
       "type": "__player__",
       "textures": [
-        "assets/spaceship/sprite_spaceships0.png",
-        "assets/spaceship/sprite_spaceships1.png",
-        "assets/spaceship/sprite_spaceships2.png",
-        "assets/spaceship/sprite_spaceships3.png",
-        "assets/capsule/sprite_capsules0.png",
-        "assets/capsule/sprite_capsules1.png",
-        "assets/capsule/sprite_capsules2.png",
-        "assets/capsule/sprite_capsules3.png"
+        "assets/player/Layer 1_1.png",
+        "assets/player/Layer 1_2.png",
+        "assets/player/Layer 1_3.png",
+        "assets/player/Layer 1_4.png",
+        "assets/player/Layer 1_5.png",
+        "assets/player/Layer 1_6.png",
+        "assets/player/Layer 2_1.png",
+        "assets/player/Layer 2_2.png",
+        "assets/player/Layer 2_3.png",
+        "assets/player/Layer 2_4.png",
+        "assets/player/Layer 2_5.png",
+        "assets/player/Layer 2_6.png",
+        "assets/player/Layer 3_1.png",
+        "assets/player/Layer 3_2.png",
+        "assets/player/Layer 3_3.png",
+        "assets/player/Layer 3_4.png",
+        "assets/player/Layer 3_5.png",
+        "assets/player/Layer 3_6.png",
+        "assets/player/Layer 4_1.png",
+        "assets/player/Layer 4_2.png",
+        "assets/player/Layer 4_3.png",
+        "assets/player/Layer 4_4.png",
+        "assets/player/Layer 4_5.png",
+        "assets/player/Layer 4_6.png"
       ],
-      "index_textures": [0, 4],
+      "index_textures": [0, 6, 12, 18],
       "instance": [
         {
           "x": 256.0,
           "y": 256.0,
-          "scale": 3
+          "scale": 2.5
         }
       ]
     }
