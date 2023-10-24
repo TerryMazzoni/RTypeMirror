@@ -52,11 +52,7 @@ namespace ECS
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-
-        //         entity.id = {EntityType::Player, id};
-        //         _eventManager.setMyPlayer(entity);
-
-                _systemManager.addSystems({changeTexture});
+                _systemManager.addSystems({changeTexture, shoot});
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
@@ -81,7 +77,6 @@ namespace ECS
     void Core::init(int id)
     {
         _eventManager.updateMyPlayer(id);
-    }
 
     int Core::run(std::shared_ptr<Client> client)
     {
@@ -95,11 +90,6 @@ namespace ECS
             _entitiesManager.removeEntities(entitiesToDelete);
             _systemManager.removeSystems(entitiesToDelete);
             _entitiesManager.updateEntities(_eventManager.getActions());
-            _eventManager.clear();
-            _entitiesManager.updateEntities(_systemManager.execute());
-            createEntities();
-            inputs = _graph.getInputs();
-            client->setEvents(transformInputsForClient(inputs));
             _graph.displayEntities(_entitiesManager.getEntities());
         }
         is_running(1);
