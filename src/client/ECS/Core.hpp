@@ -9,7 +9,6 @@
 
 #include "Enum.hpp"
 #include "ECS.hpp"
-#include "Raylib.hpp"
 #include "Graph.hpp"
 #include "Client.hpp"
 
@@ -34,6 +33,6 @@ namespace ECS {
             EntitiesManager _entitiesManager;
             EventManager _eventManager;
             SystemManager _systemManager;
-            Graph _graph;
+            Graphic::Graph _graph;
     };
 } // namespace ECS

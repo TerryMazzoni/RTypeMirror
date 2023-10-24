@@ -47,6 +47,7 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/Raylib/RlInputs.cpp
     ${CLIENT_PATH}/Raylib/RlScreen.cpp
     ${CLIENT_PATH}/Raylib/RlSound.cpp
+    ${CLIENT_PATH}/Raylib/RlSprite.cpp
     ${CLIENT_PATH}/Raylib/RlText.cpp
     ${CLIENT_PATH}/Raylib/RlTexture.cpp
     ${CLIENT_PATH}/Raylib/RlWindow.cpp
@@ -91,7 +92,7 @@ if (NOT raylib_FOUND)
     FetchContent_Declare(
         raylib
         URL https://github.com/raysan5/raylib/archive/refs/tags/4.5.0.tar.gz
-        # DOWNLOAD_EXTRACT_TIMESTAMP ON
+        DOWNLOAD_EXTRACT_TIMESTAMP ON
     )
     FetchContent_GetProperties(raylib)
     if (NOT raylib_POPULATED)
@@ -114,7 +115,7 @@ else()
     FetchContent_Declare(
     Boost
     URL "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz"
-    # DOWNLOAD_EXTRACT_TIMESTAMP ON
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
     )
 endif()
 
