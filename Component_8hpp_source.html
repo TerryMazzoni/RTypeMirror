@@ -82,27 +82,20 @@ $(function() {
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>ECS {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classECS_1_1Component.html">   15</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classECS_1_1Component.html">Component</a> : <span class="keyword">public</span> <a class="code" href="classECS_1_1IComponent.html">IComponent</a> {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <a class="code" href="classECS_1_1Component.html">Component</a>(std::any value);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <a class="code" href="classECS_1_1Component.html">Component</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            ~<a class="code" href="classECS_1_1Component.html">Component</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classECS_1_1Component.html#a6d3faeb68fdb9f1537adc8757b2e963f">setValue</a>(std::any value);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            std::any <a class="code" href="classECS_1_1Component.html#ae8c9e526afa35412250990a44480dd48">getValue</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            ComponentType <a class="code" href="classECS_1_1Component.html#a1861f587e95a6744571e7c6d5ca8cf4e">getType</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classECS_1_1Component.html#ad070ba8a3aaf3436050c0e01090b8c01">setType</a>(ComponentType type);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            T _value;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            ComponentType _type;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;} <span class="comment">// namespace ECS</span></div>
-<div class="ttc" id="aclassECS_1_1Component_html"><div class="ttname"><a href="classECS_1_1Component.html">ECS::Component</a></div><div class="ttdef"><b>Definition:</b> Component.hpp:15</div></div>
-<div class="ttc" id="aclassECS_1_1Component_html_a1861f587e95a6744571e7c6d5ca8cf4e"><div class="ttname"><a href="classECS_1_1Component.html#a1861f587e95a6744571e7c6d5ca8cf4e">ECS::Component::getType</a></div><div class="ttdeci">ComponentType getType() const</div><div class="ttdoc">Get the type of the component.</div><div class="ttdef"><b>Definition:</b> Component.cpp:37</div></div>
-<div class="ttc" id="aclassECS_1_1Component_html_a6d3faeb68fdb9f1537adc8757b2e963f"><div class="ttname"><a href="classECS_1_1Component.html#a6d3faeb68fdb9f1537adc8757b2e963f">ECS::Component::setValue</a></div><div class="ttdeci">int setValue(std::any value)</div><div class="ttdoc">Set the value of the component.</div><div class="ttdef"><b>Definition:</b> Component.cpp:24</div></div>
-<div class="ttc" id="aclassECS_1_1Component_html_ad070ba8a3aaf3436050c0e01090b8c01"><div class="ttname"><a href="classECS_1_1Component.html#ad070ba8a3aaf3436050c0e01090b8c01">ECS::Component::setType</a></div><div class="ttdeci">void setType(ComponentType type)</div><div class="ttdoc">Set the type of the component.</div><div class="ttdef"><b>Definition:</b> Component.cpp:43</div></div>
-<div class="ttc" id="aclassECS_1_1Component_html_ae8c9e526afa35412250990a44480dd48"><div class="ttname"><a href="classECS_1_1Component.html#ae8c9e526afa35412250990a44480dd48">ECS::Component::getValue</a></div><div class="ttdeci">std::any getValue() const</div><div class="ttdoc">Get the value of the component.</div><div class="ttdef"><b>Definition:</b> Component.cpp:31</div></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classECS_1_1Component.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classECS_1_1Component.html">Component</a> : <span class="keyword">public</span> <a class="code" href="classECS_1_1IComponent.html">IComponent</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <a class="code" href="classECS_1_1Component.html">Component</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            ~<a class="code" href="classECS_1_1Component.html">Component</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            ComponentType <a class="code" href="classECS_1_1Component.html#a50598bebe5cdc1f946451f1c4e76fbec">getType</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classECS_1_1Component.html#a63447e98eb39532b88efd7e89d1077dc">setType</a>(ComponentType type);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            ComponentType _type;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    };</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;} <span class="comment">// namespace ECS</span></div>
+<div class="ttc" id="aclassECS_1_1Component_html"><div class="ttname"><a href="classECS_1_1Component.html">ECS::Component</a></div><div class="ttdef"><b>Definition:</b> Component.hpp:14</div></div>
+<div class="ttc" id="aclassECS_1_1Component_html_a50598bebe5cdc1f946451f1c4e76fbec"><div class="ttname"><a href="classECS_1_1Component.html#a50598bebe5cdc1f946451f1c4e76fbec">ECS::Component::getType</a></div><div class="ttdeci">ComponentType getType() const</div><div class="ttdoc">Get the type of the component.</div><div class="ttdef"><b>Definition:</b> Component.cpp:12</div></div>
+<div class="ttc" id="aclassECS_1_1Component_html_a63447e98eb39532b88efd7e89d1077dc"><div class="ttname"><a href="classECS_1_1Component.html#a63447e98eb39532b88efd7e89d1077dc">ECS::Component::setType</a></div><div class="ttdeci">void setType(ComponentType type)</div><div class="ttdoc">Set the type of the component.</div><div class="ttdef"><b>Definition:</b> Component.cpp:17</div></div>
 <div class="ttc" id="aclassECS_1_1IComponent_html"><div class="ttname"><a href="classECS_1_1IComponent.html">ECS::IComponent</a></div><div class="ttdef"><b>Definition:</b> IComponent.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -80,34 +80,33 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Enum.hpp&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;ECS.hpp&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;Raylib.hpp&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Graph.hpp&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Client.hpp&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>ECS {</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classECS_1_1Core.html">   17</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classECS_1_1Core.html">Core</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classECS_1_1Core.html">Core</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            ~<a class="code" href="classECS_1_1Core.html">Core</a>();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classECS_1_1Core.html#ac965af300c1495a75e91129d3ad33fe4">run</a>(std::shared_ptr&lt;Client&gt;);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            std::vector&lt;EventInput&gt; transformInputsForClient(std::set&lt;Input&gt; inputs);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordtype">void</span> createEntities();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordtype">void</span> createBullet(<a class="code" href="structECS_1_1Entity.html">Entity</a> entity);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <a class="code" href="classECS_1_1EntitiesManager.html">EntitiesManager</a> _entitiesManager;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classECS_1_1EventManager.html">EventManager</a> _eventManager;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <a class="code" href="classECS_1_1SystemManager.html">SystemManager</a> _systemManager;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <a class="code" href="classGraph.html">Graph</a> _graph;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;} <span class="comment">// namespace ECS</span></div>
-<div class="ttc" id="aclassECS_1_1Core_html"><div class="ttname"><a href="classECS_1_1Core.html">ECS::Core</a></div><div class="ttdef"><b>Definition:</b> Core.hpp:17</div></div>
-<div class="ttc" id="aclassECS_1_1Core_html_ac965af300c1495a75e91129d3ad33fe4"><div class="ttname"><a href="classECS_1_1Core.html#ac965af300c1495a75e91129d3ad33fe4">ECS::Core::run</a></div><div class="ttdeci">int run(std::shared_ptr&lt; Client &gt;)</div><div class="ttdoc">Run the client loop.</div><div class="ttdef"><b>Definition:</b> Core.cpp:106</div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;Graph.hpp&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Client.hpp&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>ECS {</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classECS_1_1Core.html">   16</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classECS_1_1Core.html">Core</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <a class="code" href="classECS_1_1Core.html">Core</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            ~<a class="code" href="classECS_1_1Core.html">Core</a>();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classECS_1_1Core.html#ac965af300c1495a75e91129d3ad33fe4">run</a>(std::shared_ptr&lt;Client&gt;);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            std::vector&lt;EventInput&gt; transformInputsForClient(std::set&lt;Input&gt; inputs);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordtype">void</span> createEntities();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordtype">void</span> createBullet(<a class="code" href="structECS_1_1Entity.html">Entity</a> entity);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <a class="code" href="classECS_1_1EntitiesManager.html">EntitiesManager</a> _entitiesManager;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <a class="code" href="classECS_1_1EventManager.html">EventManager</a> _eventManager;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classECS_1_1SystemManager.html">SystemManager</a> _systemManager;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <a class="code" href="classGraphic_1_1Graph.html">Graphic::Graph</a> _graph;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;} <span class="comment">// namespace ECS</span></div>
+<div class="ttc" id="aclassECS_1_1Core_html"><div class="ttname"><a href="classECS_1_1Core.html">ECS::Core</a></div><div class="ttdef"><b>Definition:</b> Core.hpp:16</div></div>
+<div class="ttc" id="aclassECS_1_1Core_html_ac965af300c1495a75e91129d3ad33fe4"><div class="ttname"><a href="classECS_1_1Core.html#ac965af300c1495a75e91129d3ad33fe4">ECS::Core::run</a></div><div class="ttdeci">int run(std::shared_ptr&lt; Client &gt;)</div><div class="ttdoc">Run the client loop.</div><div class="ttdef"><b>Definition:</b> Core.cpp:93</div></div>
 <div class="ttc" id="aclassECS_1_1EntitiesManager_html"><div class="ttname"><a href="classECS_1_1EntitiesManager.html">ECS::EntitiesManager</a></div><div class="ttdef"><b>Definition:</b> EntitiesManager.hpp:19</div></div>
 <div class="ttc" id="aclassECS_1_1EventManager_html"><div class="ttname"><a href="classECS_1_1EventManager.html">ECS::EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.hpp:20</div></div>
 <div class="ttc" id="aclassECS_1_1SystemManager_html"><div class="ttname"><a href="classECS_1_1SystemManager.html">ECS::SystemManager</a></div><div class="ttdef"><b>Definition:</b> SystemManager.hpp:19</div></div>
-<div class="ttc" id="aclassGraph_html"><div class="ttname"><a href="classGraph.html">Graph</a></div><div class="ttdef"><b>Definition:</b> Graph.hpp:19</div></div>
+<div class="ttc" id="aclassGraphic_1_1Graph_html"><div class="ttname"><a href="classGraphic_1_1Graph.html">Graphic::Graph</a></div><div class="ttdef"><b>Definition:</b> Graph.hpp:19</div></div>
 <div class="ttc" id="astructECS_1_1Entity_html"><div class="ttname"><a href="structECS_1_1Entity.html">ECS::Entity</a></div><div class="ttdef"><b>Definition:</b> Entity.hpp:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

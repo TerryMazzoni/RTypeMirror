@@ -80,12 +80,6 @@ Inheritance diagram for ECS::IComponent:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae9b3faefe7bd00756133aa3e50943f82"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classECS_1_1IComponent.html#ae9b3faefe7bd00756133aa3e50943f82">setValue</a> (std::any value)=0</td></tr>
-<tr class="memdesc:ae9b3faefe7bd00756133aa3e50943f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the component.  <a href="classECS_1_1IComponent.html#ae9b3faefe7bd00756133aa3e50943f82">More...</a><br /></td></tr>
-<tr class="separator:ae9b3faefe7bd00756133aa3e50943f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accf0fc333a91128710699483e166a099"><td class="memItemLeft" align="right" valign="top">virtual std::any&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classECS_1_1IComponent.html#accf0fc333a91128710699483e166a099">getValue</a> () const =0</td></tr>
-<tr class="memdesc:accf0fc333a91128710699483e166a099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of the component.  <a href="classECS_1_1IComponent.html#accf0fc333a91128710699483e166a099">More...</a><br /></td></tr>
-<tr class="separator:accf0fc333a91128710699483e166a099"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5260b1f547876476a6cee167b664fa4"><td class="memItemLeft" align="right" valign="top">virtual ComponentType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classECS_1_1IComponent.html#aa5260b1f547876476a6cee167b664fa4">getType</a> () const =0</td></tr>
 <tr class="memdesc:aa5260b1f547876476a6cee167b664fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the component.  <a href="classECS_1_1IComponent.html#aa5260b1f547876476a6cee167b664fa4">More...</a><br /></td></tr>
 <tr class="separator:aa5260b1f547876476a6cee167b664fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,37 +114,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the type of the component. </p>
 <dl class="section return"><dt>Returns</dt><dd>ComponentType </dd></dl>
 
-<p>Implemented in <a class="el" href="classECS_1_1Component.html#a1861f587e95a6744571e7c6d5ca8cf4e">ECS::Component&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="accf0fc333a91128710699483e166a099"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accf0fc333a91128710699483e166a099">&#9670;&nbsp;</a></span>getValue()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::any ECS::IComponent::getValue </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the value of the component. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::any </dd></dl>
-
-<p>Implemented in <a class="el" href="classECS_1_1Component.html#ae8c9e526afa35412250990a44480dd48">ECS::Component&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classECS_1_1Component.html#a50598bebe5cdc1f946451f1c4e76fbec">ECS::Component</a>.</p>
 
 </div>
 </div>
@@ -186,44 +150,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classECS_1_1Component.html#ad070ba8a3aaf3436050c0e01090b8c01">ECS::Component&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="ae9b3faefe7bd00756133aa3e50943f82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9b3faefe7bd00756133aa3e50943f82">&#9670;&nbsp;</a></span>setValue()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual int ECS::IComponent::setValue </td>
-          <td>(</td>
-          <td class="paramtype">std::any&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set the value of the component. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">std::any</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
-
-<p>Implemented in <a class="el" href="classECS_1_1Component.html#a6d3faeb68fdb9f1537adc8757b2e963f">ECS::Component&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classECS_1_1Component.html#a63447e98eb39532b88efd7e89d1077dc">ECS::Component</a>.</p>
 
 </div>
 </div>

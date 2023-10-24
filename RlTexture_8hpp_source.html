@@ -81,28 +81,27 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;raylib.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;RlColor.hpp&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>Raylib</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlTexture.html">   17</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a>();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a>(std::string path);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        ~<a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a>();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlTexture.html#aa4e5a8b28c9f43a9b071697eb87880f3">unload</a>();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classRaylib_1_1RlTexture.html#ac7826db487610d4d477747fa6b7e62e8">getWidth</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classRaylib_1_1RlTexture.html#a9a899a742fa435d3d96f1cb853c40620">getHeight</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlTexture.html#ad255bb5fea00956367bc4d0142e8cc44">setTexture</a>(std::string path);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        Texture2D <a class="code" href="classRaylib_1_1RlTexture.html#abbf5d9ce20f50c28bf3a280c56f0d9c6">getTexture</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        Texture2D _texture;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    };</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="ttc" id="aclassRaylib_1_1RlTexture_html"><div class="ttname"><a href="classRaylib_1_1RlTexture.html">Raylib::RlTexture</a></div><div class="ttdef"><b>Definition:</b> RlTexture.hpp:18</div></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>Raylib</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlTexture.html">   16</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a>(std::string path);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        ~<a class="code" href="classRaylib_1_1RlTexture.html">RlTexture</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlTexture.html#aa4e5a8b28c9f43a9b071697eb87880f3">unload</a>();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classRaylib_1_1RlTexture.html#ac7826db487610d4d477747fa6b7e62e8">getWidth</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classRaylib_1_1RlTexture.html#a9a899a742fa435d3d96f1cb853c40620">getHeight</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlTexture.html#ad255bb5fea00956367bc4d0142e8cc44">setTexture</a>(std::string path);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        Texture2D <a class="code" href="classRaylib_1_1RlTexture.html#abbf5d9ce20f50c28bf3a280c56f0d9c6">getTexture</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        Texture2D _texture;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    };</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="ttc" id="aclassRaylib_1_1RlTexture_html"><div class="ttname"><a href="classRaylib_1_1RlTexture.html">Raylib::RlTexture</a></div><div class="ttdef"><b>Definition:</b> RlTexture.hpp:17</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlTexture_html_a9a899a742fa435d3d96f1cb853c40620"><div class="ttname"><a href="classRaylib_1_1RlTexture.html#a9a899a742fa435d3d96f1cb853c40620">Raylib::RlTexture::getHeight</a></div><div class="ttdeci">int getHeight() const</div><div class="ttdoc">Get the Height of the texture.</div><div class="ttdef"><b>Definition:</b> RlTexture.cpp:22</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlTexture_html_aa4e5a8b28c9f43a9b071697eb87880f3"><div class="ttname"><a href="classRaylib_1_1RlTexture.html#aa4e5a8b28c9f43a9b071697eb87880f3">Raylib::RlTexture::unload</a></div><div class="ttdeci">void unload()</div><div class="ttdoc">Unload the texture.</div><div class="ttdef"><b>Definition:</b> RlTexture.cpp:12</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlTexture_html_abbf5d9ce20f50c28bf3a280c56f0d9c6"><div class="ttname"><a href="classRaylib_1_1RlTexture.html#abbf5d9ce20f50c28bf3a280c56f0d9c6">Raylib::RlTexture::getTexture</a></div><div class="ttdeci">Texture2D getTexture() const</div><div class="ttdoc">Get the Texture object.</div><div class="ttdef"><b>Definition:</b> RlTexture.cpp:32</div></div>
