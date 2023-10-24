@@ -9,9 +9,11 @@
 
 #include <string>
 
-#include "raylib.h"
 #include "RlColor.hpp"
 #include "RlFont.hpp"
+extern "C" {
+    #include "raylib.h"
+}
 
 namespace Raylib
 {

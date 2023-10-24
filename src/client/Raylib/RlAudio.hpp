@@ -7,10 +7,11 @@
 
 #pragma once
 
-#include "raylib.h"
+extern "C" {
+    #include "raylib.h"
+}
 
-namespace Raylib
-{
+namespace Raylib {
     /**
      * @brief Function to initialize audio device
      *
@@ -27,4 +28,4 @@ namespace Raylib
      * @param volume Master volume to set
      */
     void setMasterVolume(float volume);
-}
+} // namespace Raylib
