@@ -130,7 +130,7 @@ namespace Raylib {
 
         for (auto &indexTexture : _currentTexture) {
             indexTexture = indexTexture + 1 > _listTextures.size() / _currentTexture.size() * (idx + 1) - 1
-                               ? _listTextures.size() * idx
+                               ? _listTextures.size() / _currentTexture.size() * idx
                                : indexTexture + 1;
             idx++;
         }
