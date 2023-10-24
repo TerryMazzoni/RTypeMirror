@@ -112,7 +112,7 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t entity)
         for (int i = 0; i < communication.second.nbrItems; i++) {
             if (entity.type == "__player__" && entity.id == communication.first) {
                 if (entity.instance.find("speed") == entity.instance.end()) {
-                    entity.instance.insert({"speed", Parser::Any(1)});
+                    entity.instance.insert({"speed", Parser::Any(1.0)});
                 }
                 std::cout << "UPDATE3" << std::endl;
                 for (int i = 0; i < communication.second.nbrItems; i++) {
