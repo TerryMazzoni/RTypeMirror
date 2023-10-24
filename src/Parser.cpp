@@ -292,4 +292,75 @@ namespace Parser {
         return s;
     }
 
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, int value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, float value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, std::string &value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, double value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, Any &value)
+    {
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, value).first->second = value;
+        }
+        else {
+            umap.insert({key, value});
+        }
+        return 0;
+    }
+
+    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string &key)
+    {
+        if (umap.find(key) == umap.end())
+            return false;
+        return true;
+    }
+
 } // namespace Parser
