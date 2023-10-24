@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include "EventManager.hpp"
+#include "Factory.hpp"
+#include "Position.hpp"
 
 namespace ECS {
 
@@ -49,6 +51,42 @@ namespace ECS {
         return 0;
     }
 
+    int EventManager::executeServerActions(Communication::ShipsPosition ships)
+    {
+        ECS::Entity tmp;
+        std::cout << "executeServerActions: " << &_actions << std::endl;
+    
+        for (int i = 0; i < ships.nbrItems; i++) {
+            tmp = ECS::Entity();
+            if (ships.ship[i].type == ShipType::ENEMY)
+                tmp.id = EntityId(EntityType::Enemy, ships.ship[i].id);
+            else
+                tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
+            std::shared_ptr<IComponent> pos = Factory::createComponent(ComponentType::Position, std::to_string(ships.ship[i].position.x) + "," + std::to_string(ships.ship[i].position.y));
+            pos->setType(ComponentType::Position);
+            // std::cout << "serverAction : " << pos << std::endl;
+            tmp.components.push_back(pos);
+            // for (auto &comp : tmp.components)
+                // std::cout << std::any_cast<ECS::Position>(comp->getValue()).x << ", " << std::any_cast<ECS::Position>(comp->getValue()).y << std::endl;
+            _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::Move, 0));
+            // std::cout << "serverActions len: " << _actions.size() << std::endl;
+        }
+        return 0;
+    }
+
+    int EventManager::executeServerActions(Communication::MissilesPosition missiles)
+    {
+        ECS::Entity tmp;
+    
+        for (int i = 0; i < missiles.nbrItems; i++) {
+            tmp = ECS::Entity();
+            tmp.id = EntityId(EntityType::Bullet, missiles.missile[i].id);
+            tmp.components.push_back(Factory::createComponent(ComponentType::Position, std::to_string(missiles.missile[i].position.x) + "," + std::to_string(missiles.missile[i].position.y)));
+            _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::Shoot, 0));
+        }
+        return 0;
+    }
+
     void EventManager::movePlayer(EventInput dir)
     {
         switch (dir) {
@@ -71,7 +109,18 @@ namespace ECS {
 
     std::vector<Action> EventManager::getActions() const
     {
+        std::cout << "getActions: " << &_actions << std::endl;
+        // std::cout << "getActions len: " << _actions.size() << std::endl;
+        // std::cout << "Get actions :" << std::endl;
+        for (auto &action : _actions) {
+            std::cout << (int) std::get<1>(action) << std::endl;
+        }
+        std::cout << "----------------------------------------------------------------" << std::endl;
         return _actions;
     }
 
+    void ECS::EventManager::clear()
+    {
+        _actions.clear();
+    }
 } // namespace ECS

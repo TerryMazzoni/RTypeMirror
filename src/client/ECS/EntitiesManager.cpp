@@ -6,9 +6,11 @@
 */
 
 #include <iostream>
+#include <map>
 #include "EntitiesManager.hpp"
 #include "Position.hpp"
 #include "Texture.hpp"
+#include "Factory.hpp"
 
 namespace ECS {
     EntitiesManager::EntitiesManager()
@@ -70,20 +72,42 @@ namespace ECS {
 
     int EntitiesManager::updateEntities(std::vector<Action> actions)
     {
+        static std::map<EntityType, const std::string> entityPaths = {
+            {EntityType::Bullet, ""},
+            {EntityType::Enemy, "assets/player/Player1.png"},
+            {EntityType::Player, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4"},
+        };
         std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> list;
         int idx = 0;
 
         _entitiesToCreate.clear();
         for (auto &action : actions) {
+            // std::cout << "Action " << (int) std::get<1>(action) << std::endl;
             switch (std::get<1>(action)) {
                 case ActionType::Move:
                     list = _mapComponent[ComponentType::Position];
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::IComponent> componentP = entity.getComponent(ComponentType::Position);
-                        float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
-                        float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
-                        std::pair<int, int> mouv = std::any_cast<std::pair<int, int>>(std::get<2>(action));
-                        list[entity.id.second].value()->setValue(Position(std::make_pair(x + mouv.first, y + mouv.second)));
+                        // std::cout << std::get<2>(action).type().name() << "==" << typeid(int).name() << std::endl;
+                        if (std::get<2>(action).type() == typeid(int)) {
+                            // std::cout << "Position component : " << entity.getComponent(ComponentType::Position) << std::endl;
+                            // std::cout << "      x: " << std::any_cast<ECS::Position>(componentP->getValue()).x << std::endl;
+                            // std::cout << "      y: " << std::any_cast<ECS::Position>(componentP->getValue()).y << std::endl;
+                            // std::cout << "entity.id.second: " << entity.id.second << ", list[entity.id.second].has_value(): " << !list[entity.id.second].has_value() << std::endl;
+                            if (list.size() < entity.id.second or !list[entity.id.second].has_value()) {
+                                entity.components.push_back(Factory::createComponent(ComponentType::Texture, entityPaths[entity.id.first]));
+                                addEntities({entity});
+                                // std::cout << "Entity added" << std::endl;
+                            } else
+                                list[entity.id.second] = componentP;
+                        } else {
+                            // std::cout << entity.getComponent(ComponentType::Position) << ", " << std::any_cast<std::pair<int, int>>(std::get<2>(action)).first << ", "<< std::any_cast<std::pair<int, int>>(std::get<2>(action)).second << std::endl;
+                            float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
+                            float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
+                            std::pair<int, int> mouv = std::any_cast<std::pair<int, int>>(std::get<2>(action));
+                            // std::cout << "else: " << entity.id.second << std::endl;
+                            list[entity.id.second].value()->setValue(Position(std::make_pair(x + mouv.first, y + mouv.second)));
+                        }
                     }
                     break;
                 case ActionType::Shoot:

@@ -16,7 +16,6 @@
 
 namespace ECS
 {
-
     Core::Core()
     {
         std::vector<Parser::entity_t> entities;
@@ -28,9 +27,6 @@ namespace ECS
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
         }
-        _entitiesManager = EntitiesManager();
-        _eventManager = EventManager();
-        _systemManager = SystemManager();
         Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
         Entity background;
@@ -80,7 +76,7 @@ namespace ECS
                 std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
                 shoot->setEntity(entity);
 
-                _systemManager.addSystems({changeTexture, shoot});
+                _systemManager.addSystems({changeTexture});
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
@@ -115,6 +111,7 @@ namespace ECS
             _entitiesManager.removeEntities(entitiesToDelete);
             _systemManager.removeSystems(entitiesToDelete);
             _entitiesManager.updateEntities(_eventManager.getActions());
+            _eventManager.clear();
             _entitiesManager.updateEntities(_systemManager.execute());
             createEntities();
             Raylib::beginDraw();
@@ -125,6 +122,18 @@ namespace ECS
         }
         is_running(1);
         client->send(quit);
+        return 0;
+    }
+
+    int Core::executeServerActions(Communication::ShipsPosition ships)
+    {
+        _eventManager.executeServerActions(ships);
+        return 0;
+    }
+
+    int Core::executeServerActions(Communication::MissilesPosition missiles)
+    {
+        _eventManager.executeServerActions(missiles);
         return 0;
     }
 

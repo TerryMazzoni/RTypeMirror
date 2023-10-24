@@ -292,7 +292,7 @@ namespace Parser {
         return s;
     }
 
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, int value)
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value)
     {
         Any newValue = Any(value);
 
@@ -305,7 +305,7 @@ namespace Parser {
         return 0;
     }
 
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, float value)
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value)
     {
         Any newValue = Any(value);
 
@@ -318,7 +318,7 @@ namespace Parser {
         return 0;
     }
 
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, std::string &value)
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value)
     {
         Any newValue = Any(value);
 
@@ -331,7 +331,7 @@ namespace Parser {
         return 0;
     }
 
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, double value)
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value)
     {
         Any newValue = Any(value);
 
@@ -344,7 +344,7 @@ namespace Parser {
         return 0;
     }
 
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, Any &value)
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value)
     {
 
         if (keyExists(umap, key)) {
@@ -356,7 +356,7 @@ namespace Parser {
         return 0;
     }
 
-    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string &key)
+    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key)
     {
         if (umap.find(key) == umap.end())
             return false;

@@ -23,10 +23,4 @@ namespace Raylib
      * @return std::vector<std::tuple<int, int, std::optional<int>>>
      */
     std::set<Input> getInputs();
-    /**
-     * @brief Get the Mouse Position
-     *
-     * @return std::pair<int, int>
-     */
-    std::pair<int, int> getMousePos();
 }

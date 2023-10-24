@@ -171,12 +171,12 @@ namespace Parser {
             int _lastId;
     };
 
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, int value);
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, float value);
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, std::string &value);
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, double value);
-    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string &key, Any &value);
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value);
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value);
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value);
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value);
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value);
 
-    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string &key);
+    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key);
 
 } // namespace Parser

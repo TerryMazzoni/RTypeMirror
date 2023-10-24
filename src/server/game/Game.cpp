@@ -47,7 +47,7 @@ void Game::run(std::shared_ptr<Server> server)
                 }
                 if (status == 2) {
                     if (!_init)
-                        initGame("assets/map.json");
+                        initGame("assets/test.json");
                     server->sendToAll(timer);
                 }
             }
@@ -85,7 +85,7 @@ void Game::initGame(std::string map_path)
     Parser::ParserJson parser = Parser::ParserJson(map_path).parse();
     _entities = parser.getEntities();
     for (auto &entity : _entities) {
-        if (entity.instance.find("id") != entity.instance.end() && (entity.instance["id"].getInt()) > _last_entity_id) {
+        if (Parser::keyExists(entity.instance, "id") && (entity.instance["id"].getInt()) > _last_entity_id) {
             _last_entity_id = entity.instance["id"].getInt();
         }
     }
@@ -106,26 +106,32 @@ void Game::updateGame(std::shared_ptr<Server> server)
 
 void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t entity)
 {
+    std::cout << "UPDATE" << std::endl;
     int index = 0;
     for (auto &communication : server->getInput()) {
         for (int i = 0; i < communication.second.nbrItems; i++) {
             if (entity.type == "player" && (entity.instance["id"].getInt()) == communication.first) {
-                if (entity.instance.find("speed") == entity.instance.end()) {
+                std::cout << "UPDATE2" << std::endl;
+                if (Parser::keyExists(entity.instance, "speed")) {
                     entity.instance.insert({"speed", Parser::Any(1)});
                 }
+                std::cout << "UPDATE3" << std::endl;
                 for (int i = 0; i < communication.second.nbrItems; i++) {
                     switch (communication.second.event[i]) {
+                        std::cout << "UPDATE4" << std::endl;
                         case Communication::EventInput::Key_up:
-                            entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat()) - 1 * (entity.instance["speed"].getFloat()))});
+                            std::cout << "Before : " << entity.instance["y"].getFloat() << std::endl;
+                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));
+                            std::cout << "After : " << entity.instance["y"].getFloat() << std::endl;
                             break;
                         case Communication::EventInput::Key_down:
-                            entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat()) + 1 * (entity.instance["speed"].getFloat()))});
+                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) + 1 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_left:
-                            entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat()) - 1 * (entity.instance["speed"].getFloat()))});
+                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_right:
-                            entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat()) + 1 * (entity.instance["speed"].getFloat()))});
+                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) + 1 * (entity.instance["speed"].getFloat())));
                             break;
                         default:
                             break;
@@ -173,26 +179,26 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
         entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat()) + (entity.instance["direction_y"].getFloat()) * (entity.instance["speed"].getFloat()))});
     }
     if (entity.type != "__player__" || entity.type != "missile") {
-        if (entity.type.substr(0, 4) != "boss" && entity.instance.find("x") != entity.instance.end() && entity.instance.find("speed") != entity.instance.end()) {
+        if (entity.type.substr(0, 4) != "boss" && Parser::keyExists(entity.instance, "x") && Parser::keyExists(entity.instance, "speed")) {
             entity.instance.insert({"x", Parser::Any((entity.instance["x"].getFloat() - 1.0 * (entity.instance["speed"].getFloat() / 10.0)))});
         }
         if (entity.type == "enemy2" || entity.type == "boss1") {
-            if (entity.instance.find("y_status") == entity.instance.end())
+            if (Parser::keyExists(entity.instance, "y_status"))
                 entity.instance.insert({"y_status", Parser::Any(0)});
             if (entity.instance["y_status"].getInt() == 0) {
                 entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat() + 1.0 * (entity.instance["speed"].getFloat() / 10.0)))});
-                if (entity.instance.find("y") != entity.instance.end() && entity.instance["y"].getFloat() <= 100.0)
+                if (Parser::keyExists(entity.instance, "y") && entity.instance["y"].getFloat() <= 100.0)
                     entity.instance.insert({"y_status", Parser::Any(1)});
             }
             else {
                 entity.instance.insert({"y", Parser::Any((entity.instance["y"].getFloat() - 1.0))});
-                if (entity.instance.find("y") != entity.instance.end() && entity.instance["y"].getFloat() >= 900.0)
+                if (Parser::keyExists(entity.instance, "y") && entity.instance["y"].getFloat() >= 900.0)
                     entity.instance.insert({"y_status", Parser::Any(0)});
             }
         }
     }
     if (entity.type == "__player__") {
-        if (entity.instance.find("x") != entity.instance.end() && entity.instance.find("y") != entity.instance.end() &&
+        if (Parser::keyExists(entity.instance, "x") && Parser::keyExists(entity.instance, "y") &&
             entity.id != 0 && server->getIds()[entity.id] == true)
             _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::PLAYER));
 
@@ -212,12 +218,12 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entit
     }
     else if (entity.type == "missile") {
         std::cout << "Missile" << std::endl;
-        if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end() && entity.instance.find("direction_x") == entity.instance.end() || entity.instance.find("direction_y") == entity.instance.end() && entity.instance.find("speed") == entity.instance.end())
+        if (Parser::keyExists(entity.instance, "x") || Parser::keyExists(entity.instance, "y") && Parser::keyExists(entity.instance, "direction_x") || Parser::keyExists(entity.instance, "direction_y") && Parser::keyExists(entity.instance, "speed"))
             return;
         _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(entity.instance["direction_x"].getFloat()), (entity.instance["direction_y"].getFloat())}, (entity.instance["speed"].getFloat()), 1, 1));
     }
     else if (entity.type == "enemy_1" || entity.type == "enemy_2" || entity.type == "boss_1") {
-        if (entity.instance.find("x") == entity.instance.end() || entity.instance.find("y") == entity.instance.end())
+        if (Parser::keyExists(entity.instance, "x") || Parser::keyExists(entity.instance, "y"))
             return;
         _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::ENEMY));
     }

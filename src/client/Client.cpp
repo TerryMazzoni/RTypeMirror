@@ -7,6 +7,7 @@
 
 #include "Client.hpp"
 #include "Communication.hpp"
+#include "Core.hpp"
 
 bool is_running(int flag)
 {
@@ -42,11 +43,12 @@ Client::~Client()
     _socket.close();
 }
 
-void Client::processMessage(const std::string &msg)
+void Client::processMessage(const std::string &msg, ECS::Core &core)
 {
     char *data = const_cast<char *>(msg.c_str());
     Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
 
+    std::cout << "header : " << (int)header->type << std::endl;
     if (header->type == Communication::CommunicationTypes::ID) {
         Communication::Id *id = reinterpret_cast<Communication::Id *>(data);
         _id = id->id;
@@ -90,6 +92,7 @@ void Client::processMessage(const std::string &msg)
             std::cout << "       X: " << ships->ship[i].position.x << std::endl;
             std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
         }
+        core.executeServerActions(*ships);
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
@@ -101,6 +104,7 @@ void Client::processMessage(const std::string &msg)
             std::cout << "X: " << missiles->missile[i].position.x << std::endl;
             std::cout << "Y: " << missiles->missile[i].position.y << std::endl;
         }
+        core.executeServerActions(*missiles);
     }
     else if (header->type == Communication::CommunicationTypes::COLISION) {
         Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
@@ -111,18 +115,19 @@ void Client::processMessage(const std::string &msg)
     }
 }
 
-void Client::receiveAsync()
+void Client::receiveAsync(ECS::Core &core)
 {
     std::vector<char> recv_buffer(1024);
     udp::endpoint sender_endpoint;
 
     _socket.async_receive_from(
         boost::asio::buffer(recv_buffer), sender_endpoint,
-        [this, &recv_buffer, &sender_endpoint](
+        [this, &recv_buffer, &sender_endpoint, &core](
             const boost::system::error_code &error, std::size_t bytes_received) {
             if (!error && bytes_received > 0) {
                 processMessage(std::string(
-                    recv_buffer.begin(), recv_buffer.begin() + bytes_received));
+                                   recv_buffer.begin(), recv_buffer.begin() + bytes_received),
+                               core);
             }
             else if (error != boost::asio::error::operation_aborted) {
                 std::cerr << "Error on receive: " << error.message()
@@ -132,7 +137,7 @@ void Client::receiveAsync()
             }
             if (!is_running(0))
                 return;
-            receiveAsync();
+            receiveAsync(core);
         });
     getIoService().run();
 }
@@ -167,8 +172,9 @@ void Client::run()
                     input.event[i] = (Communication::EventInput)_events[i];
                 }
                 input.type = Communication::CommunicationTypes::INPUT;
-                if (input.nbrItems > 0)
+                if (input.nbrItems > 0) {
                     this->send(input);
+                }
                 _events.clear();
             }
             elapsed_seconds -= 100000000;
