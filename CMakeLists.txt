@@ -36,7 +36,6 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/ECS/SystemManager.cpp
     ${CLIENT_PATH}/ECS/components/Component.cpp
     ${CLIENT_PATH}/ECS/systems/ASystem.cpp
-    ${CLIENT_PATH}/ECS/systems/Mouvement.cpp
     ${CLIENT_PATH}/ECS/systems/ChangeTexture.cpp
     ${CLIENT_PATH}/Raylib/RlAudio.cpp
     ${CLIENT_PATH}/Raylib/RlColor.cpp
