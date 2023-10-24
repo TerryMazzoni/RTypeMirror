@@ -106,13 +106,6 @@
         12,
         18
       ],
-<<<<<<< HEAD
-=======
-      "index_textures": [
-        0,
-        4
-      ],
->>>>>>> 3720642 (Fix movements gameloop side.)
       "instance": [
         {
           "x": 256.0,

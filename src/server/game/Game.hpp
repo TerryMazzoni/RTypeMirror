@@ -72,21 +72,21 @@ class Game {
          * @param server
          * @param entity
          */
-        void updateShips(std::shared_ptr<Server> server, Parser::entity_t entity);
+        void updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity);
         /**
          * @brief Update the colisions between the ships and the bullets.
          *
          * @param server
          * @param entity
          */
-        void updateColisions(std::shared_ptr<Server> server, Parser::entity_t entity);
+        void updateColisions(std::shared_ptr<Server> server, Parser::entity_t &entity);
         /**
          * @brief Update the entities and push it to the vectors.
          *
          * @param server
          * @param entity
          */
-        void updateEntities(std::shared_ptr<Server> server, Parser::entity_t entity);
+        void updateEntities(std::shared_ptr<Server> server, Parser::entity_t &entity);
         /**
          * @brief End the game.
          *

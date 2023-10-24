@@ -105,7 +105,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
     // sendBullets(server);
 }
 
-void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t entity)
+void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity)
 {
     std::cout << "UPDATE" << std::endl;
     int index = 0;
@@ -144,7 +144,7 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t entity)
     }
 }
 
-void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t entity)
+void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t &entity)
 {
     if (entity.type != "__tile__") {
         for (auto &entity_colision : _entities) {
@@ -169,7 +169,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t enti
     }
 }
 
-void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t entity)
+void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t &entity)
 {
     if (entity.type == "missile") {
         // TODO: check if entity.instance["x"].getFloat() return infinity, if yes, throw exception
