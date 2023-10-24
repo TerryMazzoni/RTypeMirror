@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rtypemirror_285',['RTypeMirror',['../index.html',1,'']]]
+  ['rtypemirror_310',['RTypeMirror',['../index.html',1,'']]]
 ];

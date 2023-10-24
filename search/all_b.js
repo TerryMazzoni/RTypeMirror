@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quit_76',['Quit',['../structCommunication_1_1Quit.html',1,'Communication']]]
+  ['quit_84',['Quit',['../structCommunication_1_1Quit.html',1,'Communication']]]
 ];
