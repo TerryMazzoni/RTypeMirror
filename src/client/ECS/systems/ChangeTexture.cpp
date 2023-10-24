@@ -5,7 +5,6 @@
 ** ChangeTexture
 */
 
-#include "Position.hpp"
 #include "ChangeTexture.hpp"
 
 namespace ECS {

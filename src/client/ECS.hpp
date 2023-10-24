@@ -7,12 +7,7 @@
 
 #pragma once
 
-#include "Color.hpp"
-#include "Position.hpp"
-#include "Rotation.hpp"
-#include "Scale.hpp"
-#include "Text.hpp"
-#include "Texture.hpp"
+#include "Sprite.hpp"
 
 #include "Factory.hpp"
 
