@@ -38,12 +38,6 @@ namespace ECS
         background.id = {EntityType::Background, 5};
 
         _entitiesManager.addEntities({background});
-        for (Parser::entity_t &entityData : entities) {
-            Entity entity;
-            std::ostringstream textureostring;
-            std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));
-            std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
-            std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
             if (entityData.type == "__player__") {
 
@@ -58,11 +52,9 @@ namespace ECS
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Player, entityData.id};
-                _eventManager.setMyPlayer(entity);
 
-                std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
-                changeTexture->setEntity(entity);
+        //         entity.id = {EntityType::Player, id};
+        //         _eventManager.setMyPlayer(entity);
 
                 _systemManager.addSystems({changeTexture});
             }
@@ -156,7 +148,7 @@ namespace ECS
 
     void Core::createBullet(Entity entity)
     {
-        Entity bullet;
+        // Entity bullet;
 
         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, "assets/bullet/ammu1.png"));
         sprite->setType(ComponentType::Sprite);
@@ -165,9 +157,9 @@ namespace ECS
         bullet.components.push_back(sprite);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
-        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
-        bulletMouvement->setEntity(bullet);
-        _entitiesManager.addEntities({bullet});
-        _systemManager.addSystems({bulletMouvement});
+        // std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
+        // bulletMouvement->setEntity(bullet);
+        // _entitiesManager.addEntities({bullet});
+        // _systemManager.addSystems({bulletMouvement});
     }
 } // namespace ECS
