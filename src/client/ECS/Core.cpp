@@ -9,10 +9,9 @@
 #include <vector>
 #include "Core.hpp"
 #include "BulletMouvement.hpp"
-#include "Mouvement.hpp"
-#include "Shoot.hpp"
 #include "ChangeTexture.hpp"
 #include "Parser.hpp"
+#include "Graph.hpp"
 
 namespace ECS
 {
@@ -31,15 +30,13 @@ namespace ECS
         _entitiesManager = EntitiesManager();
         _eventManager = EventManager();
         _systemManager = SystemManager();
-        Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
+        _graph = Graphic::Graph();
+        Graphic::createWindow(1920, 1080, "RTypeMirror", 60);
 
         Entity background;
-        std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Texture, "assets/background/road1.png");
-        componentBT->setType(ComponentType::Texture);
+        std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Sprite, "assets/background/road1.png");
+        componentBT->setType(ComponentType::Sprite);
         background.components.push_back(componentBT);
-        std::shared_ptr<ECS::IComponent> componentBP = ECS::Factory::createComponent(ComponentType::Position, "0,0");
-        componentBP->setType(ComponentType::Position);
-        background.components.push_back(componentBP);
         background.id = {EntityType::Background, 5};
 
         _entitiesManager.addEntities({background});
@@ -52,24 +49,17 @@ namespace ECS
             std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
             if (entityData.type == "__player__") {
-                std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
-                componentT->setType(ComponentType::Texture);
-                entity.components.push_back(componentT);
 
-
+                std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
                 if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
-                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (entityData.instance["x"].getString() + "," + entityData.instance["y"].getString()));
-                componentP->setType(ComponentType::Position);
-                entity.components.push_back(componentP);
-
+                sprite->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
                 if (entityData.instance.count("scale") == 0)
                     throw std::runtime_error("ERROR: entity __player__ have invalid scale");
-                std::shared_ptr<ECS::IComponent> componentS = ECS::Factory::createComponent(ComponentType::Scale, entityData.instance["scale"].getString());
-                componentS->setType(ComponentType::Scale);
-                entity.components.push_back(componentS);
-
-
+                sprite->setScale(entityData.instance["scale"].getFloat());
+                sprite->setScale(3);
+                sprite->setType(ComponentType::Sprite);
+                entity.components.push_back(sprite);
 
                 entity.id = {EntityType::Player, id};
                 _eventManager.setMyPlayer(entity);
@@ -77,19 +67,16 @@ namespace ECS
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
 
-                std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
-                shoot->setEntity(entity);
-
-                _systemManager.addSystems({changeTexture, shoot});
+                _systemManager.addSystems({changeTexture});
             }
             else if (entityData.type == "__tile__") {
-                std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
-                componentT->setType(ComponentType::Texture);
-                entity.components.push_back(componentT);
+                std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid position");
+                sprite->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
 
-                std::shared_ptr<ECS::IComponent> componentP = ECS::Factory::createComponent(ComponentType::Position, (entityData.instance["x"].getString() + "," + entityData.instance["y"].getString()));
-                componentP->setType(ComponentType::Position);
-                entity.components.push_back(componentP);
+                sprite->setType(ComponentType::Sprite);
+                entity.components.push_back(sprite);
 
                 entity.id = {EntityType::Background, id};
             }
@@ -100,7 +87,7 @@ namespace ECS
 
     Core::~Core()
     {
-        Raylib::closeWindow();
+        Graphic::closeWindow();
     }
 
     int Core::run(std::shared_ptr<Client> client)
@@ -108,8 +95,8 @@ namespace ECS
         Communication::Quit quit;
         std::set<Input> inputs;
 
-        while (!Raylib::windowShouldClose() and is_running(0)) {
-            Raylib::clear(Raylib::RlColor(0, 0, 0));
+        while (Graphic::checkWindowOpen() and is_running(0)) {
+            Graphic::refreshWindow();
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
             _entitiesManager.removeEntities(entitiesToDelete);
@@ -117,11 +104,9 @@ namespace ECS
             _entitiesManager.updateEntities(_eventManager.getActions());
             _entitiesManager.updateEntities(_systemManager.execute());
             createEntities();
-            Raylib::beginDraw();
-            inputs = Raylib::getInputs();
+            inputs = _graph.getInputs();
             client->setEvents(transformInputsForClient(inputs));
             _graph.displayEntities(_entitiesManager.getEntities());
-            Raylib::endDraw();
         }
         is_running(1);
         client->send(quit);
@@ -159,16 +144,12 @@ namespace ECS
     {
         Entity bullet;
 
-        std::shared_ptr<ECS::IComponent> texture = ECS::Factory::createComponent(ComponentType::Texture, "assets/bullet/ammu1.png");
-        texture->setType(ComponentType::Texture);
-        bullet.components.push_back(texture);
-        std::shared_ptr<ECS::IComponent> componentP = entity.getComponent(ComponentType::Position);
-        float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
-        float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
-        std::shared_ptr<ECS::IComponent> position = ECS::Factory::createComponent(ComponentType::Position, std::to_string(x + 64 * 3) + "," + std::to_string(y + 32 * 3));
-        position->setType(ComponentType::Position);
-        bullet.components.push_back(position);
-        bullet.id = {EntityType::Bullet, _entitiesManager.getEntities().size()};
+        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, "assets/bullet/ammu1.png"));
+        sprite->setType(ComponentType::Sprite);
+        std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
+        sprite->setPosition(spriteToCopy->getPos());
+        bullet.components.push_back(sprite);
+        bullet.id = {EntityType::Bullet, entity.id.second};
 
         std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
         bulletMouvement->setEntity(bullet);

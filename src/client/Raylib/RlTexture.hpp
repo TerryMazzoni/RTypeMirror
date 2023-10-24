@@ -10,7 +10,6 @@
 #include <string>
 
 #include "raylib.h"
-#include "RlColor.hpp"
 
 namespace Raylib
 {
