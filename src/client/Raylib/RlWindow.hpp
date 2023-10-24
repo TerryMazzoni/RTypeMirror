@@ -8,7 +8,9 @@
 #pragma once
 
 #include <string>
-#include <raylib.h>
+extern "C" {
+    #include "raylib.h"
+}
 
 namespace Raylib
 {
