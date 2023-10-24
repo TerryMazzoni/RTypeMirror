@@ -9,8 +9,10 @@
 
 #include <utility>
 #include <any>
-#include "raylib.h"
 #include "Sprite.hpp"
+extern "C" {
+    #include "raylib.h"
+}
 
 namespace Raylib {
     class RlSprite : public ECS::Sprite {

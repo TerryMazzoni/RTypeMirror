@@ -12,8 +12,10 @@
 #include <optional>
 #include <tuple>
 
-#include "raylib.h"
 #include "Enum.hpp"
+extern "C" {
+    #include "raylib.h"
+}
 
 namespace Raylib
 {
