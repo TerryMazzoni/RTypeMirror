@@ -78,28 +78,30 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;raylib.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>Raylib</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlColor.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlColor.html">RlColor</a></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classRaylib_1_1RlColor.html">RlColor</a>();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classRaylib_1_1RlColor.html">RlColor</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> r, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> g, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a = 255);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        ~<a class="code" href="classRaylib_1_1RlColor.html">RlColor</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        Color <a class="code" href="classRaylib_1_1RlColor.html#ab7467f6fa101de8b1aa3251d3b53a148">getColor</a>();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlColor.html#ac6af33c65b03843a37967fdafda1a9ae">setColor</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> r, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> g, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a = 255);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classRaylib_1_1RlColor.html#abf12a2cccfe91e571ca1c636518dacb8">getR</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classRaylib_1_1RlColor.html#a906864634ec6b534f29aedf1bd32e76a">getG</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classRaylib_1_1RlColor.html#abb382901bd1e686023f1079ef2735592">getB</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        Color _color;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="ttc" id="aclassRaylib_1_1RlColor_html"><div class="ttname"><a href="classRaylib_1_1RlColor.html">Raylib::RlColor</a></div><div class="ttdef"><b>Definition:</b> RlColor.hpp:15</div></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">    #include &quot;raylib.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>Raylib</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlColor.html">   16</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlColor.html">RlColor</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classRaylib_1_1RlColor.html">RlColor</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classRaylib_1_1RlColor.html">RlColor</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> r, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> g, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a = 255);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        ~<a class="code" href="classRaylib_1_1RlColor.html">RlColor</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        Color <a class="code" href="classRaylib_1_1RlColor.html#ab7467f6fa101de8b1aa3251d3b53a148">getColor</a>();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlColor.html#ac6af33c65b03843a37967fdafda1a9ae">setColor</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> r, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> g, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a = 255);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classRaylib_1_1RlColor.html#abf12a2cccfe91e571ca1c636518dacb8">getR</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classRaylib_1_1RlColor.html#a906864634ec6b534f29aedf1bd32e76a">getG</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classRaylib_1_1RlColor.html#abb382901bd1e686023f1079ef2735592">getB</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        Color _color;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    };</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="ttc" id="aclassRaylib_1_1RlColor_html"><div class="ttname"><a href="classRaylib_1_1RlColor.html">Raylib::RlColor</a></div><div class="ttdef"><b>Definition:</b> RlColor.hpp:17</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlColor_html_a906864634ec6b534f29aedf1bd32e76a"><div class="ttname"><a href="classRaylib_1_1RlColor.html#a906864634ec6b534f29aedf1bd32e76a">Raylib::RlColor::getG</a></div><div class="ttdeci">unsigned char getG() const</div><div class="ttdoc">Get the Green value of the color.</div><div class="ttdef"><b>Definition:</b> RlColor.cpp:27</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlColor_html_ab7467f6fa101de8b1aa3251d3b53a148"><div class="ttname"><a href="classRaylib_1_1RlColor.html#ab7467f6fa101de8b1aa3251d3b53a148">Raylib::RlColor::getColor</a></div><div class="ttdeci">Color getColor()</div><div class="ttdoc">Get the Color object.</div><div class="ttdef"><b>Definition:</b> RlColor.cpp:17</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlColor_html_abb382901bd1e686023f1079ef2735592"><div class="ttname"><a href="classRaylib_1_1RlColor.html#abb382901bd1e686023f1079ef2735592">Raylib::RlColor::getB</a></div><div class="ttdeci">unsigned char getB() const</div><div class="ttdoc">Get the Blue value of the color.</div><div class="ttdef"><b>Definition:</b> RlColor.cpp:32</div></div>

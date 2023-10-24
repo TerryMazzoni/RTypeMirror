@@ -80,24 +80,26 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;raylib.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>Raylib</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlFont.html">   16</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlFont.html">RlFont</a></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classRaylib_1_1RlFont.html">RlFont</a>(std::string path);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        ~<a class="code" href="classRaylib_1_1RlFont.html">RlFont</a>();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlFont.html#a31da02cf477023b23e260edb0c952660">unload</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        Font <a class="code" href="classRaylib_1_1RlFont.html#a76ccf768ce2bbc38cce6dd47c7943866">getFont</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        Font _font;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    };</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="ttc" id="aclassRaylib_1_1RlFont_html"><div class="ttname"><a href="classRaylib_1_1RlFont.html">Raylib::RlFont</a></div><div class="ttdef"><b>Definition:</b> RlFont.hpp:17</div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">    #include &quot;raylib.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>Raylib</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlFont.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlFont.html">RlFont</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classRaylib_1_1RlFont.html">RlFont</a>(std::string path);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        ~<a class="code" href="classRaylib_1_1RlFont.html">RlFont</a>();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlFont.html#a31da02cf477023b23e260edb0c952660">unload</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        Font <a class="code" href="classRaylib_1_1RlFont.html#a76ccf768ce2bbc38cce6dd47c7943866">getFont</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        Font _font;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="ttc" id="aclassRaylib_1_1RlFont_html"><div class="ttname"><a href="classRaylib_1_1RlFont.html">Raylib::RlFont</a></div><div class="ttdef"><b>Definition:</b> RlFont.hpp:19</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlFont_html_a31da02cf477023b23e260edb0c952660"><div class="ttname"><a href="classRaylib_1_1RlFont.html#a31da02cf477023b23e260edb0c952660">Raylib::RlFont::unload</a></div><div class="ttdeci">void unload()</div><div class="ttdoc">Unload the font.</div><div class="ttdef"><b>Definition:</b> RlFont.cpp:12</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlFont_html_a76ccf768ce2bbc38cce6dd47c7943866"><div class="ttname"><a href="classRaylib_1_1RlFont.html#a76ccf768ce2bbc38cce6dd47c7943866">Raylib::RlFont::getFont</a></div><div class="ttdeci">Font getFont() const</div><div class="ttdoc">Get the Font object.</div><div class="ttdef"><b>Definition:</b> RlFont.cpp:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
