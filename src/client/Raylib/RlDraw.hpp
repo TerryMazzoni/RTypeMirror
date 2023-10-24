@@ -7,8 +7,10 @@
 
 #pragma once
 
-#include "raylib.h"
 #include "RlColor.hpp"
+extern "C" {
+    #include "raylib.h"
+}
 
 namespace Raylib
 {
