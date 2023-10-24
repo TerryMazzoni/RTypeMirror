@@ -10,7 +10,6 @@
 #include "Core.hpp"
 #include "BulletMouvement.hpp"
 #include "Mouvement.hpp"
-#include "Shoot.hpp"
 #include "ChangeTexture.hpp"
 #include "Parser.hpp"
 #include "Graph.hpp"
@@ -69,10 +68,7 @@ namespace ECS
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
 
-                std::shared_ptr<ISystem> shoot = std::make_shared<Shoot>(Shoot());
-                shoot->setEntity(entity);
-
-                _systemManager.addSystems({changeTexture, shoot});
+                _systemManager.addSystems({changeTexture});
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
@@ -165,22 +161,18 @@ namespace ECS
 
     void Core::createBullet(Entity entity)
     {
-        // Entity bullet;
+        Entity bullet;
 
-        // std::shared_ptr<ECS::IComponent> texture = ECS::Factory::createComponent(ComponentType::Texture, "assets/bullet/ammu1.png");
-        // texture->setType(ComponentType::Texture);
-        // bullet.components.push_back(texture);
-        // std::shared_ptr<ECS::IComponent> componentP = entity.getComponent(ComponentType::Position);
-        // float x = std::any_cast<ECS::Position>(componentP->getValue()).x;
-        // float y = std::any_cast<ECS::Position>(componentP->getValue()).y;
-        // std::shared_ptr<ECS::IComponent> position = ECS::Factory::createComponent(ComponentType::Position, std::to_string(x + 64 * 3) + "," + std::to_string(y + 32 * 3));
-        // position->setType(ComponentType::Position);
-        // bullet.components.push_back(position);
-        // bullet.id = {EntityType::Bullet, _entitiesManager.getEntities().size()};
+        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, "assets/bullet/ammu1.png"));
+        sprite->setType(ComponentType::Sprite);
+        std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
+        sprite->setPosition(spriteToCopy->getPos());
+        bullet.components.push_back(sprite);
+        bullet.id = {EntityType::Bullet, entity.id.second};
 
-        // std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
-        // bulletMouvement->setEntity(bullet);
-        // _entitiesManager.addEntities({bullet});
-        // _systemManager.addSystems({bulletMouvement});
+        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
+        bulletMouvement->setEntity(bullet);
+        _entitiesManager.addEntities({bullet});
+        _systemManager.addSystems({bulletMouvement});
     }
 } // namespace ECS
