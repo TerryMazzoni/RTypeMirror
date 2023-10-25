@@ -12,9 +12,31 @@ The client displays the game using [Raylib](https://www.raylib.com/). It has his
 
 ## Getting Started
 
+### Download
+
+To download the project, use:
+
+On Linux:
+
+    ./download.sh
+
+On Windows:
+
+    ./download.bat
+
+It will download the project and build it.
+
+### Build
+
 To create the client and the server, use:
 
+On Linux:
+
     ./install.sh
+
+On Windows:
+
+    ./install.bat
 
 ### Server
 
@@ -30,8 +52,10 @@ To create the client and the server, use:
 
 ## Documentation
 
-You can check the documentation [here](https://terrymazzoni.github.io/RTypeMirror/).
+[Technical documentation](https://terrymazzoni.github.io/RTypeMirror/)
 
-You can also check the RFC [here](https://terrymazzoni.github.io/RTypeMirror/RFC)
+[Developper documentation](https://rtype.gitbook.io/documentation/)
+
+[RFC](https://terrymazzoni.github.io/RTypeMirror/RFC)
 
 Made by: Antonin Laudon - Luca Deltort - Terry Mazzoni - Christopher Artigas - Tom Laiolo
