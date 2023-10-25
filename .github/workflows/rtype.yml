@@ -10,17 +10,18 @@ env:
 
 jobs:
   BuildUbuntu:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: BuildUbuntu
-        run: timeout 30m ./install.sh
+        run: ./install.sh
 
   BuildWindows:
+    timeout-minutes: 30
     runs-on: windows-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -41,9 +42,7 @@ jobs:
     
 
       - name: BuildWindows
-        run: |
-          timeout /t 2700
-          .\install.bat
+        run: .\install.bat
 
   MirrorPush:
     runs-on: ubuntu-latest
