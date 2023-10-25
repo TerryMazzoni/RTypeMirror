@@ -25,6 +25,7 @@ namespace ECS {
              * @return std::shared_ptr<ECS::IComponent> 
              */
             std::shared_ptr<ECS::IComponent> getComponent(ComponentType type);
+            void setComponent(ComponentType type, std::shared_ptr<ECS::IComponent> value);
     };
     
     using Action = std::tuple<std::vector<ECS::Entity>, ActionType, std::any>;

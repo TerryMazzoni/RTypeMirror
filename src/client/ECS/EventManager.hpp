@@ -31,6 +31,12 @@ namespace ECS {
              */
             void setMyPlayer(Entity my);
             /**
+             * @brief Update the My Player object
+             * 
+             * @param id 
+             */
+            void updateMyPlayer(int id);
+            /**
              * @brief Execute player inputs
              * 
              * @param std::set<Input>

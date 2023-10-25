@@ -19,7 +19,6 @@ namespace ECS
     Core::Core()
     {
         std::vector<Parser::entity_t> entities;
-        int id = 6;
 
         try {
             entities = Parser::ParserJson(transformPath(std::string("assets/test.json"))).parse().getEntities();
@@ -39,7 +38,6 @@ namespace ECS
         background.id = {EntityType::Background, 5};
 
         _entitiesManager.addEntities({background});
-
         for (Parser::entity_t &entityData : entities) {
             Entity entity;
             std::ostringstream textureostring;
@@ -60,7 +58,7 @@ namespace ECS
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Player, id};
+                entity.id = {EntityType::Player, entityData.id};
                 _eventManager.setMyPlayer(entity);
 
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
@@ -77,9 +75,8 @@ namespace ECS
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Background, id};
+                entity.id = {EntityType::Background, entityData.id};
             }
-            id++;
             _entitiesManager.addEntities({entity});
         }
     }
@@ -87,6 +84,11 @@ namespace ECS
     Core::~Core()
     {
         Graphic::closeWindow();
+    }
+
+    void Core::init(int id)
+    {
+        _eventManager.updateMyPlayer(id);
     }
 
     int Core::run(std::shared_ptr<Client> client)

@@ -17,4 +17,18 @@ namespace ECS {
         }
         return nullptr;
     }
+
+    void Entity::setComponent(ComponentType type, std::shared_ptr<ECS::IComponent> value)
+    {
+        int i = 0;
+    
+        for (auto component : components) {
+            if (component->getType() == type) {
+                components[i] = value;
+                return;
+            }
+            i++;
+        }
+        components.push_back(value);
+    }
 } // namespace ECS

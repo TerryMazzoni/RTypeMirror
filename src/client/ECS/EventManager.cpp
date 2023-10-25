@@ -25,6 +25,14 @@ namespace ECS {
         _myPlayer = my;
     }
 
+    void EventManager::updateMyPlayer(int id)
+    {
+        _myPlayer.id = {_myPlayer.id.first, id};
+        ECS::Position pos = std::any_cast<ECS::Position>(_myPlayer.getComponent(ComponentType::Position)->getValue());
+        pos.y = pos.y + 200 * (id - 1);
+        _myPlayer.getComponent(ComponentType::Position)->setValue(pos);
+    }
+
     int EventManager::executeInputs(std::set<Input> listEvent)
     {
         _actions.clear();
@@ -54,7 +62,6 @@ namespace ECS {
     int EventManager::executeServerActions(Communication::ShipsPosition ships)
     {
         ECS::Entity tmp;
-        std::cout << "executeServerActions: " << &_actions << std::endl;
     
         for (int i = 0; i < ships.nbrItems; i++) {
             tmp = ECS::Entity();
@@ -64,12 +71,13 @@ namespace ECS {
                 tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
             std::shared_ptr<IComponent> pos = Factory::createComponent(ComponentType::Position, std::to_string(ships.ship[i].position.x) + "," + std::to_string(ships.ship[i].position.y));
             pos->setType(ComponentType::Position);
-            // std::cout << "serverAction : " << pos << std::endl;
+            try {
+                std::cout << "serverAction : " << std::any_cast<ECS::Position>(pos->getValue()).x << ", " << std::any_cast<ECS::Position>(pos->getValue()).y << std::endl;
+            } catch(std::exception &e) {
+                std::cout << "serverActionError : " << e.what() << std::endl;
+            }
             tmp.components.push_back(pos);
-            // for (auto &comp : tmp.components)
-                // std::cout << std::any_cast<ECS::Position>(comp->getValue()).x << ", " << std::any_cast<ECS::Position>(comp->getValue()).y << std::endl;
             _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::Move, 0));
-            // std::cout << "serverActions len: " << _actions.size() << std::endl;
         }
         return 0;
     }
@@ -109,13 +117,13 @@ namespace ECS {
 
     std::vector<Action> EventManager::getActions() const
     {
-        std::cout << "getActions: " << &_actions << std::endl;
+        // std::cout << "getActions: " << &_actions << std::endl;
         // std::cout << "getActions len: " << _actions.size() << std::endl;
         // std::cout << "Get actions :" << std::endl;
-        for (auto &action : _actions) {
-            std::cout << (int) std::get<1>(action) << std::endl;
-        }
-        std::cout << "----------------------------------------------------------------" << std::endl;
+        // for (auto &action : _actions) {
+        //     std::cout << (int) std::get<1>(action) << std::endl;
+        // }
+        // std::cout << "----------------------------------------------------------------" << std::endl;
         return _actions;
     }
 

@@ -20,6 +20,11 @@ namespace ECS {
             Core();
             ~Core();
             /**
+             * @brief init Core
+             * 
+             */
+            void init(int id);
+            /**
              * @brief Run the client loop
              * 
              * @param std::shared_ptr<Client> 
@@ -40,7 +45,6 @@ namespace ECS {
              * @return int 
              */
             int executeServerActions(Communication::MissilesPosition);
-
         private:
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
             void createEntities();

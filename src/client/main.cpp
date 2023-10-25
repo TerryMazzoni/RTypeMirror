@@ -33,11 +33,11 @@ static void signal_handler(int signal)
 
 int main(int ac, char **av)
 {
+    ECS::Core core;
     Args args;
     std::shared_ptr<Client> client;
     std::shared_ptr<std::thread> receiveThread;
     std::shared_ptr<std::thread> runThread;
-    ECS::Core core;
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;

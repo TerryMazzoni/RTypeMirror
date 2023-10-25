@@ -68,7 +68,7 @@ namespace ECS {
         static std::map<EntityType, const std::string> entityPaths = {
             {EntityType::Bullet, ""},
             {EntityType::Enemy, "assets/player/Player1.png"},
-            {EntityType::Player, "assets/spaceship/sprite_spaceships0.png,assets/spaceship/sprite_spaceships1.png,assets/spaceship/sprite_spaceships2.png,assets/spaceship/sprite_spaceships3.png,assets/capsule/sprite_capsules0.png,assets/capsule/sprite_capsules1.png,assets/capsule/sprite_capsules2.png,assets/capsule/sprite_capsules3.png,0,4"},
+            {EntityType::Player, "assets/player/Layer 1_1.png,assets/player/Layer 1_2.png,assets/player/Layer 1_3.png,assets/player/Layer 1_4.png,assets/player/Layer 1_5.png,assets/player/Layer 1_6.png,assets/player/Layer 2_1.png,assets/player/Layer 2_2.png,assets/player/Layer 2_3.png,assets/player/Layer 2_4.png,assets/player/Layer 2_5.png,assets/player/Layer 2_6.png,assets/player/Layer 3_1.png,assets/player/Layer 3_2.png,assets/player/Layer 3_3.png,assets/player/Layer 3_4.png,assets/player/Layer 3_5.png,assets/player/Layer 3_6.png,assets/player/Layer 4_1.png,assets/player/Layer 4_2.png,assets/player/Layer 4_3.png,assets/player/Layer 4_4.png,assets/player/Layer 4_5.png,assets/player/Layer 4_6.png,0,6,12,18"},
         };
         std::vector<std::optional<std::shared_ptr<ECS::IComponent>>> list;
         int idx = 0;
@@ -84,6 +84,7 @@ namespace ECS {
                         std::pair<int, int> move = std::any_cast<std::pair<int, int>>(std::get<2>(action));
                         sprite->move(move);
                     }
+                    _mapComponent[ComponentType::Sprite] = list;
                     break;
                 case ActionType::Shoot:
                     _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), EntityType::Bullet));
