@@ -72,14 +72,8 @@ namespace ECS {
             else
                 tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
             std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
-            // std::to_string(ships.ship[i].position.x) + "," + std::to_string(ships.ship[i].position.y
             sprite->setPosition(std::make_pair(ships.ship[i].position.x, ships.ship[i].position.y));
             sprite->setType(ComponentType::Sprite);
-            try {
-                std::cout << "serverAction : " << sprite->getPosX() << ", " << sprite->getPosY() << std::endl;
-            } catch(std::exception &e) {
-                std::cout << "serverActionError : " << e.what() << std::endl;
-            }
             tmp.components.push_back(sprite);
             if (ships.ship[i].type == ShipType::ENEMY)
                 _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::UpdatePosEnemy, 0));
@@ -107,16 +101,16 @@ namespace ECS {
     {
         switch (dir) {
             case EventInput::Key_up:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, -10)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, -5)));
                 break;
             case EventInput::Key_down:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 10)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 5)));
                 break;
             case EventInput::Key_left:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(-10, 0)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(-5, 0)));
                 break;
             case EventInput::Key_right:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(10, 0)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(5, 0)));
                 break;
             default:
                 break;
@@ -125,13 +119,6 @@ namespace ECS {
 
     std::vector<Action> EventManager::getActions() const
     {
-        // std::cout << "getActions: " << &_actions << std::endl;
-        // std::cout << "getActions len: " << _actions.size() << std::endl;
-        // std::cout << "Get actions :" << std::endl;
-        // for (auto &action : _actions) {
-        //     std::cout << (int) std::get<1>(action) << std::endl;
-        // }
-        // std::cout << "----------------------------------------------------------------" << std::endl;
         return _actions;
     }
 

@@ -65,7 +65,11 @@ namespace ECS {
              * @return std::vector<int>
              */
             std::vector<Entity> getEntitiesToDelete();
-
+            /**
+             * @brief Clear the Entities in the to create vector
+             * 
+             */
+            void clearEntitiesToCreate();
         protected:
         private:
             void resizeMapComponent();

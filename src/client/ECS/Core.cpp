@@ -38,7 +38,6 @@ namespace ECS
 
     void Core::init(int id)
     {
-        std::cout << "parse" << std::endl;
         std::vector<Parser::entity_t> entities;
 
         try {
@@ -63,7 +62,7 @@ namespace ECS
             std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
             std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
-            if (entityData.type == "__player__") {
+            if (entityData.type == "__player__" && index == id) {
                 std::cout << "Player index :" << index << std::endl;
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
                 if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
@@ -72,7 +71,6 @@ namespace ECS
                 if (entityData.instance.count("scale") == 0)
                     throw std::runtime_error("ERROR: entity __player__ have invalid scale");
                 sprite->setScale(entityData.instance["scale"].getFloat());
-                sprite->setScale(3);
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
@@ -83,8 +81,7 @@ namespace ECS
                 changeTexture->setEntity(entity);
 
                 _systemManager.addSystems({changeTexture});
-                if (index == id)
-                    _eventManager.setMyPlayer(entity);
+                _eventManager.setMyPlayer(entity);
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
@@ -122,6 +119,7 @@ namespace ECS
             _eventManager.clear();
             _entitiesManager.updateEntities(_systemManager.execute());
             _createEntities();
+            _entitiesManager.clearEntitiesToCreate();
             inputs = _graph.getInputs();
             client->setEvents(transformInputsForClient(inputs));
             _graph.displayEntities(_entitiesManager.getEntities());
@@ -159,15 +157,18 @@ namespace ECS
     {
         std::vector<std::pair<std::vector<Entity>, EntityType>> entities = _entitiesManager.getEntitiesToCreate();
 
-        for (auto &entities : entities) {
-            switch (entities.second) {
+        std::cout << "size: " << entities.size() << std::endl;
+        for (auto &entity : entities) {
+            std::cout << "entityType to create : " << (int) entity.second << std::endl;
+            switch (entity.second) {
                 case EntityType::Bullet:
-                    for (Entity entity : entities.first) {
+                    for (Entity entity : entity.first) {
                         _createBullet(entity);
                     }
                     break;
                 case EntityType::Player:
-                    for (Entity entity : entities.first) {
+                    for (Entity entity : entity.first) {
+                        std::cout << "create entity " << std::endl;
                         _createPlayer(entity);
                     }
                 default:
@@ -187,7 +188,7 @@ namespace ECS
         bullet.components.push_back(sprite);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
-        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
+        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>();
         bulletMouvement->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
         _systemManager.addSystems({bulletMouvement});
@@ -201,9 +202,14 @@ namespace ECS
         sprite->setType(ComponentType::Sprite);
         std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
         sprite->setPosition(spriteToCopy->getPos());
+        sprite->setScale(3);
         player.components.push_back(sprite);
         player.id = {EntityType::Player, entity.id.second};
 
+        std::shared_ptr<ISystem> textureChange = std::make_shared<ChangeTexture>();
+        textureChange->setEntity(player);
+        std::cout << "Create player: " << player.id.second << std::endl;
         _entitiesManager.addEntities({player});
+        _systemManager.addSystems({textureChange});
     }
 } // namespace ECS
