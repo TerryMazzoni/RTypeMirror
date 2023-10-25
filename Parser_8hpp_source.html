@@ -221,30 +221,43 @@ $(function() {
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">            */</span></div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            std::vector&lt;entity_t&gt; getEntities() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <span class="comment">/*</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">            ** @brief Parse all entities in the json file</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">            */</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordtype">void</span> parseEntity(boost::property_tree::ptree &amp;entity);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <span class="comment">/*</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">            ** @brief Parse the map in the json file</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">            */</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="keywordtype">void</span> parseMap(boost::property_tree::ptree &amp;map);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            <span class="comment">/*</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">            ** @brief Display all entities in the json file for debug</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">            */</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            <span class="keywordtype">void</span> displayEntities();</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            std::string _path;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            std::vector&lt;entity_t&gt; _entities;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            <span class="keywordtype">int</span> _lastId;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    };</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;} <span class="comment">// namespace Parser</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordtype">int</span> <a class="code" href="classParser_1_1ParserJson.html#aedda08a8e6d27bcfe24b432095a230db">getTileSize</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="comment">/*</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="comment">            ** @brief Parse all entities in the json file</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment">            */</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            <span class="keywordtype">void</span> parseEntity(boost::property_tree::ptree &amp;entity);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="comment">/*</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">            ** @brief Parse the map in the json file</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">            */</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            <span class="keywordtype">void</span> parseMap(boost::property_tree::ptree &amp;map);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            <span class="comment">/*</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment">            ** @brief Display all entities in the json file for debug</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">            */</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            <span class="keywordtype">void</span> displayEntities();</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            std::string _path;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            std::vector&lt;entity_t&gt; _entities;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="keywordtype">int</span> _lastId;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="keywordtype">int</span> _tileSize;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    };</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">int</span> setValue(std::unordered_map&lt;std::string, Parser::Any&gt; &amp;umap, std::string key, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordtype">int</span> setValue(std::unordered_map&lt;std::string, Parser::Any&gt; &amp;umap, std::string key, <span class="keywordtype">float</span> value);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">int</span> setValue(std::unordered_map&lt;std::string, Parser::Any&gt; &amp;umap, std::string key, std::string value);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">int</span> setValue(std::unordered_map&lt;std::string, Parser::Any&gt; &amp;umap, std::string key, <span class="keywordtype">double</span> value);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordtype">int</span> setValue(std::unordered_map&lt;std::string, Parser::Any&gt; &amp;umap, std::string key, <a class="code" href="classParser_1_1Any.html">Any</a> value);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">bool</span> keyExists(std::unordered_map&lt;std::string, Parser::Any&gt; &amp;umap, std::string key);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;} <span class="comment">// namespace Parser</span></div>
 <div class="ttc" id="aclassParser_1_1Any_html"><div class="ttname"><a href="classParser_1_1Any.html">Parser::Any</a></div><div class="ttdef"><b>Definition:</b> Parser.hpp:37</div></div>
 <div class="ttc" id="aclassParser_1_1ParserException_html"><div class="ttname"><a href="classParser_1_1ParserException.html">Parser::ParserException</a></div><div class="ttdef"><b>Definition:</b> Parser.hpp:93</div></div>
 <div class="ttc" id="aclassParser_1_1ParserJson_html"><div class="ttname"><a href="classParser_1_1ParserJson.html">Parser::ParserJson</a></div><div class="ttdef"><b>Definition:</b> Parser.hpp:109</div></div>
+<div class="ttc" id="aclassParser_1_1ParserJson_html_aedda08a8e6d27bcfe24b432095a230db"><div class="ttname"><a href="classParser_1_1ParserJson.html#aedda08a8e6d27bcfe24b432095a230db">Parser::ParserJson::getTileSize</a></div><div class="ttdeci">int getTileSize() const</div><div class="ttdoc">Get the Tile Size object.</div><div class="ttdef"><b>Definition:</b> Parser.cpp:210</div></div>
 <div class="ttc" id="astructParser_1_1entity__t_html"><div class="ttname"><a href="structParser_1_1entity__t.html">Parser::entity_t</a></div><div class="ttdef"><b>Definition:</b> Parser.hpp:86</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

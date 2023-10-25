@@ -4,11 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="ECS::ISystem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classECS_1_1ISystem.html",tooltip=" "];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="ECS::ASystem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classECS_1_1ASystem.html",tooltip=" "];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="ECS::BulletMouvement",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classECS_1_1BulletMouvement.html",tooltip=" "];
-  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="ECS::ChangeTexture",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classECS_1_1ChangeTexture.html",tooltip=" "];
+  Node0 [label="ECS::EventManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classECS_1_1EventManager.html",tooltip=" "];
 }

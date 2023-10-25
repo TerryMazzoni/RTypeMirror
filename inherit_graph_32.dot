@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="Raylib::RlMusic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classRaylib_1_1RlMusic.html",tooltip=" "];
+  Node0 [label="Parser::ParserJson",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classParser_1_1ParserJson.html",tooltip=" "];
 }
