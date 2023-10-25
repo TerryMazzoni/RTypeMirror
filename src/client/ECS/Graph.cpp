@@ -41,15 +41,9 @@ namespace Graphic {
         for (const auto &anyTexture : sprite->getTexturesToDisplay()) {
             textures.push_back(std::any_cast<Texture2D>(anyTexture));
         }
-<<<<<<< HEAD
-        Vector2 pos = Vector2(sprite->getPosX(), sprite->getPosY());
-        Vector2 transform = Vector2(sprite->getRotation(), sprite->getScale());
-        Color color = (Color){(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
-=======
-        Vector2 pos = Vector2({(float) sprite->getPosX(), (float) sprite->getPosY()});
-        Vector2 transform = Vector2({(float) sprite->getRotation(), (float) sprite->getScale()});
+        Vector2 pos = Vector2({(float)sprite->getPosX(), (float)sprite->getPosY()});
+        Vector2 transform = Vector2({(float)sprite->getRotation(), (float)sprite->getScale()});
         Color color = Color{(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
->>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
 
         for (auto &texture : textures) {
             Raylib::drawEx(texture, pos, transform, color);
@@ -91,11 +85,7 @@ namespace Graphic {
 
     void refreshWindow()
     {
-<<<<<<< HEAD
-        Raylib::clear(Color(0, 0, 0));
-=======
         Raylib::clear(Color({0, 0, 0, 255}));
->>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
     }
 
     bool checkWindowOpen()

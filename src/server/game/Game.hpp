@@ -130,4 +130,6 @@ class Game {
         std::vector<std::shared_ptr<Ship>> _ships;
         std::vector<std::shared_ptr<Bonus>> _bonus;
         int _last_entity_id;
+        int _tile_size;
+        unsigned int _loop;
 };

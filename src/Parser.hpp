@@ -150,6 +150,13 @@ namespace Parser {
             */
             std::vector<entity_t> getEntities() const;
 
+            /**
+             * @brief Get the Tile Size object
+             *
+             * @return int
+             */
+            int getTileSize() const;
+
         protected:
         private:
             /*
@@ -169,6 +176,7 @@ namespace Parser {
             std::string _path;
             std::vector<entity_t> _entities;
             int _lastId;
+            int _tileSize;
     };
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value);
