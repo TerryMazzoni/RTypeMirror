@@ -41,7 +41,9 @@ jobs:
     
 
       - name: BuildWindows
-        run: .\install.bat
+        run: |
+          timeout /t 1800
+          .\install.bat
 
   MirrorPush:
     runs-on: ubuntu-latest
