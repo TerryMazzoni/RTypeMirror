@@ -3,7 +3,7 @@ name: Documentation
 on:
   push:
     branches:
-      - "dev"
+      - "*"
 
 jobs:
   
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Doxygen
-        run: sudo apt-get install doxygen
+        run: sudo apt-get -y install doxygen
 
       - name: Generate Doxygen Documentation
         run: doxygen Doxyfile
