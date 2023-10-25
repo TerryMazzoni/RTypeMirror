@@ -120,17 +120,17 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity)
                     switch (communication.second.event[i]) {
                         case Communication::EventInput::Key_up:
                             std::cout << "Before : " << entity.instance["y"].getFloat() << std::endl;
-                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 20 * (entity.instance["speed"].getFloat())));
                             std::cout << "After : " << entity.instance["y"].getFloat() << std::endl;
                             break;
                         case Communication::EventInput::Key_down:
-                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) + 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) + 20 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_left:
-                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) - 20 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_right:
-                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) + 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) + 20 * (entity.instance["speed"].getFloat())));
                             break;
                         default:
                             break;

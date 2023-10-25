@@ -30,12 +30,6 @@ namespace ECS {
              */
             void initWindow();
             /**
-             * @brief Init id of myPlayer
-             * 
-             * @param id 
-             */
-            void initId(int id);
-            /**
              * @brief Run the client loop
              * 
              * @param std::shared_ptr<Client> 

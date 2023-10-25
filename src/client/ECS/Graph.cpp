@@ -41,8 +41,8 @@ namespace Graphic {
         for (const auto &anyTexture : sprite->getTexturesToDisplay()) {
             textures.push_back(std::any_cast<Texture2D>(anyTexture));
         }
-        Vector2 pos = Vector2(sprite->getPosX(), sprite->getPosY());
-        Vector2 transform = Vector2(sprite->getRotation(), sprite->getScale());
+        Vector2 pos = Vector2({(float) sprite->getPosX(), (float) sprite->getPosY()});
+        Vector2 transform = Vector2({(float) sprite->getRotation(), (float) sprite->getScale()});
         Color color = Color{(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
 
         for (auto &texture : textures) {
@@ -85,7 +85,7 @@ namespace Graphic {
 
     void refreshWindow()
     {
-        Raylib::clear(Color(0, 0, 0));
+        Raylib::clear(Color({0, 0, 0, 255}));
     }
 
     bool checkWindowOpen()

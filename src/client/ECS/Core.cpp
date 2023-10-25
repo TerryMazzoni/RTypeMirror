@@ -36,11 +36,6 @@ namespace ECS
         }
     }
 
-    void Core::initId(int id)
-    {
-        _id = id;
-    }
-
     void Core::init(int id)
     {
         std::cout << "parse" << std::endl;
@@ -183,7 +178,7 @@ namespace ECS
 
     void Core::_createBullet(Entity entity)
     {
-        // Entity bullet;
+        Entity bullet;
 
         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, "assets/bullet/ammu1.png"));
         sprite->setType(ComponentType::Sprite);
@@ -192,10 +187,10 @@ namespace ECS
         bullet.components.push_back(sprite);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
-        // std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
-        // bulletMouvement->setEntity(bullet);
-        // _entitiesManager.addEntities({bullet});
-        // _systemManager.addSystems({bulletMouvement});
+        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
+        bulletMouvement->setEntity(bullet);
+        _entitiesManager.addEntities({bullet});
+        _systemManager.addSystems({bulletMouvement});
     }
 
     void Core::_createPlayer(Entity entity)
