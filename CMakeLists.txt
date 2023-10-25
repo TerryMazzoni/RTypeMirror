@@ -19,6 +19,7 @@ set(SERVER_SOURCES
     ${SERVER_PATH}/game/Bullet.cpp
     ${SERVER_PATH}/game/Ship.cpp
     ${SRC_PATH}/Parser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TransformPath.cpp
 )
 
 set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/client)
@@ -50,6 +51,7 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/Raylib/RlTexture.cpp
     ${CLIENT_PATH}/Raylib/RlWindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TransformPath.cpp
 )
 
 add_executable(r-type_server ${SERVER_SOURCES})
