@@ -48,7 +48,6 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     char *data = const_cast<char *>(msg.c_str());
     Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
 
-    std::cout << "header : " << (int)header->type << std::endl;
     if (header->type == Communication::CommunicationTypes::ID) {
         Communication::Id *id = reinterpret_cast<Communication::Id *>(data);
         _id = id->id;

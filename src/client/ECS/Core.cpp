@@ -159,9 +159,7 @@ namespace ECS {
     {
         std::vector<std::pair<std::vector<Entity>, EntityType>> entities = _entitiesManager.getEntitiesToCreate();
 
-        std::cout << "size: " << entities.size() << std::endl;
         for (auto &entity : entities) {
-            std::cout << "entityType to create : " << (int)entity.second << std::endl;
             switch (entity.second) {
                 case EntityType::Bullet:
                     for (Entity entity : entity.first) {
@@ -170,7 +168,6 @@ namespace ECS {
                     break;
                 case EntityType::Player:
                     for (Entity entity : entity.first) {
-                        std::cout << "create entity " << std::endl;
                         _createPlayer(entity);
                     }
                 default:

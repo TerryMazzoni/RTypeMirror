@@ -90,7 +90,6 @@ namespace ECS {
                         else {
                             std::shared_ptr<ECS::Sprite> pos = std::dynamic_pointer_cast<ECS::Sprite>(_listEntities[entity.id.second]->getComponent(ComponentType::Sprite));
                             pos->setPosition(sprite->getPos());
-                            std::cout << "UpdatePosPlayer update : " << entity.id.second << std::endl;
                         }
                     }
                     break;
