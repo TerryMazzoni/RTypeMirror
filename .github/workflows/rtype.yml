@@ -5,9 +5,6 @@ on:
     branches:
       - "dev"
       - "main"
-  pull_request:
-    branches:
-      - "*"
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/B-CPP-500-TLS-5-1-rtype-antonin.laudon.git"
