@@ -121,6 +121,8 @@ namespace ECS
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
             _entitiesManager.removeEntities(entitiesToDelete);
             _systemManager.removeSystems(entitiesToDelete);
+            executeServerActions(client->getShipsPositions());
+            executeServerActions(client->getMissilesPositions());
             _entitiesManager.updateEntities(_eventManager.getActions());
             _eventManager.clear();
             _entitiesManager.updateEntities(_systemManager.execute());
@@ -134,15 +136,17 @@ namespace ECS
         return 0;
     }
 
-    int Core::executeServerActions(Communication::ShipsPosition ships)
+    int Core::executeServerActions(std::vector<Communication::ShipsPosition> ships)
     {
-        _eventManager.executeServerActions(ships);
+        for (auto &ship : ships)
+            _eventManager.executeServerActions(ship);
         return 0;
     }
 
-    int Core::executeServerActions(Communication::MissilesPosition missiles)
+    int Core::executeServerActions(std::vector<Communication::MissilesPosition> missiles)
     {
-        _eventManager.executeServerActions(missiles);
+        for (auto &missile : missiles)
+            _eventManager.executeServerActions(missile);
         return 0;
     }
 

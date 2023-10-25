@@ -103,7 +103,18 @@ class Client {
          * @param events
          */
         void setEvents(std::vector<EventInput> events);
-
+        /**
+         * @brief Get the Ships Positions object
+         * 
+         * @return std::vector<Communication::ShipsPosition> 
+         */
+        std::vector<Communication::ShipsPosition> getShipsPositions();
+        /**
+         * @brief Get the Missiles Positions object
+         * 
+         * @return std::vector<Communication::MissilesPosition> 
+         */
+        std::vector<Communication::MissilesPosition> getMissilesPositions();
     private:
         boost::asio::io_service _io_service;
         udp::socket _socket;
@@ -112,4 +123,6 @@ class Client {
         bool _is_ready;
         bool _game_started;
         std::vector<EventInput> _events;
+        std::vector<Communication::ShipsPosition> _shipsPositions;
+        std::vector<Communication::MissilesPosition> _missilesPositions;
 };
