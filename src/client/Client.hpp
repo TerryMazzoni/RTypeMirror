@@ -56,13 +56,13 @@ class Client {
          * 
          * @param ECS::Core
          */
-        void receiveAsync(ECS::Core &core);
+        void receiveAsync(std::shared_ptr<ECS::Core> core);
         /**
          * @brief Process a message from the server
          *
          * @param msg
          */
-        void processMessage(const std::string &msg, ECS::Core &core);
+        void processMessage(const std::string &msg, std::shared_ptr<ECS::Core> core);
         /**
          * @brief Run the client
          */

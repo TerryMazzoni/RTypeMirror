@@ -43,7 +43,7 @@ Client::~Client()
     _socket.close();
 }
 
-void Client::processMessage(const std::string &msg, ECS::Core &core)
+void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> core)
 {
     char *data = const_cast<char *>(msg.c_str());
     Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
@@ -58,7 +58,6 @@ void Client::processMessage(const std::string &msg, ECS::Core &core)
             return;
         }
         std::cout << "My ID is " << _id << std::endl;
-        core.init(_id);
     }
     else if (header->type == Communication::CommunicationTypes::QUIT) {
         this->getIoService().stop();
@@ -93,7 +92,7 @@ void Client::processMessage(const std::string &msg, ECS::Core &core)
         //     std::cout << "       X: " << ships->ship[i].position.x << std::endl;
         //     std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
         // }
-        core.executeServerActions(*ships);
+        core->executeServerActions(*ships);
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
@@ -105,7 +104,7 @@ void Client::processMessage(const std::string &msg, ECS::Core &core)
             std::cout << "X: " << missiles->missile[i].position.x << std::endl;
             std::cout << "Y: " << missiles->missile[i].position.y << std::endl;
         }
-        core.executeServerActions(*missiles);
+        core->executeServerActions(*missiles);
     }
     else if (header->type == Communication::CommunicationTypes::COLISION) {
         Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
@@ -116,7 +115,7 @@ void Client::processMessage(const std::string &msg, ECS::Core &core)
     }
 }
 
-void Client::receiveAsync(ECS::Core &core)
+void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
 {
     std::vector<char> recv_buffer(1024);
     udp::endpoint sender_endpoint;
