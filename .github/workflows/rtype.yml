@@ -42,7 +42,7 @@ jobs:
 
       - name: BuildWindows
         run: |
-          timeout /t 1800
+          timeout /t 2700
           .\install.bat
 
   MirrorPush:
