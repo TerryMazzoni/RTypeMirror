@@ -33,7 +33,7 @@ static void signal_handler(int signal)
 
 int main(int ac, char **av)
 {
-    ECS::Core core;
+    std::shared_ptr<ECS::Core> core = std::make_shared<ECS::Core>();
     Args args;
     std::shared_ptr<Client> client;
     std::shared_ptr<std::thread> receiveThread;
@@ -48,7 +48,7 @@ int main(int ac, char **av)
     signal(SIGINT, signal_handler);
     receiveThread = std::make_shared<std::thread>([&client, &core]() { client->receiveAsync(core); });
     runThread = std::make_shared<std::thread>([&client]() { client->run(); });
-    core.run(client);
+    core->run(client);
     receiveThread->join();
     runThread->join();
     return 0;

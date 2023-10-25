@@ -8,7 +8,8 @@
 #include <iostream>
 #include "EventManager.hpp"
 #include "Factory.hpp"
-#include "Position.hpp"
+#include "Sprite.hpp"
+#include "Entity.hpp"
 
 namespace ECS {
 
@@ -27,10 +28,11 @@ namespace ECS {
 
     void EventManager::updateMyPlayer(int id)
     {
-        _myPlayer.id = {_myPlayer.id.first, id};
-        ECS::Position pos = std::any_cast<ECS::Position>(_myPlayer.getComponent(ComponentType::Position)->getValue());
-        pos.y = pos.y + 200 * (id - 1);
-        _myPlayer.getComponent(ComponentType::Position)->setValue(pos);
+        Entity myPlayer = Entity();
+        myPlayer.id = {_myPlayer.id.first, id};
+        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
+        sprite->setPosition({0, 200 * (id + 1)});
+        // _myPlayer.getComponent(ComponentType::Position)->setValue(pos);
     }
 
     int EventManager::executeInputs(std::set<Input> listEvent)
@@ -69,15 +71,20 @@ namespace ECS {
                 tmp.id = EntityId(EntityType::Enemy, ships.ship[i].id);
             else
                 tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
-            std::shared_ptr<IComponent> pos = Factory::createComponent(ComponentType::Position, std::to_string(ships.ship[i].position.x) + "," + std::to_string(ships.ship[i].position.y));
-            pos->setType(ComponentType::Position);
+            std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
+            // std::to_string(ships.ship[i].position.x) + "," + std::to_string(ships.ship[i].position.y
+            sprite->setPosition(std::make_pair(ships.ship[i].position.x, ships.ship[i].position.y));
+            sprite->setType(ComponentType::Sprite);
             try {
-                std::cout << "serverAction : " << std::any_cast<ECS::Position>(pos->getValue()).x << ", " << std::any_cast<ECS::Position>(pos->getValue()).y << std::endl;
+                std::cout << "serverAction : " << sprite->getPosX() << ", " << sprite->getPosY() << std::endl;
             } catch(std::exception &e) {
                 std::cout << "serverActionError : " << e.what() << std::endl;
             }
-            tmp.components.push_back(pos);
-            _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::Move, 0));
+            tmp.components.push_back(sprite);
+            if (ships.ship[i].type == ShipType::ENEMY)
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::UpdatePosEnemy, 0));
+            else
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::UpdatePosPlayer, 0));
         }
         return 0;
     }
@@ -89,7 +96,8 @@ namespace ECS {
         for (int i = 0; i < missiles.nbrItems; i++) {
             tmp = ECS::Entity();
             tmp.id = EntityId(EntityType::Bullet, missiles.missile[i].id);
-            tmp.components.push_back(Factory::createComponent(ComponentType::Position, std::to_string(missiles.missile[i].position.x) + "," + std::to_string(missiles.missile[i].position.y)));
+            std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, "assets/bullet/ammu1.png"));
+            sprite->setPosition(std::make_pair(missiles.missile[i].position.x, missiles.missile[i].position.y));
             _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::Shoot, 0));
         }
         return 0;

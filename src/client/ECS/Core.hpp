@@ -25,6 +25,17 @@ namespace ECS {
              */
             void init(int id);
             /**
+             * @brief Init the window
+             * 
+             */
+            void initWindow();
+            /**
+             * @brief Init id of myPlayer
+             * 
+             * @param id 
+             */
+            void initId(int id);
+            /**
              * @brief Run the client loop
              * 
              * @param std::shared_ptr<Client> 
@@ -47,8 +58,9 @@ namespace ECS {
             int executeServerActions(Communication::MissilesPosition);
         private:
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
-            void createEntities();
-            void createBullet(Entity entity);
+            void _createEntities();
+            void _createBullet(Entity entity);
+            void _createPlayer(Entity entity);
 
             EntitiesManager _entitiesManager;
             EventManager _eventManager;

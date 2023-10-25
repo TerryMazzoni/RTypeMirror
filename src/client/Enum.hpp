@@ -36,6 +36,8 @@ enum class ActionType {
     Move,
     Shoot,
     ChangeTexture,
+    UpdatePosPlayer,
+    UpdatePosEnemy,
     Unknown
 };
 
