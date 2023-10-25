@@ -30,12 +30,15 @@ namespace ECS {
              */
             void initWindow();
             /**
+<<<<<<< HEAD
              * @brief Init id of myPlayer
              * 
              * @param id 
              */
             void initId(int id);
             /**
+=======
+>>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
              * @brief Run the client loop
              * 
              * @param std::shared_ptr<Client> 
@@ -66,6 +69,9 @@ namespace ECS {
             EventManager _eventManager;
             SystemManager _systemManager;
             Graphic::Graph _graph;
+<<<<<<< HEAD
             int _id;
+=======
+>>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
     };
 } // namespace ECS

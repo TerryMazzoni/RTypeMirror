@@ -7,6 +7,7 @@
 
 #include "Game.hpp"
 #include "Communication.hpp"
+#include "TransformPath.hpp"
 
 Game::Game()
     : _level(0), _score(0)
@@ -47,7 +48,7 @@ void Game::run(std::shared_ptr<Server> server)
                 }
                 if (status == 2) {
                     if (!_init)
-                        initGame("assets/test.json");
+                        initGame(transformPath(std::string("assets/test.json")));
                     server->sendToAll(timer);
                 }
             }
@@ -118,18 +119,16 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity)
                 for (int i = 0; i < communication.second.nbrItems; i++) {
                     switch (communication.second.event[i]) {
                         case Communication::EventInput::Key_up:
-                            std::cout << "Before : " << entity.instance["y"].getFloat() << std::endl;
-                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));
-                            std::cout << "After : " << entity.instance["y"].getFloat() << std::endl;
+                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 20 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_down:
-                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) + 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) + 20 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_left:
-                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) - 20 * (entity.instance["speed"].getFloat())));
                             break;
                         case Communication::EventInput::Key_right:
-                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) + 1 * (entity.instance["speed"].getFloat())));
+                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) + 20 * (entity.instance["speed"].getFloat())));
                             break;
                         default:
                             break;

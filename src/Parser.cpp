@@ -43,17 +43,17 @@ namespace Parser {
             value.get_value<int>();
             return type_t::INT;
         }
-        catch (boost::property_tree::ptree_bad_data &e) {
+        catch (...) {
             try {
                 value.get_value<float>();
                 return type_t::FLOAT;
             }
-            catch (boost::property_tree::ptree_bad_data &e) {
+            catch (...) {
                 try {
                     value.get_value<std::string>();
                     return type_t::STRING;
                 }
-                catch (boost::property_tree::ptree_bad_data &e) {
+                catch (...) {
                     return type_t::NONE;
                 }
             }

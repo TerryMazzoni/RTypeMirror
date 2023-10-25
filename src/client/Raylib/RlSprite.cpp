@@ -10,18 +10,30 @@
 
 namespace Raylib {
     RlSprite::RlSprite()
+<<<<<<< HEAD
         : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _positions({0, 0}), _color((Color){255, 255, 255, 255}), _scale(1.0), _rotation(0)
+=======
+        : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _positions({0, 0}), _color(Color{255, 255, 255, 255}), _scale(1.0), _rotation(0)
+>>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
     {
     }
 
     RlSprite::RlSprite(const int x, const int y)
+<<<<<<< HEAD
         : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _color((Color){255, 255, 255, 255}), _scale(1.0), _rotation(0)
+=======
+        : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _color(Color{255, 255, 255, 255}), _scale(1.0), _rotation(0)
+>>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
     {
         _positions = std::make_pair(x, y);
     }
 
     RlSprite::RlSprite(const std::vector<std::string> pathTextures, std::vector<int> textureIndexes)
+<<<<<<< HEAD
         : _textureWithColor({}), _positions({0, 0}), _color((Color){255, 255, 255, 255}), _scale(1.0), _rotation(0)
+=======
+        : _textureWithColor({}), _positions({0, 0}), _color(Color{255, 255, 255, 255}), _scale(1.0), _rotation(0)
+>>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
     {
         for (const auto &texture : pathTextures) {
             _listTextures.push_back(LoadTexture(texture.c_str()));
@@ -49,7 +61,11 @@ namespace Raylib {
 
     void RlSprite::setColor(const int r, const int g, const int b, const int a, std::vector<int> textureWithColor)
     {
+<<<<<<< HEAD
         _color = (Color){(unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a};
+=======
+        _color = Color{(unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a};
+>>>>>>> b7af44bbbf2ccf61efd453689a958a6d79e30e6b
         _textureWithColor = textureWithColor;
     }
 

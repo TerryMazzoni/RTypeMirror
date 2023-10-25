@@ -11,7 +11,7 @@ namespace Raylib
 {
     void RlColor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
     {
-        _color = (Color){r, g, b, a};
+        _color = Color{r, g, b, a};
     }
 
     Color RlColor::getColor()
@@ -36,12 +36,12 @@ namespace Raylib
 
     RlColor::RlColor()
     {
-        _color = (Color){0, 0, 0, 255};
+        _color = Color{0, 0, 0, 255};
     }
 
     RlColor::RlColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
     {
-        _color = (Color){r, g, b, a};
+        _color = Color{r, g, b, a};
     }
 
     RlColor::~RlColor()
