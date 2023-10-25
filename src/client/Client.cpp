@@ -92,7 +92,7 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
         //     std::cout << "       X: " << ships->ship[i].position.x << std::endl;
         //     std::cout << "       Y: " << ships->ship[i].position.y << std::endl;
         // }
-        core->executeServerActions(*ships);
+        _shipsPositions.push_back(*ships);
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
@@ -104,7 +104,7 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
             std::cout << "X: " << missiles->missile[i].position.x << std::endl;
             std::cout << "Y: " << missiles->missile[i].position.y << std::endl;
         }
-        core->executeServerActions(*missiles);
+        _missilesPositions.push_back(*missiles);
     }
     else if (header->type == Communication::CommunicationTypes::COLISION) {
         Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
@@ -214,4 +214,20 @@ void Client::setIsReady(bool is_ready)
 void Client::setEvents(std::vector<EventInput> events)
 {
     _events = events;
+}
+
+std::vector<Communication::ShipsPosition> Client::getShipsPositions()
+{
+    std::vector<Communication::ShipsPosition> tmp = _shipsPositions;
+    _shipsPositions.clear();
+    std::cout << tmp.size() << std::endl;
+    return tmp;
+}
+
+std::vector<Communication::MissilesPosition> Client::getMissilesPositions()
+{
+    std::vector<Communication::MissilesPosition> tmp = _missilesPositions;
+    _missilesPositions.clear();
+    std::cout << tmp.size() << std::endl;
+    return tmp;
 }

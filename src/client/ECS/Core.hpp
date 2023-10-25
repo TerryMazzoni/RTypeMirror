@@ -48,14 +48,14 @@ namespace ECS {
              * @param Communication::ShipsPosition
              * @return int 
              */
-            int executeServerActions(Communication::ShipsPosition);
+            int executeServerActions(std::vector<Communication::ShipsPosition>);
             /**
              * @brief Execute the Server Actions object
              * 
              * @param Communication::MissilesPosition
              * @return int 
              */
-            int executeServerActions(Communication::MissilesPosition);
+            int executeServerActions(std::vector<Communication::MissilesPosition>);
         private:
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
             void _createEntities();
