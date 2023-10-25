@@ -21,7 +21,6 @@ namespace Raylib
     {
         static std::set<Input> inputs;
         int tmp = 0;
-        std::pair<int, int> mousePos = getMousePos();
 
         for (auto event : inputTypes) {
             if (IsKeyReleased((int)event))
@@ -29,13 +28,6 @@ namespace Raylib
         }
         while ((tmp = GetKeyPressed()))
             inputs.insert(std::tuple(EventType::Keyboard, tmp, std::nullopt));
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-            inputs.insert(std::tuple(EventType::Mouse, mousePos.first, mousePos.second));
         return inputs;
-    }
-
-    std::pair<int, int> getMousePos()
-    {
-        return std::pair(GetMouseX(), GetMouseY());
     }
 }

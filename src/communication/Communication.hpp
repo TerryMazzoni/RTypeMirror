@@ -15,6 +15,18 @@ enum class ShipType {
     ENEMY
 };
 
+enum class BonusType {
+    UNKNOW,
+    HEAL30,
+    HEAL50,
+    HEAL100,
+    GUN1,
+    GUN2,
+    GUN3,
+    SHIELD,
+    MAX_HEALTH
+};
+
 namespace Communication {
 
     enum class EventInput {
@@ -34,7 +46,8 @@ namespace Communication {
         SHIPS,
         MISSILES,
         COLISION,
-        INPUT
+        INPUT,
+        BONUS
     };
 
     typedef struct Header {
@@ -105,4 +118,16 @@ namespace Communication {
             EventInput event[16];
             size_t nbrItems;
     } Inputs;
-} // namespace Communication
+
+    typedef struct Bonus {
+            Position position;
+            int id;
+            BonusType type;
+    } Bonus;
+
+    typedef struct BonusPosition {
+            CommunicationTypes code = CommunicationTypes::BONUS;
+            Bonus bonus[32];
+            size_t nbrItems;
+    } BonusPosition;
+}; // namespace Communication

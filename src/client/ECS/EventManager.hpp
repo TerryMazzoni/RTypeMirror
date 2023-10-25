@@ -13,8 +13,10 @@
 #include <tuple>
 #include <any>
 #include <optional>
+#include <memory>
 #include "Enum.hpp"
 #include "Entity.hpp"
+#include "Communication.hpp"
 
 namespace ECS {
     class EventManager {
@@ -29,6 +31,12 @@ namespace ECS {
              */
             void setMyPlayer(Entity my);
             /**
+             * @brief Update the My Player object
+             * 
+             * @param id 
+             */
+            void updateMyPlayer(int id);
+            /**
              * @brief Execute player inputs
              * 
              * @param std::set<Input>
@@ -36,11 +44,30 @@ namespace ECS {
              */
             int executeInputs(std::set<Input>);
             /**
+             * @brief Execute the Server Actions object
+             * 
+             * @param Communication::ShipsPosition
+             * @return int 
+             */
+            int executeServerActions(Communication::ShipsPosition);
+            /**
+             * @brief Execute the Server Actions object
+             * 
+             * @param Communication::MissilesPosition
+             * @return int 
+             */
+            int executeServerActions(Communication::MissilesPosition);
+            /**
              * @brief Get the Actions object
              * 
              * @return std::vector<Action> 
              */
             std::vector<Action> getActions() const;
+            /**
+             * @brief clear the vector
+             * 
+             */
+            void clear();
 
         private:
             /**

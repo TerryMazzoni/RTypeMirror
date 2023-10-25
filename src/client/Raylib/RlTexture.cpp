@@ -6,6 +6,7 @@
 */
 
 #include "RlTexture.hpp"
+#include <iostream>
 
 namespace Raylib
 {
@@ -40,6 +41,7 @@ namespace Raylib
 
     RlTexture::RlTexture(std::string path)
     {
+        std::cout << path << std::endl;
         _texture = LoadTexture(path.c_str());
     }
 

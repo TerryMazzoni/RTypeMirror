@@ -18,6 +18,7 @@ set(SERVER_SOURCES
     ${SERVER_PATH}/game/Game.cpp
     ${SERVER_PATH}/game/Bullet.cpp
     ${SERVER_PATH}/game/Ship.cpp
+    ${SERVER_PATH}/game/Bonus.cpp
     ${SRC_PATH}/Parser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TransformPath.cpp
 )

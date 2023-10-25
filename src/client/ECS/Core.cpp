@@ -14,13 +14,30 @@
 #include "Graph.hpp"
 #include "TransformPath.hpp"
 
-namespace ECS
-{
-
+namespace ECS {
     Core::Core()
     {
+        _entitiesManager = EntitiesManager();
+        _eventManager = EventManager();
+        _systemManager = SystemManager();
+        _graph = Graphic::Graph();
+    }
+
+    Core::~Core()
+    {
+        Graphic::closeWindow();
+    }
+
+    void Core::initWindow()
+    {
+        if (!Graphic::checkWindowOpen()) {
+            Graphic::createWindow(1920, 1080, "RTypeMirror", 60);
+        }
+    }
+
+    void Core::init(int id)
+    {
         std::vector<Parser::entity_t> entities;
-        int id = 6;
 
         try {
             entities = Parser::ParserJson(transformPath(std::string("assets/test.json"))).parse().getEntities();
@@ -28,11 +45,6 @@ namespace ECS
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
         }
-        _entitiesManager = EntitiesManager();
-        _eventManager = EventManager();
-        _systemManager = SystemManager();
-        _graph = Graphic::Graph();
-        Graphic::createWindow(1920, 1080, "RTypeMirror", 60);
         Entity background;
         std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Sprite, "assets/background/road1.png");
         componentBT->setType(ComponentType::Sprite);
@@ -41,6 +53,7 @@ namespace ECS
 
         _entitiesManager.addEntities({background});
 
+        int index = 1;
         for (Parser::entity_t &entityData : entities) {
             Entity entity;
             std::ostringstream textureostring;
@@ -48,8 +61,8 @@ namespace ECS
             std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
             std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
-            if (entityData.type == "__player__") {
-
+            if (entityData.type == "__player__" && index == id) {
+                std::cout << "Player index :" << index << std::endl;
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
                 if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
@@ -61,13 +74,15 @@ namespace ECS
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Player, id};
+                entity.id = {EntityType::Player, index};
                 _eventManager.setMyPlayer(entity);
 
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
 
                 _systemManager.addSystems({changeTexture});
+                if (index == id)
+                    _eventManager.setMyPlayer(entity);
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
@@ -78,16 +93,11 @@ namespace ECS
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Background, id};
+                entity.id = {EntityType::Background, index};
             }
-            id++;
+            index++;
             _entitiesManager.addEntities({entity});
         }
-    }
-
-    Core::~Core()
-    {
-        Graphic::closeWindow();
     }
 
     int Core::run(std::shared_ptr<Client> client)
@@ -95,21 +105,43 @@ namespace ECS
         Communication::Quit quit;
         std::set<Input> inputs;
 
+        while (client->getId() == 0)
+            ;
+        initWindow();
+        init(client->getId());
         while (Graphic::checkWindowOpen() and is_running(0)) {
             Graphic::refreshWindow();
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
             _entitiesManager.removeEntities(entitiesToDelete);
             _systemManager.removeSystems(entitiesToDelete);
+            executeServerActions(client->getShipsPositions());
+            executeServerActions(client->getMissilesPositions());
             _entitiesManager.updateEntities(_eventManager.getActions());
+            _eventManager.clear();
             _entitiesManager.updateEntities(_systemManager.execute());
-            createEntities();
+            _createEntities();
+            _entitiesManager.clearEntitiesToCreate();
             inputs = _graph.getInputs();
             client->setEvents(transformInputsForClient(inputs));
             _graph.displayEntities(_entitiesManager.getEntities());
         }
         is_running(1);
         client->send(quit);
+        return 0;
+    }
+
+    int Core::executeServerActions(std::vector<Communication::ShipsPosition> ships)
+    {
+        for (auto &ship : ships)
+            _eventManager.executeServerActions(ship);
+        return 0;
+    }
+
+    int Core::executeServerActions(std::vector<Communication::MissilesPosition> missiles)
+    {
+        for (auto &missile : missiles)
+            _eventManager.executeServerActions(missile);
         return 0;
     }
 
@@ -123,24 +155,28 @@ namespace ECS
         return eventInputs;
     }
 
-    void Core::createEntities()
+    void Core::_createEntities()
     {
         std::vector<std::pair<std::vector<Entity>, EntityType>> entities = _entitiesManager.getEntitiesToCreate();
 
-        for (auto &entities : entities) {
-            switch (entities.second) {
+        for (auto &entity : entities) {
+            switch (entity.second) {
                 case EntityType::Bullet:
-                    for (Entity entity : entities.first) {
-                        createBullet(entity);
+                    for (Entity entity : entity.first) {
+                        _createBullet(entity);
                     }
                     break;
+                case EntityType::Player:
+                    for (Entity entity : entity.first) {
+                        _createPlayer(entity);
+                    }
                 default:
                     break;
             }
         }
     }
 
-    void Core::createBullet(Entity entity)
+    void Core::_createBullet(Entity entity)
     {
         Entity bullet;
 
@@ -151,9 +187,28 @@ namespace ECS
         bullet.components.push_back(sprite);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
-        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>(BulletMouvement());
+        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>();
         bulletMouvement->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
         _systemManager.addSystems({bulletMouvement});
+    }
+
+    void Core::_createPlayer(Entity entity)
+    {
+        Entity player;
+
+        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
+        sprite->setType(ComponentType::Sprite);
+        std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
+        sprite->setPosition(spriteToCopy->getPos());
+        sprite->setScale(3);
+        player.components.push_back(sprite);
+        player.id = {EntityType::Player, entity.id.second};
+
+        std::shared_ptr<ISystem> textureChange = std::make_shared<ChangeTexture>();
+        textureChange->setEntity(player);
+        std::cout << "Create player: " << player.id.second << std::endl;
+        _entitiesManager.addEntities({player});
+        _systemManager.addSystems({textureChange});
     }
 } // namespace ECS

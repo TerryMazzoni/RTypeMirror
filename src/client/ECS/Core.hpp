@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "Enum.hpp"
 #include "ECS.hpp"
 #include "Graph.hpp"
@@ -18,17 +20,42 @@ namespace ECS {
             Core();
             ~Core();
             /**
+             * @brief init Core
+             *
+             */
+            void init(int id);
+            /**
+             * @brief Init the window
+             *
+             */
+            void initWindow();
+            /**
              * @brief Run the client loop
-             * 
-             * @param std::shared_ptr<Client> 
-             * @return int 
+             *
+             * @param std::shared_ptr<Client>
+             * @return int
              */
             int run(std::shared_ptr<Client>);
+            /**
+             * @brief Execute the Server Actions object
+             *
+             * @param Communication::ShipsPosition
+             * @return int
+             */
+            int executeServerActions(std::vector<Communication::ShipsPosition>);
+            /**
+             * @brief Execute the Server Actions object
+             *
+             * @param Communication::MissilesPosition
+             * @return int
+             */
+            int executeServerActions(std::vector<Communication::MissilesPosition>);
 
         private:
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
-            void createEntities();
-            void createBullet(Entity entity);
+            void _createEntities();
+            void _createBullet(Entity entity);
+            void _createPlayer(Entity entity);
 
             EntitiesManager _entitiesManager;
             EventManager _eventManager;

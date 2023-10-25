@@ -110,16 +110,15 @@ namespace Parser {
         std::map<char, std::vector<int>> indexesMap;
         std::string line;
         entity_t newEntity;
-        int tileSize;
         int y = 0;
 
         if (root.count(PARSER_MAP) == 0)
             throw ParserException("key " + static_cast<std::string>(PARSER_MAP) + " not found");
 
         if (root.get_child(PARSER_MAP).count(PARSER_MAP_TILESIZE) == 0)
-            tileSize = 64;
+            _tileSize = 64;
         else
-            tileSize = root.get_child(PARSER_MAP).get<int>(PARSER_MAP_TILESIZE);
+            _tileSize = root.get_child(PARSER_MAP).get<int>(PARSER_MAP_TILESIZE);
 
         if (root.get_child(PARSER_MAP).count(PARSER_TEXTURES) != 0) {
             textures = root.get_child(PARSER_MAP).get_child(PARSER_TEXTURES);
@@ -153,8 +152,8 @@ namespace Parser {
                         "__tile__",
                         {texturesMap[line[i]], indexesMap[line[i]]},
                     };
-                    newEntity.instance.insert({"x", Any((i * tileSize) * 1.0f)});
-                    newEntity.instance.insert({"y", Any((y * tileSize) * 1.0f)});
+                    newEntity.instance.insert({"x", Any((i * _tileSize) * 1.0f)});
+                    newEntity.instance.insert({"y", Any((y * _tileSize) * 1.0f)});
                     _entities.push_back(newEntity);
                 }
                 y++;
@@ -206,6 +205,11 @@ namespace Parser {
         if (verbose)
             displayEntities();
         return *this;
+    }
+
+    int ParserJson::getTileSize() const
+    {
+        return _tileSize;
     }
 
     Any::Any(int i)
@@ -290,6 +294,77 @@ namespace Parser {
         if (_type == Parser::type_t::STRING)
             s = _s;
         return s;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value)
+    {
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, value).first->second = value;
+        }
+        else {
+            umap.insert({key, value});
+        }
+        return 0;
+    }
+
+    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key)
+    {
+        if (umap.find(key) == umap.end())
+            return false;
+        return true;
     }
 
 } // namespace Parser
