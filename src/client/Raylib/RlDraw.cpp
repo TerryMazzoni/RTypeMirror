@@ -9,9 +9,9 @@
 
 namespace Raylib
 {
-    void clear(RlColor color)
+    void clear(Color color)
     {
-        ClearBackground(color.getColor());
+        ClearBackground(color);
     }
 
     void beginDraw()
@@ -24,13 +24,13 @@ namespace Raylib
         EndDrawing();
     }
 
-    void draw(RlTexture texture, int x, int y, RlColor color)
+    void draw(Texture2D texture, int x, int y, Color color)
     {
-        DrawTexture(texture.getTexture(), x, y, color.getColor());
+        DrawTexture(texture, x, y, color);
     }
 
-    void drawEx(RlTexture texture, Vector2 position, Vector2 values, RlColor color)
+    void drawEx(Texture2D texture, Vector2 position, Vector2 values, Color color)
     {
-        DrawTextureEx(texture.getTexture(), position, values.x, values.y, color.getColor());
+        DrawTextureEx(texture, position, values.x, values.y, color);
     }
 }

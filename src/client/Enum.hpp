@@ -36,6 +36,8 @@ enum class ActionType {
     Move,
     Shoot,
     ChangeTexture,
+    UpdatePosPlayer,
+    UpdatePosEnemy,
     Unknown
 };
 
@@ -48,11 +50,6 @@ enum class SceneType {
 };
 
 enum class ComponentType {
-    Color,
-    Position,
-    Rotation,
-    Scale,
-    Texture,
-    Text,
+    Sprite,
     Unknown
 };

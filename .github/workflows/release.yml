@@ -16,3 +16,6 @@ jobs:
           automatic_release_tag: "Release"
           prerelease: false
           title: "R-Type v${{ github.run_number }}"
+          files: |
+            download.sh
+            download.bat

@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include "raylib.h"
 #include "RlColor.hpp"
-#include "RlTexture.hpp"
+extern "C" {
+    #include "raylib.h"
+}
 
 namespace Raylib
 {
@@ -18,7 +19,7 @@ namespace Raylib
      *
      * @param color Color of the background
      */
-    void clear(RlColor color);
+    void clear(Color color);
     /**
      * @brief Begin drawing
      *
@@ -37,7 +38,7 @@ namespace Raylib
      * @param int Y position
      * @param RlColor Color of the texture
     */
-    void draw(RlTexture texture, int x, int y, RlColor color);
+    void draw(Texture2D texture, int x, int y, Color color);
     /**
      * @brief Draw a texture with a specified rotation and scale
      * 
@@ -46,5 +47,5 @@ namespace Raylib
      * @param Vector2 Rotation and scale of the texture
      * @param RlColor Color of the texture
      */
-    void drawEx(RlTexture texture, Vector2 position, Vector2 values, RlColor color);
+    void drawEx(Texture2D texture, Vector2 position, Vector2 values, Color color);
 }

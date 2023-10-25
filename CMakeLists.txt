@@ -18,7 +18,9 @@ set(SERVER_SOURCES
     ${SERVER_PATH}/game/Game.cpp
     ${SERVER_PATH}/game/Bullet.cpp
     ${SERVER_PATH}/game/Ship.cpp
+    ${SERVER_PATH}/game/Bonus.cpp
     ${SRC_PATH}/Parser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TransformPath.cpp
 )
 
 set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/client)
@@ -36,9 +38,7 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/ECS/SystemManager.cpp
     ${CLIENT_PATH}/ECS/components/Component.cpp
     ${CLIENT_PATH}/ECS/systems/ASystem.cpp
-    ${CLIENT_PATH}/ECS/systems/Mouvement.cpp
     ${CLIENT_PATH}/ECS/systems/ChangeTexture.cpp
-    ${CLIENT_PATH}/ECS/systems/Shoot.cpp
     ${CLIENT_PATH}/ECS/systems/BulletMouvement.cpp
     ${CLIENT_PATH}/Raylib/RlAudio.cpp
     ${CLIENT_PATH}/Raylib/RlColor.cpp
@@ -47,10 +47,12 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/Raylib/RlInputs.cpp
     ${CLIENT_PATH}/Raylib/RlScreen.cpp
     ${CLIENT_PATH}/Raylib/RlSound.cpp
+    ${CLIENT_PATH}/Raylib/RlSprite.cpp
     ${CLIENT_PATH}/Raylib/RlText.cpp
     ${CLIENT_PATH}/Raylib/RlTexture.cpp
     ${CLIENT_PATH}/Raylib/RlWindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TransformPath.cpp
 )
 
 add_executable(r-type_server ${SERVER_SOURCES})

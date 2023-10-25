@@ -10,8 +10,13 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+
 #include "Enum.hpp"
 #include "Communication.hpp"
+
+namespace ECS {
+    class Core;
+}
 
 using boost::asio::ip::udp;
 
@@ -41,21 +46,23 @@ class Client {
             try {
                 _socket.send(boost::asio::buffer(&data, sizeof(data)));
             }
-            catch (const std::exception &e) {
+            catch (...) {
                 is_running(1);
                 std::cout << "Error on send" << std::endl;
             }
         }
         /**
          * @brief Receive a message from the server
+         * 
+         * @param ECS::Core
          */
-        void receiveAsync();
+        void receiveAsync(std::shared_ptr<ECS::Core> core);
         /**
          * @brief Process a message from the server
          *
          * @param msg
          */
-        void processMessage(const std::string &msg);
+        void processMessage(const std::string &msg, std::shared_ptr<ECS::Core> core);
         /**
          * @brief Run the client
          */
@@ -92,11 +99,22 @@ class Client {
         void setIsReady(bool is_ready);
         /**
          * @brief Set the Events Input for the server
-         * 
-         * @param events 
+         *
+         * @param events
          */
         void setEvents(std::vector<EventInput> events);
-
+        /**
+         * @brief Get the Ships Positions object
+         * 
+         * @return std::vector<Communication::ShipsPosition> 
+         */
+        std::vector<Communication::ShipsPosition> getShipsPositions();
+        /**
+         * @brief Get the Missiles Positions object
+         * 
+         * @return std::vector<Communication::MissilesPosition> 
+         */
+        std::vector<Communication::MissilesPosition> getMissilesPositions();
     private:
         boost::asio::io_service _io_service;
         udp::socket _socket;
@@ -105,4 +123,6 @@ class Client {
         bool _is_ready;
         bool _game_started;
         std::vector<EventInput> _events;
+        std::vector<Communication::ShipsPosition> _shipsPositions;
+        std::vector<Communication::MissilesPosition> _missilesPositions;
 };

@@ -76,30 +76,70 @@
           "x": 256.0,
           "y": 100.0,
           "scale": 3,
-          "id": 1
+          "speed": 1
         },
         {
           "x": 256.0,
           "y": 300.0,
           "scale": 3,
-          "id": 2
+          "speed": 1
         },
         {
           "x": 256.0,
           "y": 500.0,
           "scale": 3,
-          "id": 3
+          "speed": 1
         },
         {
           "x": 256.0,
           "y": 700.0,
           "scale": 3,
-          "id": 4
+          "speed": 1
         }
       ]
     },
     {
-      "type": "enemy",
+      "type": "enemy_1",
+      "textures": [
+        "assets/enemies/Enemy1/0.png",
+        "assets/enemies/Enemy1/1.png",
+        "assets/enemies/Enemy1/2.png",
+        "assets/enemies/Enemy1/3.png",
+        "assets/enemies/Enemy1/4.png",
+        "assets/enemies/Enemy1/5.png"
+      ],
+      "instance": [
+        {
+          "x": 100.0,
+          "y": 256.0,
+          "damage": 10,
+          "speed": 5,
+          "health": 50
+        }
+      ]
+    },
+    {
+      "type": "enemy_2",
+      "textures": [
+        "assets/enemies/Enemy2/0.png",
+        "assets/enemies/Enemy2/1.png",
+        "assets/enemies/Enemy2/2.png",
+        "assets/enemies/Enemy2/3.png",
+        "assets/enemies/Enemy2/4.png",
+        "assets/enemies/Enemy2/5.png"
+      ],
+      "instance": [
+        {
+          "x": 100.0,
+          "y": 256.0,
+          "damage": 6,
+          "speed": 15,
+          "health": 30
+        }
+      ]
+    },
+    {
+      "type": "boss_1",
       "textures": [
         "assets/player/Player1.png"
       ],
@@ -107,22 +147,9 @@
         {
           "x": 100.0,
           "y": 256.0,
-          "id": 5
-        },
-        {
-          "x": 200.0,
-          "y": 256.0,
-          "id": 6
-        },
-        {
-          "x": 300.0,
-          "y": 256.0,
-          "id": 7
-        },
-        {
-          "x": 400.0,
-          "y": 256.0,
-          "id": 8
+          "damage": 3,
+          "speed": 3,
+          "health": 200
         }
       ]
     }

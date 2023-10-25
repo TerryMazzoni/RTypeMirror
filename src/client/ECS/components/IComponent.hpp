@@ -17,19 +17,6 @@ namespace ECS {
         public:
             virtual ~IComponent() = default;
             /**
-             * @brief Set the value of the component
-             *
-             * @param std::any
-             * @return int
-             */
-            virtual int setValue(std::any value) = 0;
-            /**
-             * @brief Get the value of the component
-             *
-             * @return std::any
-             */
-            virtual std::any getValue() const = 0;
-            /**
              * @brief Get the type of the component
              *
              * @return ComponentType

@@ -22,47 +22,6 @@ std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
     return (client_memory);
 }
 
-// static void signal_handler(int signal)
-// {
-//     if (signal == SIGINT)
-//         is_running(1);
-//     client_memory(0, nullptr)->send("quit\0");
-// }
-
-// int main(int ac, char **av)
-// {
-//     Args args;
-//     std::shared_ptr<Client> client;
-//     std::shared_ptr<std::thread> receiveThread;
-//     std::shared_ptr<std::thread> runThread;
-
-//     if (int r = args.setArgs(ac, av) != 0)
-//         return r - 1;
-//     client =
-//         std::make_shared<Client>(args.getIp(), std::to_string(args.getPort()));
-//     if (!client->getSocket().is_open())
-//         return 84;
-//     client_memory(1, client);
-//     signal(SIGINT, signal_handler);
-//     client->send("Connect");
-
-//     GenericCommunication generic(CommunicationTypes::Type_NewPlayerPosition);
-
-//     generic.setPosition(Position(Coords{1, 2}, Coords{3, 4}));
-//     generic.setTeam(1);
-
-//     std::ostringstream os;
-//     boost::archive::binary_oarchive oa(os);
-//     oa << generic;
-//     client->send(os.str());
-//     client->send("Not ready");
-//     receiveThread = std::make_shared<std::thread>([&client]() { client->receiveAsync(); });
-//     runThread = std::make_shared<std::thread>([&client]() { client->run(); });
-//     receiveThread->join();
-//     runThread->join();
-//     return 0;
-// }
-
 static void signal_handler(int signal)
 {
     Communication::Quit quit;
@@ -74,23 +33,22 @@ static void signal_handler(int signal)
 
 int main(int ac, char **av)
 {
+    std::shared_ptr<ECS::Core> core = std::make_shared<ECS::Core>();
     Args args;
     std::shared_ptr<Client> client;
     std::shared_ptr<std::thread> receiveThread;
     std::shared_ptr<std::thread> runThread;
-    ECS::Core core;
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
-    client =
-        std::make_shared<Client>(args.getIp(), std::to_string(args.getPort()));
+    client = std::make_shared<Client>(args.getIp(), std::to_string(args.getPort()));
     if (!client->getSocket().is_open())
         return 84;
     client_memory(1, client);
     signal(SIGINT, signal_handler);
-    receiveThread = std::make_shared<std::thread>([&client]() { client->receiveAsync(); });
+    receiveThread = std::make_shared<std::thread>([&client, &core]() { client->receiveAsync(core); });
     runThread = std::make_shared<std::thread>([&client]() { client->run(); });
-    core.run(client);
+    core->run(client);
     receiveThread->join();
     runThread->join();
     return 0;

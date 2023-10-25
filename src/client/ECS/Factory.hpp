@@ -34,46 +34,10 @@ namespace ECS {
             Factory();
 
             /**
-             * @brief Create a Color object
+             * @brief Create a Sprite object
              * 
-             * @param std::string& value of the component
              * @return std::shared_ptr<IComponent> 
              */
-            std::shared_ptr<IComponent> createColor(const std::string &value);
-            /**
-             * @brief Create a Position object
-             * 
-             * @param std::string& value of the component
-             * @return std::shared_ptr<IComponent>
-            */
-            std::shared_ptr<IComponent> createPosition(const std::string &value);
-            /**
-             * @brief Create a Rotation object
-             * 
-             * @param std::string& value of the component
-             * @return std::shared_ptr<IComponent>
-            */
-            std::shared_ptr<IComponent> createRotation(const std::string &value);
-            /**
-             * @brief Create a Scale object
-             * 
-             * @param std::string& value of the component
-             * @return std::shared_ptr<IComponent>
-            */
-            std::shared_ptr<IComponent> createScale(const std::string &value);
-            /**
-             * @brief Create a Text object
-             * 
-             * @param std::string& value of the component
-             * @return std::shared_ptr<IComponent>
-            */
-            std::shared_ptr<IComponent> createText(const std::string &value);
-            /**
-             * @brief Create a Texture object
-             * 
-             * @param std::string& value of the component
-             * @return std::shared_ptr<IComponent>
-            */
-            std::shared_ptr<IComponent> createTexture(const std::string &value);
+            std::shared_ptr<IComponent> createSprite(const std::string &value);
     };
 } // namespace ECS

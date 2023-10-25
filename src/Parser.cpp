@@ -12,12 +12,14 @@ namespace Parser {
     {
         _path = path;
         _entities = {};
+        _lastId = 1;
     }
 
     ParserJson::ParserJson()
     {
         _path = "__default__";
         _entities = {};
+        _lastId = 1;
     }
 
     ParserJson::~ParserJson()
@@ -41,17 +43,17 @@ namespace Parser {
             value.get_value<int>();
             return type_t::INT;
         }
-        catch (boost::property_tree::ptree_bad_data &e) {
+        catch (...) {
             try {
                 value.get_value<float>();
                 return type_t::FLOAT;
             }
-            catch (boost::property_tree::ptree_bad_data &e) {
+            catch (...) {
                 try {
                     value.get_value<std::string>();
                     return type_t::STRING;
                 }
-                catch (boost::property_tree::ptree_bad_data &e) {
+                catch (...) {
                     return type_t::NONE;
                 }
             }
@@ -80,19 +82,18 @@ namespace Parser {
             if (entity.second.count(PARSER_ENTITY_INSTANCE) != 0) {
                 for (auto &instance : entity.second.get_child(PARSER_ENTITY_INSTANCE)) {
                     newEntity = {
+                        _lastId++,
                         typeEntities,
                         {textures, indexes},
-                        {},
                     };
                     for (auto &value : instance.second) {
                         type = getType(value.second);
                         if (type == type_t::INT)
-                            newEntity.instance[value.first] = value.second.get_value<int>();
+                            newEntity.instance.insert({value.first, Any(value.second.get_value<int>())});
                         else if (type == type_t::FLOAT)
-                            newEntity.instance[value.first] = value.second.get_value<float>();
+                            newEntity.instance.insert({value.first, Any(value.second.get_value<float>())});
                         else if (type == type_t::STRING)
-                            newEntity.instance[value.first] = value.second.get_value<std::string>();
-                        newEntity.instanceType[value.first] = type;
+                            newEntity.instance.insert({value.first, Any(value.second.get_value<std::string>())});
                     }
                     _entities.push_back(newEntity);
                 }
@@ -109,16 +110,15 @@ namespace Parser {
         std::map<char, std::vector<int>> indexesMap;
         std::string line;
         entity_t newEntity;
-        int tileSize;
         int y = 0;
 
         if (root.count(PARSER_MAP) == 0)
             throw ParserException("key " + static_cast<std::string>(PARSER_MAP) + " not found");
 
         if (root.get_child(PARSER_MAP).count(PARSER_MAP_TILESIZE) == 0)
-            tileSize = 64;
+            _tileSize = 64;
         else
-            tileSize = root.get_child(PARSER_MAP).get<int>(PARSER_MAP_TILESIZE);
+            _tileSize = root.get_child(PARSER_MAP).get<int>(PARSER_MAP_TILESIZE);
 
         if (root.get_child(PARSER_MAP).count(PARSER_TEXTURES) != 0) {
             textures = root.get_child(PARSER_MAP).get_child(PARSER_TEXTURES);
@@ -148,13 +148,12 @@ namespace Parser {
                         throw Parser::ParserException("Texture not found for char: '" + std::string(1, line[i]) + "' at x: " + std::to_string(i) + " y: " + std::to_string(y));
                     }
                     newEntity = {
+                        _lastId++,
                         "__tile__",
                         {texturesMap[line[i]], indexesMap[line[i]]},
-                        {}};
-                    newEntity.instance["x"] = (i * tileSize) * 1.0f;
-                    newEntity.instance["y"] = (y * tileSize) * 1.0f;
-                    newEntity.instanceType["x"] = type_t::FLOAT;
-                    newEntity.instanceType["y"] = type_t::FLOAT;
+                    };
+                    newEntity.instance.insert({"x", Any((i * _tileSize) * 1.0f)});
+                    newEntity.instance.insert({"y", Any((y * _tileSize) * 1.0f)});
                     _entities.push_back(newEntity);
                 }
                 y++;
@@ -166,6 +165,7 @@ namespace Parser {
     {
         for (auto &entity : _entities) {
             std::cout << "┓\n┃ " << entity.type << std::endl;
+            std::cout << "┃    ID: " << entity.id << std::endl;
             std::cout << "┃    Textures: " << std::endl;
             std::cout << "┃      Indexes:" << std::endl;
             for (auto &index : entity.textures.second)
@@ -176,13 +176,12 @@ namespace Parser {
             std::cout << "┃    Instance: " << std::endl;
             for (auto &instance : entity.instance) {
                 std::cout << "┃      " << instance.first << ": ";
-
-                if (entity.instanceType[instance.first] == Parser::type_t::INT)
-                    std::cout << "int = " << std::any_cast<int>(instance.second) << std::endl;
-                else if (entity.instanceType[instance.first] == Parser::type_t::FLOAT)
-                    std::cout << "float = " << std::any_cast<float>(instance.second) << std::endl;
-                else if (entity.instanceType[instance.first] == Parser::type_t::STRING)
-                    std::cout << "string = " << std::any_cast<std::string>(instance.second) << std::endl;
+                if (instance.second.getType() == Parser::type_t::INT)
+                    std::cout << "int = " << instance.second.getInt() << std::endl;
+                else if (instance.second.getType() == Parser::type_t::FLOAT)
+                    std::cout << "float = " << instance.second.getFloat() << std::endl;
+                else if (instance.second.getType() == Parser::type_t::STRING)
+                    std::cout << "string = " << instance.second.getString() << std::endl;
                 else
                     std::cout << "unknown" << std::endl;
             }
@@ -206,6 +205,166 @@ namespace Parser {
         if (verbose)
             displayEntities();
         return *this;
+    }
+
+    int ParserJson::getTileSize() const
+    {
+        return _tileSize;
+    }
+
+    Any::Any(int i)
+        : _i(i), _f(0.0), _s(""), _type(type_t::INT)
+    {
+    }
+
+    Any::Any(float f)
+        : _i(0), _f(f), _s(""), _type(type_t::FLOAT)
+    {
+    }
+
+    Any::Any(std::string s)
+        : _i(0), _f(0.0), _s(s), _type(type_t::STRING)
+    {
+    }
+
+    Any::Any(double d)
+        : _i(0), _f(d), _s(""), _type(type_t::FLOAT)
+    {
+    }
+
+    Any::Any()
+        : _i(0), _f(0), _s(""), _type(type_t::NONE)
+    {
+        throw Parser::ParserException("Cannot create an Any with no value");
+    }
+
+    Parser::type_t Any::getType() const
+    {
+        return _type;
+    }
+
+    int Any::getInt() const
+    {
+        int i = 0;
+
+        if (_type == Parser::type_t::INT)
+            i = _i;
+        if (_type == Parser::type_t::FLOAT)
+            i = static_cast<int>(_f);
+        if (_type == Parser::type_t::STRING) {
+            try {
+                i = std::stoi(_s);
+            }
+            catch (...) {
+                std::cout << "Could not convert string '" << _s << "' to int" << std::endl;
+                i = std::numeric_limits<int>::infinity();
+            }
+        }
+        return i;
+    }
+
+    float Any::getFloat() const
+    {
+        float f = 0.0;
+
+        if (_type == Parser::type_t::INT)
+            f = static_cast<float>(_i);
+        if (_type == Parser::type_t::FLOAT)
+            f = _f;
+        if (_type == Parser::type_t::STRING) {
+            try {
+                f = std::stof(_s);
+            }
+            catch (...) {
+                std::cout << "Could not convert string '" << _s << "' to float" << std::endl;
+                f = std::numeric_limits<float>::infinity();
+            }
+        }
+        return f;
+    }
+
+    std::string Any::getString() const
+    {
+        std::string s = "";
+
+        if (_type == Parser::type_t::INT)
+            s = std::to_string(_i);
+        if (_type == Parser::type_t::FLOAT)
+            s = std::to_string(_f);
+        if (_type == Parser::type_t::STRING)
+            s = _s;
+        return s;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value)
+    {
+        Any newValue = Any(value);
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, newValue).first->second = newValue;
+        }
+        else {
+            umap.insert({key, newValue});
+        }
+        return 0;
+    }
+
+    int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value)
+    {
+
+        if (keyExists(umap, key)) {
+            umap.emplace(key, value).first->second = value;
+        }
+        else {
+            umap.insert({key, value});
+        }
+        return 0;
+    }
+
+    bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key)
+    {
+        if (umap.find(key) == umap.end())
+            return false;
+        return true;
     }
 
 } // namespace Parser

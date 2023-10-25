@@ -6,81 +6,90 @@
 */
 
 #include <set>
+#include <iostream>
+#include "RlInputs.hpp"
+#include "RlDraw.hpp"
 #include "Graph.hpp"
+#include "RlSprite.hpp"
+#include "RlWindow.hpp"
 
-std::set<Input> Graph::getInputs() const
-{
-    return Raylib::getInputs();
-}
+namespace Graphic {
+    std::set<Input> Graph::getInputs() const
+    {
+        return Raylib::getInputs();
+    }
 
-int Graph::displayEntities(std::vector<std::optional<ECS::Entity>> entities)
-{
-    for (std::optional<ECS::Entity> &entity : entities) {
-        if (entity.has_value()) {
-            if (entity.value().getComponent(ComponentType::Texture) != nullptr && entity.value().getComponent(ComponentType::Position) != nullptr) {
-                displayTexture(entity.value());
-            }
-            else if (entity.value().getComponent(ComponentType::Text) != nullptr && entity.value().getComponent(ComponentType::Position) != nullptr) {
-                displayText(entity.value());
+    int Graph::displayEntities(std::vector<std::optional<ECS::Entity>> entities)
+    {
+        Raylib::beginDraw();
+        for (std::optional<ECS::Entity> &entity : entities) {
+            if (entity.has_value()) {
+                if (entity.value().getComponent(ComponentType::Sprite) != nullptr) {
+                    displayTexture(entity.value());
+                }
             }
         }
+        Raylib::endDraw();
+        return 0;
     }
-    return 0;
-}
 
-int Graph::displayTexture(ECS::Entity &entity)
-{
-    ECS::Color color;
-    ECS::Position position;
-    ECS::Rotation rotation;
-    ECS::Scale scale;
-    ECS::Texture texture;
+    int Graph::displayTexture(ECS::Entity &entity)
+    {
+        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
 
-    if (entity.getComponent(ComponentType::Color) != nullptr)
-        color = std::any_cast<ECS::Color>(entity.getComponent(ComponentType::Color)->getValue());
-    else
-        color = ECS::Color(255, 255, 255);
-    if (entity.getComponent(ComponentType::Rotation) != nullptr)
-        rotation = std::any_cast<ECS::Rotation>(entity.getComponent(ComponentType::Rotation)->getValue());
-    else
-        rotation = ECS::Rotation(0);
-    if (entity.getComponent(ComponentType::Scale) != nullptr)
-        scale = std::any_cast<ECS::Scale>(entity.getComponent(ComponentType::Scale)->getValue());
-    else
-        scale = ECS::Scale(1);
-    texture = std::any_cast<ECS::Texture>(entity.getComponent(ComponentType::Texture)->getValue());
-    position = std::any_cast<ECS::Position>(entity.getComponent(ComponentType::Position)->getValue());
-    for (auto textureID : texture.currentTexture) {
-        Raylib::drawEx(texture.textureList[textureID], Vector2({position.x, position.y}), Vector2({rotation.angle, scale.scale}), color.color);
+        std::vector<Texture2D> textures;
+        for (const auto &anyTexture : sprite->getTexturesToDisplay()) {
+            textures.push_back(std::any_cast<Texture2D>(anyTexture));
+        }
+        Vector2 pos = Vector2({(float)sprite->getPosX(), (float)sprite->getPosY()});
+        Vector2 transform = Vector2({(float)sprite->getRotation(), (float)sprite->getScale()});
+        Color color = Color{(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
+
+        for (auto &texture : textures) {
+            Raylib::drawEx(texture, pos, transform, color);
+        }
+        return 0;
     }
-    return 0;
-}
 
-int Graph::displayText(ECS::Entity &entity)
-{
-    ECS::Text text;
-    ECS::Position position;
-    ECS::Scale scale;
-    ECS::Color color;
+    Graph::Graph()
+    {
+    }
 
-    if (entity.getComponent(ComponentType::Scale) != nullptr)
-        scale = std::any_cast<ECS::Scale>(entity.getComponent(ComponentType::Scale)->getValue());
-    else
-        scale = ECS::Scale(1);
-    if (entity.getComponent(ComponentType::Color) != nullptr)
-        color = std::any_cast<ECS::Color>(entity.getComponent(ComponentType::Color)->getValue());
-    else
-        color = ECS::Color(255, 255, 255);
-    text = std::any_cast<ECS::Text>(entity.getComponent(ComponentType::Text)->getValue());
-    position = std::any_cast<ECS::Position>(entity.getComponent(ComponentType::Position)->getValue());
-    Raylib::drawText(text.text, Vector3({position.x, position.y, scale.scale}), color.color);
-    return 0;
-}
+    Graph::~Graph()
+    {
+    }
+    std::shared_ptr<ECS::Sprite> createSprite()
+    {
+        return std::make_shared<Raylib::RlSprite>(Raylib::RlSprite());
+    }
 
-Graph::Graph()
-{
-}
+    std::shared_ptr<ECS::Sprite> createSprite(const int x, const int y)
+    {
+        return std::make_shared<Raylib::RlSprite>(Raylib::RlSprite(x, y));
+    }
 
-Graph::~Graph()
-{
-}
+    std::shared_ptr<ECS::Sprite> createSprite(const std::vector<std::string> pathTextures, std::vector<int> textureIndexes)
+    {
+        return std::make_shared<Raylib::RlSprite>(Raylib::RlSprite(pathTextures, textureIndexes));
+    }
+
+    void createWindow(int width, int heigth, std::string name, int frameRate)
+    {
+        Raylib::initWindow(width, heigth, name, frameRate);
+    }
+
+    void closeWindow()
+    {
+        Raylib::closeWindow();
+    }
+
+    void refreshWindow()
+    {
+        Raylib::clear(Color({0, 0, 0, 255}));
+    }
+
+    bool checkWindowOpen()
+    {
+        return !Raylib::windowShouldClose();
+    }
+} // namespace Graphic

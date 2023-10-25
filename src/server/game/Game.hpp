@@ -11,6 +11,7 @@
 #include "Parser.hpp"
 #include "Bullet.hpp"
 #include "Ship.hpp"
+#include "Bonus.hpp"
 #include <memory>
 #include <vector>
 
@@ -72,21 +73,21 @@ class Game {
          * @param server
          * @param entity
          */
-        void updateShips(std::shared_ptr<Server> server, Parser::entity_t entity);
+        void updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity);
         /**
          * @brief Update the colisions between the ships and the bullets.
          *
          * @param server
          * @param entity
          */
-        void updateColisions(std::shared_ptr<Server> server, Parser::entity_t entity);
+        void updateColisions(std::shared_ptr<Server> server, Parser::entity_t &entity);
         /**
          * @brief Update the entities and push it to the vectors.
          *
          * @param server
          * @param entity
          */
-        void updateEntities(std::shared_ptr<Server> server, Parser::entity_t entity);
+        void updateEntities(std::shared_ptr<Server> server, Parser::entity_t &entity);
         /**
          * @brief End the game.
          *
@@ -105,6 +106,19 @@ class Game {
          * @param server
          */
         void sendBullets(std::shared_ptr<Server> server);
+        /**
+         * @brief Send the bonus to the clients
+         *
+         * @param bonus
+         */
+        void sendBonus(std::shared_ptr<Server> server);
+        /**
+         * @brief Check the colision between to entities.
+         *
+         * @return true
+         * @return false
+         */
+        bool checkColision(Parser::entity_t entity1, Parser::entity_t entity2);
 
     private:
         int _level;
@@ -114,5 +128,8 @@ class Game {
         bool _init;
         std::vector<std::shared_ptr<Bullet>> _bullets;
         std::vector<std::shared_ptr<Ship>> _ships;
+        std::vector<std::shared_ptr<Bonus>> _bonus;
         int _last_entity_id;
+        int _tile_size;
+        unsigned int _loop;
 };
