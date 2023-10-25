@@ -25,6 +25,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Create PowerShell Profile
+        run: New-Item -ItemType File -Path $PROFILE -Force
+
       - name: Set up MSYS2 environment
         uses: msys2/setup-msys2@v2
         with:
@@ -33,9 +36,9 @@ jobs:
 
       - name: Install CMake and g++
         run: |
-          Add-Content -Path $PROFILE -Value 'export PATH=$PATH:C:\msys64\usr\bin'
-          RefreshEnv
+          $env:Path += ";C:\msys64\usr\bin"
           pacman -S --noconfirm mingw-w64-x86_64-toolchain cmake
+    
 
       - name: BuildWindows
         run: .\install.bat
