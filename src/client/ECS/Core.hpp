@@ -21,6 +21,11 @@ namespace ECS {
             Core();
             ~Core();
             /**
+             * @brief init Core
+             * 
+             */
+            void init(int id);
+            /**
              * @brief Run the client loop
              * 
              * @param std::shared_ptr<Client> 
@@ -41,7 +46,6 @@ namespace ECS {
              * @return int 
              */
             int executeServerActions(Communication::MissilesPosition);
-
         private:
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
             void createEntities();
@@ -51,5 +55,6 @@ namespace ECS {
             EventManager _eventManager;
             SystemManager _systemManager;
             Graph _graph;
+            int _id;
     };
 } // namespace ECS

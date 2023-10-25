@@ -117,7 +117,6 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity)
                 std::cout << "UPDATE3" << std::endl;
                 for (int i = 0; i < communication.second.nbrItems; i++) {
                     switch (communication.second.event[i]) {
-                        std::cout << "UPDATE4" << std::endl;
                         case Communication::EventInput::Key_up:
                             std::cout << "Before : " << entity.instance["y"].getFloat() << std::endl;
                             Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 1 * (entity.instance["speed"].getFloat())));

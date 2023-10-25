@@ -18,8 +18,9 @@ namespace ECS
 {
     Core::Core()
     {
+        Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
+        _id = 1;
         std::vector<Parser::entity_t> entities;
-        int id = 6;
 
         try {
             entities = Parser::ParserJson("assets/test.json").parse().getEntities();
@@ -27,8 +28,8 @@ namespace ECS
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
         }
-        Raylib::initWindow(1920, 1080, "RTypeMirror", 60);
 
+        std::cout << "parse" << std::endl;
         Entity background;
         std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Texture, "assets/background/road1.png");
         componentBT->setType(ComponentType::Texture);
@@ -39,7 +40,6 @@ namespace ECS
         background.id = {EntityType::Background, 5};
 
         _entitiesManager.addEntities({background});
-
         for (Parser::entity_t &entityData : entities) {
             Entity entity;
             std::ostringstream textureostring;
@@ -47,7 +47,7 @@ namespace ECS
             std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
             std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
-            if (entityData.type == "__player__") {
+            if (entityData.type == "__player__" && entityData.id == _id) {
                 std::shared_ptr<ECS::IComponent> componentT = ECS::Factory::createComponent(ComponentType::Texture, textureString);
                 componentT->setType(ComponentType::Texture);
                 entity.components.push_back(componentT);
@@ -66,8 +66,7 @@ namespace ECS
                 entity.components.push_back(componentS);
 
 
-
-                entity.id = {EntityType::Player, id};
+                entity.id = {EntityType::Player, entityData.id};
                 _eventManager.setMyPlayer(entity);
 
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
@@ -87,16 +86,21 @@ namespace ECS
                 componentP->setType(ComponentType::Position);
                 entity.components.push_back(componentP);
 
-                entity.id = {EntityType::Background, id};
+                entity.id = {EntityType::Background, entityData.id};
             }
-            id++;
             _entitiesManager.addEntities({entity});
         }
+        std::cout << "parse end" << std::endl;
     }
 
     Core::~Core()
     {
         Raylib::closeWindow();
+    }
+
+    void Core::init(int id)
+    {
+        _eventManager.updateMyPlayer(id);
     }
 
     int Core::run(std::shared_ptr<Client> client)
@@ -105,6 +109,8 @@ namespace ECS
         std::set<Input> inputs;
 
         while (!Raylib::windowShouldClose() and is_running(0)) {
+            if (_id == 0)
+                continue;
             Raylib::clear(Raylib::RlColor(0, 0, 0));
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
