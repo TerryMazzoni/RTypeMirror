@@ -32,7 +32,6 @@ namespace ECS {
         myPlayer.id = {_myPlayer.id.first, id};
         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
         sprite->setPosition({0, 200 * (id + 1)});
-        // _myPlayer.getComponent(ComponentType::Position)->setValue(pos);
     }
 
     int EventManager::executeInputs(std::set<Input> listEvent)
@@ -119,13 +118,6 @@ namespace ECS {
 
     std::vector<Action> EventManager::getActions() const
     {
-        // std::cout << "getActions: " << &_actions << std::endl;
-        // std::cout << "getActions len: " << _actions.size() << std::endl;
-        // std::cout << "Get actions :" << std::endl;
-        // for (auto &action : _actions) {
-        //     std::cout << (int) std::get<1>(action) << std::endl;
-        // }
-        // std::cout << "----------------------------------------------------------------" << std::endl;
         return _actions;
     }
 
