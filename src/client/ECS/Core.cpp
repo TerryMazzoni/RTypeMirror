@@ -12,6 +12,7 @@
 #include "ChangeTexture.hpp"
 #include "Parser.hpp"
 #include "Graph.hpp"
+#include "TransformPath.hpp"
 
 namespace ECS
 {
@@ -22,7 +23,7 @@ namespace ECS
         int id = 6;
 
         try {
-            entities = Parser::ParserJson("assets/test.json").parse().getEntities();
+            entities = Parser::ParserJson(transformPath(std::string("assets/test.json"))).parse().getEntities();
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
@@ -32,7 +33,6 @@ namespace ECS
         _systemManager = SystemManager();
         _graph = Graphic::Graph();
         Graphic::createWindow(1920, 1080, "RTypeMirror", 60);
-
         Entity background;
         std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Sprite, "assets/background/road1.png");
         componentBT->setType(ComponentType::Sprite);

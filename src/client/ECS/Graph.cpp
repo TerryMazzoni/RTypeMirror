@@ -43,7 +43,7 @@ namespace Graphic {
         }
         Vector2 pos = Vector2(sprite->getPosX(), sprite->getPosY());
         Vector2 transform = Vector2(sprite->getRotation(), sprite->getScale());
-        Color color = (Color){(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
+        Color color = Color{(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
 
         for (auto &texture : textures) {
             Raylib::drawEx(texture, pos, transform, color);

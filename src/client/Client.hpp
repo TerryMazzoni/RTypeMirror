@@ -41,7 +41,7 @@ class Client {
             try {
                 _socket.send(boost::asio::buffer(&data, sizeof(data)));
             }
-            catch (const std::exception &e) {
+            catch (...) {
                 is_running(1);
                 std::cout << "Error on send" << std::endl;
             }

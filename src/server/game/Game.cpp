@@ -7,6 +7,7 @@
 
 #include "Game.hpp"
 #include "Communication.hpp"
+#include "TransformPath.hpp"
 
 Game::Game()
     : _level(0), _score(0)
@@ -47,7 +48,7 @@ void Game::run(std::shared_ptr<Server> server)
                 }
                 if (status == 2) {
                     if (!_init)
-                        initGame("assets/map.json");
+                        initGame(transformPath(std::string("assets/map.json")));
                     server->sendToAll(timer);
                 }
             }
