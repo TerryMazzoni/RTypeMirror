@@ -132,6 +132,19 @@
           "speed": 10.0
         }
       ]
+    },
+    {
+      "type": "bonus",
+      "textures": [
+        "assets/player/Layer 1_1.png"
+      ],
+      "instance": [
+        {
+          "x": 300.0,
+          "y": 700.0,
+          "b_type": "heal30"
+        }
+      ]
     }
   ]
 }

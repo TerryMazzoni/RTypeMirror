@@ -11,6 +11,7 @@
 #include "Parser.hpp"
 #include "Bullet.hpp"
 #include "Ship.hpp"
+#include "Bonus.hpp"
 #include <memory>
 #include <vector>
 
@@ -105,6 +106,19 @@ class Game {
          * @param server
          */
         void sendBullets(std::shared_ptr<Server> server);
+        /**
+         * @brief Send the bonus to the clients
+         *
+         * @param bonus
+         */
+        void sendBonus(std::shared_ptr<Server> server);
+        /**
+         * @brief Check the colision between to entities.
+         *
+         * @return true
+         * @return false
+         */
+        bool checkColision(Parser::entity_t entity1, Parser::entity_t entity2);
 
     private:
         int _level;
@@ -114,5 +128,6 @@ class Game {
         bool _init;
         std::vector<std::shared_ptr<Bullet>> _bullets;
         std::vector<std::shared_ptr<Ship>> _ships;
+        std::vector<std::shared_ptr<Bonus>> _bonus;
         int _last_entity_id;
 };
