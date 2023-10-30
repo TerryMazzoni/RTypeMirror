@@ -15,8 +15,10 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "Release"
           prerelease: true
-          draft: true
+          draft: false
           title: "R-Type v${{ github.run_number }}"
           files: |
+            install.sh
+            install.bat
             download.sh
             download.bat
