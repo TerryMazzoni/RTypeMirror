@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - RT-139-File-in-the-releases
 
 jobs:
   CreateReleaseDev:
@@ -22,7 +21,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "Release"
-          prerelease: true
+          prerelease: false
           title: "R-Type v${{ steps.date.outputs.date }}"
           files: |
             download.sh
