@@ -52,10 +52,10 @@ On Windows:
 
 ## Documentation
 
-[Technical documentation](https://terrymazzoni.github.io/RTypeMirror/)
+<a href="https://terrymazzoni.github.io/RTypeMirror/" target="_blank" rel="noopener">Technical documentation</a>
 
-[Developper documentation](https://rtype.gitbook.io/documentation/)
+<a href="https://rtype.gitbook.io/documentation/" target="_blank" rel="noopener">Developper documentation</a>
 
-[RFC](https://terrymazzoni.github.io/RTypeMirror/RFC)
+<a href="https://rtype.gitbook.io/documentation/rfc" target="_blank" rel="noopener">RFC</a>
 
 Made by: Antonin Laudon - Luca Deltort - Terry Mazzoni - Christopher Artigas - Tom Laiolo
