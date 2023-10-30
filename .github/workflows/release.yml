@@ -12,10 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: LS
-        run: ls -laR
-
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -24,4 +20,6 @@ jobs:
           prerelease: true
           draft: false
           title: "R-Type v${{ github.run_number }}"
-          files: ./src/Parser.cpp
+          files: |
+            download.sh
+            download.bat
