@@ -208,7 +208,6 @@ std::vector<Communication::ShipsPosition> Client::getShipsPositions()
 {
     std::vector<Communication::ShipsPosition> tmp = _shipsPositions;
     _shipsPositions.clear();
-    std::cout << tmp.size() << std::endl;
     return tmp;
 }
 
@@ -216,6 +215,5 @@ std::vector<Communication::MissilesPosition> Client::getMissilesPositions()
 {
     std::vector<Communication::MissilesPosition> tmp = _missilesPositions;
     _missilesPositions.clear();
-    std::cout << tmp.size() << std::endl;
     return tmp;
 }

@@ -64,11 +64,13 @@ namespace ECS {
             if (entityData.type == "__player__" && index == id) {
                 std::cout << "Player index :" << index << std::endl;
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
-                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0) {
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
+                }
                 sprite->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
-                if (entityData.instance.count("scale") == 0)
+                if (entityData.instance.count("scale") == 0) {
                     throw std::runtime_error("ERROR: entity __player__ have invalid scale");
+                }
                 sprite->setScale(entityData.instance["scale"].getFloat());
                 sprite->setScale(3);
                 sprite->setType(ComponentType::Sprite);
@@ -86,8 +88,9 @@ namespace ECS {
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
-                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0)
+                if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0) {
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
+                }
                 sprite->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
 
                 sprite->setType(ComponentType::Sprite);
