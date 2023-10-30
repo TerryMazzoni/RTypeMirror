@@ -17,4 +17,4 @@ jobs:
           prerelease: true
           draft: false
           title: "R-Type v${{ github.run_number }}"
-          files: download.sh
+          files: ./src/Parser.cpp
