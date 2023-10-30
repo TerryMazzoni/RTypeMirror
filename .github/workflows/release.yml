@@ -12,14 +12,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d%m%y')"
+
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "Release"
           prerelease: true
-          draft: false
-          title: "R-Type v${{ github.run_number }}"
+          title: "R-Type v${{ steps.date.outputs.date }}"
           files: |
             download.sh
             download.bat
