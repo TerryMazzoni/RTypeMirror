@@ -18,5 +18,5 @@ jobs:
           draft: false
           title: "R-Type v${{ github.run_number }}"
           files: |
-            download.sh
-            download.bat
+            ./download.sh
+            ./download.bat
