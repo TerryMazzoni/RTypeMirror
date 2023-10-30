@@ -68,8 +68,9 @@ namespace Parser {
         entity_t newEntity;
         type_t type;
 
-        if (root.count(PARSER_ALL_ENTITIES) == 0)
+        if (root.count(PARSER_ALL_ENTITIES) == 0) {
             throw ParserException("key " + static_cast<std::string>(PARSER_ALL_ENTITIES) + " not found");
+        }
         for (auto &entity : root.get_child(PARSER_ALL_ENTITIES)) {
             typeEntities = entity.second.get<std::string>(PARSER_TYPE);
             textures = {};
@@ -112,8 +113,9 @@ namespace Parser {
         entity_t newEntity;
         int y = 0;
 
-        if (root.count(PARSER_MAP) == 0)
+        if (root.count(PARSER_MAP) == 0) {
             throw ParserException("key " + static_cast<std::string>(PARSER_MAP) + " not found");
+        }
 
         if (root.get_child(PARSER_MAP).count(PARSER_MAP_TILESIZE) == 0)
             _tileSize = 64;
@@ -192,10 +194,12 @@ namespace Parser {
 
     ParserJson &ParserJson::parse(bool verbose)
     {
-        if (_path == "__default__")
+        if (_path == "__default__") {
             throw Parser::ParserException("No path set");
-        if (!std::filesystem::exists(_path))
+        }
+        if (!std::filesystem::exists(_path)) {
             throw Parser::ParserException("File not found");
+        }
 
         boost::property_tree::ptree root;
         boost::property_tree::read_json(_path, root);
@@ -235,7 +239,6 @@ namespace Parser {
     Any::Any()
         : _i(0), _f(0), _s(""), _type(type_t::NONE)
     {
-        throw Parser::ParserException("Cannot create an Any with no value");
     }
 
     Parser::type_t Any::getType() const
