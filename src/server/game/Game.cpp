@@ -99,6 +99,8 @@ void Game::initGame(std::string map_path)
                 Parser::setValue(entity.value().instance, "team", 1);
             }
         }
+        if (entity.type == "__player__")
+            Parser::setValue(entity.instance, "team", 0);
     }
 }
 
