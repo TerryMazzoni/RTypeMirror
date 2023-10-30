@@ -4,17 +4,18 @@ on:
   push:
     branches:
       - main
+      - RT-139-File-in-the-releases
 
 jobs:
   CreateReleaseDev:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "Release"
-          prerelease: false
+          prerelease: true
+          draft: true
           title: "R-Type v${{ github.run_number }}"
           files: |
             download.sh
