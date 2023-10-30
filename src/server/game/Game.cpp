@@ -257,7 +257,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t &enti
                 Parser::setValue(newEntity.instance, "damage", (1));
                 Parser::setValue(newEntity.instance, "team", 0);
                 _entities.push_back(newEntity);
-                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{((float)1.0), ((float)0.0)}, (float)1.0, (float)1.0, 1));
+                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
             }
         }
     }
@@ -272,7 +272,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t &enti
                 }
             }
             else {
-                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat() + ((entity.instance["speed"].getFloat() * (float)20.0) * entity.instance["direction_x"].getFloat())), (entity.instance["y"].getFloat() - ((entity.instance["speed"].getFloat() * (float)20.0) * entity.instance["direction_y"].getFloat()))}, Communication::Position{(entity.instance["direction_x"].getFloat()), (entity.instance["direction_y"].getFloat())}, (entity.instance["speed"].getFloat()), 1, entity.instance["id"].getInt()));
+                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat() + ((entity.instance["speed"].getFloat() * (float)20.0) * entity.instance["direction_x"].getFloat())), (entity.instance["y"].getFloat() - ((entity.instance["speed"].getFloat() * (float)20.0) * entity.instance["direction_y"].getFloat()))}, Communication::Position{(entity.instance["direction_x"].getFloat()), (entity.instance["direction_y"].getFloat())}, (entity.instance["speed"].getFloat()), 1, entity.id));
             }
         }
     }
@@ -294,7 +294,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t &enti
             Parser::setValue(newEntity.instance, "damage", (entity.instance["damage"].getInt()));
             Parser::setValue(newEntity.instance, "team", 1);
             _entities.push_back(newEntity);
-            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{((float)1.0), ((float)0.0)}, (float)1.0, (float)1.0, 1));
+            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
         }
     }
 }
