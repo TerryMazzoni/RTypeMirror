@@ -17,6 +17,4 @@ jobs:
           prerelease: true
           draft: false
           title: "R-Type v${{ github.run_number }}"
-          files: |
-            ${{ github.workspace }}/download.sh
-            ${{ github.workspace }}/download.bat
+          files: download.sh
