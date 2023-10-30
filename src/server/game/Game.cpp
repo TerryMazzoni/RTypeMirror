@@ -92,6 +92,9 @@ void Game::initGame(std::string map_path)
         }
         if (entity.type == "__player__")
             Parser::setValue(entity.instance, "team", 0);
+        if (entity.type == "enemy_1" || entity.type == "enemy_2" || entity.type == "boss_1") {
+            Parser::setValue(entity.instance, "team", 1);
+        }
     }
 }
 
