@@ -13,7 +13,6 @@ namespace Raylib
     void RlMusic::play()
     {
         PlayMusicStream(_music);
-        SetMusicVolume(_music, 50.0);
     }
 
     void RlMusic::stop()
@@ -34,6 +33,11 @@ namespace Raylib
     void RlMusic::update()
     {
         UpdateMusicStream(_music);
+    }
+
+    void RlMusic::setLoop(bool loop)
+    {
+        _music.looping = loop;
     }
 
     RlMusic::RlMusic(const std::string path)

@@ -49,6 +49,12 @@ namespace Raylib
          *
          */
         void update();
+        /**
+         * @brief Set the is the music loop
+         * 
+         * @param loop 
+         */
+        void setLoop(bool loop);
 
     private:
         Music _music;

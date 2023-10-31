@@ -42,5 +42,11 @@ namespace ECS {
              *
              */
             virtual void update() = 0;
+            /**
+             * @brief Set the is the music loop
+             * 
+             * @param loop 
+             */
+            virtual void setLoop(bool loop) = 0;
     };
 } // namespace ECS

@@ -10,6 +10,7 @@
 #include "Core.hpp"
 #include "BulletMouvement.hpp"
 #include "ChangeTexture.hpp"
+#include "UpdateMusic.hpp"
 #include "Parser.hpp"
 #include "Graph.hpp"
 #include "TransformPath.hpp"
@@ -86,7 +87,10 @@ namespace ECS {
                     music->setType(ComponentType::Music);
                     music->play();
                     entity.components.push_back(music);
+                    std::shared_ptr<ISystem> updateMusic = std::make_shared<UpdateMusic>();
+                    updateMusic->setEntity(entity);
                     _eventManager.setMyPlayer(entity);
+                    _systemManager.addSystems({updateMusic});
                 }
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
@@ -196,10 +200,17 @@ namespace ECS {
         std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
         sprite->setPosition(spriteToCopy->getPos());
         bullet.components.push_back(sprite);
+        std::shared_ptr<ECS::Musics> music = std::dynamic_pointer_cast<ECS::Musics>(ECS::Factory::createComponent(ComponentType::Music, "assets/music/game_theme.ogg"));
+        music->setType(ComponentType::Music);
+        music->play();
+        music->setLoop(false);
+        bullet.components.push_back(music);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
         std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>();
         bulletMouvement->setEntity(bullet);
+        std::shared_ptr<ISystem> updateMusic = std::make_shared<UpdateMusic>();
+        updateMusic->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
         // _systemManager.addSystems({bulletMouvement});
     }
