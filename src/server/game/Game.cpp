@@ -116,6 +116,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
     sendBonus(server);
     _ships.clear();
     _bullets.clear();
+    _bonus.clear();
     _loop++;
 }
 
@@ -171,11 +172,15 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                     }
                 }
             }
-            else if (entity_colision.value().type == "missile" && entity.value().type != "missile" && Parser::keyExists(entity_colision.value().instance, "team") && Parser::keyExists(entity.value().instance, "team")) {
-                if ((entity.value().id) != (entity_colision.value().id) && entity.value().instance["team"].getInt() != entity_colision.value().instance["team"].getInt()) {
+            else if (entity_colision.has_value() && entity_colision.value().type == "missile" && Parser::keyExists(entity_colision.value().instance, "team")) {
+                if (entity.has_value() && entity_colision.has_value() && (entity.value().id) != (entity_colision.value().id) && entity.value().instance["team"].getInt() != entity_colision.value().instance["team"].getInt()) {
                     if (checkColision(entity.value(), entity_colision.value())) {
-                        if (Parser::keyExists(entity.value().instance, "hp") && (entity.value().instance["hp"].getInt()) != 0) {
-                            Parser::setValue(entity.value().instance, "hp", 0);
+                        std::cout << "BULLET COLISION" << std::endl;
+                        int damage = entity.value().instance["damage"].getInt();
+                        _entities[entity.value().id] = std::nullopt;
+                        if (Parser::keyExists(entity_colision.value().instance, "hp") && (entity_colision.value().instance["hp"].getInt()) != 0) {
+                            std::cout << "BULLET DELETE" << std::endl;
+                            Parser::setValue(entity_colision.value().instance, "hp", entity_colision.value().instance["hp"].getInt() - damage);
                         }
                     }
                 }
@@ -276,7 +281,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     }
     else if (entity.value().type == "missile") {
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed") && entity.value().id != 0) {
-            if (entity.value().instance["x"].getFloat() < 0.0 || entity.value().instance["x"].getFloat() > 1920.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
+            if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["x"].getFloat() > 2120.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
                 _entities[entity.value().id] = std::nullopt;
             }
             else {
@@ -285,10 +290,12 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         }
     }
     else if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
-        if (Parser::keyExists(entity.value().instance, "x") || Parser::keyExists(entity.value().instance, "y"))
+        if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y"))
             return;
-        if (entity.value().instance["x"].getFloat() < 0.0)
+        if (entity.value().instance["x"].getFloat() < 0.0) {
             _entities[entity.value().id] = std::nullopt;
+            return;
+        }
         _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, ShipType::ENEMY));
         if (_loop % 5 == 0 && entity.value().instance["x"].getFloat() <= 1920.0) {
             Parser::entity_t newEntity;
@@ -304,7 +311,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             Parser::setValue(newEntity.instance, "damage", (entity.value().instance["damage"].getInt()));
             Parser::setValue(newEntity.instance, "team", 1);
             _entities.push_back(std::optional<Parser::entity_t>{newEntity});
-            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
+            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(newEntity.instance["x"].getFloat()), (newEntity.instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
         }
     }
 }
@@ -341,10 +348,6 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].position.x = _ships[i]->getPos().x;
         shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
-        std::cout << "Ships " << shipsPosition.ship[shipsPosition.nbrItems].id << " :" << std::endl;
-        std::cout << "Type: " << (int) shipsPosition.ship[shipsPosition.nbrItems].type << std::endl;
-        std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.x << std::endl;
-        std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.y << std::endl;
         shipsPosition.nbrItems++;
         if (shipsPosition.nbrItems == 32) {
             server->sendToAll(shipsPosition);
