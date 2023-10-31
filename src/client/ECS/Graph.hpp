@@ -14,6 +14,7 @@
 #include "Enum.hpp"
 #include "Entity.hpp"
 #include "Sprite.hpp"
+#include "Musics.hpp"
 
 namespace Graphic {
     class Graph {
@@ -67,6 +68,13 @@ namespace Graphic {
      * @return std::shared_ptr<ECS::Sprite>
      */
     std::shared_ptr<ECS::Sprite> createSprite(const std::vector<std::string> pathTextures, std::vector<int> textureIndexes);
+    /**
+     * @brief Create a Musics object
+     * 
+     * @param path 
+     * @return std::shared_ptr<ECS::Musics> 
+     */
+    std::shared_ptr<ECS::Musics> createMusics(const std::string path);
     /**
      * @brief Create a Window object
      *

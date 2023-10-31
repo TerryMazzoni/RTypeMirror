@@ -12,6 +12,7 @@
 #include "Graph.hpp"
 #include "RlSprite.hpp"
 #include "RlWindow.hpp"
+#include "RlMusic.hpp"
 
 namespace Graphic {
     std::set<Input> Graph::getInputs() const
@@ -60,27 +61,34 @@ namespace Graphic {
     }
     std::shared_ptr<ECS::Sprite> createSprite()
     {
-        return std::make_shared<Raylib::RlSprite>(Raylib::RlSprite());
+        return std::make_shared<Raylib::RlSprite>();
     }
 
     std::shared_ptr<ECS::Sprite> createSprite(const int x, const int y)
     {
-        return std::make_shared<Raylib::RlSprite>(Raylib::RlSprite(x, y));
+        return std::make_shared<Raylib::RlSprite>(x, y);
     }
 
     std::shared_ptr<ECS::Sprite> createSprite(const std::vector<std::string> pathTextures, std::vector<int> textureIndexes)
     {
-        return std::make_shared<Raylib::RlSprite>(Raylib::RlSprite(pathTextures, textureIndexes));
+        return std::make_shared<Raylib::RlSprite>(pathTextures, textureIndexes);
+    }
+
+    std::shared_ptr<ECS::Musics> createMusics(const std::string path)
+    {
+        return std::make_shared<Raylib::RlMusic>(path);
     }
 
     void createWindow(int width, int heigth, std::string name, int frameRate)
     {
         Raylib::initWindow(width, heigth, name, frameRate);
+        InitAudioDevice();
     }
 
     void closeWindow()
     {
         Raylib::closeWindow();
+        CloseAudioDevice();
     }
 
     void refreshWindow()

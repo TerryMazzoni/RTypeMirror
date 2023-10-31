@@ -81,12 +81,17 @@ namespace ECS {
                 entity.id = {EntityType::Player, index};
                 _eventManager.setMyPlayer(entity);
 
+                if (index == id) {
+                    std::shared_ptr<ECS::Musics> music = std::dynamic_pointer_cast<ECS::Musics>(ECS::Factory::createComponent(ComponentType::Music, "assets/music/game_theme.ogg"));
+                    music->setType(ComponentType::Music);
+                    music->play();
+                    entity.components.push_back(music);
+                    _eventManager.setMyPlayer(entity);
+                }
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
 
                 _systemManager.addSystems({changeTexture});
-                if (index == id)
-                    _eventManager.setMyPlayer(entity);
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));

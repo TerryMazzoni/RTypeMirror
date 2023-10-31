@@ -39,5 +39,12 @@ namespace ECS {
              * @return std::shared_ptr<IComponent> 
              */
             std::shared_ptr<IComponent> createSprite(const std::string &value);
+            /**
+             * @brief Create a Music object
+             * 
+             * @param value 
+             * @return std::shared_ptr<IComponent> 
+             */
+            std::shared_ptr<IComponent> createMusic(const std::string &value);
     };
 } // namespace ECS

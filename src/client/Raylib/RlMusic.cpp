@@ -9,19 +9,21 @@
 
 namespace Raylib
 {
-    void RlMusic::unload()
-    {
-        UnloadMusicStream(_music);
-    }
 
     void RlMusic::play()
     {
         PlayMusicStream(_music);
+        SetMusicVolume(_music, 50.0);
     }
 
     void RlMusic::stop()
     {
         StopMusicStream(_music);
+    }
+
+    bool RlMusic::isPlaying()
+    {
+        return IsMusicStreamPlaying(_music);
     }
 
     void RlMusic::setVolume(float volume)
@@ -34,12 +36,13 @@ namespace Raylib
         UpdateMusicStream(_music);
     }
 
-    RlMusic::RlMusic(std::string path)
+    RlMusic::RlMusic(const std::string path)
     {
         _music = LoadMusicStream(path.c_str());
     }
 
     RlMusic::~RlMusic()
     {
+        UnloadMusicStream(_music);
     }
 }
