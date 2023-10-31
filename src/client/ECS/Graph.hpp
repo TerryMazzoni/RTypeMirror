@@ -44,7 +44,14 @@ namespace Graphic {
              * @param Entity
              * @return int
              */
-            int displayTexture(ECS::Entity &entity);
+            int _displayTexture(ECS::Entity &entity);
+            /**
+             * @brief Sort entities to better display
+             * 
+             * @param entities 
+             * @return vector<Entity> 
+             */
+            std::vector<ECS::Entity> _sortEntities(std::vector<std::optional<ECS::Entity>> entities);
             std::vector<Input> _events;
     };
     /**

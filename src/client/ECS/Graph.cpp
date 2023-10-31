@@ -7,6 +7,7 @@
 
 #include <set>
 #include <iostream>
+#include <algorithm>
 #include "RlInputs.hpp"
 #include "RlDraw.hpp"
 #include "Graph.hpp"
@@ -24,18 +25,61 @@ namespace Graphic {
     int Graph::displayEntities(std::vector<std::optional<ECS::Entity>> entities)
     {
         Raylib::beginDraw();
-        for (std::optional<ECS::Entity> &entity : entities) {
-            if (entity.has_value()) {
-                if (entity.value().getComponent(ComponentType::Sprite) != nullptr) {
-                    displayTexture(entity.value());
-                }
+        std::vector<ECS::Entity> entitiesSorted = _sortEntities(entities);
+
+        for (ECS::Entity &entity : entitiesSorted) {
+            if (entity.getComponent(ComponentType::Sprite) != nullptr) {
+                _displayTexture(entity);
             }
         }
         Raylib::endDraw();
         return 0;
     }
 
-    int Graph::displayTexture(ECS::Entity &entity)
+    std::vector<ECS::Entity> Graph::_sortEntities(std::vector<std::optional<ECS::Entity>> entities)
+    {
+        std::vector<ECS::Entity> listEntitiesPlayer = {};
+        std::vector<ECS::Entity> listEntitiesEnemy = {};
+        std::vector<ECS::Entity> listEntitiesBullet = {};
+        std::vector<ECS::Entity> listEntitiesBackground1 = {};
+        std::vector<ECS::Entity> listEntitiesBackground2 = {};
+        std::vector<ECS::Entity> listEntitiesBackground3 = {};
+
+        for (auto &entity : entities) {
+            if (entity.has_value()) {
+                switch (entity.value().id.first) {
+                    case EntityType::Background1:
+                        listEntitiesBackground1.push_back(entity.value());
+                        break;
+                    case EntityType::Background2:
+                        listEntitiesBackground2.push_back(entity.value());
+                        break;
+                    case EntityType::Background3:
+                        listEntitiesBackground3.push_back(entity.value());
+                        break;
+                    case EntityType::Player:
+                        listEntitiesPlayer.push_back(entity.value());
+                        break;
+                    case EntityType::Enemy:
+                        listEntitiesEnemy.push_back(entity.value());
+                        break;
+                    case EntityType::Bullet:
+                        listEntitiesBullet.push_back(entity.value());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        listEntitiesBackground3.insert(listEntitiesBackground3.end(), listEntitiesBackground2.begin(), listEntitiesBackground2.end());
+        listEntitiesBackground3.insert(listEntitiesBackground3.end(), listEntitiesBackground1.begin(), listEntitiesBackground1.end());
+        listEntitiesBackground3.insert(listEntitiesBackground3.end(), listEntitiesEnemy.begin(), listEntitiesEnemy.end());
+        listEntitiesBackground3.insert(listEntitiesBackground3.end(), listEntitiesPlayer.begin(), listEntitiesPlayer.end());
+        listEntitiesBackground3.insert(listEntitiesBackground3.end(), listEntitiesBullet.begin(), listEntitiesBullet.end());
+        return listEntitiesBackground3;
+    }
+
+    int Graph::_displayTexture(ECS::Entity &entity)
     {
         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
 
