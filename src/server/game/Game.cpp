@@ -28,14 +28,14 @@ void Game::run(std::shared_ptr<Server> server)
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {
-            static int timerCount = 1;
+            static int timerCount = 29;
             Communication::Timer timer;
             int status = server->getGameStatus();
 
             timer.time = (int)timerCount / 5;
             if (!error) {
                 if (status == 0) {
-                    timerCount = 1;
+                    timerCount = 29;
                     this->run(server);
                 }
                 else if (status == 1) {
@@ -43,7 +43,7 @@ void Game::run(std::shared_ptr<Server> server)
                     timerCount--;
                     if (timerCount == 0) {
                         server->setGameStatus(2);
-                        timerCount = 1;
+                        timerCount = 29;
                     }
                 }
                 if (status == 2) {
