@@ -39,23 +39,9 @@ namespace ECS {
         _actions.clear();
         for (auto &event : listEvent) {
             if (std::get<0>(event) == EventType::Keyboard) {
-                switch (std::get<1>(event)) {
-                    case (int)EventInput::Key_up:
-                        movePlayer((EventInput)std::get<1>(event));
-                        break;
-                    case (int)EventInput::Key_down:
-                        movePlayer((EventInput)std::get<1>(event));
-                        break;
-                    case (int)EventInput::Key_left:
-                        movePlayer((EventInput)std::get<1>(event));
-                        break;
-                    case (int)EventInput::Key_right:
-                        movePlayer((EventInput)std::get<1>(event));
-                        break;
-                    case (int)EventInput::Space:
-                        break;
-                    default:
-                        break;
+                if (std::get<1>(event) == (int)EventInput::Space) {
+                    // TODO setready
+                    break;
                 }
             }
         }
@@ -98,28 +84,6 @@ namespace ECS {
             _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::Shoot, 0));
         }
         return 0;
-    }
-
-    void EventManager::movePlayer(EventInput dir)
-    {
-        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(_myPlayer.getComponent(ComponentType::Sprite));
-
-        switch (dir) {
-            case EventInput::Key_up:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, -20)));
-                break;
-            case EventInput::Key_down:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 20)));
-                break;
-            case EventInput::Key_left:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(-20, 0)));
-                break;
-            case EventInput::Key_right:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(20, 0)));
-                break;
-            default:
-                break;
-        }
     }
 
     std::vector<Action> EventManager::getActions() const

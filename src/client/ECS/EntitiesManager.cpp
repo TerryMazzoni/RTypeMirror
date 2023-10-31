@@ -71,7 +71,6 @@ namespace ECS {
         int idx = 0;
 
         for (auto &action : actions) {
-            // std::cout << "Action " << (int) std::get<1>(action) << std::endl;
             switch (std::get<1>(action)) {
                 case ActionType::Move:
                     list = _mapComponent[ComponentType::Sprite];
@@ -86,7 +85,6 @@ namespace ECS {
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
                         if (list.size() < entity.id.second or !list[entity.id.second].has_value()) {
-                            std::cout << "UpdatePosPlayer create : " << entity.id.second << std::endl;
                             _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), EntityType::Player));
                         }
                         else {

@@ -63,7 +63,6 @@ namespace ECS {
             std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
             if (entityData.type == "__player__" && index == id) {
-                std::cout << "Player index :" << index << std::endl;
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
                 if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0) {
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
@@ -219,7 +218,6 @@ namespace ECS {
 
         std::shared_ptr<ISystem> textureChange = std::make_shared<ChangeTexture>();
         textureChange->setEntity(player);
-        std::cout << "Create player: " << player.id.second << std::endl;
         _entitiesManager.addEntities({player});
         _systemManager.addSystems({textureChange});
     }

@@ -45,12 +45,11 @@ int Args::setArgs(int ac, char **av)
 
     for (int i = 1; i < ac; ++i) {
         if (std::string(av[i]) == "-h" || std::string(av[i]) == "--help") {
-            std::cout << "USAGE: " << av[0] << " -p port -i ip [-m]"
+            std::cout << "USAGE: " << av[0] << " -p port -i ip"
                       << std::endl;
             std::cout << "\tport\tis the port number\t8080 by default" << std::endl;
             std::cout << "\tip\tis the ip of the server; localhost by default"
                       << std::endl;
-            std::cout << "\tm\tif present, mute the gui" << std::endl;
             return 1;
         }
     }
@@ -60,9 +59,6 @@ int Args::setArgs(int ac, char **av)
         }
         else if (std::string(av[i]) == "-i" && i + 1 < ac) {
             ip = av[i + 1];
-        }
-        else if (std::string(av[i]) == "-m") {
-            setMute();
         }
     }
     if (port.empty()) {
