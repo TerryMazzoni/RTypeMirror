@@ -1,7 +1,14 @@
 {
-  "background": [
-    "background1",
-    "background2"
+  "background1": [
+    "assets/background/road1.png",
+    "assets/background/road2.png"
+  ],
+  "background2": [
+    "assets/background/sidewalk1.png",
+    "assets/background/sidewalk2.png",
+    "assets/background/sidewalk3.png"
+  ],
+  "background3": [
   ],
   "map": {
     "tiles": [
