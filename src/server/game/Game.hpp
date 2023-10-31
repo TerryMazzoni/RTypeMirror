@@ -126,6 +126,13 @@ class Game {
          * @return false
          */
         bool checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2);
+        /**
+         * @brief Get the Ship Type object
+         *
+         * @param type
+         * @return Ship::ShipType
+         */
+        ShipType getShipType(std::string type);
 
     private:
         int _level;

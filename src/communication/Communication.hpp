@@ -12,7 +12,9 @@
 enum class ShipType {
     UNKNOW,
     PLAYER,
-    ENEMY
+    ENEMY1,
+    ENEMY2,
+    BOSS1
 };
 
 enum class BonusType {
