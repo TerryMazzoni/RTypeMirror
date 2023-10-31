@@ -1,4 +1,8 @@
 {
+  "background": [
+    "background1",
+    "background2"
+  ],
   "map": {
     "tiles": [
       "#SSSSSSSSSSSSSSSSSSSSSS###SSSSSSSSSSSSS##SSSSSSSSSSSSSSSS###SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS###SSSSSSSS#",

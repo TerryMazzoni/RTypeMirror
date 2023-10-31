@@ -13,6 +13,7 @@ namespace Parser {
         _path = path;
         _entities = {};
         _lastId = 1;
+        _background = {};
     }
 
     ParserJson::ParserJson()
@@ -20,6 +21,7 @@ namespace Parser {
         _path = "__default__";
         _entities = {};
         _lastId = 1;
+        _background = {};
     }
 
     ParserJson::~ParserJson()
@@ -163,8 +165,20 @@ namespace Parser {
         }
     }
 
+    void ParserJson::parseBackground(boost::property_tree::ptree &root)
+    {
+        if (root.count(PARSER_BACKGROUND) == 0)
+            return;
+        for (auto &entity : root.get_child(PARSER_BACKGROUND))
+            _background.push_back(entity.second.get_value<std::string>());
+    }
+
     void ParserJson::displayEntities()
     {
+        std::cout << "Tile Size: " << _tileSize << std::endl;
+        std::cout << "Background: " << std::endl;
+        for (std::string &back : _background)
+            std::cout << "┃  " << back << std::endl;
         for (auto &entity : _entities) {
             std::cout << "┓\n┃ " << entity.type << std::endl;
             std::cout << "┃    ID: " << entity.id << std::endl;
@@ -206,6 +220,7 @@ namespace Parser {
 
         parseEntity(root);
         parseMap(root);
+        parseBackground(root);
         if (verbose)
             displayEntities();
         return *this;
@@ -214,6 +229,11 @@ namespace Parser {
     int ParserJson::getTileSize() const
     {
         return _tileSize;
+    }
+
+    std::vector<std::string> ParserJson::getBackground() const
+    {
+        return _background;
     }
 
     Any::Any(int i)
