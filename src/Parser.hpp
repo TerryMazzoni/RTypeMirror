@@ -155,7 +155,7 @@ namespace Parser {
             std::vector<entity_t> getEntities() const;
 
             /*
-            ** @brief Get the path to the backgrounds
+            ** @brief Get the path to the foregrounds
             **
             ** @return vector of string
             **
@@ -164,7 +164,7 @@ namespace Parser {
 
 
             /*
-            ** @brief Get the path to the backgrounds
+            ** @brief Get the path to the middlegrounds
             **
             ** @return vector of string
             **
