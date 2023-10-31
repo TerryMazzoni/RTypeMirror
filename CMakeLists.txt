@@ -45,6 +45,7 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/Raylib/RlDraw.cpp
     ${CLIENT_PATH}/Raylib/RlFont.cpp
     ${CLIENT_PATH}/Raylib/RlInputs.cpp
+    ${CLIENT_PATH}/Raylib/RlMusic.cpp
     ${CLIENT_PATH}/Raylib/RlScreen.cpp
     ${CLIENT_PATH}/Raylib/RlSound.cpp
     ${CLIENT_PATH}/Raylib/RlSprite.cpp
