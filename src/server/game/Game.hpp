@@ -114,6 +114,12 @@ class Game {
          */
         void sendBonus(std::shared_ptr<Server> server);
         /**
+         * @brief Send the id of an entity to delete to the clients
+         *
+         * @param server
+         */
+        void sendDelete(std::shared_ptr<Server> server, int id);
+        /**
          * @brief Check the colision between to entities.
          *
          * @return true

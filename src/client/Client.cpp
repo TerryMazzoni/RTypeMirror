@@ -84,7 +84,7 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
         for (int i = 0; i < ships->nbrItems; i++) {
             std::cout << "Ship " << i << ": " << std::endl;
             std::cout << "ID: " << ships->ship[i].id << std::endl;
-            std::cout << "type: " << (int) ships->ship[i].type << std::endl;
+            std::cout << "type: " << (int)ships->ship[i].type << std::endl;
             std::cout << "Position: " << std::endl;
             std::cout << "X: " << ships->ship[i].position.x << std::endl;
             std::cout << "Y: " << ships->ship[i].position.y << std::endl;
@@ -98,6 +98,10 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     else if (header->type == Communication::CommunicationTypes::COLISION) {
         Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
         std::cout << "Colisions between: " << colision->id1 << " and " << colision->id2 << std::endl;
+    }
+    else if (header->type == Communication::CommunicationTypes::DELETE) {
+        Communication::Delete *del = reinterpret_cast<Communication::Delete *>(data);
+        std::cout << "Delete: " << del->id << std::endl;
     }
     else {
         std::cout << "Unknown message" << std::endl;
