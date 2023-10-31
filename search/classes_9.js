@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parserexception_193',['ParserException',['../classParser_1_1ParserException.html',1,'Parser']]],
-  ['parserjson_194',['ParserJson',['../classParser_1_1ParserJson.html',1,'Parser']]],
-  ['position_195',['Position',['../structCommunication_1_1Position.html',1,'Communication']]]
+  ['message_193',['Message',['../structMessage.html',1,'']]],
+  ['missile_194',['Missile',['../structCommunication_1_1Missile.html',1,'Communication']]],
+  ['missilesposition_195',['MissilesPosition',['../structCommunication_1_1MissilesPosition.html',1,'Communication']]]
 ];

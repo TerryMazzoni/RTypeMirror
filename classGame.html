@@ -125,6 +125,9 @@ std::vector&lt; std::shared_ptr&lt; <a class="el" href="classBullet.html">Bullet
 <tr class="memitem:afcc9ec177cc1b309050b0ee628c4c982"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#afcc9ec177cc1b309050b0ee628c4c982">sendBonus</a> (std::shared_ptr&lt; <a class="el" href="classServer.html">Server</a> &gt; server)</td></tr>
 <tr class="memdesc:afcc9ec177cc1b309050b0ee628c4c982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the bonus to the clients.  <a href="classGame.html#afcc9ec177cc1b309050b0ee628c4c982">More...</a><br /></td></tr>
 <tr class="separator:afcc9ec177cc1b309050b0ee628c4c982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab660bd3453885ff9985ec81c20fe33d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#ab660bd3453885ff9985ec81c20fe33d2">sendDelete</a> (std::shared_ptr&lt; <a class="el" href="classServer.html">Server</a> &gt; server, int id)</td></tr>
+<tr class="memdesc:ab660bd3453885ff9985ec81c20fe33d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the id of an entity to delete to the clients.  <a href="classGame.html#ab660bd3453885ff9985ec81c20fe33d2">More...</a><br /></td></tr>
+<tr class="separator:ab660bd3453885ff9985ec81c20fe33d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a123dac7b8e208b255e0125aa6af94b65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a123dac7b8e208b255e0125aa6af94b65">checkColision</a> (std::optional&lt; <a class="el" href="structParser_1_1entity__t.html">Parser::entity_t</a> &gt; entity1, std::optional&lt; <a class="el" href="structParser_1_1entity__t.html">Parser::entity_t</a> &gt; entity2)</td></tr>
 <tr class="memdesc:a123dac7b8e208b255e0125aa6af94b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the colision between to entities.  <a href="classGame.html#a123dac7b8e208b255e0125aa6af94b65">More...</a><br /></td></tr>
 <tr class="separator:a123dac7b8e208b255e0125aa6af94b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,6 +301,42 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Send the bullets to the clients. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">server</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab660bd3453885ff9985ec81c20fe33d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab660bd3453885ff9985ec81c20fe33d2">&#9670;&nbsp;</a></span>sendDelete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Game::sendDelete </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classServer.html">Server</a> &gt;&#160;</td>
+          <td class="paramname"><em>server</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send the id of an entity to delete to the clients. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">server</td><td></td></tr>
