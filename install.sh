@@ -1,9 +1,8 @@
 if ! command -v nproc &>/dev/null; then
-    num_threads=8
+    num_threads=4
 else
     num_threads=$(nproc)
 fi
-echo "num_threads=$(nproc)"
 threads_to_use=$((num_threads - 1))
 
 echo "Using $threads_to_use threads to compile"
