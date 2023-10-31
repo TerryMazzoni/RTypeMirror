@@ -99,31 +99,6 @@ namespace ECS {
         return 0;
     }
 
-<<<<<<< Updated upstream
-=======
-    void EventManager::movePlayer(EventInput dir)
-    {
-        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(_myPlayer.getComponent(ComponentType::Sprite));
-
-        switch (dir) {
-            case EventInput::Key_up:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 0)));
-                break;
-            case EventInput::Key_down:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 0)));
-                break;
-            case EventInput::Key_left:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 0)));
-                break;
-            case EventInput::Key_right:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 0)));
-                break;
-            default:
-                break;
-        }
-    }
-
->>>>>>> Stashed changes
     std::vector<Action> EventManager::getActions() const
     {
         return _actions;
