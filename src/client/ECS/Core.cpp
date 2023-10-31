@@ -50,7 +50,7 @@ namespace ECS {
         std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Sprite, "assets/background/road1.png");
         componentBT->setType(ComponentType::Sprite);
         background.components.push_back(componentBT);
-        background.id = {EntityType::Background, 5};
+        background.id = {EntityType::Background3, 5};
 
         _entitiesManager.addEntities({background});
 
@@ -107,7 +107,7 @@ namespace ECS {
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Background, index};
+                entity.id = {EntityType::Background1, index};
             }
             index++;
             _entitiesManager.addEntities({entity});
