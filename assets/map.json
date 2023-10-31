@@ -160,7 +160,8 @@
           "damage": 10,
           "speed": 5,
           "health": 50,
-          "scale": 2
+          "scale": 2,
+          "y_status": 0
         }
       ]
     },
@@ -181,7 +182,8 @@
           "damage": 6,
           "speed": 50,
           "health": 30,
-          "scale": 2
+          "scale": 2,
+          "y_status": 0
         }
       ]
     },
@@ -192,12 +194,13 @@
       ],
       "instance": [
         {
-          "x": 900.0,
+          "x": 1940.0,
           "y": 256.0,
           "damage": 3,
-          "speed": 3,
+          "speed": 100,
           "health": 200,
-          "scale": 4
+          "scale": 4,
+          "y_status": 0
         }
       ]
     },

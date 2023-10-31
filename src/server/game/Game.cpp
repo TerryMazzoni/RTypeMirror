@@ -235,20 +235,24 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         }
     }
     if (entity.value().type != "__player__" && entity.value().type != "missile") {
-        if (entity.value().type.substr(0, 4) != "boss" && Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "speed")) {
-            Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0)));
+        if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "speed")) {
+            if (entity.value().type.substr(0, 4) == "boss" && entity.value().instance["x"].getFloat() >= 1800.0) {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0)));
+            }
+            else if (entity.value().type.substr(0, 4) != "boss") {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0)));
+            }
         }
-        if (entity.value().type == "enemy2" || entity.value().type == "boss1") {
-            if (Parser::keyExists(entity.value().instance, "y_status"))
-                Parser::setValue(entity.value().instance, "y_status", 0);
+        if (entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
             if (entity.value().instance["y_status"].getInt() == 0) {
                 Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() + 1.0 * (entity.value().instance["speed"].getFloat() / 10.0));
-                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
+                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() >= 1020.0)
                     Parser::setValue(entity.value().instance, "y_status", 1);
             }
             else {
-                Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 1.0);
-                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() >= 900.0)
+                Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0));
+                std::cout << "Y: " << entity.value().instance["y"].getFloat() << std::endl;
+                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
                     Parser::setValue(entity.value().instance, "y_status", 0);
             }
         }
