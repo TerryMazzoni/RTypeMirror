@@ -41,22 +41,19 @@ namespace ECS {
     void Core::init(int id)
     {
         std::vector<Parser::entity_t> entities;
+        Parser::ParserJson parser = Parser::ParserJson(transformPath(std::string("assets/map.json")));
+        std::vector<std::string> background1;
+        std::vector<std::string> background2;
+        std::vector<std::string> background3;
 
         try {
-            entities = Parser::ParserJson(transformPath(std::string("levels/level_1.json"))).parse().getEntities();
+            parser.parse();
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
         }
-        Entity background;
-        std::shared_ptr<ECS::IComponent> componentBT = ECS::Factory::createComponent(ComponentType::Sprite, "assets/background/road1.png");
-        componentBT->setType(ComponentType::Sprite);
-        background.components.push_back(componentBT);
-        background.id = {EntityType::Background3, 5};
+        entities = parser.getEntities();
 
-        _entitiesManager.addEntities({background});
-
-        int index = 1;
         for (Parser::entity_t &entityData : entities) {
             Entity entity;
             std::ostringstream textureostring;
@@ -64,7 +61,7 @@ namespace ECS {
             std::copy(entityData.textures.second.begin(), entityData.textures.second.end(), std::ostream_iterator<int>(textureostring, ","));
             std::string textureString = textureostring.str().erase(textureostring.str().size() - 1);
 
-            if (entityData.type == "__player__" && index == id) {
+            if (entityData.type == "__player__" && entityData.id == id) {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
                 if (entityData.instance.count("x") == 0 || entityData.instance.count("y") == 0) {
                     throw std::runtime_error("ERROR: entity __player__ have invalid position");
@@ -86,10 +83,10 @@ namespace ECS {
                 std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setScale(entityData.instance["scale"].getFloat());
                 entity.components.push_back(weapon);
 
-                entity.id = {EntityType::Player, index};
+                entity.id = {EntityType::Player, entityData.id};
                 _eventManager.setMyPlayer(entity);
 
-                if (index == id) {
+                if (entityData.id == id) {
                     std::shared_ptr<ECS::Musics> music = std::dynamic_pointer_cast<ECS::Musics>(ECS::Factory::createComponent(ComponentType::Music, "assets/music/game_theme.ogg"));
                     music->setType(ComponentType::Music);
                     music->play();
@@ -133,9 +130,8 @@ namespace ECS {
                 sprite->setType(ComponentType::Sprite);
                 entity.components.push_back(sprite);
 
-                entity.id = {EntityType::Background1, index};
+                entity.id = {EntityType::Background1, entityData.id};
             }
-            index++;
             _entitiesManager.addEntities({entity});
         }
         Entity entityReady;
