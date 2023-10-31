@@ -28,14 +28,14 @@ void Game::run(std::shared_ptr<Server> server)
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {
-            static int timerCount = 29;
+            static int timerCount = 1;
             Communication::Timer timer;
             int status = server->getGameStatus();
 
             timer.time = (int)timerCount / 5;
             if (!error) {
                 if (status == 0) {
-                    timerCount = 29;
+                    timerCount = 1;
                     this->run(server);
                 }
                 else if (status == 1) {
@@ -43,7 +43,7 @@ void Game::run(std::shared_ptr<Server> server)
                     timerCount--;
                     if (timerCount == 0) {
                         server->setGameStatus(2);
-                        timerCount = 29;
+                        timerCount = 1;
                     }
                 }
                 if (status == 2) {
@@ -175,9 +175,10 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
             else if (entity_colision.has_value() && entity_colision.value().type == "missile" && Parser::keyExists(entity_colision.value().instance, "team")) {
                 if (entity.has_value() && entity_colision.has_value() && (entity.value().id) != (entity_colision.value().id) && entity.value().instance["team"].getInt() != entity_colision.value().instance["team"].getInt()) {
                     if (checkColision(entity.value(), entity_colision.value())) {
-                        std::cout << "BULLET COLISION" << std::endl;
                         int damage = entity.value().instance["damage"].getInt();
+                        sendDelete(server, entity.value().id);
                         _entities[entity.value().id] = std::nullopt;
+
                         if (Parser::keyExists(entity_colision.value().instance, "hp") && (entity_colision.value().instance["hp"].getInt()) != 0) {
                             std::cout << "BULLET DELETE" << std::endl;
                             Parser::setValue(entity_colision.value().instance, "hp", entity_colision.value().instance["hp"].getInt() - damage);
@@ -212,6 +213,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             }
                             Parser::setValue(entity.value().instance, std::string("gun"), gun);
                         }
+                        sendDelete(server, entity_colision.value().id);
                         _entities[entity_colision.value().id] = std::nullopt;
                     }
                 }
@@ -282,6 +284,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     else if (entity.value().type == "missile") {
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed") && entity.value().id != 0) {
             if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["x"].getFloat() > 2120.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
+                sendDelete(server, entity.value().id);
                 _entities[entity.value().id] = std::nullopt;
             }
             else {
@@ -293,6 +296,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y"))
             return;
         if (entity.value().instance["x"].getFloat() < 0.0) {
+            sendDelete(server, entity.value().id);
             _entities[entity.value().id] = std::nullopt;
             return;
         }
@@ -409,7 +413,7 @@ void Game::sendBonus(std::shared_ptr<Server> server)
 
 void Game::sendDelete(std::shared_ptr<Server> server, int id)
 {
-    Communication::Id idToDelete;
+    Communication::Delete idToDelete;
 
     idToDelete.id = id;
     server->sendToAll(idToDelete);
