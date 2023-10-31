@@ -305,11 +305,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value)
@@ -318,11 +319,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value)
@@ -331,11 +333,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value)
@@ -344,11 +347,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value)
@@ -356,11 +360,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, value).first->second = value;
+            return 1;
         }
         else {
             umap.insert({key, value});
+            return 0;
         }
-        return 0;
     }
 
     bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key)
