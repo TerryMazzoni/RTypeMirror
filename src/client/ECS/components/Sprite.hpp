@@ -53,6 +53,12 @@ namespace ECS {
              */
             virtual void setScale(const float scale) = 0;
             /**
+             * @brief Set the Speed object
+             * 
+             * @param speed 
+             */
+            virtual void setSpeed(const float speed) = 0;
+            /**
              * @brief Set the Rotation object
              * 
              * @param rotation 
@@ -113,6 +119,12 @@ namespace ECS {
              * @return float 
              */
             virtual float getScale() const = 0;
+            /**
+             * @brief Get the Speed object
+             * 
+             * @return float 
+             */
+            virtual float getSpeed() const = 0;
             /**
              * @brief Get the Rotation object
              * 

@@ -48,7 +48,7 @@ void Game::run(std::shared_ptr<Server> server)
                 }
                 if (status == 2) {
                     if (!_init)
-                        initGame(transformPath(std::string("assets/test.json")));
+                        initGame(transformPath(std::string("assets/map.json")));
                     server->sendToAll(timer);
                 }
             }
@@ -107,9 +107,9 @@ void Game::updateGame(std::shared_ptr<Server> server)
     for (auto &entity : _entities) {
         if (!entity.has_value())
             continue;
-        updateShips(server, entity);
         updateColisions(server, entity);
         updateEntities(server, entity);
+        updateShips(server, entity);
     }
     sendShips(server);
     sendBullets(server);
@@ -219,10 +219,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
 {
     if (!entity.has_value())
         return;
-    std::cout << "UPDATE ENTITY" << std::endl;
     if (entity.value().type == "missile") {
-        // TODO: check if entity.instance["x"].getFloat() return infinity, if yes, throw exception
-        // same for int
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed")) {
             Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat()) + (entity.value().instance["direction_x"].getFloat()) * (entity.value().instance["speed"].getFloat()));
             Parser::setValue(entity.value().instance, "y", (entity.value().instance["y"].getFloat()) + (entity.value().instance["direction_y"].getFloat()) * (entity.value().instance["speed"].getFloat()));
@@ -259,8 +256,8 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
                 newEntity.type = "missile";
                 newEntity.textures = (std::pair<std::vector<std::string>, std::vector<int>>){};
                 newEntity.instance = {};
-                Parser::setValue(newEntity.instance, "x", (entity.value().instance["x"].getFloat()));
-                Parser::setValue(newEntity.instance, "y", (entity.value().instance["y"].getFloat()));
+                Parser::setValue(newEntity.instance, "x", (entity.value().instance["x"].getFloat() + (_tile_size / 1.5) * (entity.value().instance["scale"].getFloat())));
+                Parser::setValue(newEntity.instance, "y", (entity.value().instance["y"].getFloat() + (_tile_size / 2) * (entity.value().instance["scale"].getFloat())));
                 Parser::setValue(newEntity.instance, "direction_x", (1.0));
                 Parser::setValue(newEntity.instance, "direction_y", (0.0));
                 Parser::setValue(newEntity.instance, "speed", (40.0));
@@ -269,7 +266,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
                 _entities.push_back(std::optional<Parser::entity_t>{newEntity});
                 _bullets.push_back(std::make_shared<Bullet>(
                     Communication::Position{(newEntity.instance["x"].getFloat()),
-                                            (newEntity.instance["x"].getFloat())},
+                                            (newEntity.instance["y"].getFloat())},
                     Communication::Position{(newEntity.instance["direction_x"].getFloat()),
                                             (newEntity.instance["direction_y"].getFloat())},
                     newEntity.instance["speed"].getFloat(),
@@ -283,7 +280,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
                 _entities[entity.value().id] = std::nullopt;
             }
             else {
-                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.value().instance["x"].getFloat() + ((entity.value().instance["speed"].getFloat() * (float)20.0) * entity.value().instance["direction_x"].getFloat())), (entity.value().instance["y"].getFloat() - ((entity.value().instance["speed"].getFloat() * (float)20.0) * entity.value().instance["direction_y"].getFloat()))}, Communication::Position{(entity.value().instance["direction_x"].getFloat()), (entity.value().instance["direction_y"].getFloat())}, (entity.value().instance["speed"].getFloat()), 1, entity.value().id));
+                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.value().instance["x"].getFloat() + ((entity.value().instance["speed"].getFloat()) * entity.value().instance["direction_x"].getFloat())), (entity.value().instance["y"].getFloat() - ((entity.value().instance["speed"].getFloat()) * entity.value().instance["direction_y"].getFloat()))}, Communication::Position{(entity.value().instance["direction_x"].getFloat()), (entity.value().instance["direction_y"].getFloat())}, (entity.value().instance["speed"].getFloat()), 1, entity.value().id));
             }
         }
     }
@@ -344,6 +341,10 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].position.x = _ships[i]->getPos().x;
         shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
+        std::cout << "Ships " << shipsPosition.ship[shipsPosition.nbrItems].id << " :" << std::endl;
+        std::cout << "Type: " << (int) shipsPosition.ship[shipsPosition.nbrItems].type << std::endl;
+        std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.x << std::endl;
+        std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.y << std::endl;
         shipsPosition.nbrItems++;
         if (shipsPosition.nbrItems == 32) {
             server->sendToAll(shipsPosition);

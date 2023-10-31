@@ -42,7 +42,7 @@ class Server {
         template <typename T>
         void send(T &data, const udp::endpoint &client)
         {
-            std::cout << "sended: " << _socket.send_to(boost::asio::buffer(&data, sizeof(data)), client) << " bytes" << std::endl;
+            std::cout << "sent: " << _socket.send_to(boost::asio::buffer(&data, sizeof(data)), client) << " bytes" << std::endl;
         }
         /**
          * @brief Send a message to all clients
@@ -112,7 +112,7 @@ class Server {
          *
          * @return std::vector<Communication::Input>&
          */
-        std::vector<std::pair<int, Communication::Inputs>> getInput() const;
+        std::vector<std::pair<int, Communication::Inputs>> &getInput();
         /**
          * @brief Clear the input
          */

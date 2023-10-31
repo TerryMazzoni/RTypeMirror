@@ -10,7 +10,7 @@
 
 namespace Raylib {
     RlSprite::RlSprite()
-        : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _positions({0, 0}), _color(Color{255, 255, 255, 255}), _scale(1.0), _rotation(0)
+        : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _positions({0, 0}), _color(Color{255, 255, 255, 255}), _scale(1.0), _speed(1.0), _rotation(0)
     {
     }
 
@@ -56,6 +56,11 @@ namespace Raylib {
     void RlSprite::setScale(const float scale)
     {
         _scale = scale;
+    }
+
+    void RlSprite::setSpeed(const float speed)
+    {
+        _speed = speed;
     }
 
     void RlSprite::setRotation(const float rotation)
@@ -111,6 +116,11 @@ namespace Raylib {
     float RlSprite::getScale() const
     {
         return _scale;
+    }
+
+    float RlSprite::getSpeed() const
+    {
+        return _speed;
     }
 
     float RlSprite::getRotation() const

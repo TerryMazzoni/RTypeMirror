@@ -66,35 +66,69 @@
     {
       "type": "__player__",
       "textures": [
-        "assets/player/Player1.png",
-        "assets/player/Player2.png",
-        "assets/player/Player3.png",
-        "assets/player/Player4.png"
+        "assets/player/Layer 1_1.png",
+        "assets/player/Layer 1_2.png",
+        "assets/player/Layer 1_3.png",
+        "assets/player/Layer 1_4.png",
+        "assets/player/Layer 1_5.png",
+        "assets/player/Layer 1_6.png",
+        "assets/player/Layer 2_1.png",
+        "assets/player/Layer 2_2.png",
+        "assets/player/Layer 2_3.png",
+        "assets/player/Layer 2_4.png",
+        "assets/player/Layer 2_5.png",
+        "assets/player/Layer 2_6.png",
+        "assets/player/Layer 3_1.png",
+        "assets/player/Layer 3_2.png",
+        "assets/player/Layer 3_3.png",
+        "assets/player/Layer 3_4.png",
+        "assets/player/Layer 3_5.png",
+        "assets/player/Layer 3_6.png",
+        "assets/player/Layer 4_1.png",
+        "assets/player/Layer 4_2.png",
+        "assets/player/Layer 4_3.png",
+        "assets/player/Layer 4_4.png",
+        "assets/player/Layer 4_5.png",
+        "assets/player/Layer 4_6.png"
+      ],
+      "index_textures": [
+        0,
+        6,
+        12,
+        18
       ],
       "instance": [
         {
           "x": 256.0,
           "y": 100.0,
           "scale": 3,
-          "speed": 1
+          "speed": 1.0,
+          "hp": 100,
+          "max_hp": 100
         },
         {
           "x": 256.0,
           "y": 300.0,
           "scale": 3,
-          "speed": 1
+          "speed": 1.0,
+          "hp": 100,
+          "max_hp": 100
         },
         {
           "x": 256.0,
           "y": 500.0,
           "scale": 3,
-          "speed": 1
+          "speed": 1.0,
+          "hp": 100,
+          "max_hp": 100
         },
         {
           "x": 256.0,
           "y": 700.0,
           "scale": 3,
-          "speed": 1
+          "speed": 1.0,
+          "hp": 100,
+          "max_hp": 100
         }
       ]
     },
@@ -150,6 +184,20 @@
           "damage": 3,
           "speed": 3,
           "health": 200
+        }
+      ]
+    },
+    {
+      "type": "bonus",
+      "textures": [
+        "assets/player/Layer 1_1.png"
+      ],
+      "instance": [
+        {
+          "x": 800.0,
+          "y": 700.0,
+          "b_type": "heal30",
+          "speed": 50.0
         }
       ]
     }

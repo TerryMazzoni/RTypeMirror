@@ -40,7 +40,7 @@ namespace ECS {
         std::vector<Parser::entity_t> entities;
 
         try {
-            entities = Parser::ParserJson(transformPath(std::string("assets/test.json"))).parse().getEntities();
+            entities = Parser::ParserJson(transformPath(std::string("assets/map.json"))).parse().getEntities();
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
@@ -71,9 +71,11 @@ namespace ECS {
                 if (entityData.instance.count("scale") == 0) {
                     throw std::runtime_error("ERROR: entity __player__ have invalid scale");
                 }
+                if (entityData.instance.count("speed") == 0)
+                    throw std::runtime_error("ERROR: entity __player__ have invalid speed");
                 sprite->setScale(entityData.instance["scale"].getFloat());
-                sprite->setScale(3);
                 sprite->setType(ComponentType::Sprite);
+                sprite->setSpeed(entityData.instance["speed"].getFloat());
                 entity.components.push_back(sprite);
 
                 entity.id = {EntityType::Player, index};
@@ -106,6 +108,7 @@ namespace ECS {
     int Core::run(std::shared_ptr<Client> client)
     {
         Communication::Quit quit;
+        Communication::Ready ready;
         std::set<Input> inputs;
 
         while (client->getId() == 0)
@@ -193,7 +196,7 @@ namespace ECS {
         std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>();
         bulletMouvement->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
-        _systemManager.addSystems({bulletMouvement});
+        // _systemManager.addSystems({bulletMouvement});
     }
 
     void Core::_createPlayer(Entity entity)
