@@ -9,10 +9,6 @@
 
 namespace Raylib
 {
-    void RlSound::unload()
-    {
-        UnloadSound(_sound);
-    }
 
     void RlSound::play()
     {
@@ -31,5 +27,6 @@ namespace Raylib
 
     RlSound::~RlSound()
     {
+        UnloadSound(_sound);
     }
 }

@@ -8,24 +8,20 @@
 #pragma once
 
 #include <string>
-
+#include "Musics.hpp"
 extern "C" {
     #include "raylib.h"
 }
 
 namespace Raylib
 {
-    class RlMusic
+    class RlMusic : public ECS::Musics
     {
     public:
-        RlMusic(std::string path);
+        RlMusic() = default;
+        RlMusic(const std::string path);
         ~RlMusic();
 
-        /**
-         * @brief Unload the music
-         *
-         */
-        void unload();
         /**
          * @brief Play the music
          *
@@ -37,6 +33,13 @@ namespace Raylib
          */
         void stop();
         /**
+         * @brief Return the current state of the music
+         * 
+         * @return true 
+         * @return false 
+         */
+        bool isPlaying();
+        /**
          * @brief Set the volume of the music
          *
          */
@@ -46,6 +49,12 @@ namespace Raylib
          *
          */
         void update();
+        /**
+         * @brief Set the is the music loop
+         * 
+         * @param loop 
+         */
+        void setLoop(bool loop);
 
     private:
         Music _music;

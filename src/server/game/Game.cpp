@@ -99,6 +99,8 @@ void Game::initGame(std::string map_path)
                 Parser::setValue(entity.value().instance, "team", 1);
             }
         }
+        if (entity.value().type == "__player__")
+            Parser::setValue(entity.value().instance, "team", 0);
     }
 }
 
@@ -348,6 +350,10 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].position.x = _ships[i]->getPos().x;
         shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
+        std::cout << "Ships " << shipsPosition.ship[shipsPosition.nbrItems].id << " :" << std::endl;
+        std::cout << "Type: " << (int) shipsPosition.ship[shipsPosition.nbrItems].type << std::endl;
+        std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.x << std::endl;
+        std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.y << std::endl;
         shipsPosition.nbrItems++;
         if (shipsPosition.nbrItems == 32) {
             server->sendToAll(shipsPosition);

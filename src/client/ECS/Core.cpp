@@ -10,6 +10,7 @@
 #include "Core.hpp"
 #include "BulletMouvement.hpp"
 #include "ChangeTexture.hpp"
+#include "UpdateMusic.hpp"
 #include "Parser.hpp"
 #include "Graph.hpp"
 #include "TransformPath.hpp"
@@ -81,12 +82,20 @@ namespace ECS {
                 entity.id = {EntityType::Player, index};
                 _eventManager.setMyPlayer(entity);
 
+                if (index == id) {
+                    std::shared_ptr<ECS::Musics> music = std::dynamic_pointer_cast<ECS::Musics>(ECS::Factory::createComponent(ComponentType::Music, "assets/music/game_theme.ogg"));
+                    music->setType(ComponentType::Music);
+                    music->play();
+                    entity.components.push_back(music);
+                    std::shared_ptr<ISystem> updateMusic = std::make_shared<UpdateMusic>();
+                    updateMusic->setEntity(entity);
+                    _eventManager.setMyPlayer(entity);
+                    _systemManager.addSystems({updateMusic});
+                }
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
 
                 _systemManager.addSystems({changeTexture});
-                if (index == id)
-                    _eventManager.setMyPlayer(entity);
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
@@ -193,10 +202,7 @@ namespace ECS {
         bullet.components.push_back(sprite);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
-        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>();
-        bulletMouvement->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
-        // _systemManager.addSystems({bulletMouvement});
     }
 
     void Core::_createPlayer(Entity entity)
