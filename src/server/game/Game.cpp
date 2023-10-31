@@ -235,20 +235,24 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         }
     }
     if (entity.value().type != "__player__" && entity.value().type != "missile") {
-        if (entity.value().type.substr(0, 4) != "boss" && Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "speed")) {
-            Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0)));
+        if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "speed")) {
+            if (entity.value().type.substr(0, 4) == "boss" && entity.value().instance["x"].getFloat() >= 1800.0) {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0)));
+            }
+            else if (entity.value().type.substr(0, 4) != "boss") {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0)));
+            }
         }
-        if (entity.value().type == "enemy2" || entity.value().type == "boss1") {
-            if (Parser::keyExists(entity.value().instance, "y_status"))
-                Parser::setValue(entity.value().instance, "y_status", 0);
+        if (entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
             if (entity.value().instance["y_status"].getInt() == 0) {
                 Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() + 1.0 * (entity.value().instance["speed"].getFloat() / 10.0));
-                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
+                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() >= 1020.0)
                     Parser::setValue(entity.value().instance, "y_status", 1);
             }
             else {
-                Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 1.0);
-                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() >= 900.0)
+                Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0));
+                std::cout << "Y: " << entity.value().instance["y"].getFloat() << std::endl;
+                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
                     Parser::setValue(entity.value().instance, "y_status", 0);
             }
         }
@@ -258,7 +262,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             Parser::keyExists(entity.value().instance, "y") &&
             entity.value().id != 0 &&
             server->getIds()[entity.value().id] == true) {
-            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, ShipType::PLAYER));
+            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type)));
             if (_loop % 5 == 0) {
                 Parser::entity_t newEntity;
                 newEntity.id = _entities.size();
@@ -302,7 +306,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             _entities[entity.value().id] = std::nullopt;
             return;
         }
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, ShipType::ENEMY));
+        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type)));
         if (_loop % 5 == 0 && entity.value().instance["x"].getFloat() <= 1920.0) {
             Parser::entity_t newEntity;
             newEntity.id = _entities.size();
@@ -355,7 +359,7 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
         std::cout << "Ships " << shipsPosition.ship[shipsPosition.nbrItems].id << " :" << std::endl;
-        std::cout << "Type: " << (int) shipsPosition.ship[shipsPosition.nbrItems].type << std::endl;
+        std::cout << "Type: " << (int)shipsPosition.ship[shipsPosition.nbrItems].type << std::endl;
         std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.x << std::endl;
         std::cout << "    " << shipsPosition.ship[shipsPosition.nbrItems].position.y << std::endl;
         shipsPosition.nbrItems++;
@@ -423,4 +427,15 @@ void Game::sendDelete(std::shared_ptr<Server> server, int id)
 
     idToDelete.id = id;
     server->sendToAll(idToDelete);
+}
+
+ShipType Game::getShipType(std::string type)
+{
+    if (type == "enemy_1")
+        return Ship::ShipType::ENEMY_1;
+    if (type == "enemy_2")
+        return Ship::ShipType::ENEMY_2;
+    if (type == "boss_1")
+        return Ship::ShipType::BOSS_1;
+    return Ship::ShipType::PLAYER;
 }
