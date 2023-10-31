@@ -79,35 +79,39 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Musics.hpp&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">    #include &quot;raylib.h&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>Raylib</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlMusic.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classRaylib_1_1RlMusic.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a> : <span class="keyword">public</span> <a class="code" href="classECS_1_1Musics.html">ECS::Musics</a></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a>(std::string path);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        ~<a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a>();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#a125f34f98a745dd649c9e134f0087310">unload</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#adb566f39a08997af215b6ce10dac8c41">play</a>();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#aaac557a6634fdabbb2e25eb0cd5148c9">stop</a>();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#a5a749479f4e8bef1027584d4ba7b43de">setVolume</a>(<span class="keywordtype">float</span> volume);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#a6aa6111a5bc11e35d590fbb5cee6221e">update</a>();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        Music _music;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a>(<span class="keyword">const</span> std::string path);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        ~<a class="code" href="classRaylib_1_1RlMusic.html">RlMusic</a>();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#adb566f39a08997af215b6ce10dac8c41">play</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#aaac557a6634fdabbb2e25eb0cd5148c9">stop</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classRaylib_1_1RlMusic.html#aa0ec9e83c2a320378dfc53225b6bd745">isPlaying</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#a5a749479f4e8bef1027584d4ba7b43de">setVolume</a>(<span class="keywordtype">float</span> volume);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#a6aa6111a5bc11e35d590fbb5cee6221e">update</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classRaylib_1_1RlMusic.html#a18e449c52cee56ae03a67bcae9c74862">setLoop</a>(<span class="keywordtype">bool</span> loop);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        Music _music;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    };</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="ttc" id="aclassECS_1_1Musics_html"><div class="ttname"><a href="classECS_1_1Musics.html">ECS::Musics</a></div><div class="ttdef"><b>Definition:</b> Musics.hpp:14</div></div>
 <div class="ttc" id="aclassRaylib_1_1RlMusic_html"><div class="ttname"><a href="classRaylib_1_1RlMusic.html">Raylib::RlMusic</a></div><div class="ttdef"><b>Definition:</b> RlMusic.hpp:19</div></div>
-<div class="ttc" id="aclassRaylib_1_1RlMusic_html_a125f34f98a745dd649c9e134f0087310"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#a125f34f98a745dd649c9e134f0087310">Raylib::RlMusic::unload</a></div><div class="ttdeci">void unload()</div><div class="ttdoc">Unload the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:12</div></div>
-<div class="ttc" id="aclassRaylib_1_1RlMusic_html_a5a749479f4e8bef1027584d4ba7b43de"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#a5a749479f4e8bef1027584d4ba7b43de">Raylib::RlMusic::setVolume</a></div><div class="ttdeci">void setVolume(float volume)</div><div class="ttdoc">Set the volume of the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:27</div></div>
-<div class="ttc" id="aclassRaylib_1_1RlMusic_html_a6aa6111a5bc11e35d590fbb5cee6221e"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#a6aa6111a5bc11e35d590fbb5cee6221e">Raylib::RlMusic::update</a></div><div class="ttdeci">void update()</div><div class="ttdoc">Update the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:32</div></div>
-<div class="ttc" id="aclassRaylib_1_1RlMusic_html_aaac557a6634fdabbb2e25eb0cd5148c9"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#aaac557a6634fdabbb2e25eb0cd5148c9">Raylib::RlMusic::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:22</div></div>
-<div class="ttc" id="aclassRaylib_1_1RlMusic_html_adb566f39a08997af215b6ce10dac8c41"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#adb566f39a08997af215b6ce10dac8c41">Raylib::RlMusic::play</a></div><div class="ttdeci">void play()</div><div class="ttdoc">Play the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:17</div></div>
+<div class="ttc" id="aclassRaylib_1_1RlMusic_html_a18e449c52cee56ae03a67bcae9c74862"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#a18e449c52cee56ae03a67bcae9c74862">Raylib::RlMusic::setLoop</a></div><div class="ttdeci">void setLoop(bool loop)</div><div class="ttdoc">Set the is the music loop.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:38</div></div>
+<div class="ttc" id="aclassRaylib_1_1RlMusic_html_a5a749479f4e8bef1027584d4ba7b43de"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#a5a749479f4e8bef1027584d4ba7b43de">Raylib::RlMusic::setVolume</a></div><div class="ttdeci">void setVolume(float volume)</div><div class="ttdoc">Set the volume of the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:28</div></div>
+<div class="ttc" id="aclassRaylib_1_1RlMusic_html_a6aa6111a5bc11e35d590fbb5cee6221e"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#a6aa6111a5bc11e35d590fbb5cee6221e">Raylib::RlMusic::update</a></div><div class="ttdeci">void update()</div><div class="ttdoc">Update the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:33</div></div>
+<div class="ttc" id="aclassRaylib_1_1RlMusic_html_aa0ec9e83c2a320378dfc53225b6bd745"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#aa0ec9e83c2a320378dfc53225b6bd745">Raylib::RlMusic::isPlaying</a></div><div class="ttdeci">bool isPlaying()</div><div class="ttdoc">Return the current state of the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:23</div></div>
+<div class="ttc" id="aclassRaylib_1_1RlMusic_html_aaac557a6634fdabbb2e25eb0cd5148c9"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#aaac557a6634fdabbb2e25eb0cd5148c9">Raylib::RlMusic::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:18</div></div>
+<div class="ttc" id="aclassRaylib_1_1RlMusic_html_adb566f39a08997af215b6ce10dac8c41"><div class="ttname"><a href="classRaylib_1_1RlMusic.html#adb566f39a08997af215b6ce10dac8c41">Raylib::RlMusic::play</a></div><div class="ttdeci">void play()</div><div class="ttdoc">Play the music.</div><div class="ttdef"><b>Definition:</b> RlMusic.cpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
