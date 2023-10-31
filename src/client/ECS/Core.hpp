@@ -55,7 +55,7 @@ namespace ECS {
             std::vector<EventInput> transformInputsForClient(std::set<Input> inputs);
             void _createEntities();
             void _createBullet(Entity entity);
-            void _createPlayer(Entity entity);
+            void _createShip(Entity entity);
 
             EntitiesManager _entitiesManager;
             EventManager _eventManager;

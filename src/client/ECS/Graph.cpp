@@ -60,7 +60,13 @@ namespace Graphic {
                     case EntityType::Player:
                         listEntitiesPlayer.push_back(entity.value());
                         break;
-                    case EntityType::Enemy:
+                    case EntityType::Enemy1:
+                        listEntitiesEnemy.push_back(entity.value());
+                        break;
+                    case EntityType::Enemy2:
+                        listEntitiesEnemy.push_back(entity.value());
+                        break;
+                    case EntityType::Boss1:
                         listEntitiesEnemy.push_back(entity.value());
                         break;
                     case EntityType::Bullet:

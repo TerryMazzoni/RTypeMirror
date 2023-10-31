@@ -56,6 +56,17 @@ namespace ECS {
         return 0;
     }
 
+    int EntitiesManager::removeEntities(std::vector<int> entitiesToRemove)
+    {
+        for (auto &entity : entitiesToRemove) {
+            for (auto &list : _mapComponent) {
+                list.second[entity] = std::nullopt;
+            }
+            _listEntities[entity] = std::nullopt;
+        }
+        return 0;
+    }
+
     int EntitiesManager::clearEntities()
     {
         for (auto &list : _mapComponent) {
@@ -98,7 +109,7 @@ namespace ECS {
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
                         if (list.size() < entity.id.second or !list[entity.id.second].has_value()) {
-                            _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), EntityType::Player));
+                            _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), entity.id.first));
                         }
                         else {
                             list[entity.id.second] = sprite;

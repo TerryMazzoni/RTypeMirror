@@ -128,6 +128,7 @@ namespace ECS {
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
             _entitiesManager.removeEntities(entitiesToDelete);
+            _entitiesManager.removeEntities(client->getEntitiesToDelete());
             _systemManager.removeSystems(entitiesToDelete);
             executeServerActions(client->getShipsPositions());
             executeServerActions(client->getMissilesPositions());
@@ -182,8 +183,24 @@ namespace ECS {
                     break;
                 case EntityType::Player:
                     for (Entity entity : entity.first) {
-                        _createPlayer(entity);
+                        _createShip(entity);
                     }
+                    break;
+                case EntityType::Enemy1:
+                    for (Entity entity : entity.first) {
+                        _createShip(entity);
+                    }
+                    break;
+                case EntityType::Enemy2:
+                    for (Entity entity : entity.first) {
+                        _createShip(entity);
+                    }
+                    break;
+                case EntityType::Boss1:
+                    for (Entity entity : entity.first) {
+                        _createShip(entity);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -204,15 +221,32 @@ namespace ECS {
         _entitiesManager.addEntities({bullet});
     }
 
-    void Core::_createPlayer(Entity entity)
+    void Core::_createShip(Entity entity)
     {
         Entity player;
+        std::string path;
 
-        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
+        switch (entity.id.first) {
+            case (EntityType::Player):
+                path = PATH_TEXTURES_PLAYER;
+                break;
+            case (EntityType::Enemy1):
+                path = PATH_TEXTURES_ENEMY1;
+                break;
+            case (EntityType::Enemy2):
+                path = PATH_TEXTURES_ENEMY2;
+                break;
+            // case (EntityType::Boss1):
+            //     path = PATH_TEXTURES_BOSS1;
+            //     break;
+            default:
+                break;
+        }
+        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, path));
         sprite->setType(ComponentType::Sprite);
         std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
         sprite->setPosition(spriteToCopy->getPos());
-        sprite->setScale(3);
+        sprite->setScale(spriteToCopy->getScale());
         player.components.push_back(sprite);
         player.id = {EntityType::Player, entity.id.second};
 

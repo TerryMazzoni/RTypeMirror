@@ -159,7 +159,7 @@
           "y": 256.0,
           "damage": 10,
           "speed": 5,
-          "health": 50,
+          "hp": 50,
           "scale": 2,
           "y_status": 0
         }
@@ -181,7 +181,7 @@
           "y": 256.0,
           "damage": 6,
           "speed": 50,
-          "health": 30,
+          "hp": 30,
           "scale": 2,
           "y_status": 0
         }
@@ -198,23 +198,9 @@
           "y": 256.0,
           "damage": 3,
           "speed": 100,
-          "health": 200,
+          "hp": 200,
           "scale": 4,
           "y_status": 0
-        }
-      ]
-    },
-    {
-      "type": "bonus",
-      "textures": [
-        "assets/player/Layer 1_1.png"
-      ],
-      "instance": [
-        {
-          "x": 800.0,
-          "y": 700.0,
-          "b_type": "heal30",
-          "speed": 50.0
         }
       ]
     },

@@ -54,18 +54,31 @@ namespace ECS {
 
         for (int i = 0; i < ships.nbrItems; i++) {
             tmp = ECS::Entity();
-            if (ships.ship[i].type == ShipType::ENEMY)
-                tmp.id = EntityId(EntityType::Enemy, ships.ship[i].id);
-            else
-                tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
+            switch (ships.ship[i].type) {
+                case ShipType::ENEMY1:
+                    tmp.id = EntityId(EntityType::Enemy1, ships.ship[i].id);
+                    break;
+                case ShipType::ENEMY2:
+                    tmp.id = EntityId(EntityType::Enemy2, ships.ship[i].id);
+                    break;
+                case ShipType::BOSS1:
+                    tmp.id = EntityId(EntityType::Boss1, ships.ship[i].id);
+                    break;
+                case ShipType::PLAYER:
+                    tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
+                    break;
+                default:
+                    break;
+            }
             std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
             sprite->setPosition(std::make_pair(ships.ship[i].position.x, ships.ship[i].position.y));
             sprite->setType(ComponentType::Sprite);
+            sprite->setScale(ships.ship[i].scale);
             tmp.components.push_back(sprite);
-            if (ships.ship[i].type == ShipType::ENEMY)
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::UpdatePosEnemy, 0));
-            else
+            if (ships.ship[i].type == ShipType::PLAYER)
                 _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::UpdatePosPlayer, 0));
+            else
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{tmp}, ActionType::UpdatePosEnemy, 0));
         }
         return 0;
     }

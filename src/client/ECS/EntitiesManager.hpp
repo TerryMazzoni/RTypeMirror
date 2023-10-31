@@ -41,6 +41,13 @@ namespace ECS {
              */
             int removeEntities(std::vector<Entity> entitiesToRemove);
             /**
+             * @brief Remove a list of entities in the entity manager
+             *
+             * @param std::vector<int>
+             * @return int
+             */
+            int removeEntities(std::vector<int> entitiesToRemove);
+            /**
              * @brief Clear the list of entities and set the size as 5 to prevent boutons
              *
              * @return int

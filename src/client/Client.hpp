@@ -115,6 +115,12 @@ class Client {
          * @return std::vector<Communication::MissilesPosition> 
          */
         std::vector<Communication::MissilesPosition> getMissilesPositions();
+        /**
+         * @brief Get the Entities id To Delete object
+         * 
+         * @return std::vector<int> 
+         */
+        std::vector<int> getEntitiesToDelete();
     private:
         boost::asio::io_service _io_service;
         udp::socket _socket;
@@ -125,4 +131,5 @@ class Client {
         std::vector<EventInput> _events;
         std::vector<Communication::ShipsPosition> _shipsPositions;
         std::vector<Communication::MissilesPosition> _missilesPositions;
+        std::vector<int> _entitiesToDelete;
 };

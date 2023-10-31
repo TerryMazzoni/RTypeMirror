@@ -3,7 +3,6 @@ if ! command -v nproc &>/dev/null; then
 else
     num_threads=$(nproc)
 fi
-
 threads_to_use=$((num_threads - 1))
 
 echo "Using $threads_to_use threads to compile"
