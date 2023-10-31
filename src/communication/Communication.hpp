@@ -47,7 +47,8 @@ namespace Communication {
         MISSILES,
         COLISION,
         INPUT,
-        BONUS
+        BONUS,
+        DELETE
     };
 
     typedef struct Header {
@@ -130,4 +131,9 @@ namespace Communication {
             Bonus bonus[32];
             size_t nbrItems;
     } BonusPosition;
+
+    typedef struct Delete {
+            CommunicationTypes code = CommunicationTypes::DELETE;
+            int id;
+    } Delete;
 }; // namespace Communication

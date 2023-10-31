@@ -406,3 +406,11 @@ void Game::sendBonus(std::shared_ptr<Server> server)
         server->sendToAll(bonusPosition);
     }
 }
+
+void Game::sendDelete(std::shared_ptr<Server> server, int id)
+{
+    Communication::Id idToDelete;
+
+    idToDelete.id = id;
+    server->sendToAll(idToDelete);
+}
