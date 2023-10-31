@@ -52,5 +52,6 @@ enum class SceneType {
 enum class ComponentType {
     Sprite,
     Music,
+    Sound,
     Unknown
 };

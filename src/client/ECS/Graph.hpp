@@ -15,6 +15,7 @@
 #include "Entity.hpp"
 #include "Sprite.hpp"
 #include "Musics.hpp"
+#include "Sounds.hpp"
 
 namespace Graphic {
     class Graph {
@@ -75,6 +76,13 @@ namespace Graphic {
      * @return std::shared_ptr<ECS::Musics> 
      */
     std::shared_ptr<ECS::Musics> createMusics(const std::string path);
+    /**
+     * @brief Create a Sound object
+     * 
+     * @param path 
+     * @return std::shared_ptr<ECS::Musics> 
+     */
+    std::shared_ptr<ECS::Sounds> createSound(const std::string path);
     /**
      * @brief Create a Window object
      *

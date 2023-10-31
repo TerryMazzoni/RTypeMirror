@@ -8,24 +8,19 @@
 #pragma once
 
 #include <string>
-
+#include "Sounds.hpp"
 extern "C" {
     #include "raylib.h"
 }
 
 namespace Raylib
 {
-    class RlSound
+    class RlSound : public ECS::Sounds
     {
     public:
         RlSound(std::string path);
         ~RlSound();
 
-        /**
-         * @brief Unload the sound
-         *
-         */
-        void unload();
         /**
          * @brief Play the sound
          *

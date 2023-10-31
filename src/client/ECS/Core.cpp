@@ -200,19 +200,14 @@ namespace ECS {
         std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
         sprite->setPosition(spriteToCopy->getPos());
         bullet.components.push_back(sprite);
-        std::shared_ptr<ECS::Musics> music = std::dynamic_pointer_cast<ECS::Musics>(ECS::Factory::createComponent(ComponentType::Music, "assets/music/game_theme.ogg"));
-        music->setType(ComponentType::Music);
-        music->play();
-        music->setLoop(false);
-        bullet.components.push_back(music);
+        std::shared_ptr<ECS::Sounds> sound = std::dynamic_pointer_cast<ECS::Sounds>(ECS::Factory::createComponent(ComponentType::Sound, "assets/music/shoot.ogg"));
+        sound->setType(ComponentType::Sound);
+        sound->play();
+        sound->setVolume(50.0);
+        bullet.components.push_back(sound);
         bullet.id = {EntityType::Bullet, entity.id.second};
 
-        std::shared_ptr<ISystem> bulletMouvement = std::make_shared<BulletMouvement>();
-        bulletMouvement->setEntity(bullet);
-        std::shared_ptr<ISystem> updateMusic = std::make_shared<UpdateMusic>();
-        updateMusic->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
-        _systemManager.addSystems({updateMusic});
     }
 
     void Core::_createPlayer(Entity entity)

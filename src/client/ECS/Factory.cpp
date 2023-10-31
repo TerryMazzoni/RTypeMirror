@@ -13,6 +13,15 @@
 #include "Factory.hpp"
 #include "Sprite.hpp"
 
+
+std::shared_ptr<ECS::IComponent> ECS::Factory::createSound(const std::string &value)
+{
+    if (_sound == nullptr) {
+        _sound = Graphic::createSound(value);
+    }
+    return _sound;
+}
+
 std::shared_ptr<ECS::IComponent> ECS::Factory::createMusic(const std::string &value)
 {
     return (Graphic::createMusics(value));
@@ -57,6 +66,7 @@ std::shared_ptr<ECS::IComponent> ECS::Factory::createComponent(ComponentType typ
     static std::function<std::shared_ptr<ECS::IComponent>(ECS::Factory &, const std::string &)> funcs[6] = {
         &ECS::Factory::createSprite,
         &ECS::Factory::createMusic,
+        &ECS::Factory::createSound,
     };
     if (type <= static_cast<ComponentType>(5))
         return funcs[static_cast<int>(type)](singleton, value);
