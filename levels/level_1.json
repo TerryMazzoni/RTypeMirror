@@ -1,0 +1,202 @@
+{
+    "map": {
+      "tiles": [
+        "#########################################################################################################################",
+        "#                                                ###                                                                     ",
+        "#                                                ###                                                                     ",
+        "#                                                ###                                                                     ",
+        "#                                                ###                                                                     ",
+        "#                                                ###                                                                     ",
+        "#                                                                                                                        ",
+        "#                                                                                                                        ",
+        "#                                                                                                                        ",
+        "#                                                                                                                        ",
+        "#                                                        ###                                                             ",
+        "#                                                        ###                                                             ",
+        "#                                                        ###                                                             ",
+        "#                                                        ###                                                             ",
+        "#                                                        ###                                                             ",
+        "#                                                        ###                                                             ",
+        "#########################################################################################################################"
+      ],
+      "tile_size": 64,
+      "textures": {
+        "#": ["assets/walls/Wall.png"]
+      }
+    },
+    "all_entities": [
+      {
+        "type": "__player__",
+        "textures": [
+          "assets/player/Layer 1_1.png",
+          "assets/player/Layer 1_2.png",
+          "assets/player/Layer 1_3.png",
+          "assets/player/Layer 1_4.png",
+          "assets/player/Layer 1_5.png",
+          "assets/player/Layer 1_6.png",
+          "assets/player/Layer 2_1.png",
+          "assets/player/Layer 2_2.png",
+          "assets/player/Layer 2_3.png",
+          "assets/player/Layer 2_4.png",
+          "assets/player/Layer 2_5.png",
+          "assets/player/Layer 2_6.png",
+          "assets/player/Layer 3_1.png",
+          "assets/player/Layer 3_2.png",
+          "assets/player/Layer 3_3.png",
+          "assets/player/Layer 3_4.png",
+          "assets/player/Layer 3_5.png",
+          "assets/player/Layer 3_6.png",
+          "assets/player/Layer 4_1.png",
+          "assets/player/Layer 4_2.png",
+          "assets/player/Layer 4_3.png",
+          "assets/player/Layer 4_4.png",
+          "assets/player/Layer 4_5.png",
+          "assets/player/Layer 4_6.png"
+        ],
+        "index_textures": [
+          0,
+          6,
+          12,
+          18
+        ],
+        "instance": [
+          {
+            "x": 256.0,
+            "y": 128.0,
+            "scale": 3,
+            "speed": 1.0,
+            "hp": 100,
+            "max_hp": 100
+          },
+          {
+            "x": 256.0,
+            "y": 384.0,
+            "scale": 3,
+            "speed": 1.0,
+            "hp": 100,
+            "max_hp": 100
+          },
+          {
+            "x": 256.0,
+            "y": 640.0,
+            "scale": 3,
+            "speed": 1.0,
+            "hp": 100,
+            "max_hp": 100
+          },
+          {
+            "x": 256.0,
+            "y": 896.0,
+            "scale": 3,
+            "speed": 1.0,
+            "hp": 100,
+            "max_hp": 100
+          }
+        ]
+      },
+      {
+        "type": "enemy_1",
+        "textures": [
+          "assets/enemies/Enemy1/0.png",
+          "assets/enemies/Enemy1/1.png",
+          "assets/enemies/Enemy1/2.png",
+          "assets/enemies/Enemy1/3.png",
+          "assets/enemies/Enemy1/4.png",
+          "assets/enemies/Enemy1/5.png"
+        ],
+        "instance": [
+          {
+            "x": 1216.0,
+            "y": 384.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1280.0,
+            "y": 448.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1344.0,
+            "y": 512.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1408.0,
+            "y": 576.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1472.0,
+            "y": 640.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1536.0,
+            "y": 704.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1600.0,
+            "y": 768.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1344.0,
+            "y": 640.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1280.0,
+            "y": 704.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1216.0,
+            "y": 768.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1472.0,
+            "y": 512.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1536.0,
+            "y": 448.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          },
+          {
+            "x": 1600.0,
+            "y": 384.0,
+            "damage": 10,
+            "speed": 5,
+            "health": 50
+          }
+        ]
+      }
+    ]
+  }
