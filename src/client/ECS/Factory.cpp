@@ -13,6 +13,10 @@
 #include "Factory.hpp"
 #include "Sprite.hpp"
 
+std::shared_ptr<ECS::IComponent> ECS::Factory::createWeapon(const std::string &value)
+{
+    return (Graphic::createWeapon(value));
+}
 
 std::shared_ptr<ECS::IComponent> ECS::Factory::createSound(const std::string &value)
 {
@@ -63,10 +67,11 @@ std::shared_ptr<ECS::IComponent> ECS::Factory::createSprite(const std::string &v
 std::shared_ptr<ECS::IComponent> ECS::Factory::createComponent(ComponentType type, const std::string &value)
 {
     static ECS::Factory singleton;
-    static std::function<std::shared_ptr<ECS::IComponent>(ECS::Factory &, const std::string &)> funcs[6] = {
+    static std::function<std::shared_ptr<ECS::IComponent>(ECS::Factory &, const std::string &)> funcs[4] = {
         &ECS::Factory::createSprite,
         &ECS::Factory::createMusic,
         &ECS::Factory::createSound,
+        &ECS::Factory::createWeapon,
     };
     if (type <= static_cast<ComponentType>(5))
         return funcs[static_cast<int>(type)](singleton, value);

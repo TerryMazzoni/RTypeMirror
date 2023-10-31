@@ -16,6 +16,7 @@
 #include "RlMusic.hpp"
 #include "RlSound.hpp"
 #include "RlTime.hpp"
+#include "RlWeapon.hpp"
 
 namespace Graphic {
     std::set<Input> Graph::getInputs() const
@@ -134,6 +135,11 @@ namespace Graphic {
     std::shared_ptr<ECS::Sounds> createSound(const std::string path)
     {
         return std::make_shared<Raylib::RlSound>(path);
+    }
+
+    std::shared_ptr<ECS::Weapon> createWeapon(const std::string path)
+    {
+        return std::make_shared<Raylib::RlWeapon>(path);
     }
 
     void createWindow(int width, int heigth, std::string name, int frameRate)

@@ -17,6 +17,7 @@ namespace ECS {
         _mapComponent[ComponentType::Sprite] = {};
         _mapComponent[ComponentType::Music] = {};
         _mapComponent[ComponentType::Sound] = {};
+        _mapComponent[ComponentType::Weapon] = {};
         _sizeListComponents = 5;
         resizeMapComponent();
         _listEntities.resize(_sizeListComponents + 1);

@@ -79,6 +79,11 @@ namespace ECS {
                 sprite->setSpeed(entityData.instance["speed"].getFloat());
                 entity.components.push_back(sprite);
 
+                std::shared_ptr<ECS::Weapon> weapon = std::dynamic_pointer_cast<ECS::Weapon>(ECS::Factory::createComponent(ComponentType::Weapon, "assets/gun/gun1.png"));
+                weapon->setType(ComponentType::Weapon);
+                weapon->getSprite()->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
+                entity.components.push_back(sprite);
+                
                 entity.id = {EntityType::Player, index};
                 _eventManager.setMyPlayer(entity);
 
