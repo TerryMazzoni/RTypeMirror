@@ -260,6 +260,17 @@ namespace Parser {
         return _background_3;
     }
 
+    int ParserJson::addId()
+    {
+        _lastId++;
+        return _lastId - 1;
+    }
+
+    int ParserJson::getLastId() const
+    {
+        return _lastId;
+    }
+
     Any::Any(int i)
         : _i(i), _f(0.0), _s(""), _type(type_t::INT)
     {

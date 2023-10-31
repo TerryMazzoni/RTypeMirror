@@ -187,6 +187,10 @@ namespace Parser {
              */
             int getTileSize() const;
 
+            int addId();
+
+            int getLastId() const;
+
         protected:
         private:
             /*
@@ -208,6 +212,7 @@ namespace Parser {
             ** @brief Display all entities in the json file for debug
             */
             void displayEntities();
+
 
             std::string _path;
             std::vector<entity_t> _entities;
