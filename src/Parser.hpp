@@ -179,12 +179,63 @@ namespace Parser {
             int _tileSize;
     };
 
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value);
 
+    /*
+     ** @brief check if a key is present in a unordered map
+     ** @param umap the unordered map to check
+     ** @param key the key to check
+     **
+     ** @return `true` if the key is present, `false` otherwise
+     */
     bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key);
 
 } // namespace Parser
