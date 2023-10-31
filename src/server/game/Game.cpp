@@ -240,7 +240,6 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                 if (entity.has_value() && entity_colision.has_value() && (entity.value().id) != (entity_colision.value().id) && entity.value().instance["team"].getInt() != entity_colision.value().instance["team"].getInt()) {
                     if (checkColision(entity.value(), entity_colision.value())) {
                         int damage = entity.value().instance["damage"].getInt();
-                        std::cout << "DELETE FDP " << entity.value().id << " dans la colision" << std::endl;
                         sendDelete(server, entity.value().id);
                         _entities[entity.value().id] = std::nullopt;
 
@@ -277,7 +276,6 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             }
                             Parser::setValue(entity.value().instance, std::string("gun"), gun);
                         }
-                        std::cout << "DELETE FDP " << entity_colision.value().id << " dans la fin de la colision" << std::endl;
                         sendDelete(server, entity_colision.value().id);
                         _entities[entity_colision.value().id] = std::nullopt;
                     }
@@ -354,7 +352,6 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     else if (entity.value().type == "missile") {
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed") && entity.value().id != 0) {
             if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["x"].getFloat() > 2120.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
-                std::cout << "DELETE FDP " << entity.value().id << " dans l'update entities" << std::endl;
                 sendDelete(server, entity.value().id);
                 _entities[entity.value().id] = std::nullopt;
             }
@@ -367,7 +364,6 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y") || !Parser::keyExists(entity.value().instance, "scale"))
             return;
         if (entity.value().instance["x"].getFloat() < 0.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
-            std::cout << "DELETE FDP " << entity.value().id << " après l'autre update entities" << std::endl;
             sendDelete(server, entity.value().id);
             _entities[entity.value().id] = std::nullopt;
         }
