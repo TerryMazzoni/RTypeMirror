@@ -13,6 +13,7 @@ namespace Raylib
     void RlMusic::play()
     {
         PlayMusicStream(_music);
+        SetMusicVolume(_music, 50.0);
     }
 
     void RlMusic::stop()
