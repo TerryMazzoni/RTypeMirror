@@ -13,7 +13,9 @@
 
 enum class EntityType {
     Player,
-    Enemy,
+    Enemy1,
+    Enemy2,
+    Boss1,
     Bullet,
     Background1,
     Background2,

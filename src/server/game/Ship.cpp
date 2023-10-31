@@ -17,13 +17,14 @@ Ship::Ship()
     _type = ShipType::UNKNOW;
 }
 
-Ship::Ship(Communication::Position pos, int id, ShipType type)
+Ship::Ship(Communication::Position pos, int id, ShipType type, float scale)
 {
     _pos = pos;
     _speed = 0;
     _life = 100;
     _id = id;
     _level = 1;
+    _scale = scale;
     _type = type;
 }
 
@@ -84,6 +85,11 @@ int Ship::getId() const
 int Ship::getLevel() const
 {
     return _level;
+}
+
+float Ship::getScale() const
+{
+    return _scale;
 }
 
 ShipType Ship::getType() const

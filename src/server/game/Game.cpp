@@ -74,6 +74,7 @@ int Game::getLevel() const
     return _level;
 }
 
+
 int Game::getScore() const
 {
     return _score;
@@ -239,6 +240,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                 if (entity.has_value() && entity_colision.has_value() && (entity.value().id) != (entity_colision.value().id) && entity.value().instance["team"].getInt() != entity_colision.value().instance["team"].getInt()) {
                     if (checkColision(entity.value(), entity_colision.value())) {
                         int damage = entity.value().instance["damage"].getInt();
+                        std::cout << "DELETE FDP " << entity.value().id << " dans la colision" << std::endl;
                         sendDelete(server, entity.value().id);
                         _entities[entity.value().id] = std::nullopt;
 
@@ -275,6 +277,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             }
                             Parser::setValue(entity.value().instance, std::string("gun"), gun);
                         }
+                        std::cout << "DELETE FDP " << entity_colision.value().id << " dans la fin de la colision" << std::endl;
                         sendDelete(server, entity_colision.value().id);
                         _entities[entity_colision.value().id] = std::nullopt;
                     }
@@ -320,9 +323,10 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     if (entity.value().type == "__player__") {
         if (Parser::keyExists(entity.value().instance, "x") &&
             Parser::keyExists(entity.value().instance, "y") &&
+            Parser::keyExists(entity.value().instance, "scale") &&
             entity.value().id != 0 &&
             server->getIds()[entity.value().id] == true) {
-            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type)));
+            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
             if (_loop % 5 == 0) {
                 Parser::entity_t newEntity;
                 newEntity.id = _entities.size();
@@ -350,6 +354,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     else if (entity.value().type == "missile") {
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed") && entity.value().id != 0) {
             if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["x"].getFloat() > 2120.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
+                std::cout << "DELETE FDP " << entity.value().id << " dans l'update entities" << std::endl;
                 sendDelete(server, entity.value().id);
                 _entities[entity.value().id] = std::nullopt;
             }
@@ -359,14 +364,14 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         }
     }
     else if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
-        if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y"))
+        if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y") || !Parser::keyExists(entity.value().instance, "scale"))
             return;
-        if (entity.value().instance["x"].getFloat() < 0.0) {
+        if (entity.value().instance["x"].getFloat() < 0.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
+            std::cout << "DELETE FDP " << entity.value().id << " après l'autre update entities" << std::endl;
             sendDelete(server, entity.value().id);
             _entities[entity.value().id] = std::nullopt;
-            return;
         }
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type)));
+        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
         if (_loop % 5 == 0 && entity.value().instance["x"].getFloat() <= 1920.0) {
             Parser::entity_t newEntity;
             newEntity.id = _entities.size();
@@ -418,6 +423,7 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].position.x = _ships[i]->getPos().x;
         shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
+        shipsPosition.ship[shipsPosition.nbrItems].scale = _ships[i]->getScale();
         shipsPosition.nbrItems++;
         if (shipsPosition.nbrItems == 32) {
             server->sendToAll(shipsPosition);
@@ -488,10 +494,10 @@ void Game::sendDelete(std::shared_ptr<Server> server, int id)
 ShipType Game::getShipType(std::string type)
 {
     if (type == "enemy_1")
-        return Ship::ShipType::ENEMY_1;
+        return ShipType::ENEMY1;
     if (type == "enemy_2")
-        return Ship::ShipType::ENEMY_2;
+        return ShipType::ENEMY2;
     if (type == "boss_1")
-        return Ship::ShipType::BOSS_1;
-    return Ship::ShipType::PLAYER;
+        return ShipType::BOSS1;
+    return ShipType::PLAYER;
 }

@@ -67,6 +67,7 @@ namespace Communication {
             int id;
             float life;
             int level;
+            float scale;
             ShipType type;
     } SpaceShip;
 

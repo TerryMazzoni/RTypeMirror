@@ -22,7 +22,7 @@ class Ship {
          * @param id
          * @param type
          */
-        Ship(Communication::Position pos, int id, ShipType type);
+        Ship(Communication::Position pos, int id, ShipType type, float scale);
         /**
          * @brief Destroy the Ship object
          */
@@ -94,6 +94,12 @@ class Ship {
          */
         int getLevel() const;
         /**
+         * @brief Get the Scale object
+         * 
+         * @return float 
+         */
+        float getScale() const;
+        /**
          * @brief Get the Type object
          *
          * @return ShipType
@@ -106,5 +112,6 @@ class Ship {
         float _life;
         int _id;
         int _level;
+        float _scale;
         ShipType _type;
 };

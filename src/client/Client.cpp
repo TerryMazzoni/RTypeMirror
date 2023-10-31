@@ -91,6 +91,8 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     }
     else if (header->type == Communication::CommunicationTypes::DELETE) {
         Communication::Delete *del = reinterpret_cast<Communication::Delete *>(data);
+        _entitiesToDelete.push_back(del->id);
+        std::cout << "Delete: " << del->id << std::endl;
     }
     else {
         std::cout << "Unknown message" << std::endl;
@@ -209,5 +211,12 @@ std::vector<Communication::MissilesPosition> Client::getMissilesPositions()
 {
     std::vector<Communication::MissilesPosition> tmp = _missilesPositions;
     _missilesPositions.clear();
+    return tmp;
+}
+
+std::vector<int> Client::getEntitiesToDelete()
+{
+    std::vector<int> tmp = _entitiesToDelete;
+    _entitiesToDelete.clear();
     return tmp;
 }
