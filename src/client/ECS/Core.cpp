@@ -212,7 +212,7 @@ namespace ECS {
         std::shared_ptr<ISystem> updateMusic = std::make_shared<UpdateMusic>();
         updateMusic->setEntity(bullet);
         _entitiesManager.addEntities({bullet});
-        // _systemManager.addSystems({bulletMouvement});
+        _systemManager.addSystems({updateMusic});
     }
 
     void Core::_createPlayer(Entity entity)
