@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['checkcolision_218',['checkColision',['../classGame.html#a3b8204f4d81f6fafefd0973d3f14e6a6',1,'Game']]],
+  ['checkcolision_218',['checkColision',['../classGame.html#a123dac7b8e208b255e0125aa6af94b65',1,'Game']]],
   ['clear_219',['clear',['../classECS_1_1EventManager.html#adce9c30f68b4bd98a783640e1b2598c5',1,'ECS::EventManager']]],
   ['clearentities_220',['clearEntities',['../classECS_1_1EntitiesManager.html#a084f018c238951040b7576979bb0ff4d',1,'ECS::EntitiesManager']]],
   ['clearentitiestocreate_221',['clearEntitiesToCreate',['../classECS_1_1EntitiesManager.html#a499cdb37a6fbbb42c8f0d6422ff1a150',1,'ECS::EntitiesManager']]],
