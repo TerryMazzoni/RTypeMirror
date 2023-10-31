@@ -80,18 +80,19 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     }
     else if (header->type == Communication::CommunicationTypes::SHIPS) {
         Communication::ShipsPosition *ships = reinterpret_cast<Communication::ShipsPosition *>(data);
+        std::cout << "Ships: " << ships->nbrItems << std::endl;
+        for (int i = 0; i < ships->nbrItems; i++) {
+            std::cout << "Ship " << i << ": " << std::endl;
+            std::cout << "ID: " << ships->ship[i].id << std::endl;
+            std::cout << "type: " << (int) ships->ship[i].type << std::endl;
+            std::cout << "Position: " << std::endl;
+            std::cout << "X: " << ships->ship[i].position.x << std::endl;
+            std::cout << "Y: " << ships->ship[i].position.y << std::endl;
+        }
         _shipsPositions.push_back(*ships);
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
-        std::cout << "Missiles: " << missiles->nbrItems << std::endl;
-        for (int i = 0; i < missiles->nbrItems; i++) {
-            std::cout << "Missile " << i << ": " << std::endl;
-            std::cout << "ID: " << missiles->missile[i].id << std::endl;
-            std::cout << "Position: " << std::endl;
-            std::cout << "X: " << missiles->missile[i].position.x << std::endl;
-            std::cout << "Y: " << missiles->missile[i].position.y << std::endl;
-        }
         _missilesPositions.push_back(*missiles);
     }
     else if (header->type == Communication::CommunicationTypes::COLISION) {
@@ -105,7 +106,7 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
 
 void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
 {
-    std::vector<char> recv_buffer(1024);
+    std::vector<char> recv_buffer(1500);
     udp::endpoint sender_endpoint;
 
     _socket.async_receive_from(
@@ -113,6 +114,7 @@ void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
         [this, &recv_buffer, &sender_endpoint, &core](
             const boost::system::error_code &error, std::size_t bytes_received) {
             if (!error && bytes_received > 0) {
+                std::cout << "received " << bytes_received << " bytes" << std::endl;
                 processMessage(std::string(
                                    recv_buffer.begin(), recv_buffer.begin() + bytes_received),
                                core);

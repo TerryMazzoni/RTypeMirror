@@ -12,7 +12,8 @@ static const std::vector<EventInput> inputTypes = {
     EventInput::Key_up,
     EventInput::Key_down,
     EventInput::Key_left,
-    EventInput::Key_right
+    EventInput::Key_right,
+    EventInput::Space
 };
 
 namespace Raylib

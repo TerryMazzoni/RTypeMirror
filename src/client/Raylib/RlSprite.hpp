@@ -74,6 +74,12 @@ namespace Raylib {
              */
             void setScale(const float scale);
             /**
+             * @brief Set the Speed of the sprite
+             * 
+             * @param speed float
+             */
+            void setSpeed(const float speed);
+            /**
              * @brief Set the Rotation of the sprite
              * 
              * @param rotation float
@@ -135,6 +141,12 @@ namespace Raylib {
              */
             float getScale() const;
             /**
+             * @brief Get the Speed of the sprite
+             * 
+             * @return float 
+             */
+            float getSpeed() const;
+            /**
              * @brief Get the Rotation of the sprite
              * 
              * @return float 
@@ -159,7 +171,7 @@ namespace Raylib {
             std::pair<int, int> _positions;
             Color _color;
             float _scale;
+            float _speed;
             float _rotation;
-
     };
 } // namespace Raylib
