@@ -13,6 +13,10 @@ namespace Parser {
         _path = path;
         _entities = {};
         _lastId = 1;
+        _background_1 = {};
+        _background_2 = {};
+        _background_3 = {};
+
     }
 
     ParserJson::ParserJson()
@@ -20,6 +24,10 @@ namespace Parser {
         _path = "__default__";
         _entities = {};
         _lastId = 1;
+        _background_1 = {};
+        _background_2 = {};
+        _background_3 = {};
+
     }
 
     ParserJson::~ParserJson()
@@ -163,8 +171,28 @@ namespace Parser {
         }
     }
 
+    void ParserJson::parseBackground(boost::property_tree::ptree &root)
+    {
+        for (auto &entity : root.get_child(PARSER_BACKGROUND_1))
+            _background_1.push_back(entity.second.get_value<std::string>());
+        for (auto &entity : root.get_child(PARSER_BACKGROUND_2))
+            _background_2.push_back(entity.second.get_value<std::string>());
+        for (auto &entity : root.get_child(PARSER_BACKGROUND_3))
+            _background_3.push_back(entity.second.get_value<std::string>());
+    }
+
     void ParserJson::displayEntities()
     {
+        std::cout << "Tile Size: " << _tileSize << std::endl;
+        std::cout << "Background 1: " << std::endl;
+        for (std::string &back : _background_1)
+            std::cout << "┃  " << back << std::endl;
+        std::cout << "Background 2: " << std::endl;
+        for (std::string &back : _background_2)
+            std::cout << "┃  " << back << std::endl;
+        std::cout << "Background 3: " << std::endl;
+        for (std::string &back : _background_3)
+            std::cout << "┃  " << back << std::endl;
         for (auto &entity : _entities) {
             std::cout << "┓\n┃ " << entity.type << std::endl;
             std::cout << "┃    ID: " << entity.id << std::endl;
@@ -206,6 +234,7 @@ namespace Parser {
 
         parseEntity(root);
         parseMap(root);
+        parseBackground(root);
         if (verbose)
             displayEntities();
         return *this;
@@ -214,6 +243,21 @@ namespace Parser {
     int ParserJson::getTileSize() const
     {
         return _tileSize;
+    }
+
+    std::vector<std::string> ParserJson::getBackground_1() const
+    {
+        return _background_1;
+    }
+
+    std::vector<std::string> ParserJson::getBackground_2() const
+    {
+        return _background_2;
+    }
+
+    std::vector<std::string> ParserJson::getBackground_3() const
+    {
+        return _background_3;
     }
 
     Any::Any(int i)

@@ -25,6 +25,10 @@
 #define PARSER_MAP_TILES "tiles"
 #define PARSER_MAP_TILESIZE "tile_size"
 #define PARSER_INDEX_TEXTURES "index_textures"
+#define PARSER_BACKGROUND_1 "background1"
+#define PARSER_BACKGROUND_2 "background2"
+#define PARSER_BACKGROUND_3 "background3"
+
 
 namespace Parser {
     enum class type_t {
@@ -150,6 +154,32 @@ namespace Parser {
             */
             std::vector<entity_t> getEntities() const;
 
+            /*
+            ** @brief Get the path to the foregrounds
+            **
+            ** @return vector of string
+            **
+            */
+            std::vector<std::string> getBackground_1() const;
+
+
+            /*
+            ** @brief Get the path to the middlegrounds
+            **
+            ** @return vector of string
+            **
+            */
+            std::vector<std::string> getBackground_2() const;
+
+
+            /*
+            ** @brief Get the path to the backgrounds
+            **
+            ** @return vector of string
+            **
+            */
+            std::vector<std::string> getBackground_3() const;
+
             /**
              * @brief Get the Tile Size object
              *
@@ -162,11 +192,17 @@ namespace Parser {
             /*
             ** @brief Parse all entities in the json file
             */
-            void parseEntity(boost::property_tree::ptree &entity);
+            void parseEntity(boost::property_tree::ptree &root);
+
             /*
             ** @brief Parse the map in the json file
             */
-            void parseMap(boost::property_tree::ptree &map);
+            void parseMap(boost::property_tree::ptree &root);
+
+            /*
+            ** @brief Parse the background in the json file
+            */
+            void parseBackground(boost::property_tree::ptree &root);
 
             /*
             ** @brief Display all entities in the json file for debug
@@ -177,6 +213,9 @@ namespace Parser {
             std::vector<entity_t> _entities;
             int _lastId;
             int _tileSize;
+            std::vector<std::string> _background_1;
+            std::vector<std::string> _background_2;
+            std::vector<std::string> _background_3;
     };
 
     /*
