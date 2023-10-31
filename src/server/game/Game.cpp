@@ -35,7 +35,7 @@ void Game::run(std::shared_ptr<Server> server)
             timer.time = (int)timerCount / 5;
             if (!error) {
                 if (status == 0) {
-                    timerCount = 1;
+                    timerCount = 29;
                     this->run(server);
                 }
                 else if (status == 1) {
@@ -43,7 +43,7 @@ void Game::run(std::shared_ptr<Server> server)
                     timerCount--;
                     if (timerCount == 0) {
                         server->setGameStatus(2);
-                        timerCount = 1;
+                        timerCount = 29;
                     }
                 }
                 if (status == 2) {
