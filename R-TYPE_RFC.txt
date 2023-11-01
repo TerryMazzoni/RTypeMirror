@@ -72,7 +72,9 @@ RFC 9999                        R-TYPE PROTOCOL                  September 2023
         SHIPS,
         MISSILES,
         COLISION,
-        INPUT
+        INPUT,
+        BONUS,
+        DELETE
 
     Each communications are sent in a specific format. One structure exists for
     each communication type, and they all have their type at the top of the
@@ -99,7 +101,7 @@ RFC 9999                        R-TYPE PROTOCOL                  September 2023
         permitting him to know his ID.
 
     4b. Status of the game :
-            
+
         Each clients are sending the READY structure at every loop, permitting
         the server to know if the client is ready to play. When all clients are
         ready, the server will send the TIMER structure, containing the time
@@ -111,10 +113,14 @@ RFC 9999                        R-TYPE PROTOCOL                  September 2023
         SHIPS
         MISSILES
         COLISION
+        BONUS
+        DELETE
 
         The SHIPS structure contains all the ships of the game (allies and
         enemies with a type), the MISSILES structure contains all the missiles
-        of the game, and the COLISION_ENTITIES contains the two IDs of the
-        entities that collided.
+        of the game, the COLISION_ENTITIES contains the two IDs of the
+        entities that collided, the BONUS structure contains the ID of the
+        bonus and the type of the bonus and the DELETE structure contains the
+        ID of the entity to delete.
 
 Tom                             Standards Track                        [Page 3]
