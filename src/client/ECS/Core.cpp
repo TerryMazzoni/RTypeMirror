@@ -43,7 +43,7 @@ namespace ECS {
         std::vector<Parser::entity_t> entities;
 
         try {
-            entities = Parser::ParserJson(transformPath(std::string("assets/map.json"))).parse().getEntities();
+            entities = Parser::ParserJson(transformPath(std::string("levels/level_1.json"))).parse().getEntities();
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
