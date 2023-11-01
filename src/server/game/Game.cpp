@@ -28,14 +28,14 @@ void Game::run(std::shared_ptr<Server> server)
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {
-            static int timerCount = 1;
+            static int timerCount = 29;
             Communication::Timer timer;
             int status = server->getGameStatus();
 
             timer.time = (int)timerCount / 5;
             if (!error) {
                 if (status == 0) {
-                    timerCount = 1;
+                    timerCount = 29;
                     this->run(server);
                 }
                 else if (status == 1) {
@@ -43,7 +43,7 @@ void Game::run(std::shared_ptr<Server> server)
                     timerCount--;
                     if (timerCount == 0) {
                         server->setGameStatus(2);
-                        timerCount = 1;
+                        timerCount = 29;
                     }
                 }
                 if (status == 2) {
@@ -353,7 +353,6 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             server->getIds()[entity.value().id] == true) {
             _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
             if (_loop % 25 == 0) {
-                std::cout << "PLAYER HP : " << entity.value().instance["hp"].getFloat() << std::endl;
                 Parser::entity_t newEntity;
                 newEntity.id = _entities.size();
                 newEntity.type = "missile";
@@ -393,7 +392,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     else if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
         if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y") || !Parser::keyExists(entity.value().instance, "scale"))
             return;
-        if (entity.value().instance["x"].getFloat() < 0.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
+        if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
             sendDelete(server, entity.value().id);
             entity = std::nullopt;
             return;
