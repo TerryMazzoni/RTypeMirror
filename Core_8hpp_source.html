@@ -101,15 +101,16 @@ $(function() {
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordtype">void</span> _createEntities();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> _createBullet(<a class="code" href="structECS_1_1Entity.html">Entity</a> entity);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordtype">void</span> _createShip(<a class="code" href="structECS_1_1Entity.html">Entity</a> entity);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <a class="code" href="classECS_1_1EntitiesManager.html">EntitiesManager</a> _entitiesManager;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="classECS_1_1EventManager.html">EventManager</a> _eventManager;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <a class="code" href="classECS_1_1SystemManager.html">SystemManager</a> _systemManager;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <a class="code" href="classGraphic_1_1Graph.html">Graphic::Graph</a> _graph;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} <span class="comment">// namespace ECS</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> setDeltaTime();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="classECS_1_1EntitiesManager.html">EntitiesManager</a> _entitiesManager;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <a class="code" href="classECS_1_1EventManager.html">EventManager</a> _eventManager;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <a class="code" href="classECS_1_1SystemManager.html">SystemManager</a> _systemManager;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <a class="code" href="classGraphic_1_1Graph.html">Graphic::Graph</a> _graph;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    };</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">// namespace ECS</span></div>
 <div class="ttc" id="aclassECS_1_1Core_html"><div class="ttname"><a href="classECS_1_1Core.html">ECS::Core</a></div><div class="ttdef"><b>Definition:</b> Core.hpp:18</div></div>
-<div class="ttc" id="aclassECS_1_1Core_html_a56b2343e209680cb9eecdaffd7f36b5f"><div class="ttname"><a href="classECS_1_1Core.html#a56b2343e209680cb9eecdaffd7f36b5f">ECS::Core::executeServerActions</a></div><div class="ttdeci">int executeServerActions(std::vector&lt; Communication::ShipsPosition &gt;)</div><div class="ttdoc">Execute the Server Actions object.</div><div class="ttdef"><b>Definition:</b> Core.cpp:162</div></div>
+<div class="ttc" id="aclassECS_1_1Core_html_a56b2343e209680cb9eecdaffd7f36b5f"><div class="ttname"><a href="classECS_1_1Core.html#a56b2343e209680cb9eecdaffd7f36b5f">ECS::Core::executeServerActions</a></div><div class="ttdeci">int executeServerActions(std::vector&lt; Communication::ShipsPosition &gt;)</div><div class="ttdoc">Execute the Server Actions object.</div><div class="ttdef"><b>Definition:</b> Core.cpp:163</div></div>
 <div class="ttc" id="aclassECS_1_1Core_html_ac0c7ef50ea0d5f58c97163b29b563fc2"><div class="ttname"><a href="classECS_1_1Core.html#ac0c7ef50ea0d5f58c97163b29b563fc2">ECS::Core::init</a></div><div class="ttdeci">void init(int id)</div><div class="ttdoc">init Core</div><div class="ttdef"><b>Definition:</b> Core.cpp:40</div></div>
 <div class="ttc" id="aclassECS_1_1Core_html_ac965af300c1495a75e91129d3ad33fe4"><div class="ttname"><a href="classECS_1_1Core.html#ac965af300c1495a75e91129d3ad33fe4">ECS::Core::run</a></div><div class="ttdeci">int run(std::shared_ptr&lt; Client &gt;)</div><div class="ttdoc">Run the client loop.</div><div class="ttdef"><b>Definition:</b> Core.cpp:126</div></div>
 <div class="ttc" id="aclassECS_1_1Core_html_ae8a1c67068d757045dc7188ae3ba028c"><div class="ttname"><a href="classECS_1_1Core.html#ae8a1c67068d757045dc7188ae3ba028c">ECS::Core::initWindow</a></div><div class="ttdeci">void initWindow()</div><div class="ttdoc">Init the window.</div><div class="ttdef"><b>Definition:</b> Core.cpp:33</div></div>
