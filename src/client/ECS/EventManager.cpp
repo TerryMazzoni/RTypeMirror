@@ -127,16 +127,16 @@ namespace ECS {
 
         switch (dir) {
             case EventInput::Key_up:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, -4)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, (int) (-4 * _deltaTime))));
                 break;
             case EventInput::Key_down:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, 4)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(0, (int) (4 * _deltaTime))));
                 break;
             case EventInput::Key_left:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(-4, 0)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair((int) (-4 * _deltaTime), 0)));
                 break;
             case EventInput::Key_right:
-                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair(4, 0)));
+                _actions.push_back(std::make_tuple(std::vector<ECS::Entity>{_myPlayer}, ActionType::Move, std::make_pair((int) (4 * _deltaTime), 0)));
                 break;
             default:
                 break;
@@ -156,5 +156,10 @@ namespace ECS {
     bool ECS::EventManager::getClientReady() const
     {
         return _clientReady;
+    }
+
+    void ECS::EventManager::setDeltaTime(double deltaTime)
+    {
+        _deltaTime = deltaTime;
     }
 } // namespace ECS

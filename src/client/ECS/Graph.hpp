@@ -116,4 +116,10 @@ namespace Graphic {
      * @return false
      */
     bool checkWindowOpen();
+    /**
+     * @brief Get the Delta Time object
+     * 
+     * @return double 
+     */
+    double getDeltaTime();
 } // namespace Graphic
