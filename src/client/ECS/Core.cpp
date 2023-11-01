@@ -109,7 +109,6 @@ namespace ECS {
 
                 entity.id = {EntityType::Background1, index};
             }
-
             index++;
             _entitiesManager.addEntities({entity});
         }
