@@ -119,8 +119,10 @@ void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
                 this->getIoService().stop();
                 is_running(1);
             }
-            if (!is_running(0))
+            if (!is_running(0)) {
+                std::cout << "[RECEIVE] Client stopped" << std::endl;
                 return;
+            }
             receiveAsync(core);
         });
     getIoService().run();
@@ -168,6 +170,7 @@ void Client::run()
         end = std::chrono::system_clock::now().time_since_epoch().count();
         elapsed_seconds += (end - start);
     }
+    this->getIoService().stop();
 }
 
 udp::socket &Client::getSocket()

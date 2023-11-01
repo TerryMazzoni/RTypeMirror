@@ -48,12 +48,12 @@ class Client {
             }
             catch (...) {
                 is_running(1);
-                std::cout << "Error on send" << std::endl;
+                std::cout << "Error on send, the server is probably not started" << std::endl;
             }
         }
         /**
          * @brief Receive a message from the server
-         * 
+         *
          * @param ECS::Core
          */
         void receiveAsync(std::shared_ptr<ECS::Core> core);
@@ -105,22 +105,23 @@ class Client {
         void setEvents(std::vector<EventInput> events);
         /**
          * @brief Get the Ships Positions object
-         * 
-         * @return std::vector<Communication::ShipsPosition> 
+         *
+         * @return std::vector<Communication::ShipsPosition>
          */
         std::vector<Communication::ShipsPosition> getShipsPositions();
         /**
          * @brief Get the Missiles Positions object
-         * 
-         * @return std::vector<Communication::MissilesPosition> 
+         *
+         * @return std::vector<Communication::MissilesPosition>
          */
         std::vector<Communication::MissilesPosition> getMissilesPositions();
         /**
          * @brief Get the Entities id To Delete object
-         * 
-         * @return std::vector<int> 
+         *
+         * @return std::vector<int>
          */
         std::vector<int> getEntitiesToDelete();
+
     private:
         boost::asio::io_service _io_service;
         udp::socket _socket;
