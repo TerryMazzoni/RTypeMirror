@@ -45,10 +45,9 @@ On Windows:
 
 ### Client
 
-    USAGE: ./r-type_client -p port -i ip [-m]
+    USAGE: ./r-type_client -p port -i ip
         port    is the port number      8080 by default
         ip      is the ip of the server; localhost by default
-        m       if present, mute the gui
 
 ## Documentation
 
