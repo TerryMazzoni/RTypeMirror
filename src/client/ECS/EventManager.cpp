@@ -15,6 +15,7 @@ namespace ECS {
 
     EventManager::EventManager()
     {
+        _clientReady = false;
     }
 
     EventManager::~EventManager()
@@ -40,7 +41,7 @@ namespace ECS {
         for (auto &event : listEvent) {
             if (std::get<0>(event) == EventType::Keyboard) {
                 if (std::get<1>(event) == (int)EventInput::Space) {
-                    // TODO setready
+                    _clientReady = true;
                     break;
                 }
             }
@@ -107,5 +108,10 @@ namespace ECS {
     void ECS::EventManager::clear()
     {
         _actions.clear();
+    }
+
+    bool ECS::EventManager::getClientReady() const
+    {
+        return _clientReady;
     }
 } // namespace ECS
