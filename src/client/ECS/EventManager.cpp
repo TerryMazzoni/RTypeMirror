@@ -52,26 +52,31 @@ namespace ECS {
     int EventManager::executeServerActions(Communication::ShipsPosition ships)
     {
         ECS::Entity tmp;
+        std::string path;
 
         for (int i = 0; i < ships.nbrItems; i++) {
             tmp = ECS::Entity();
             switch (ships.ship[i].type) {
                 case ShipType::ENEMY1:
                     tmp.id = EntityId(EntityType::Enemy1, ships.ship[i].id);
+                    path = PATH_TEXTURES_ENEMY1;
                     break;
                 case ShipType::ENEMY2:
                     tmp.id = EntityId(EntityType::Enemy2, ships.ship[i].id);
+                    path = PATH_TEXTURES_ENEMY2;
                     break;
                 case ShipType::BOSS1:
                     tmp.id = EntityId(EntityType::Boss1, ships.ship[i].id);
+                    path = PATH_TEXTURES_BOSS1;
                     break;
                 case ShipType::PLAYER:
                     tmp.id = EntityId(EntityType::Player, ships.ship[i].id);
+                    path = PATH_TEXTURES_PLAYER;
                     break;
                 default:
                     break;
             }
-            std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, PATH_TEXTURES_PLAYER));
+            std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, path));
             sprite->setPosition(std::make_pair(ships.ship[i].position.x, ships.ship[i].position.y));
             sprite->setType(ComponentType::Sprite);
             sprite->setScale(ships.ship[i].scale);
