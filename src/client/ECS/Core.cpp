@@ -75,7 +75,15 @@ namespace ECS {
                         std::shared_ptr<ISystem> backgroundMouvement = std::make_shared<BackgroundMouvement>(1920 * (i + 1), -1920 * (nbrBacks - i + 1));
                         sprite->setPosition({1920 * i + (j * totalWidth), 0});
                         sprite->setType(ComponentType::Sprite);
-                        sprite->setSpeed(-5.0);
+
+                        if (Parser::keyExists(entityData.instance, "speed")) {
+                            float speed = entityData.instance["speed"].getFloat();
+                            if (speed != std::numeric_limits<float>::infinity())
+                                sprite->setSpeed(speed);
+                        } else {
+                            sprite->setSpeed(-5.0);
+                        }
+
                         background.components.push_back(sprite);
                         background.id = {type, entityData.id + (i + (j * nbrBacks))};
                         backgroundMouvement->setEntity(background);
