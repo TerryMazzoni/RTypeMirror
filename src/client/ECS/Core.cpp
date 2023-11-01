@@ -11,6 +11,7 @@
 #include "BulletMouvement.hpp"
 #include "ChangeTexture.hpp"
 #include "UpdateMusic.hpp"
+#include "UpdatePosGun.hpp"
 #include "Parser.hpp"
 #include "Graph.hpp"
 #include "TransformPath.hpp"
@@ -81,9 +82,10 @@ namespace ECS {
 
                 std::shared_ptr<ECS::Weapon> weapon = std::dynamic_pointer_cast<ECS::Weapon>(ECS::Factory::createComponent(ComponentType::Weapon, "assets/gun/gun1.png"));
                 weapon->setType(ComponentType::Weapon);
-                weapon->getSprite()->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
-                entity.components.push_back(sprite);
-                
+                std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setPosition(std::make_pair(entityData.instance["x"].getInt(), entityData.instance["y"].getInt()));
+                std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setScale(entityData.instance["scale"].getFloat());
+                entity.components.push_back(weapon);
+
                 entity.id = {EntityType::Player, index};
                 _eventManager.setMyPlayer(entity);
 
@@ -100,7 +102,10 @@ namespace ECS {
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
 
-                _systemManager.addSystems({changeTexture});
+                std::shared_ptr<ISystem> updatePosGun = std::make_shared<UpdatePosGun>();
+                updatePosGun->setEntity(entity);
+
+                _systemManager.addSystems({changeTexture, updatePosGun});
             }
             else if (entityData.type == "__tile__") {
                 std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, textureString));
@@ -272,6 +277,19 @@ namespace ECS {
         std::shared_ptr<ISystem> textureChange = std::make_shared<ChangeTexture>();
         textureChange->setEntity(ship);
         _entitiesManager.addEntities({ship});
+        // if (entity.id.first == EntityType::Player) {
+        //     std::cout << "Player create weapon" << std::endl;
+        //     std::shared_ptr<ECS::Weapon> weapon = std::dynamic_pointer_cast<ECS::Weapon>(ECS::Factory::createComponent(ComponentType::Weapon, "assets/gun/gun1.png"));
+        //     weapon->setType(ComponentType::Weapon);
+        //     std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setPosition(spriteToCopy->getPos());
+        //     std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setScale(spriteToCopy->getScale());
+        //     ship.components.push_back(weapon);
+
+        //     std::shared_ptr<ISystem> updatePosGun = std::make_shared<UpdatePosGun>();
+        //     updatePosGun->setEntity(entity);
+        //     _systemManager.addSystems({updatePosGun});
+        // }
+
         _systemManager.addSystems({textureChange});
     }
 

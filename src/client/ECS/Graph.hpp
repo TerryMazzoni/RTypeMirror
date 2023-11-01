@@ -45,7 +45,7 @@ namespace Graphic {
              * @param Entity
              * @return int
              */
-            int _displayTexture(ECS::Entity &entity);
+            int _displayTexture(ECS::Entity &entity, bool isWeapon);
             /**
              * @brief Sort entities to better display
              * 

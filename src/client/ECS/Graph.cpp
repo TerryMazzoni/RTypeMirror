@@ -31,7 +31,10 @@ namespace Graphic {
 
         for (ECS::Entity &entity : entitiesSorted) {
             if (entity.getComponent(ComponentType::Sprite) != nullptr) {
-                _displayTexture(entity);
+                _displayTexture(entity, false);
+            }
+            if (entity.getComponent(ComponentType::Weapon) != nullptr) {
+                _displayTexture(entity, true);
             }
         }
         Raylib::endDraw();
@@ -87,9 +90,13 @@ namespace Graphic {
         return listEntitiesBackground3;
     }
 
-    int Graph::_displayTexture(ECS::Entity &entity)
+    int Graph::_displayTexture(ECS::Entity &entity, bool isWeapon)
     {
-        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
+        std::shared_ptr<ECS::Sprite> sprite;
+        if (isWeapon)
+            sprite = std::dynamic_pointer_cast<ECS::Sprite>(std::dynamic_pointer_cast<ECS::Weapon>(entity.getComponent(ComponentType::Weapon))->getSprite());
+        else
+            sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
 
         std::vector<Texture2D> textures;
         for (const auto &anyTexture : sprite->getTexturesToDisplay()) {

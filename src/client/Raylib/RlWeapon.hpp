@@ -7,11 +7,11 @@
 
 #pragma once
 
-#include "RlSprite.hpp"
+#include "IComponent.hpp"
 #include "Weapon.hpp"
 
 namespace Raylib {
-    class RlWeapon : public Weapon {
+    class RlWeapon : public ECS::Weapon {
         public:
             RlWeapon(const std::string path);
             ~RlWeapon() = default;
@@ -20,15 +20,15 @@ namespace Raylib {
              * 
              * @param sprite 
              */
-            void setSprite(std::shared_ptr<ECS::Sprite> sprite);
+            void setSprite(std::shared_ptr<ECS::IComponent> sprite);
             /**
              * @brief Get the Sprite object
              * 
-             * @return std::shared_ptr<ECS::Sprite> 
+             * @return std::shared_ptr<ECS::IComponent> 
              */
-            std::shared_ptr<ECS::Sprite> getSprite();
+            std::shared_ptr<ECS::IComponent> getSprite();
 
         private:
-            RlSprite _sprite;
+            std::shared_ptr<ECS::IComponent> _sprite;
     };
 }
