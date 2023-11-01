@@ -124,7 +124,7 @@ namespace ECS {
                     list = _mapComponent[ComponentType::Sprite];
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
-                        sprite->animateTextures();
+                        sprite->animateTextures(_deltaTime);
                     }
                     break;
                 case ActionType::Unknown:
@@ -177,5 +177,10 @@ namespace ECS {
     void EntitiesManager::clearEntitiesToCreate()
     {
         _entitiesToCreate.clear();
+    }
+
+    void EntitiesManager::setDeltaTime(double deltaTime)
+    {
+        _deltaTime = deltaTime;
     }
 } // namespace ECS

@@ -13,7 +13,7 @@ extern "C" {
 
 namespace Raylib
 {
-    int getElapsedTime() {
+    double getElapsedTime() {
         static double last = 0;
         double deltaTime = GetTime() - last;
 

@@ -56,6 +56,7 @@ namespace ECS {
             void _createEntities();
             void _createBullet(Entity entity);
             void _createShip(Entity entity);
+            void setDeltaTime();
 
             EntitiesManager _entitiesManager;
             EventManager _eventManager;

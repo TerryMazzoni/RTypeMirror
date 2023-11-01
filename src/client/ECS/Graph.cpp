@@ -15,6 +15,7 @@
 #include "RlWindow.hpp"
 #include "RlMusic.hpp"
 #include "RlSound.hpp"
+#include "RlTime.hpp"
 
 namespace Graphic {
     std::set<Input> Graph::getInputs() const
@@ -155,5 +156,10 @@ namespace Graphic {
     bool checkWindowOpen()
     {
         return !Raylib::windowShouldClose();
+    }
+
+    double getDeltaTime()
+    {
+        return Raylib::getElapsedTime();
     }
 } // namespace Graphic

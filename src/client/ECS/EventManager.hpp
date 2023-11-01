@@ -75,7 +75,12 @@ namespace ECS {
              * @return false 
              */
             bool getClientReady() const;
-
+            /**
+             * @brief Set the Delta Time object
+             * 
+             * @param deltaTime 
+             */
+            void setDeltaTime(double deltaTime);
         private:
             /**
              * @brief Move the player entity
@@ -87,5 +92,6 @@ namespace ECS {
             Entity _myPlayer;
             std::vector<Action> _actions;
             bool _clientReady;
+            double _deltaTime;
     };
 } // namespace ECS

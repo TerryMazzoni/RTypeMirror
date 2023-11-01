@@ -77,6 +77,12 @@ namespace ECS {
              * 
              */
             void clearEntitiesToCreate();
+            /**
+             * @brief Set the Delta Time object
+             * 
+             * @param deltaTime 
+             */
+            void setDeltaTime(double deltaTime);
         protected:
         private:
             void resizeMapComponent();
@@ -87,5 +93,6 @@ namespace ECS {
             std::vector<std::pair<std::vector<Entity>, EntityType>> _entitiesToCreate;
             std::vector<Entity> _entitiesToDelete;
             int _sizeListComponents;
+            double _deltaTime;
     };
 } // namespace ECS

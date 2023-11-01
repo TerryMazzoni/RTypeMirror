@@ -163,7 +163,7 @@ namespace Raylib {
              * @brief Animate the texture of the sprite
              * 
              */
-            void animateTextures();
+            void animateTextures(float deltaTime);
         private:
             std::vector<Texture2D> _listTextures;
             std::vector<int> _currentTexture;

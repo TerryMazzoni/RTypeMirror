@@ -134,15 +134,21 @@ namespace Raylib {
         _positions.second += velocity.second;
     }
 
-    void RlSprite::animateTextures()
+    void RlSprite::animateTextures(float deltaTime)
     {
+        static float elapsedTime = 0;
         int idx = 0;
 
+        elapsedTime += deltaTime;
         for (auto &indexTexture : _currentTexture) {
-            indexTexture = indexTexture + 1 > _listTextures.size() / _currentTexture.size() * (idx + 1) - 1
-                               ? _listTextures.size() / _currentTexture.size() * idx
-                               : indexTexture + 1;
+            if (elapsedTime >= 0.3) {
+                indexTexture = indexTexture + 1 > _listTextures.size() / _currentTexture.size() * (idx + 1) - 1
+                                ? _listTextures.size() / _currentTexture.size() * idx
+                                : indexTexture + 1;
+            }
             idx++;
         }
+        if (elapsedTime >= 0.3)
+            elapsedTime -= 0.3;
     }
 } // namespace Raylib

@@ -137,6 +137,7 @@ namespace ECS {
         while (Graphic::checkWindowOpen() and is_running(0)) {
             if (!client->getIsReady())
                 client->setIsReady(_eventManager.getClientReady());
+            setDeltaTime();
             Graphic::refreshWindow();
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
@@ -267,5 +268,13 @@ namespace ECS {
         textureChange->setEntity(ship);
         _entitiesManager.addEntities({ship});
         _systemManager.addSystems({textureChange});
+    }
+
+    void Core::setDeltaTime()
+    {
+        double deltaTime = Graphic::getDeltaTime();
+
+        _entitiesManager.setDeltaTime(deltaTime);
+        _eventManager.setDeltaTime(deltaTime);
     }
 } // namespace ECS

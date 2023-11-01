@@ -142,6 +142,6 @@ namespace ECS {
              * @brief Animate the texture of the sprite
              * 
              */
-            virtual void animateTextures() = 0;
+            virtual void animateTextures(float deltaTime) = 0;
     };
 } // namespace ECS
