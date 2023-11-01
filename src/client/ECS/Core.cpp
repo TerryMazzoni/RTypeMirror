@@ -98,6 +98,22 @@ namespace ECS {
                     updateMusic->setEntity(entity);
                     _eventManager.setMyPlayer(entity);
                     _systemManager.addSystems({updateMusic});
+                    switch (id) {
+                        case 1:
+                            sprite->setColor(255, 0, 0, 255, {1, 2});
+                            break;
+                        case 2:
+                            sprite->setColor(0, 0, 255, 255, {1, 2});
+                            break;
+                        case 3:
+                            sprite->setColor(0, 255, 0, 255, {1, 2});
+                            break;
+                        case 4:
+                            sprite->setColor(0, 255, 255, 255, {1, 2});
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
                 changeTexture->setEntity(entity);
@@ -124,7 +140,7 @@ namespace ECS {
         }
         Entity entityReady;
         std::shared_ptr<ECS::IComponent> ready = ECS::Factory::createComponent(ComponentType::Sprite, "assets/READY.png");
-        std::dynamic_pointer_cast<ECS::Sprite>(ready)->setPosition(std::make_pair(500,800));
+        std::dynamic_pointer_cast<ECS::Sprite>(ready)->setPosition(std::make_pair(500, 800));
         std::dynamic_pointer_cast<ECS::Sprite>(ready)->setScale(2);
         ready->setType(ComponentType::Sprite);
         entityReady.components.push_back(ready);
@@ -271,8 +287,8 @@ namespace ECS {
         std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
         sprite->setPosition(spriteToCopy->getPos());
         sprite->setScale(spriteToCopy->getScale());
-        ship.components.push_back(sprite);
         ship.id = {EntityType::Player, entity.id.second};
+        ship.components.push_back(sprite);
 
         std::shared_ptr<ISystem> textureChange = std::make_shared<ChangeTexture>();
         textureChange->setEntity(ship);
@@ -282,6 +298,23 @@ namespace ECS {
             std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setPosition(sprite->getPos());
             std::dynamic_pointer_cast<ECS::Sprite>(weapon->getSprite())->setScale(sprite->getScale());
             ship.components.push_back(weapon);
+            std::cout << ship.id.second << std::endl;
+            switch (ship.id.second) {
+                case 1:
+                    sprite->setColor(255, 0, 0, 255, {1, 2});
+                    break;
+                case 2:
+                    sprite->setColor(0, 0, 255, 255, {1, 2});
+                    break;
+                case 3:
+                    sprite->setColor(0, 255, 0, 255, {1, 2});
+                    break;
+                case 4:
+                    sprite->setColor(0, 255, 255, 255, {1, 2});
+                    break;
+                default:
+                    break;
+            }
 
             std::shared_ptr<ISystem> updatePosGun = std::make_shared<UpdatePosGun>();
             updatePosGun->setEntity(ship);
