@@ -74,7 +74,6 @@ int Game::getLevel() const
     return _level;
 }
 
-
 int Game::getScore() const
 {
     return _score;
@@ -241,11 +240,11 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                     if (checkColision(entity.value(), entity_colision.value())) {
                         int damage = entity.value().instance["damage"].getInt();
                         sendDelete(server, entity.value().id);
-                        _entities[entity.value().id] = std::nullopt;
-
+                        entity = std::nullopt;
                         if (Parser::keyExists(entity_colision.value().instance, "hp") && (entity_colision.value().instance["hp"].getInt()) != 0) {
                             Parser::setValue(entity_colision.value().instance, "hp", entity_colision.value().instance["hp"].getInt() - damage);
                         }
+                        return;
                     }
                 }
             }
@@ -277,7 +276,8 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             Parser::setValue(entity.value().instance, std::string("gun"), gun);
                         }
                         sendDelete(server, entity_colision.value().id);
-                        _entities[entity_colision.value().id] = std::nullopt;
+                        entity = std::nullopt;
+                        return;
                     }
                 }
             }
@@ -312,9 +312,17 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             }
             else {
                 Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0));
-                std::cout << "Y: " << entity.value().instance["y"].getFloat() << std::endl;
                 if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
                     Parser::setValue(entity.value().instance, "y_status", 0);
+            }
+        }
+        else if (entity.value().type == "__tile__") {
+            if (Parser::keyExists(entity.value().instance, "x") && entity.value().instance["x"].getFloat() <= -_tile_size) {
+                entity = std::nullopt;
+                return;
+            }
+            else {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 5.0));
             }
         }
     }
@@ -353,7 +361,8 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed") && entity.value().id != 0) {
             if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["x"].getFloat() > 2120.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
                 sendDelete(server, entity.value().id);
-                _entities[entity.value().id] = std::nullopt;
+                entity = std::nullopt;
+                return;
             }
             else {
                 _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.value().instance["x"].getFloat() + ((entity.value().instance["speed"].getFloat()) * entity.value().instance["direction_x"].getFloat())), (entity.value().instance["y"].getFloat() - ((entity.value().instance["speed"].getFloat()) * entity.value().instance["direction_y"].getFloat()))}, Communication::Position{(entity.value().instance["direction_x"].getFloat()), (entity.value().instance["direction_y"].getFloat())}, (entity.value().instance["speed"].getFloat()), 1, entity.value().id));
@@ -365,7 +374,8 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             return;
         if (entity.value().instance["x"].getFloat() < 0.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
             sendDelete(server, entity.value().id);
-            _entities[entity.value().id] = std::nullopt;
+            entity = std::nullopt;
+            return;
         }
         _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
         if (_loop % 5 == 0 && entity.value().instance["x"].getFloat() <= 1920.0) {
