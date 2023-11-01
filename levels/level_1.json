@@ -76,7 +76,7 @@
           "x": 256.0,
           "y": 128.0,
           "scale": 3,
-          "speed": 1.0,
+          "speed": 2.0,
           "hp": 100,
           "max_hp": 100
         },
@@ -84,7 +84,7 @@
           "x": 256.0,
           "y": 384.0,
           "scale": 3,
-          "speed": 1.0,
+          "speed": 2.0,
           "hp": 100,
           "max_hp": 100
         },
@@ -92,7 +92,7 @@
           "x": 256.0,
           "y": 640.0,
           "scale": 3,
-          "speed": 1.0,
+          "speed": 2.0,
           "hp": 100,
           "max_hp": 100
         },
@@ -100,7 +100,7 @@
           "x": 256.0,
           "y": 896.0,
           "scale": 3,
-          "speed": 1.0,
+          "speed": 2.0,
           "hp": 100,
           "max_hp": 100
         }
@@ -118,43 +118,96 @@
       ],
       "instance": [
         {
-          "x": 1216.0,
+          "x": 2216.0,
           "y": 384.0,
           "damage": 10,
-          "speed": 50,
-          "hp": 50,
+          "speed": 1.0,
+          "hp": 20,
           "scale": 2
         },
         {
-          "x": 1216.0,
+          "x": 2216.0,
           "y": 512.0,
-          "damage": 10,
-          "speed": 50,
+          "damage": 20,
+          "speed": 1.0,
           "hp": 50,
           "scale": 2
         },
         {
-          "x": 1280.0,
+          "x": 2280.0,
           "y": 448.0,
-          "damage": 10,
-          "speed": 50,
+          "damage": 20,
+          "speed": 1.0,
           "hp": 50,
           "scale": 2
         },
         {
-          "x": 1344.0,
+          "x": 2344.0,
           "y": 512.0,
-          "damage": 10,
-          "speed": 50,
+          "damage": 20,
+          "speed": 1.0,
           "hp": 50,
           "scale": 2
         },
         {
-          "x": 1344.0,
+          "x": 2344.0,
           "y": 384.0,
-          "damage": 10,
-          "speed": 50,
+          "damage": 20,
+          "speed": 1.0,
           "hp": 50,
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "type": "enemy_2",
+      "textures": [
+        "assets/enemies/Enemy2/0.png",
+        "assets/enemies/Enemy2/1.png",
+        "assets/enemies/Enemy2/2.png",
+        "assets/enemies/Enemy2/3.png",
+        "assets/enemies/Enemy2/4.png",
+        "assets/enemies/Enemy2/5.png"
+      ],
+      "instance": [
+        {
+          "x": 3216.0,
+          "y": 384.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3216.0,
+          "y": 512.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3280.0,
+          "y": 448.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3344.0,
+          "y": 512.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3344.0,
+          "y": 384.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
           "scale": 2
         }
       ]

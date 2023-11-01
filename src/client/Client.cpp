@@ -134,7 +134,7 @@ void Client::run()
 
     while (is_running(0)) {
         start = std::chrono::system_clock::now().time_since_epoch().count();
-        if (elapsed_seconds >= 100000000) {
+        if (elapsed_seconds >= 30000000) {
             if (this->getId() == 0) {
                 Communication::Id id;
                 this->send(id);
@@ -162,7 +162,7 @@ void Client::run()
                 }
                 _events.clear();
             }
-            elapsed_seconds -= 100000000;
+            elapsed_seconds -= 30000000;
         }
         for (int i = 0; i < 10000; i++)
             ;
