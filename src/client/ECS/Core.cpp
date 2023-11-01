@@ -41,7 +41,7 @@ namespace ECS {
     void Core::init(int id)
     {
         std::vector<Parser::entity_t> entities;
-        Parser::ParserJson parser = Parser::ParserJson(transformPath(std::string("assets/map.json")));
+        Parser::ParserJson parser = Parser::ParserJson(transformPath(std::string("levels/level_1.json")));
 
         try {
             parser.parse();

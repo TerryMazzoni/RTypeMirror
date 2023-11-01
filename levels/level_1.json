@@ -1,39 +1,9 @@
 {
-  "background1": [
-    "assets/background/road1.png",
-    "assets/background/road2.png"
-  ],
-  "background2": [
-    "assets/background/sidewalk1.png",
-    "assets/background/sidewalk2.png",
-    "assets/background/sidewalk3.png"
-  ],
-  "background3": [],
   "map": {
-    "tiles": [
-      "#########################################################################################################################",
-      "#                                                ###                                                                     ",
-      "#                                                ###                                                                     ",
-      "#                                                ###                                                                     ",
-      "#                                                ###                                                                     ",
-      "#                                                ###                                                                     ",
-      "#                                                                                                                        ",
-      "#                                                                                                                        ",
-      "#                                                                                                                        ",
-      "#                                                                                                                        ",
-      "#                                                        ###                                                             ",
-      "#                                                        ###                                                             ",
-      "#                                                        ###                                                             ",
-      "#                                                        ###                                                             ",
-      "#                                                        ###                                                             ",
-      "#                                                        ###                                                             ",
-      "#########################################################################################################################"
-    ],
+    "tiles": [],
     "tile_size": 64,
     "textures": {
-      "#": [
-        "assets/walls/Wall.png"
-      ]
+      "#": ["assets/walls/Wall.png"]
     }
   },
   "all_entities": [
@@ -65,12 +35,7 @@
         "assets/player/Layer 4_5.png",
         "assets/player/Layer 4_6.png"
       ],
-      "index_textures": [
-        0,
-        6,
-        12,
-        18
-      ],
+      "index_textures": [0, 6, 12, 18],
       "instance": [
         {
           "x": 256.0,
@@ -103,6 +68,49 @@
           "speed": 2.0,
           "hp": 100,
           "max_hp": 100
+        }
+      ]
+    },
+    {
+      "type": "__background_3__",
+      "textures": [
+        "assets/background/road1.png",
+        "assets/background/road2.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "type": "__background_2__",
+      "textures": [
+        "assets/background/sidewalk1.png",
+        "assets/background/sidewalk2.png",
+        "assets/background/sidewalk3.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "type": "__background_1__",
+      "textures": [
+        "assets/background/building1.png",
+        "assets/background/building2.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0
         }
       ]
     },
