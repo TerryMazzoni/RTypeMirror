@@ -223,9 +223,6 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
 {
     if (!entity.has_value())
         return;
-    if (entity.value().type == "__tile__" && entity.value().id == 109) {
-        std::cout << "Tile " << entity.value().id << " x: " << entity.value().instance["x"].getFloat() << " y: " << entity.value().instance["y"].getFloat() << std::endl;
-    }
     if (entity.value().type != "__tile__") {
         for (auto &entity_colision : _entities) {
             if (!entity_colision.has_value())
@@ -315,16 +312,13 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             }
             else {
                 Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 1.0 * (entity.value().instance["speed"].getFloat() / 10.0));
-                std::cout << "Y: " << entity.value().instance["y"].getFloat() << std::endl;
                 if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
                     Parser::setValue(entity.value().instance, "y_status", 0);
             }
         }
         else if (entity.value().type == "__tile__") {
             if (Parser::keyExists(entity.value().instance, "x") && entity.value().instance["x"].getFloat() <= -_tile_size) {
-                std::cout << "DELETE WALL" << std::endl;
                 entity = std::nullopt;
-                std::cout << "DELETE ENTITY HAS VALUE : " << entity.has_value() << std::endl;
                 return;
             }
             else {
