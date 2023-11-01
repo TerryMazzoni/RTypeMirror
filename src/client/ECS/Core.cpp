@@ -26,7 +26,8 @@ namespace ECS {
 
     Core::~Core()
     {
-        Graphic::closeWindow();
+        if (Graphic::checkWindowOpen())
+            Graphic::closeWindow();
     }
 
     void Core::initWindow()
@@ -120,7 +121,8 @@ namespace ECS {
         std::set<Input> inputs;
 
         while (client->getId() == 0)
-            ;
+            if (!is_running(0))
+                return 1;
         initWindow();
         init(client->getId());
         while (Graphic::checkWindowOpen() and is_running(0)) {

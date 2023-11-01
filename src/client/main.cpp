@@ -38,6 +38,7 @@ int main(int ac, char **av)
     std::shared_ptr<Client> client;
     std::shared_ptr<std::thread> receiveThread;
     std::shared_ptr<std::thread> runThread;
+    int status = 0;
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
@@ -48,8 +49,8 @@ int main(int ac, char **av)
     signal(SIGINT, signal_handler);
     receiveThread = std::make_shared<std::thread>([&client, &core]() { client->receiveAsync(core); });
     runThread = std::make_shared<std::thread>([&client]() { client->run(); });
-    core->run(client);
+    status = core->run(client);
     receiveThread->join();
     runThread->join();
-    return 0;
+    return status;
 }
