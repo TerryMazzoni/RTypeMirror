@@ -68,9 +68,17 @@ namespace ECS {
              *
              */
             void clear();
+            /**
+             * @brief Get the Client Ready object
+             * 
+             * @return true 
+             * @return false 
+             */
+            bool getClientReady() const;
 
         private:
             Entity _myPlayer;
             std::vector<Action> _actions;
+            bool _clientReady;
     };
 } // namespace ECS

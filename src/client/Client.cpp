@@ -19,7 +19,7 @@ bool is_running(int flag)
 }
 
 Client::Client(const std::string &host, const std::string &port)
-    : _io_service(), _socket(_io_service), _id(0), _is_ready(true), _game_started(false),
+    : _io_service(), _socket(_io_service), _id(0), _is_ready(false), _game_started(false),
       _endpoint(boost::asio::ip::address::from_string(host), std::stoi(port))
 
 {

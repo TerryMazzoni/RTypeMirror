@@ -112,6 +112,15 @@ namespace ECS {
             index++;
             _entitiesManager.addEntities({entity});
         }
+        Entity entityReady;
+        std::shared_ptr<ECS::IComponent> ready = ECS::Factory::createComponent(ComponentType::Sprite, "assets/READY.png");
+        std::dynamic_pointer_cast<ECS::Sprite>(ready)->setPosition(std::make_pair(500,800));
+        std::dynamic_pointer_cast<ECS::Sprite>(ready)->setScale(2);
+        ready->setType(ComponentType::Sprite);
+        entityReady.components.push_back(ready);
+        entityReady.id.first = EntityType::Background1;
+        entityReady.id.second = _entitiesManager.getEntities().size();
+        _entitiesManager.addEntities({entityReady});
     }
 
     int Core::run(std::shared_ptr<Client> client)
@@ -126,6 +135,8 @@ namespace ECS {
         initWindow();
         init(client->getId());
         while (Graphic::checkWindowOpen() and is_running(0)) {
+            if (!client->getIsReady())
+                client->setIsReady(_eventManager.getClientReady());
             Graphic::refreshWindow();
             _eventManager.executeInputs(inputs);
             std::vector<Entity> entitiesToDelete = _entitiesManager.getEntitiesToDelete();
