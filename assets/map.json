@@ -8,8 +8,7 @@
     "assets/background/sidewalk2.png",
     "assets/background/sidewalk3.png"
   ],
-  "background3": [
-  ],
+  "background3": [],
   "map": {
     "tiles": [
       "#SSSSSSSSSSSSSSSSSSSSSS###SSSSSSSSSSSSS##SSSSSSSSSSSSSSSS###SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS###SSSSSSSS#",

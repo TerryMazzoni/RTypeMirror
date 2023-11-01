@@ -77,6 +77,13 @@ namespace ECS {
             bool getClientReady() const;
 
         private:
+            /**
+             * @brief Move the player entity
+             *
+             * @param EventInput
+             */
+            void movePlayer(EventInput dir);
+
             Entity _myPlayer;
             std::vector<Action> _actions;
             bool _clientReady;
