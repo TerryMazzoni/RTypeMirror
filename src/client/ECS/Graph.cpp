@@ -16,6 +16,7 @@
 #include "RlMusic.hpp"
 #include "RlSound.hpp"
 #include "RlTime.hpp"
+#include "RlWeapon.hpp"
 
 namespace Graphic {
     std::set<Input> Graph::getInputs() const
@@ -30,7 +31,10 @@ namespace Graphic {
 
         for (ECS::Entity &entity : entitiesSorted) {
             if (entity.getComponent(ComponentType::Sprite) != nullptr) {
-                _displayTexture(entity);
+                _displayTexture(entity, false);
+            }
+            if (entity.getComponent(ComponentType::Weapon) != nullptr) {
+                _displayTexture(entity, true);
             }
         }
         Raylib::endDraw();
@@ -86,9 +90,13 @@ namespace Graphic {
         return listEntitiesBackground3;
     }
 
-    int Graph::_displayTexture(ECS::Entity &entity)
+    int Graph::_displayTexture(ECS::Entity &entity, bool isWeapon)
     {
-        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
+        std::shared_ptr<ECS::Sprite> sprite;
+        if (isWeapon)
+            sprite = std::dynamic_pointer_cast<ECS::Sprite>(std::dynamic_pointer_cast<ECS::Weapon>(entity.getComponent(ComponentType::Weapon))->getSprite());
+        else
+            sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
 
         std::vector<Texture2D> textures;
         for (const auto &anyTexture : sprite->getTexturesToDisplay()) {
@@ -134,6 +142,11 @@ namespace Graphic {
     std::shared_ptr<ECS::Sounds> createSound(const std::string path)
     {
         return std::make_shared<Raylib::RlSound>(path);
+    }
+
+    std::shared_ptr<ECS::Weapon> createWeapon(const std::string path)
+    {
+        return std::make_shared<Raylib::RlWeapon>(path);
     }
 
     void createWindow(int width, int heigth, std::string name, int frameRate)

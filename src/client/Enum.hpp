@@ -57,5 +57,6 @@ enum class ComponentType {
     Sprite,
     Music,
     Sound,
+    Weapon,
     Unknown
 };

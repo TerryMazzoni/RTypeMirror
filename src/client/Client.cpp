@@ -92,7 +92,6 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     else if (header->type == Communication::CommunicationTypes::DELETE) {
         Communication::Delete *del = reinterpret_cast<Communication::Delete *>(data);
         _entitiesToDelete.push_back(del->id);
-        std::cout << "Delete: " << del->id << std::endl;
     }
     else {
         std::cout << "Unknown message" << std::endl;
