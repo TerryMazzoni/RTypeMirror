@@ -135,6 +135,12 @@ namespace Raylib {
              */
             int getA() const;
             /**
+             * @brief Get the Indexe Color object
+             * 
+             * @return std::vector<int> 
+             */
+            std::vector<int> getIndexesColor() const;
+            /**
              * @brief Get the Scale of the sprite
              * 
              * @return float 

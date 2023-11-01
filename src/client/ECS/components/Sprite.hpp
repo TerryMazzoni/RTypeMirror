@@ -120,6 +120,12 @@ namespace ECS {
              */
             virtual float getScale() const = 0;
             /**
+             * @brief Get the Indexe Color object
+             * 
+             * @return std::vector<int> 
+             */
+            virtual std::vector<int> getIndexesColor() const = 0;
+            /**
              * @brief Get the Speed object
              * 
              * @return float 
