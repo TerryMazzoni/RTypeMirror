@@ -113,6 +113,11 @@ namespace Raylib {
         return _color.a;
     }
 
+    std::vector<int> RlSprite::getIndexesColor() const
+    {
+        return _textureWithColor;
+    }
+
     float RlSprite::getScale() const
     {
         return _scale;

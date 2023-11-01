@@ -105,9 +105,15 @@ namespace Graphic {
         Vector2 pos = Vector2({(float)sprite->getPosX(), (float)sprite->getPosY()});
         Vector2 transform = Vector2({(float)sprite->getRotation(), (float)sprite->getScale()});
         Color color = Color{(unsigned char)sprite->getR(), (unsigned char)sprite->getG(), (unsigned char)sprite->getB(), (unsigned char)sprite->getA()};
+        std::vector<int> texturesWithColor = sprite->getIndexesColor();
 
+        int i = 0;
         for (auto &texture : textures) {
-            Raylib::drawEx(texture, pos, transform, color);
+            if (std::find(texturesWithColor.begin(), texturesWithColor.end(), i) != texturesWithColor.end())
+                Raylib::drawEx(texture, pos, transform, color);
+            else
+                Raylib::drawEx(texture, pos, transform, Color{(unsigned char)255, (unsigned char)255, (unsigned char)255, (unsigned char)255});
+            i++;
         }
         return 0;
     }
