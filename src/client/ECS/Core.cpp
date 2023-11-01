@@ -142,7 +142,7 @@ namespace ECS {
                             break;
                     }
                 }
-                std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>(ChangeTexture());
+                std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>();
                 changeTexture->setEntity(entity);
 
                 std::shared_ptr<ISystem> updatePosGun = std::make_shared<UpdatePosGun>();
@@ -165,13 +165,16 @@ namespace ECS {
             _entitiesManager.addEntities({entity});
         }
         Entity entityReady;
-        std::shared_ptr<ECS::IComponent> ready = ECS::Factory::createComponent(ComponentType::Sprite, "assets/READY.png");
+        std::shared_ptr<ECS::IComponent> ready = ECS::Factory::createComponent(ComponentType::Sprite, "assets/READY.png,assets/READY.png,assets/READY.png,assets/READY.png,assets/READY.png,assets/READY.png,assets/READY_empty.png");
         std::dynamic_pointer_cast<ECS::Sprite>(ready)->setPosition(std::make_pair(500, 800));
         std::dynamic_pointer_cast<ECS::Sprite>(ready)->setScale(2);
         ready->setType(ComponentType::Sprite);
         entityReady.components.push_back(ready);
         entityReady.id.first = EntityType::Background1;
         entityReady.id.second = _entitiesManager.getEntities().size();
+        std::shared_ptr<ISystem> changeTextureReady = std::make_shared<ChangeTexture>();
+        changeTextureReady->setEntity(entityReady);
+        _systemManager.addSystems({changeTextureReady});
         _entitiesManager.addEntities({entityReady});
     }
 
