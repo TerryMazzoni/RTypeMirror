@@ -28,14 +28,14 @@ void Game::run(std::shared_ptr<Server> server)
     t.expires_at(t.expires_at() + ms);
     t.async_wait(
         [this, &server](const boost::system::error_code &error) {
-            static int timerCount = 29;
+            static int timerCount = 1;
             Communication::Timer timer;
             int status = server->getGameStatus();
 
             timer.time = (int)timerCount / 5;
             if (!error) {
                 if (status == 0) {
-                    timerCount = 29;
+                    timerCount = 1;
                     this->run(server);
                 }
                 else if (status == 1) {
@@ -43,12 +43,12 @@ void Game::run(std::shared_ptr<Server> server)
                     timerCount--;
                     if (timerCount == 0) {
                         server->setGameStatus(2);
-                        timerCount = 29;
+                        timerCount = 1;
                     }
                 }
                 if (status == 2) {
                     if (!_init)
-                        initGame(transformPath(std::string("assets/map.json")));
+                        initGame(transformPath(std::string("levels/level_1.json")));
                     server->sendToAll(timer);
                 }
             }
@@ -97,6 +97,8 @@ void Game::initGame(std::string map_path)
                 Parser::setValue(entity.value().instance, "team", 0);
             if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
                 Parser::setValue(entity.value().instance, "team", 1);
+                if (!Parser::keyExists(entity.value().instance, "y_status"))
+                    Parser::setValue(entity.value().instance, "y_status", 0);
             }
         }
         if (entity.value().type == "__player__")
@@ -382,6 +384,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
         }
     }
     else if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
+        std::cout << "ENEMY, ID : " << entity.value().id << ", X : " << entity.value().instance["x"].getFloat() << " Y : " << entity.value().instance["y"].getFloat() << std::endl;
         if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y") || !Parser::keyExists(entity.value().instance, "scale"))
             return;
         if (entity.value().instance["x"].getFloat() < 0.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
