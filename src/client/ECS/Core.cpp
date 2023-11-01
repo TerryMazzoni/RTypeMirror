@@ -8,10 +8,10 @@
 #include <iostream>
 #include <vector>
 #include "Core.hpp"
-#include "BulletMouvement.hpp"
 #include "ChangeTexture.hpp"
 #include "UpdateMusic.hpp"
 #include "UpdatePosGun.hpp"
+#include "BackgroundMouvement.hpp"
 #include "Parser.hpp"
 #include "Graph.hpp"
 #include "TransformPath.hpp"
@@ -42,12 +42,9 @@ namespace ECS {
     {
         std::vector<Parser::entity_t> entities;
         Parser::ParserJson parser = Parser::ParserJson(transformPath(std::string("assets/map.json")));
-        std::vector<std::string> background1;
-        std::vector<std::string> background2;
-        std::vector<std::string> background3;
 
         try {
-            parser.parse(true);
+            parser.parse();
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
@@ -55,8 +52,39 @@ namespace ECS {
         entities = parser.getEntities();
 
         for (Parser::entity_t &entityData : entities) {
-            if (entityData.type == "__background__")
+            if (entityData.type == "__void__")
+                continue; // this type of entity is used to pad the vector of entites.
+            if (entityData.type == "__background_1__" || entityData.type == "__background_2__" || entityData.type == "__background_3__") {
+                EntityType type;
+                if (entityData.type == "__background_1__")
+                    type = EntityType::Background1;
+                if (entityData.type == "__background_2__")
+                    type = EntityType::Background2;
+                if (entityData.type == "__background_3__")
+                    type = EntityType::Background3;
+
+                int nbrBacks = entityData.textures.first.size();
+                int totalWidth = 1920 * nbrBacks;
+
+                if (nbrBacks == 0)
+                    continue;
+                for (int i = 0; i < nbrBacks; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        Entity background;
+                        std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(ECS::Factory::createComponent(ComponentType::Sprite, transformPath(entityData.textures.first[i])));
+                        std::shared_ptr<ISystem> backgroundMouvement = std::make_shared<BackgroundMouvement>(1920 * (i + 1), -1920 * (nbrBacks - i + 1));
+                        sprite->setPosition({1920 * i + (j * totalWidth), 0});
+                        sprite->setType(ComponentType::Sprite);
+                        sprite->setSpeed(-5.0);
+                        background.components.push_back(sprite);
+                        background.id = {type, entityData.id + (i + (j * nbrBacks))};
+                        backgroundMouvement->setEntity(background);
+                        _entitiesManager.addEntities({background});
+                        _systemManager.addSystems({backgroundMouvement});
+                    }
+                }
                 continue;
+            }
             Entity entity;
             std::ostringstream textureostring;
             std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));
@@ -145,6 +173,12 @@ namespace ECS {
         entityReady.id.first = EntityType::Background1;
         entityReady.id.second = _entitiesManager.getEntities().size();
         _entitiesManager.addEntities({entityReady});
+        // for (auto& entity : _entitiesManager.getEntities()) {
+        //     if (entity.has_value())
+        //         std::cout << entity.value().id.second << " " << (int)entity.value().id.first << std::endl;
+        //     else
+        //         std::cout << "skip" << std::endl;
+        // }
     }
 
     int Core::run(std::shared_ptr<Client> client)

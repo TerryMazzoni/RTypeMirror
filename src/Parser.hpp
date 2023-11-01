@@ -154,32 +154,6 @@ namespace Parser {
             */
             std::vector<entity_t> getEntities() const;
 
-            /*
-            ** @brief Get the path to the foregrounds
-            **
-            ** @return vector of string
-            **
-            */
-            std::vector<std::string> getBackground_1() const;
-
-
-            /*
-            ** @brief Get the path to the middlegrounds
-            **
-            ** @return vector of string
-            **
-            */
-            std::vector<std::string> getBackground_2() const;
-
-
-            /*
-            ** @brief Get the path to the backgrounds
-            **
-            ** @return vector of string
-            **
-            */
-            std::vector<std::string> getBackground_3() const;
-
             /**
              * @brief Get the Tile Size object
              *
@@ -202,11 +176,6 @@ namespace Parser {
             ** @brief Parse the map in the json file
             */
             void parseMap(boost::property_tree::ptree &root);
-
-            /*
-            ** @brief Parse the background in the json file
-            */
-            void parseBackground(boost::property_tree::ptree &root);
 
             /*
             ** @brief Display all entities in the json file for debug

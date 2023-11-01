@@ -354,8 +354,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
             if (_loop % 25 == 0) {
                 Parser::entity_t newEntity;
-                newEntity.id = _entities.size() + 1;
-                std::cout << "NBR OF ENTITIES: " << newEntity.id << std::endl;
+                newEntity.id = _entities.size();
                 newEntity.type = "missile";
                 newEntity.textures = (std::pair<std::vector<std::string>, std::vector<int>>){};
                 newEntity.instance = {};

@@ -167,7 +167,11 @@ namespace ECS {
                 int x = sprite->getPosX();
                 int y = sprite->getPosY();
 
-                if ((x < -100 || y < -100 || x > 2020 || y > 1180) and entity.value().id.first != EntityType::Player) {
+                if ((x < -100 || y < -100 || x > 2020 || y > 1180) and
+                entity.value().id.first != EntityType::Player and
+                entity.value().id.first != EntityType::Background1 and
+                entity.value().id.first != EntityType::Background2 and
+                entity.value().id.first != EntityType::Background3) {
                     _entitiesToDelete.push_back(entity.value());
                 }
             }

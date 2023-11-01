@@ -1,14 +1,4 @@
 {
-  "background1": [
-    "assets/background/road1.png",
-    "assets/background/road2.png"
-  ],
-  "background2": [
-    "assets/background/sidewalk1.png",
-    "assets/background/sidewalk2.png",
-    "assets/background/sidewalk3.png"
-  ],
-  "background3": [],
   "map": {
     "tiles": [
       "#SSSSSSSSSSSSSSSSSSSSSS###SSSSSSSSSSSSS##SSSSSSSSSSSSSSSS###SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS###SSSSSSSS#",
@@ -139,6 +129,47 @@
           "speed": 1.0,
           "hp": 100,
           "max_hp": 100
+        }
+      ]
+    },
+    {
+      "type": "__background_3__",
+      "textures": [
+        "assets/background/road1.png",
+        "assets/background/road2.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "type": "__background_2__",
+      "textures": [
+        "assets/background/sidewalk1.png",
+        "assets/background/sidewalk2.png",
+        "assets/background/sidewalk3.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "type": "__background_1__",
+      "textures": [
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0
         }
       ]
     },
