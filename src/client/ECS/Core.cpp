@@ -47,7 +47,7 @@ namespace ECS {
         std::vector<std::string> background3;
 
         try {
-            parser.parse();
+            parser.parse(true);
         }
         catch (Parser::ParserException &e) {
             throw std::runtime_error(e.what());
@@ -55,6 +55,8 @@ namespace ECS {
         entities = parser.getEntities();
 
         for (Parser::entity_t &entityData : entities) {
+            if (entityData.type == "__background__")
+                continue;
             Entity entity;
             std::ostringstream textureostring;
             std::copy(entityData.textures.first.begin(), entityData.textures.first.end(), std::ostream_iterator<std::string>(textureostring, ","));

@@ -12,22 +12,22 @@ namespace Parser {
     {
         _path = path;
         _entities = {};
-        _lastId = 1;
+        _lastId = 10;
         _background_1 = {};
         _background_2 = {};
         _background_3 = {};
-
+        _nbr_players = 1;
     }
 
     ParserJson::ParserJson()
     {
         _path = "__default__";
         _entities = {};
-        _lastId = 1;
+        _lastId = 10;
         _background_1 = {};
         _background_2 = {};
         _background_3 = {};
-
+        _nbr_players = 1;
     }
 
     ParserJson::~ParserJson()
@@ -183,6 +183,7 @@ namespace Parser {
 
     void ParserJson::displayEntities()
     {
+        std::cout << "Nbr of entities: " << _entities.size() << std::endl;
         std::cout << "Tile Size: " << _tileSize << std::endl;
         std::cout << "Background 1: " << std::endl;
         for (std::string &back : _background_1)
@@ -232,9 +233,26 @@ namespace Parser {
         boost::property_tree::ptree root;
         boost::property_tree::read_json(_path, root);
 
+        for (int i = 5; i <= 13; i++) {
+            _entities.push_back(
+                {i,
+                "__background__",
+                {
+                    {},
+                    {}
+                },
+                {}}
+            );
+        }
         parseEntity(root);
         parseMap(root);
         parseBackground(root);
+        for (entity_t &entity : _entities) {
+            if (entity.type == "__player__") {
+                entity.id = _nbr_players;
+                _nbr_players++;
+            }
+        };
         if (verbose)
             displayEntities();
         return *this;

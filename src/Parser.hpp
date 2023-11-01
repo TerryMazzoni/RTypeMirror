@@ -221,6 +221,7 @@ namespace Parser {
             std::vector<std::string> _background_1;
             std::vector<std::string> _background_2;
             std::vector<std::string> _background_3;
+            int _nbr_players;
     };
 
     /*
