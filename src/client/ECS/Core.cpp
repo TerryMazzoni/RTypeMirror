@@ -173,12 +173,6 @@ namespace ECS {
         entityReady.id.first = EntityType::Background1;
         entityReady.id.second = _entitiesManager.getEntities().size();
         _entitiesManager.addEntities({entityReady});
-        // for (auto& entity : _entitiesManager.getEntities()) {
-        //     if (entity.has_value())
-        //         std::cout << entity.value().id.second << " " << (int)entity.value().id.first << std::endl;
-        //     else
-        //         std::cout << "skip" << std::endl;
-        // }
     }
 
     int Core::run(std::shared_ptr<Client> client)
