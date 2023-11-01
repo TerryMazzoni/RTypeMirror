@@ -236,7 +236,7 @@ namespace ECS {
 
     void Core::_createShip(Entity entity)
     {
-        Entity player;
+        Entity ship;
         std::string path;
 
         switch (entity.id.first) {
@@ -249,9 +249,9 @@ namespace ECS {
             case (EntityType::Enemy2):
                 path = PATH_TEXTURES_ENEMY2;
                 break;
-            // case (EntityType::Boss1):
-            //     path = PATH_TEXTURES_BOSS1;
-            //     break;
+            case (EntityType::Boss1):
+                path = PATH_TEXTURES_BOSS1;
+                break;
             default:
                 break;
         }
@@ -260,12 +260,12 @@ namespace ECS {
         std::shared_ptr<ECS::Sprite> spriteToCopy = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
         sprite->setPosition(spriteToCopy->getPos());
         sprite->setScale(spriteToCopy->getScale());
-        player.components.push_back(sprite);
-        player.id = {EntityType::Player, entity.id.second};
+        ship.components.push_back(sprite);
+        ship.id = {EntityType::Player, entity.id.second};
 
         std::shared_ptr<ISystem> textureChange = std::make_shared<ChangeTexture>();
-        textureChange->setEntity(player);
-        _entitiesManager.addEntities({player});
+        textureChange->setEntity(ship);
+        _entitiesManager.addEntities({ship});
         _systemManager.addSystems({textureChange});
     }
 } // namespace ECS
