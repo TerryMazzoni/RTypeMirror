@@ -109,9 +109,9 @@ void Game::updateGame(std::shared_ptr<Server> server)
     for (auto &entity : _entities) {
         if (!entity.has_value())
             continue;
+        updateShips(server, entity);
         updateColisions(server, entity);
         updateEntities(server, entity);
-        updateShips(server, entity);
     }
     sendShips(server);
     sendBullets(server);
@@ -151,6 +151,18 @@ void Game::updateShips(std::shared_ptr<Server> server, std::optional<Parser::ent
                         default:
                             break;
                     }
+                }
+                if (move[0] == 1 && move[1] == 1 && move[2] == 1 && move[3] == 1) {
+                    server->removeInputAt(index);
+                    continue;
+                }
+                if (move[0] == 1 && move[1] == 1) {
+                    move[0] = 0;
+                    move[1] = 0;
+                }
+                if (move[2] == 1 && move[3] == 1) {
+                    move[2] = 0;
+                    move[3] = 0;
                 }
                 if (move[1] == 1 && move[3] == 1) {
                     Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) + 20.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
