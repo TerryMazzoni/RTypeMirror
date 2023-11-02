@@ -316,7 +316,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     }
     if (entity.value().type != "__player__" && entity.value().type != "missile") {
         if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "speed")) {
-            if (entity.value().type.substr(0, 4) == "boss" && entity.value().instance["x"].getFloat() >= 1800.0) {
+            if (entity.value().type.substr(0, 4) == "boss" && entity.value().instance["x"].getFloat() >= 1700.0) {
                 Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 5.0 * (entity.value().instance["speed"].getFloat())));
             }
             else if (entity.value().type.substr(0, 4) != "boss") {
