@@ -84,6 +84,18 @@ RFC 9999                        R-TYPE PROTOCOL                  September 2023
     receiving an ID structure, and after the type, the ID structure contains
     the ID of the client.
 
+------[SERVER]------ | ------------------------[CLIENT]------------------------
+                     |
+----------           |                                               ----------
+| HEADER |           |                                               |  TYPE  |
+----------           |               ----------       ----------     ----------
+| DATA 1 | --> SEND --> RECEIVED --> | HEADER |  -->  |  TYPE  | --> | DATA 1 |
+| DATA 2 |           |               ----------       ----------     | DATA 2 |
+|  ....  |           |                                               |  ....  |
+----------           |                                               ----------
+                     |
+------[SERVER]------ | ------------------------[CLIENT]------------------------
+
 Tom                             Standards Track                        [Page 2]
 
 RFC 9999                        R-TYPE PROTOCOL                  September 2023
