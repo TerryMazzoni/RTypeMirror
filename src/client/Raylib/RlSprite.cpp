@@ -10,7 +10,7 @@
 
 namespace Raylib {
     RlSprite::RlSprite()
-        : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _positions({0, 0}), _color(Color{255, 255, 255, 255}), _scale(1.0), _rotation(0)
+        : _listTextures({}), _currentTexture({0}), _textureWithColor({}), _positions({0, 0}), _color(Color{255, 255, 255, 255}), _scale(1.0), _speed(1.0), _rotation(0)
     {
     }
 
@@ -56,6 +56,11 @@ namespace Raylib {
     void RlSprite::setScale(const float scale)
     {
         _scale = scale;
+    }
+
+    void RlSprite::setSpeed(const float speed)
+    {
+        _speed = speed;
     }
 
     void RlSprite::setRotation(const float rotation)
@@ -108,9 +113,19 @@ namespace Raylib {
         return _color.a;
     }
 
+    std::vector<int> RlSprite::getIndexesColor() const
+    {
+        return _textureWithColor;
+    }
+
     float RlSprite::getScale() const
     {
         return _scale;
+    }
+
+    float RlSprite::getSpeed() const
+    {
+        return _speed;
     }
 
     float RlSprite::getRotation() const
@@ -124,15 +139,21 @@ namespace Raylib {
         _positions.second += velocity.second;
     }
 
-    void RlSprite::animateTextures()
+    void RlSprite::animateTextures(float deltaTime)
     {
+        static float elapsedTime = 0;
         int idx = 0;
 
+        elapsedTime += deltaTime;
         for (auto &indexTexture : _currentTexture) {
-            indexTexture = indexTexture + 1 > _listTextures.size() / _currentTexture.size() * (idx + 1) - 1
-                               ? _listTextures.size() / _currentTexture.size() * idx
-                               : indexTexture + 1;
+            if (elapsedTime >= 0.3) {
+                indexTexture = indexTexture + 1 > _listTextures.size() / _currentTexture.size() * (idx + 1) - 1
+                                ? _listTextures.size() / _currentTexture.size() * idx
+                                : indexTexture + 1;
+            }
             idx++;
         }
+        if (elapsedTime >= 0.3)
+            elapsedTime -= 0.3;
     }
 } // namespace Raylib

@@ -25,6 +25,10 @@
 #define PARSER_MAP_TILES "tiles"
 #define PARSER_MAP_TILESIZE "tile_size"
 #define PARSER_INDEX_TEXTURES "index_textures"
+#define PARSER_BACKGROUND_1 "background1"
+#define PARSER_BACKGROUND_2 "background2"
+#define PARSER_BACKGROUND_3 "background3"
+
 
 namespace Parser {
     enum class type_t {
@@ -157,34 +161,95 @@ namespace Parser {
              */
             int getTileSize() const;
 
+            int addId();
+
+            int getLastId() const;
+
         protected:
         private:
             /*
             ** @brief Parse all entities in the json file
             */
-            void parseEntity(boost::property_tree::ptree &entity);
+            void parseEntity(boost::property_tree::ptree &root);
+
             /*
             ** @brief Parse the map in the json file
             */
-            void parseMap(boost::property_tree::ptree &map);
+            void parseMap(boost::property_tree::ptree &root);
 
             /*
             ** @brief Display all entities in the json file for debug
             */
             void displayEntities();
 
+
             std::string _path;
             std::vector<entity_t> _entities;
             int _lastId;
             int _tileSize;
+            std::vector<std::string> _background_1;
+            std::vector<std::string> _background_2;
+            std::vector<std::string> _background_3;
+            int _nbr_players;
     };
 
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, int value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value);
+
+    /*
+     ** @brief modify / set a value in a `std::unordered_map<std::string, Parser::Any>`
+     ** @param umap the unordered map to modify
+     ** @param key the key as a string
+     ** @param value the value as a `int` / `float` / `std::string` / `double` / `Parser::Any`
+     **
+     ** @return `1` if the key was modified, `0` otherwise
+     */
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value);
 
+    /*
+     ** @brief check if a key is present in a unordered map
+     ** @param umap the unordered map to check
+     ** @param key the key to check
+     **
+     ** @return `true` if the key is present, `false` otherwise
+     */
     bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key);
 
 } // namespace Parser

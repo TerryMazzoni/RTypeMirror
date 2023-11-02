@@ -10,7 +10,7 @@
 #include "TransformPath.hpp"
 
 Game::Game()
-    : _level(0), _score(0)
+    : _level(0), _score(0), _loop(0)
 {
     _init = false;
 }
@@ -48,7 +48,7 @@ void Game::run(std::shared_ptr<Server> server)
                 }
                 if (status == 2) {
                     if (!_init)
-                        initGame(transformPath(std::string("assets/test.json")));
+                        initGame(transformPath(std::string("levels/level_1.json")));
                     server->sendToAll(timer);
                 }
             }
@@ -84,11 +84,22 @@ void Game::initGame(std::string map_path)
     _init = true;
     int _last_entity_id = 0;
     Parser::ParserJson parser = Parser::ParserJson(map_path).parse();
-    _entities = parser.getEntities();
+    for (Parser::entity_t entity : parser.getEntities()) {
+        _entities.push_back(std::optional<Parser::entity_t>{entity});
+    }
     _tile_size = parser.getTileSize();
-    for (auto &entity : _entities) {
-        if (Parser::keyExists(entity.instance, "id") && (entity.id) > _last_entity_id) {
-            _last_entity_id = entity.id;
+    for (std::optional<Parser::entity_t> &entity : _entities) {
+        if (entity.has_value()) {
+            if (Parser::keyExists(entity.value().instance, "id") && (entity.value().id) > _last_entity_id) {
+                _last_entity_id = entity.value().id;
+            }
+            if (entity.value().type == "__player__")
+                Parser::setValue(entity.value().instance, "team", 0);
+            if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
+                Parser::setValue(entity.value().instance, "team", 1);
+                if (!Parser::keyExists(entity.value().instance, "y_status"))
+                    Parser::setValue(entity.value().instance, "y_status", 0);
+            }
         }
     }
 }
@@ -96,45 +107,122 @@ void Game::initGame(std::string map_path)
 void Game::updateGame(std::shared_ptr<Server> server)
 {
     for (auto &entity : _entities) {
+        if (!entity.has_value())
+            continue;
         updateShips(server, entity);
         updateColisions(server, entity);
         updateEntities(server, entity);
     }
-    // sendBullets(server);
     sendShips(server);
+    sendBullets(server);
     sendBonus(server);
-    _bullets.clear();
     _ships.clear();
+    _bullets.clear();
     _bonus.clear();
     _loop++;
 }
 
-void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity)
+void Game::updateShips(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
 {
     int index = 0;
+    if (!entity.has_value())
+        return;
     for (auto &communication : server->getInput()) {
         for (int i = 0; i < communication.second.nbrItems; i++) {
-            if (entity.type == "__player__" && entity.id == communication.first) {
-                if (entity.instance.find("speed") == entity.instance.end()) {
-                    Parser::setValue(entity.instance, "speed", 1.0);
+            if (entity.value().type == "__player__" && entity.value().id == communication.first) {
+                if (entity.value().instance.find("speed") == entity.value().instance.end()) {
+                    Parser::setValue(entity.value().instance, "speed", 1.0);
                 }
+                int move[4] = {0, 0, 0, 0};
                 for (int i = 0; i < communication.second.nbrItems; i++) {
                     switch (communication.second.event[i]) {
                         case Communication::EventInput::Key_up:
-                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) - 20 * (entity.instance["speed"].getFloat())));
+                            move[0] = 1;
                             break;
                         case Communication::EventInput::Key_down:
-                            Parser::setValue(entity.instance, std::string("y"), (float)((entity.instance["y"].getFloat()) + 20 * (entity.instance["speed"].getFloat())));
+                            move[1] = 1;
                             break;
                         case Communication::EventInput::Key_left:
-                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) - 20 * (entity.instance["speed"].getFloat())));
+                            move[2] = 1;
                             break;
                         case Communication::EventInput::Key_right:
-                            Parser::setValue(entity.instance, std::string("x"), (float)((entity.instance["x"].getFloat()) + 20 * (entity.instance["speed"].getFloat())));
+                            move[3] = 1;
                             break;
                         default:
                             break;
                     }
+                }
+                if (move[0] == 1 && move[1] == 1 && move[2] == 1 && move[3] == 1) {
+                    server->removeInputAt(index);
+                    continue;
+                }
+                if (move[0] == 1 && move[1] == 1) {
+                    move[0] = 0;
+                    move[1] = 0;
+                }
+                if (move[2] == 1 && move[3] == 1) {
+                    move[2] = 0;
+                    move[3] = 0;
+                }
+                if (move[1] == 1 && move[3] == 1) {
+                    Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) + 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["y"].getFloat() > 980.0 - _tile_size * (entity.value().instance["scale"].getFloat()))
+                        Parser::setValue(entity.value().instance, std::string("y"), 980.0 - _tile_size * (entity.value().instance["scale"].getFloat()));
+                    Parser::setValue(entity.value().instance, std::string("x"), (float)((entity.value().instance["x"].getFloat()) + 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["x"].getFloat() > 1920.0 - _tile_size * (entity.value().instance["scale"].getFloat()))
+                        Parser::setValue(entity.value().instance, std::string("x"), 1920.0 - _tile_size * (entity.value().instance["scale"].getFloat()));
+                    server->removeInputAt(index);
+                    continue;
+                }
+                if (move[0] == 1 && move[3] == 1) {
+                    Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) - 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["y"].getFloat() < 100.0)
+                        Parser::setValue(entity.value().instance, std::string("y"), 100.0);
+                    Parser::setValue(entity.value().instance, std::string("x"), (float)((entity.value().instance["x"].getFloat()) + 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["x"].getFloat() > 1920.0 - _tile_size * (entity.value().instance["scale"].getFloat()))
+                        Parser::setValue(entity.value().instance, std::string("x"), 1920.0 - _tile_size * (entity.value().instance["scale"].getFloat()));
+                    server->removeInputAt(index);
+                    continue;
+                }
+                if (move[0] == 1 && move[2] == 1) {
+                    Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) - 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["y"].getFloat() < 100.0)
+                        Parser::setValue(entity.value().instance, std::string("y"), 100.0);
+                    Parser::setValue(entity.value().instance, std::string("x"), (float)((entity.value().instance["x"].getFloat()) - 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["x"].getFloat() < 0.0)
+                        Parser::setValue(entity.value().instance, std::string("x"), 0.0);
+                    server->removeInputAt(index);
+                    continue;
+                }
+                if (move[1] == 1 && move[2] == 1) {
+                    Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) + 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["y"].getFloat() > 980 - _tile_size * (entity.value().instance["scale"].getFloat()))
+                        Parser::setValue(entity.value().instance, std::string("y"), 980.0 - _tile_size * (entity.value().instance["scale"].getFloat()));
+                    Parser::setValue(entity.value().instance, std::string("x"), (float)((entity.value().instance["x"].getFloat()) - 5.0 * (entity.value().instance["speed"].getFloat()) / 1.5));
+                    if (entity.value().instance["x"].getFloat() < 0.0)
+                        Parser::setValue(entity.value().instance, std::string("x"), 0.0);
+                    server->removeInputAt(index);
+                    continue;
+                }
+                if (move[0] == 1 && (move[2] == 0 || move[3] == 0)) {
+                    Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) - 5.0 * (entity.value().instance["speed"].getFloat())));
+                    if (entity.value().instance["y"].getFloat() < 100.0)
+                        Parser::setValue(entity.value().instance, std::string("y"), 100.0);
+                }
+                if (move[1] == 1 && (move[2] == 0 || move[3] == 0)) {
+                    Parser::setValue(entity.value().instance, std::string("y"), (float)((entity.value().instance["y"].getFloat()) + 5.0 * (entity.value().instance["speed"].getFloat())));
+                    if (entity.value().instance["y"].getFloat() > 980.0 - _tile_size * (entity.value().instance["scale"].getFloat()))
+                        Parser::setValue(entity.value().instance, std::string("y"), 980.0 - _tile_size * (entity.value().instance["scale"].getFloat()));
+                }
+                if (move[2] == 1 && (move[0] == 0 || move[1] == 0)) {
+                    Parser::setValue(entity.value().instance, std::string("x"), (float)((entity.value().instance["x"].getFloat()) - 5.0 * (entity.value().instance["speed"].getFloat())));
+                    if (entity.value().instance["x"].getFloat() < 0.0)
+                        Parser::setValue(entity.value().instance, std::string("x"), 0.0);
+                }
+                if (move[3] == 1 && (move[0] == 0 || move[1] == 0)) {
+                    Parser::setValue(entity.value().instance, std::string("x"), (float)((entity.value().instance["x"].getFloat()) + 5.0 * (entity.value().instance["speed"].getFloat())));
+                    if (entity.value().instance["x"].getFloat() > 1920.0 - _tile_size * (entity.value().instance["scale"].getFloat()))
+                        Parser::setValue(entity.value().instance, std::string("x"), 1920.0 - _tile_size * (entity.value().instance["scale"].getFloat()));
                 }
                 server->removeInputAt(index);
             }
@@ -143,60 +231,72 @@ void Game::updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity)
     }
 }
 
-void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t &entity)
+void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
 {
-    if (entity.type != "__tile__") {
+    if (!entity.has_value())
+        return;
+    if (entity.value().type != "__tile__") {
         for (auto &entity_colision : _entities) {
-            if (entity_colision.type == "__tile__") {
-                // HANDLE COLLISION
-                if (checkColision(entity, entity_colision)) {
-                    if ((entity.instance["hp"].getInt()) != 0) {
-                        entity.instance["hp"] = 0;
-                    }
-                }
-            }
-            else if (entity_colision.type == "missile" && entity.type != "missile") {
-                if ((entity.id) != (entity_colision.id)) {
-                    if (checkColision(entity, entity_colision)) {
-                        if (Parser::keyExists(entity.instance, "hp") && (entity.instance["hp"].getInt()) != 0) {
-                            Parser::setValue(entity.instance, "hp", 0);
+            if (!entity_colision.has_value())
+                continue;
+            // if (entity_colision.value().type == "__tile__") {
+            //     // HANDLE COLLISION
+            //     if (checkColision(entity.value(), entity_colision)) {
+            //         if ((entity.value().instance["hp"].getInt()) != 0) {
+            //             entity.value().instance["hp"] = 0;
+            //         }
+            //     }
+            // }
+            if (entity_colision.has_value() && entity_colision.value().type == "missile" && Parser::keyExists(entity_colision.value().instance, "team")) {
+                if (entity.has_value() && entity_colision.has_value() && (entity.value().id) != (entity_colision.value().id) && entity.value().instance["team"].getInt() != entity_colision.value().instance["team"].getInt()) {
+                    if (checkColision(entity.value(), entity_colision.value())) {
+                        int damage = entity_colision.value().instance["damage"].getFloat();
+                        if (Parser::keyExists(entity.value().instance, "hp") && (entity.value().instance["hp"].getInt()) != 0) {
+                            if (entity.value().type == "__player__") {
+                                Parser::setValue(entity.value().instance, "hp", entity.value().instance["hp"].getInt() - 10.0);
+                            }
+                            Parser::setValue(entity.value().instance, "hp", entity.value().instance["hp"].getInt() - damage);
                         }
+                        else {
+                            sendDelete(server, entity.value().id);
+                            entity = std::nullopt;
+                        }
+                        sendDelete(server, entity_colision.value().id);
+                        entity_colision = std::nullopt;
+                        return;
                     }
                 }
             }
-            else if (entity_colision.type == "bonus" && entity.type == "__player__") {
-                if ((entity.id) != (entity_colision.id)) {
-                    if (checkColision(entity, entity_colision)) {
-                        if (entity_colision.instance["b_type"].getString().find("heal")) {
+            else if (entity_colision.value().type == "bonus" && entity.value().type == "__player__") {
+                if ((entity.value().id) != (entity_colision.value().id)) {
+                    if (checkColision(entity.value(), entity_colision.value())) {
+                        if (entity_colision.value().instance["b_type"].getString().find("heal")) {
                             int hp = 0;
                             try {
-                                hp = std::stoi(entity_colision.instance["b_type"].getString().substr(4, 6));
+                                hp = std::stoi(entity_colision.value().instance["b_type"].getString().substr(4, 6));
                             }
                             catch (std::exception &e) {
-                                std::cout << "Bad bonus instance b_type " << e.what() << std::endl;
+                                std::cerr << "Bad bonus instance b_type " << e.what() << std::endl;
                             }
-                            int new_hp = entity.instance["hp"].getInt() + hp > entity.instance["max_hp"].getInt() ?: entity.instance["max_hp"].getInt();
-                            Parser::setValue(entity.instance, std::string("hp"), new_hp);
+                            int new_hp = entity.value().instance["hp"].getInt() + hp > entity.value().instance["max_hp"].getInt() ?: entity.value().instance["max_hp"].getInt();
+                            Parser::setValue(entity.value().instance, std::string("hp"), new_hp);
                         }
-                        else if (entity_colision.instance["b_type"].getString().find("max_hp")) {
-                            Parser::setValue(entity.instance, std::string("max_hp"), 200);
+                        else if (entity_colision.value().instance["b_type"].getString().find("max_hp")) {
+                            Parser::setValue(entity.value().instance, std::string("max_hp"), 200);
                         }
-                        else if (entity_colision.instance["b_type"].getString().find("gun")) {
+                        else if (entity_colision.value().instance["b_type"].getString().find("gun")) {
                             int gun = 0;
                             try {
-                                gun = std::stoi(entity_colision.instance["b_type"].getString().substr(3, 4));
+                                gun = std::stoi(entity_colision.value().instance["b_type"].getString().substr(3, 4));
                             }
                             catch (std::exception &e) {
-                                std::cout << "Bad bonus instance b_type " << e.what() << std::endl;
+                                std::cerr << "Bad bonus instance b_type " << e.what() << std::endl;
                             }
-                            Parser::setValue(entity.instance, std::string("gun"), gun);
+                            Parser::setValue(entity.value().instance, std::string("gun"), gun);
                         }
-                        for (int i = 0; auto &entity : _entities) {
-                            if (entity.id == entity_colision.id) {
-                                _entities.erase(_entities.begin() + i);
-                            }
-                            i++;
-                        }
+                        sendDelete(server, entity_colision.value().id);
+                        entity = std::nullopt;
+                        return;
                     }
                 }
             }
@@ -204,66 +304,136 @@ void Game::updateColisions(std::shared_ptr<Server> server, Parser::entity_t &ent
     }
 }
 
-void Game::updateEntities(std::shared_ptr<Server> server, Parser::entity_t &entity)
+void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
 {
-    if (entity.type == "missile") {
-        std::cout << "MISSILE" << std::endl;
-        // TODO: check if entity.instance["x"].getFloat() return infinity, if yes, throw exception
-        // same for int
-
-        Parser::setValue(entity.instance, "x", (entity.instance["x"].getFloat()) + (entity.instance["direction_x"].getFloat()) * (entity.instance["speed"].getFloat()));
-        Parser::setValue(entity.instance, "y", (entity.instance["y"].getFloat()) + (entity.instance["direction_y"].getFloat()) * (entity.instance["speed"].getFloat()));
-    }
-    if (entity.type != "__player__" || entity.type != "missile") {
-        if (entity.type.substr(0, 4) != "boss" && Parser::keyExists(entity.instance, "x") && Parser::keyExists(entity.instance, "speed")) {
-            Parser::setValue(entity.instance, "x", (entity.instance["x"].getFloat() - 1.0 * (entity.instance["speed"].getFloat() / 10.0)));
+    if (!entity.has_value())
+        return;
+    if (entity.value().type == "missile") {
+        if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed")) {
+            Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat()) + (entity.value().instance["direction_x"].getFloat()) * (entity.value().instance["speed"].getFloat()));
+            Parser::setValue(entity.value().instance, "y", (entity.value().instance["y"].getFloat()) + (entity.value().instance["direction_y"].getFloat()) * (entity.value().instance["speed"].getFloat()));
         }
-        if (entity.type == "enemy2" || entity.type == "boss1") {
-            if (Parser::keyExists(entity.instance, "y_status"))
-                Parser::setValue(entity.instance, "y_status", 0);
-            if (entity.instance["y_status"].getInt() == 0) {
-                Parser::setValue(entity.instance, "y", entity.instance["y"].getFloat() + 1.0 * (entity.instance["speed"].getFloat() / 10.0));
-                if (Parser::keyExists(entity.instance, "y") && entity.instance["y"].getFloat() <= 100.0)
-                    Parser::setValue(entity.instance, "y_status", 1);
+    }
+    if (entity.value().type != "__player__" && entity.value().type != "missile") {
+        if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "speed")) {
+            if (entity.value().type.substr(0, 4) == "boss" && entity.value().instance["x"].getFloat() >= 1800.0) {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 5.0 * (entity.value().instance["speed"].getFloat())));
+            }
+            else if (entity.value().type.substr(0, 4) != "boss") {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 5.0 * (entity.value().instance["speed"].getFloat())));
+            }
+        }
+        if (entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
+            if (entity.value().instance["y_status"].getInt() == 0) {
+                Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() + 5.0 * (entity.value().instance["speed"].getFloat()));
+                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() >= 1020.0)
+                    Parser::setValue(entity.value().instance, "y_status", 1);
             }
             else {
-                Parser::setValue(entity.instance, "y", entity.instance["y"].getFloat() - 1.0);
-                if (Parser::keyExists(entity.instance, "y") && entity.instance["y"].getFloat() >= 900.0)
-                    Parser::setValue(entity.instance, "y_status", 0);
+                Parser::setValue(entity.value().instance, "y", entity.value().instance["y"].getFloat() - 5.0 * (entity.value().instance["speed"].getFloat()));
+                if (Parser::keyExists(entity.value().instance, "y") && entity.value().instance["y"].getFloat() <= 100.0)
+                    Parser::setValue(entity.value().instance, "y_status", 0);
+            }
+        }
+        else if (entity.value().type == "__tile__") {
+            if (Parser::keyExists(entity.value().instance, "x") && entity.value().instance["x"].getFloat() <= -_tile_size) {
+                entity = std::nullopt;
+                return;
+            }
+            else {
+                Parser::setValue(entity.value().instance, "x", (entity.value().instance["x"].getFloat() - 5.0));
             }
         }
     }
-    if (entity.type == "__player__") {
-        if (Parser::keyExists(entity.instance, "x") && Parser::keyExists(entity.instance, "y") &&
-            entity.id != 0 && server->getIds()[entity.id] == true)
-            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::PLAYER));
+    if (entity.value().type == "__player__") {
+        if (Parser::keyExists(entity.value().instance, "x") &&
+            Parser::keyExists(entity.value().instance, "y") &&
+            Parser::keyExists(entity.value().instance, "scale") &&
+            entity.value().id != 0 &&
+            server->getIds()[entity.value().id] == true) {
+            _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
+            if (_loop % 25 == 0) {
+                Parser::entity_t newEntity;
+                newEntity.id = _entities.size();
+                newEntity.type = "missile";
+                newEntity.textures = (std::pair<std::vector<std::string>, std::vector<int>>){};
+                newEntity.instance = {};
+                Parser::setValue(newEntity.instance, "x", (entity.value().instance["x"].getFloat() + (_tile_size / 1.5) * (entity.value().instance["scale"].getFloat())));
+                Parser::setValue(newEntity.instance, "y", (entity.value().instance["y"].getFloat() + (_tile_size / 2) * (entity.value().instance["scale"].getFloat())));
+                Parser::setValue(newEntity.instance, "direction_x", (1.0));
+                Parser::setValue(newEntity.instance, "direction_y", (0.0));
+                Parser::setValue(newEntity.instance, "speed", (15.0));
+                Parser::setValue(newEntity.instance, "damage", (10.0));
+                Parser::setValue(newEntity.instance, "team", 0);
+                Parser::setValue(newEntity.instance, "scale", 0.1);
+                _entities.push_back(std::optional<Parser::entity_t>{newEntity});
+                _bullets.push_back(std::make_shared<Bullet>(
+                    Communication::Position{(newEntity.instance["x"].getFloat()),
+                                            (newEntity.instance["y"].getFloat())},
+                    Communication::Position{(newEntity.instance["direction_x"].getFloat()),
+                                            (newEntity.instance["direction_y"].getFloat())},
+                    newEntity.instance["speed"].getFloat(),
+                    newEntity.instance["damage"].getFloat(), newEntity.id));
+            }
+        }
     }
-    else if (entity.type == "missile") {
-        std::cout << "Missile" << std::endl;
-        if (Parser::keyExists(entity.instance, "x") || Parser::keyExists(entity.instance, "y") && Parser::keyExists(entity.instance, "direction_x") || Parser::keyExists(entity.instance, "direction_y") && Parser::keyExists(entity.instance, "speed"))
+    else if (entity.value().type == "missile") {
+        if (Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "direction_x") && Parser::keyExists(entity.value().instance, "direction_y") && Parser::keyExists(entity.value().instance, "speed") && entity.value().id != 0) {
+            if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["x"].getFloat() > 2120.0 || entity.value().instance["y"].getFloat() < 0.0 || entity.value().instance["y"].getFloat() > 1080.0) {
+                sendDelete(server, entity.value().id);
+                entity = std::nullopt;
+                return;
+            }
+            else {
+                _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.value().instance["x"].getFloat() + ((entity.value().instance["speed"].getFloat()) * entity.value().instance["direction_x"].getFloat())), (entity.value().instance["y"].getFloat() - ((entity.value().instance["speed"].getFloat()) * entity.value().instance["direction_y"].getFloat()))}, Communication::Position{(entity.value().instance["direction_x"].getFloat()), (entity.value().instance["direction_y"].getFloat())}, (entity.value().instance["speed"].getFloat()), 1, entity.value().id));
+            }
+        }
+    }
+    else if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2" || entity.value().type == "boss_1") {
+        if (!Parser::keyExists(entity.value().instance, "x") || !Parser::keyExists(entity.value().instance, "y") || !Parser::keyExists(entity.value().instance, "scale"))
             return;
-        _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(entity.instance["direction_x"].getFloat()), (entity.instance["direction_y"].getFloat())}, (entity.instance["speed"].getFloat()), 1, 1));
-    }
-    else if (entity.type == "enemy_1" || entity.type == "enemy_2" || entity.type == "boss_1") {
-        if (Parser::keyExists(entity.instance, "x") || Parser::keyExists(entity.instance, "y"))
+        if (entity.value().instance["x"].getFloat() < -100.0 || entity.value().instance["hp"].getFloat() <= 0.0) {
+            sendDelete(server, entity.value().id);
+            entity = std::nullopt;
             return;
-        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, entity.id, ShipType::ENEMY));
-    }
-    if (_loop % 5 == 0 && entity.type == "__player__") {
-        //_bullets[_bullets.size()] = std::make_shared<Bullet>(Communication::Position{(entity.instance["x"].getFloat()), (entity.instance["y"].getFloat())}, Communication::Position{(1), (0)}, (entity.instance["speed"].getFloat()), 1, 1);
+        }
+        _ships.push_back(std::make_shared<Ship>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getShipType(entity.value().type), entity.value().instance["scale"].getFloat()));
+        if (_loop % 50 == 0 && entity.value().instance["x"].getFloat() <= 1920.0) {
+            Parser::entity_t newEntity;
+            newEntity.id = _entities.size();
+            newEntity.type = "missile";
+            newEntity.textures = (std::pair<std::vector<std::string>, std::vector<int>>){};
+            newEntity.instance = {};
+            Parser::setValue(newEntity.instance, "x", (entity.value().instance["x"].getFloat() - (_tile_size / 1.5) * (entity.value().instance["scale"].getFloat())));
+            Parser::setValue(newEntity.instance, "y", (entity.value().instance["y"].getFloat() + (_tile_size / 2) * (entity.value().instance["scale"].getFloat())));
+            Parser::setValue(newEntity.instance, "direction_x", (-1.0));
+            Parser::setValue(newEntity.instance, "direction_y", (0.0));
+            Parser::setValue(newEntity.instance, "speed", (15.0));
+            Parser::setValue(newEntity.instance, "damage", 10.0);
+            Parser::setValue(newEntity.instance, "team", 1);
+            Parser::setValue(newEntity.instance, "scale", 0.1);
+            _entities.push_back(std::optional<Parser::entity_t>{newEntity});
+            _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(newEntity.instance["x"].getFloat()), (newEntity.instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
+        }
     }
 }
 
-bool Game::checkColision(Parser::entity_t entity1, Parser::entity_t entity2)
+bool Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2)
 {
+    if (!entity1.has_value() || !entity2.has_value())
+        return false;
     std::pair<float, float> scales = {1.0, 1.0};
-    if (Parser::keyExists(entity1.instance, "scale"))
-        scales.first = entity1.instance["scale"].getFloat();
-    if (Parser::keyExists(entity2.instance, "scale"))
-        scales.second = entity1.instance["scale"].getFloat();
-    if (Parser::keyExists(entity1.instance, "x") && Parser::keyExists(entity1.instance, "y") && Parser::keyExists(entity2.instance, "x") && Parser::keyExists(entity2.instance, "y")) {
-        if ((entity1.instance["x"].getFloat() + _tile_size * scales.first) >= entity2.instance["x"].getFloat() && entity1.instance["x"].getFloat() <= (entity2.instance["x"].getFloat() + _tile_size * scales.second) && (entity1.instance["y"].getFloat() + _tile_size * scales.first) >= entity2.instance["y"].getFloat() && entity1.instance["y"].getFloat() <= (entity2.instance["y"].getFloat() + _tile_size * scales.second))
+    if (Parser::keyExists(entity1.value().instance, "scale"))
+        scales.first = entity1.value().instance["scale"].getFloat();
+    if (Parser::keyExists(entity2.value().instance, "scale"))
+        scales.second = entity2.value().instance["scale"].getFloat();
+    if (Parser::keyExists(entity1.value().instance, "x") && Parser::keyExists(entity1.value().instance, "y") && Parser::keyExists(entity2.value().instance, "x") && Parser::keyExists(entity2.value().instance, "y")) {
+        if ((entity1.value().instance["x"].getFloat() + _tile_size * scales.first) >= entity2.value().instance["x"].getFloat() &&
+            entity1.value().instance["x"].getFloat() <= (entity2.value().instance["x"].getFloat() + _tile_size * scales.second) &&
+            (entity1.value().instance["y"].getFloat() + _tile_size * scales.first) >= entity2.value().instance["y"].getFloat() &&
+            entity1.value().instance["y"].getFloat() <= (entity2.value().instance["y"].getFloat() + _tile_size * scales.second)) {
             return true;
+        }
     }
     return false;
 }
@@ -284,6 +454,7 @@ void Game::sendShips(std::shared_ptr<Server> server)
         shipsPosition.ship[shipsPosition.nbrItems].position.x = _ships[i]->getPos().x;
         shipsPosition.ship[shipsPosition.nbrItems].position.y = _ships[i]->getPos().y;
         shipsPosition.ship[shipsPosition.nbrItems].type = _ships[i]->getType();
+        shipsPosition.ship[shipsPosition.nbrItems].scale = _ships[i]->getScale();
         shipsPosition.nbrItems++;
         if (shipsPosition.nbrItems == 32) {
             server->sendToAll(shipsPosition);
@@ -341,4 +512,23 @@ void Game::sendBonus(std::shared_ptr<Server> server)
     if (bonusPosition.nbrItems > 0) {
         server->sendToAll(bonusPosition);
     }
+}
+
+void Game::sendDelete(std::shared_ptr<Server> server, int id)
+{
+    Communication::Delete idToDelete;
+
+    idToDelete.id = id;
+    server->sendToAll(idToDelete);
+}
+
+ShipType Game::getShipType(std::string type)
+{
+    if (type == "enemy_1")
+        return ShipType::ENEMY1;
+    if (type == "enemy_2")
+        return ShipType::ENEMY2;
+    if (type == "boss_1")
+        return ShipType::BOSS1;
+    return ShipType::PLAYER;
 }

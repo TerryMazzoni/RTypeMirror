@@ -74,6 +74,12 @@ namespace Raylib {
              */
             void setScale(const float scale);
             /**
+             * @brief Set the Speed of the sprite
+             * 
+             * @param speed float
+             */
+            void setSpeed(const float speed);
+            /**
              * @brief Set the Rotation of the sprite
              * 
              * @param rotation float
@@ -129,11 +135,23 @@ namespace Raylib {
              */
             int getA() const;
             /**
+             * @brief Get the Indexe Color object
+             * 
+             * @return std::vector<int> 
+             */
+            std::vector<int> getIndexesColor() const;
+            /**
              * @brief Get the Scale of the sprite
              * 
              * @return float 
              */
             float getScale() const;
+            /**
+             * @brief Get the Speed of the sprite
+             * 
+             * @return float 
+             */
+            float getSpeed() const;
             /**
              * @brief Get the Rotation of the sprite
              * 
@@ -151,7 +169,7 @@ namespace Raylib {
              * @brief Animate the texture of the sprite
              * 
              */
-            void animateTextures();
+            void animateTextures(float deltaTime);
         private:
             std::vector<Texture2D> _listTextures;
             std::vector<int> _currentTexture;
@@ -159,7 +177,7 @@ namespace Raylib {
             std::pair<int, int> _positions;
             Color _color;
             float _scale;
+            float _speed;
             float _rotation;
-
     };
 } // namespace Raylib

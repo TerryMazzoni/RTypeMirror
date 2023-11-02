@@ -39,5 +39,28 @@ namespace ECS {
              * @return std::shared_ptr<IComponent> 
              */
             std::shared_ptr<IComponent> createSprite(const std::string &value);
+            /**
+             * @brief Create a Music object
+             * 
+             * @param value 
+             * @return std::shared_ptr<IComponent> 
+             */
+            std::shared_ptr<IComponent> createMusic(const std::string &value);
+            /**
+             * @brief Create a Sound object
+             * 
+             * @param value 
+             * @return std::shared_ptr<IComponent> 
+             */
+            std::shared_ptr<IComponent> createSound(const std::string &value);
+            /**
+             * @brief Create a Weapon object
+             * 
+             * @param value 
+             * @return std::shared_ptr<IComponent> 
+             */
+            std::shared_ptr<IComponent> createWeapon(const std::string &value);
+
+            std::shared_ptr<IComponent> _sound = nullptr;
     };
 } // namespace ECS

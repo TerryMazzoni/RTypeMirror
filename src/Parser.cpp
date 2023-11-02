@@ -13,6 +13,10 @@ namespace Parser {
         _path = path;
         _entities = {};
         _lastId = 1;
+        _background_1 = {};
+        _background_2 = {};
+        _background_3 = {};
+        _nbr_players = 1;
     }
 
     ParserJson::ParserJson()
@@ -20,6 +24,10 @@ namespace Parser {
         _path = "__default__";
         _entities = {};
         _lastId = 1;
+        _background_1 = {};
+        _background_2 = {};
+        _background_3 = {};
+        _nbr_players = 1;
     }
 
     ParserJson::~ParserJson()
@@ -68,8 +76,9 @@ namespace Parser {
         entity_t newEntity;
         type_t type;
 
-        if (root.count(PARSER_ALL_ENTITIES) == 0)
+        if (root.count(PARSER_ALL_ENTITIES) == 0) {
             throw ParserException("key " + static_cast<std::string>(PARSER_ALL_ENTITIES) + " not found");
+        }
         for (auto &entity : root.get_child(PARSER_ALL_ENTITIES)) {
             typeEntities = entity.second.get<std::string>(PARSER_TYPE);
             textures = {};
@@ -86,6 +95,16 @@ namespace Parser {
                         typeEntities,
                         {textures, indexes},
                     };
+                    if (typeEntities == "__background_1__" || typeEntities == "__background_2__" || typeEntities == "__background_3__") {
+                        for (int i = 0; i < ((int)textures.size() * 2) - 1; i++) {
+                            _entities.push_back(
+                                {_lastId++,
+                                 "__void__",
+                                 {{},
+                                  {}},
+                                 {}});
+                        };
+                    }
                     for (auto &value : instance.second) {
                         type = getType(value.second);
                         if (type == type_t::INT)
@@ -112,8 +131,9 @@ namespace Parser {
         entity_t newEntity;
         int y = 0;
 
-        if (root.count(PARSER_MAP) == 0)
+        if (root.count(PARSER_MAP) == 0) {
             throw ParserException("key " + static_cast<std::string>(PARSER_MAP) + " not found");
+        }
 
         if (root.get_child(PARSER_MAP).count(PARSER_MAP_TILESIZE) == 0)
             _tileSize = 64;
@@ -163,6 +183,8 @@ namespace Parser {
 
     void ParserJson::displayEntities()
     {
+        std::cout << "Nbr of entities: " << _entities.size() << std::endl;
+        std::cout << "Tile Size: " << _tileSize << std::endl;
         for (auto &entity : _entities) {
             std::cout << "┓\n┃ " << entity.type << std::endl;
             std::cout << "┃    ID: " << entity.id << std::endl;
@@ -192,10 +214,12 @@ namespace Parser {
 
     ParserJson &ParserJson::parse(bool verbose)
     {
-        if (_path == "__default__")
+        if (_path == "__default__") {
             throw Parser::ParserException("No path set");
-        if (!std::filesystem::exists(_path))
+        }
+        if (!std::filesystem::exists(_path)) {
             throw Parser::ParserException("File not found");
+        }
 
         boost::property_tree::ptree root;
         boost::property_tree::read_json(_path, root);
@@ -210,6 +234,17 @@ namespace Parser {
     int ParserJson::getTileSize() const
     {
         return _tileSize;
+    }
+
+    int ParserJson::addId()
+    {
+        _lastId++;
+        return _lastId - 1;
+    }
+
+    int ParserJson::getLastId() const
+    {
+        return _lastId;
     }
 
     Any::Any(int i)
@@ -235,7 +270,6 @@ namespace Parser {
     Any::Any()
         : _i(0), _f(0), _s(""), _type(type_t::NONE)
     {
-        throw Parser::ParserException("Cannot create an Any with no value");
     }
 
     Parser::type_t Any::getType() const
@@ -302,11 +336,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, float value)
@@ -315,11 +350,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, std::string value)
@@ -328,11 +364,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, double value)
@@ -341,11 +378,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, newValue).first->second = newValue;
+            return 1;
         }
         else {
             umap.insert({key, newValue});
+            return 0;
         }
-        return 0;
     }
 
     int setValue(std::unordered_map<std::string, Parser::Any> &umap, std::string key, Any value)
@@ -353,11 +391,12 @@ namespace Parser {
 
         if (keyExists(umap, key)) {
             umap.emplace(key, value).first->second = value;
+            return 1;
         }
         else {
             umap.insert({key, value});
+            return 0;
         }
-        return 0;
     }
 
     bool keyExists(std::unordered_map<std::string, Parser::Any> &umap, std::string key)

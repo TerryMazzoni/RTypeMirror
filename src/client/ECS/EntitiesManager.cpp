@@ -15,6 +15,9 @@ namespace ECS {
     {
         _listEntities = {};
         _mapComponent[ComponentType::Sprite] = {};
+        _mapComponent[ComponentType::Music] = {};
+        _mapComponent[ComponentType::Sound] = {};
+        _mapComponent[ComponentType::Weapon] = {};
         _sizeListComponents = 5;
         resizeMapComponent();
         _listEntities.resize(_sizeListComponents + 1);
@@ -54,6 +57,17 @@ namespace ECS {
         return 0;
     }
 
+    int EntitiesManager::removeEntities(std::vector<int> entitiesToRemove)
+    {
+        for (auto &entity : entitiesToRemove) {
+            for (auto &list : _mapComponent) {
+                list.second[entity] = std::nullopt;
+            }
+            _listEntities[entity] = std::nullopt;
+        }
+        return 0;
+    }
+
     int EntitiesManager::clearEntities()
     {
         for (auto &list : _mapComponent) {
@@ -69,7 +83,6 @@ namespace ECS {
         int idx = 0;
 
         for (auto &action : actions) {
-            // std::cout << "Action " << (int) std::get<1>(action) << std::endl;
             switch (std::get<1>(action)) {
                 case ActionType::Move:
                     list = _mapComponent[ComponentType::Sprite];
@@ -84,7 +97,6 @@ namespace ECS {
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
                         if (list.size() < entity.id.second or !list[entity.id.second].has_value()) {
-                            std::cout << "UpdatePosPlayer create : " << entity.id.second << std::endl;
                             _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), EntityType::Player));
                         }
                         else {
@@ -98,7 +110,7 @@ namespace ECS {
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
                         if (list.size() < entity.id.second or !list[entity.id.second].has_value()) {
-                            _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), EntityType::Player));
+                            _entitiesToCreate.push_back(std::make_pair(std::get<0>(action), entity.id.first));
                         }
                         else {
                             list[entity.id.second] = sprite;
@@ -113,7 +125,7 @@ namespace ECS {
                     list = _mapComponent[ComponentType::Sprite];
                     for (auto &entity : std::get<0>(action)) {
                         std::shared_ptr<ECS::Sprite> sprite = std::dynamic_pointer_cast<ECS::Sprite>(entity.getComponent(ComponentType::Sprite));
-                        sprite->animateTextures();
+                        sprite->animateTextures(_deltaTime);
                     }
                     break;
                 case ActionType::Unknown:
@@ -155,7 +167,11 @@ namespace ECS {
                 int x = sprite->getPosX();
                 int y = sprite->getPosY();
 
-                if ((x < -100 || y < -100 || x > 2020 || y > 1180) and entity.value().id.first != EntityType::Player) {
+                if ((x < -100 || y < -100 || x > 2020 || y > 1180) and
+                entity.value().id.first != EntityType::Player and
+                entity.value().id.first != EntityType::Background1 and
+                entity.value().id.first != EntityType::Background2 and
+                entity.value().id.first != EntityType::Background3) {
                     _entitiesToDelete.push_back(entity.value());
                 }
             }
@@ -166,5 +182,10 @@ namespace ECS {
     void EntitiesManager::clearEntitiesToCreate()
     {
         _entitiesToCreate.clear();
+    }
+
+    void EntitiesManager::setDeltaTime(double deltaTime)
+    {
+        _deltaTime = deltaTime;
     }
 } // namespace ECS

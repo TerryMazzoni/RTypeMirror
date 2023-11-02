@@ -14,6 +14,7 @@
 #include "Bonus.hpp"
 #include <memory>
 #include <vector>
+#include <optional>
 
 class Game {
     public:
@@ -73,21 +74,21 @@ class Game {
          * @param server
          * @param entity
          */
-        void updateShips(std::shared_ptr<Server> server, Parser::entity_t &entity);
+        void updateShips(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity);
         /**
          * @brief Update the colisions between the ships and the bullets.
          *
          * @param server
          * @param entity
          */
-        void updateColisions(std::shared_ptr<Server> server, Parser::entity_t &entity);
+        void updateColisions(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity);
         /**
          * @brief Update the entities and push it to the vectors.
          *
          * @param server
          * @param entity
          */
-        void updateEntities(std::shared_ptr<Server> server, Parser::entity_t &entity);
+        void updateEntities(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity);
         /**
          * @brief End the game.
          *
@@ -113,17 +114,30 @@ class Game {
          */
         void sendBonus(std::shared_ptr<Server> server);
         /**
+         * @brief Send the id of an entity to delete to the clients
+         *
+         * @param server
+         */
+        void sendDelete(std::shared_ptr<Server> server, int id);
+        /**
          * @brief Check the colision between to entities.
          *
          * @return true
          * @return false
          */
-        bool checkColision(Parser::entity_t entity1, Parser::entity_t entity2);
+        bool checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2);
+        /**
+         * @brief Get the Ship Type object
+         *
+         * @param type
+         * @return Ship::ShipType
+         */
+        ShipType getShipType(std::string type);
 
     private:
         int _level;
         int _score;
-        std::vector<Parser::entity_t> _entities;
+        std::vector<std::optional<Parser::entity_t>> _entities;
         int _nb_players;
         bool _init;
         std::vector<std::shared_ptr<Bullet>> _bullets;

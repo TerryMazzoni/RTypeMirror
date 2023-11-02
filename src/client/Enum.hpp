@@ -13,9 +13,13 @@
 
 enum class EntityType {
     Player,
-    Enemy,
+    Enemy1,
+    Enemy2,
+    Boss1,
     Bullet,
-    Background,
+    Background1,
+    Background2,
+    Background3,
     Unknown
 };
 
@@ -29,7 +33,7 @@ enum class EventInput {
     Key_down = 264,
     Key_left = 263,
     Key_right = 262,
-    Left_click = 0
+    Space = 32,
 };
 
 enum class ActionType {
@@ -51,5 +55,8 @@ enum class SceneType {
 
 enum class ComponentType {
     Sprite,
+    Music,
+    Sound,
+    Weapon,
     Unknown
 };

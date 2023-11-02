@@ -50,10 +50,10 @@ int main(int ac, char **av)
     runThread = std::thread([&game, &server]() { game->run(server); });
     while (is_running(0)) {
         start = std::chrono::system_clock::now().time_since_epoch().count();
-        if (elapsed_seconds >= 100000000) {
+        if (elapsed_seconds >= 30000000) {
             if (server->getGameStatus() == 2)
                 game->updateGame(server);
-            elapsed_seconds -= 100000000;
+            elapsed_seconds -= 30000000;
         }
         for (int i = 0; i < 10000; i++)
             ;

@@ -8,8 +8,7 @@
 #include "RlTexture.hpp"
 #include <iostream>
 
-namespace Raylib
-{
+namespace Raylib {
     void RlTexture::unload()
     {
         UnloadTexture(_texture);
@@ -41,11 +40,10 @@ namespace Raylib
 
     RlTexture::RlTexture(std::string path)
     {
-        std::cout << path << std::endl;
         _texture = LoadTexture(path.c_str());
     }
 
     RlTexture::~RlTexture()
     {
     }
-}
+} // namespace Raylib

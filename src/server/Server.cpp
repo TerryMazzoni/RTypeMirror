@@ -175,7 +175,7 @@ void Server::setGameStatus(int status)
     _game_status = status;
 }
 
-std::vector<std::pair<int, Communication::Inputs>> Server::getInput() const
+std::vector<std::pair<int, Communication::Inputs>> &Server::getInput()
 {
     return _inputs;
 }

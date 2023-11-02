@@ -40,16 +40,21 @@ set(CLIENT_SOURCES
     ${CLIENT_PATH}/ECS/systems/ASystem.cpp
     ${CLIENT_PATH}/ECS/systems/ChangeTexture.cpp
     ${CLIENT_PATH}/ECS/systems/BulletMouvement.cpp
+    ${CLIENT_PATH}/ECS/systems/BackgroundMouvement.cpp
+    ${CLIENT_PATH}/ECS/systems/UpdateMusic.cpp
+    ${CLIENT_PATH}/ECS/systems/UpdatePosGun.cpp
     ${CLIENT_PATH}/Raylib/RlAudio.cpp
     ${CLIENT_PATH}/Raylib/RlColor.cpp
     ${CLIENT_PATH}/Raylib/RlDraw.cpp
     ${CLIENT_PATH}/Raylib/RlFont.cpp
     ${CLIENT_PATH}/Raylib/RlInputs.cpp
+    ${CLIENT_PATH}/Raylib/RlMusic.cpp
     ${CLIENT_PATH}/Raylib/RlScreen.cpp
     ${CLIENT_PATH}/Raylib/RlSound.cpp
     ${CLIENT_PATH}/Raylib/RlSprite.cpp
     ${CLIENT_PATH}/Raylib/RlText.cpp
     ${CLIENT_PATH}/Raylib/RlTexture.cpp
+    ${CLIENT_PATH}/Raylib/RlWeapon.cpp
     ${CLIENT_PATH}/Raylib/RlWindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TransformPath.cpp

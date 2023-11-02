@@ -19,7 +19,7 @@ bool is_running(int flag)
 }
 
 Client::Client(const std::string &host, const std::string &port)
-    : _io_service(), _socket(_io_service), _id(0), _is_ready(true), _game_started(false),
+    : _io_service(), _socket(_io_service), _id(0), _is_ready(false), _game_started(false),
       _endpoint(boost::asio::ip::address::from_string(host), std::stoi(port))
 
 {
@@ -84,19 +84,14 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     }
     else if (header->type == Communication::CommunicationTypes::MISSILES) {
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
-        std::cout << "Missiles: " << missiles->nbrItems << std::endl;
-        for (int i = 0; i < missiles->nbrItems; i++) {
-            std::cout << "Missile " << i << ": " << std::endl;
-            std::cout << "ID: " << missiles->missile[i].id << std::endl;
-            std::cout << "Position: " << std::endl;
-            std::cout << "X: " << missiles->missile[i].position.x << std::endl;
-            std::cout << "Y: " << missiles->missile[i].position.y << std::endl;
-        }
         _missilesPositions.push_back(*missiles);
     }
     else if (header->type == Communication::CommunicationTypes::COLISION) {
         Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
-        std::cout << "Colisions between: " << colision->id1 << " and " << colision->id2 << std::endl;
+    }
+    else if (header->type == Communication::CommunicationTypes::DELETE) {
+        Communication::Delete *del = reinterpret_cast<Communication::Delete *>(data);
+        _entitiesToDelete.push_back(del->id);
     }
     else {
         std::cout << "Unknown message" << std::endl;
@@ -105,7 +100,7 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
 
 void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
 {
-    std::vector<char> recv_buffer(1024);
+    std::vector<char> recv_buffer(1500);
     udp::endpoint sender_endpoint;
 
     _socket.async_receive_from(
@@ -123,8 +118,10 @@ void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
                 this->getIoService().stop();
                 is_running(1);
             }
-            if (!is_running(0))
+            if (!is_running(0)) {
+                std::cout << "[RECEIVE] Client stopped" << std::endl;
                 return;
+            }
             receiveAsync(core);
         });
     getIoService().run();
@@ -137,7 +134,7 @@ void Client::run()
 
     while (is_running(0)) {
         start = std::chrono::system_clock::now().time_since_epoch().count();
-        if (elapsed_seconds >= 100000000) {
+        if (elapsed_seconds >= 30000000) {
             if (this->getId() == 0) {
                 Communication::Id id;
                 this->send(id);
@@ -165,13 +162,14 @@ void Client::run()
                 }
                 _events.clear();
             }
-            elapsed_seconds -= 100000000;
+            elapsed_seconds -= 30000000;
         }
         for (int i = 0; i < 10000; i++)
             ;
         end = std::chrono::system_clock::now().time_since_epoch().count();
         elapsed_seconds += (end - start);
     }
+    this->getIoService().stop();
 }
 
 udp::socket &Client::getSocket()
@@ -208,7 +206,6 @@ std::vector<Communication::ShipsPosition> Client::getShipsPositions()
 {
     std::vector<Communication::ShipsPosition> tmp = _shipsPositions;
     _shipsPositions.clear();
-    std::cout << tmp.size() << std::endl;
     return tmp;
 }
 
@@ -216,6 +213,12 @@ std::vector<Communication::MissilesPosition> Client::getMissilesPositions()
 {
     std::vector<Communication::MissilesPosition> tmp = _missilesPositions;
     _missilesPositions.clear();
-    std::cout << tmp.size() << std::endl;
+    return tmp;
+}
+
+std::vector<int> Client::getEntitiesToDelete()
+{
+    std::vector<int> tmp = _entitiesToDelete;
+    _entitiesToDelete.clear();
     return tmp;
 }

@@ -12,7 +12,9 @@
 enum class ShipType {
     UNKNOW,
     PLAYER,
-    ENEMY
+    ENEMY1,
+    ENEMY2,
+    BOSS1
 };
 
 enum class BonusType {
@@ -47,7 +49,8 @@ namespace Communication {
         MISSILES,
         COLISION,
         INPUT,
-        BONUS
+        BONUS,
+        DELETE
     };
 
     typedef struct Header {
@@ -64,6 +67,7 @@ namespace Communication {
             int id;
             float life;
             int level;
+            float scale;
             ShipType type;
     } SpaceShip;
 
@@ -130,4 +134,9 @@ namespace Communication {
             Bonus bonus[32];
             size_t nbrItems;
     } BonusPosition;
+
+    typedef struct Delete {
+            CommunicationTypes code = CommunicationTypes::DELETE;
+            int id;
+    } Delete;
 }; // namespace Communication

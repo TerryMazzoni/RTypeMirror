@@ -53,6 +53,12 @@ namespace ECS {
              */
             virtual void setScale(const float scale) = 0;
             /**
+             * @brief Set the Speed object
+             * 
+             * @param speed 
+             */
+            virtual void setSpeed(const float speed) = 0;
+            /**
              * @brief Set the Rotation object
              * 
              * @param rotation 
@@ -114,6 +120,18 @@ namespace ECS {
              */
             virtual float getScale() const = 0;
             /**
+             * @brief Get the Indexe Color object
+             * 
+             * @return std::vector<int> 
+             */
+            virtual std::vector<int> getIndexesColor() const = 0;
+            /**
+             * @brief Get the Speed object
+             * 
+             * @return float 
+             */
+            virtual float getSpeed() const = 0;
+            /**
              * @brief Get the Rotation object
              * 
              * @return float 
@@ -130,6 +148,6 @@ namespace ECS {
              * @brief Animate the texture of the sprite
              * 
              */
-            virtual void animateTextures() = 0;
+            virtual void animateTextures(float deltaTime) = 0;
     };
 } // namespace ECS

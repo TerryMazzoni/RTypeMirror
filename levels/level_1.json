@@ -1,0 +1,227 @@
+{
+  "map": {
+    "tiles": [],
+    "tile_size": 64,
+    "textures": {
+      "#": ["assets/walls/Wall.png"]
+    }
+  },
+  "all_entities": [
+    {
+      "type": "__player__",
+      "textures": [
+        "assets/player/Layer 1_1.png",
+        "assets/player/Layer 1_2.png",
+        "assets/player/Layer 1_3.png",
+        "assets/player/Layer 1_4.png",
+        "assets/player/Layer 1_5.png",
+        "assets/player/Layer 1_6.png",
+        "assets/player/Layer 2_1.png",
+        "assets/player/Layer 2_2.png",
+        "assets/player/Layer 2_3.png",
+        "assets/player/Layer 2_4.png",
+        "assets/player/Layer 2_5.png",
+        "assets/player/Layer 2_6.png",
+        "assets/player/Layer 3_1.png",
+        "assets/player/Layer 3_2.png",
+        "assets/player/Layer 3_3.png",
+        "assets/player/Layer 3_4.png",
+        "assets/player/Layer 3_5.png",
+        "assets/player/Layer 3_6.png",
+        "assets/player/Layer 4_1.png",
+        "assets/player/Layer 4_2.png",
+        "assets/player/Layer 4_3.png",
+        "assets/player/Layer 4_4.png",
+        "assets/player/Layer 4_5.png",
+        "assets/player/Layer 4_6.png"
+      ],
+      "index_textures": [0, 6, 12, 18],
+      "instance": [
+        {
+          "x": 256.0,
+          "y": 128.0,
+          "scale": 3,
+          "speed": 2.0,
+          "hp": 100,
+          "max_hp": 100
+        },
+        {
+          "x": 256.0,
+          "y": 384.0,
+          "scale": 3,
+          "speed": 2.0,
+          "hp": 100,
+          "max_hp": 100
+        },
+        {
+          "x": 256.0,
+          "y": 640.0,
+          "scale": 3,
+          "speed": 2.0,
+          "hp": 100,
+          "max_hp": 100
+        },
+        {
+          "x": 256.0,
+          "y": 896.0,
+          "scale": 3,
+          "speed": 2.0,
+          "hp": 100,
+          "max_hp": 100
+        }
+      ]
+    },
+    {
+      "type": "__background_3__",
+      "textures": [
+        "assets/background/road1.png",
+        "assets/background/road2.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0,
+          "speed": -3.0
+        }
+      ]
+    },
+    {
+      "type": "__background_2__",
+      "textures": [
+        "assets/background/sidewalk1.png",
+        "assets/background/sidewalk2.png",
+        "assets/background/sidewalk3.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0,
+          "speed": -4.0
+        }
+      ]
+    },
+    {
+      "type": "__background_1__",
+      "textures": [
+        "assets/background/building1.png",
+        "assets/background/building2.png"
+      ],
+      "instance": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 0,
+          "speed": -5.0
+        }
+      ]
+    },
+    {
+      "type": "enemy_1",
+      "textures": [
+        "assets/enemies/Enemy1/0.png",
+        "assets/enemies/Enemy1/1.png",
+        "assets/enemies/Enemy1/2.png",
+        "assets/enemies/Enemy1/3.png",
+        "assets/enemies/Enemy1/4.png",
+        "assets/enemies/Enemy1/5.png"
+      ],
+      "instance": [
+        {
+          "x": 2216.0,
+          "y": 384.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 2216.0,
+          "y": 512.0,
+          "damage": 20,
+          "speed": 1.0,
+          "hp": 50,
+          "scale": 2
+        },
+        {
+          "x": 2280.0,
+          "y": 448.0,
+          "damage": 20,
+          "speed": 1.0,
+          "hp": 50,
+          "scale": 2
+        },
+        {
+          "x": 2344.0,
+          "y": 512.0,
+          "damage": 20,
+          "speed": 1.0,
+          "hp": 50,
+          "scale": 2
+        },
+        {
+          "x": 2344.0,
+          "y": 384.0,
+          "damage": 20,
+          "speed": 1.0,
+          "hp": 50,
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "type": "enemy_2",
+      "textures": [
+        "assets/enemies/Enemy2/0.png",
+        "assets/enemies/Enemy2/1.png",
+        "assets/enemies/Enemy2/2.png",
+        "assets/enemies/Enemy2/3.png",
+        "assets/enemies/Enemy2/4.png",
+        "assets/enemies/Enemy2/5.png"
+      ],
+      "instance": [
+        {
+          "x": 3216.0,
+          "y": 384.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3216.0,
+          "y": 512.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3280.0,
+          "y": 448.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3344.0,
+          "y": 512.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        },
+        {
+          "x": 3344.0,
+          "y": 384.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2
+        }
+      ]
+    }
+  ]
+}

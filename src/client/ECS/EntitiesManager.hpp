@@ -41,6 +41,13 @@ namespace ECS {
              */
             int removeEntities(std::vector<Entity> entitiesToRemove);
             /**
+             * @brief Remove a list of entities in the entity manager
+             *
+             * @param std::vector<int>
+             * @return int
+             */
+            int removeEntities(std::vector<int> entitiesToRemove);
+            /**
              * @brief Clear the list of entities and set the size as 5 to prevent boutons
              *
              * @return int
@@ -70,6 +77,12 @@ namespace ECS {
              * 
              */
             void clearEntitiesToCreate();
+            /**
+             * @brief Set the Delta Time object
+             * 
+             * @param deltaTime 
+             */
+            void setDeltaTime(double deltaTime);
         protected:
         private:
             void resizeMapComponent();
@@ -80,5 +93,6 @@ namespace ECS {
             std::vector<std::pair<std::vector<Entity>, EntityType>> _entitiesToCreate;
             std::vector<Entity> _entitiesToDelete;
             int _sizeListComponents;
+            double _deltaTime;
     };
 } // namespace ECS
