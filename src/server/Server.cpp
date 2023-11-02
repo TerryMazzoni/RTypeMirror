@@ -19,7 +19,7 @@ bool is_running(int flag)
 }
 
 Server::Server(int port)
-    : _io_service(), _socket(_io_service), _game_status(0)
+    : _io_service(), _socket(_io_service), _game_status(0), _status(0)
 {
     _ids[1] = false;
     _ids[2] = false;
@@ -86,23 +86,39 @@ void Server::receiveAsync()
     std::vector<char> recv_buffer(1500);
 
     udp::endpoint sender_endpoint;
+    static int i = 0;
+    static unsigned long time = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+    unsigned long now = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
 
-    _socket.async_receive_from(
-        boost::asio::buffer(recv_buffer), sender_endpoint,
-        [this, &recv_buffer, &sender_endpoint](
-            const boost::system::error_code &error, std::size_t bytes_received) {
-            if (!error && bytes_received > 0)
-                processMessage(std::string(recv_buffer.begin(), recv_buffer.begin() + bytes_received), sender_endpoint);
-            else if (error != boost::asio::error::operation_aborted) {
-                std::cerr << "Error on receive: " << error.message()
-                          << std::endl;
-                this->getIoService().stop();
-                is_running(1);
-            }
-            if (!is_running(0))
-                return;
-            receiveAsync();
-        });
+    if (now - time >= 1000) {
+        time = now;
+        i = 0;
+    }
+    if (i < 1000) {
+        i++;
+        _socket.async_receive_from(
+            boost::asio::buffer(recv_buffer), sender_endpoint,
+            [this, &recv_buffer, &sender_endpoint](
+                const boost::system::error_code &error, std::size_t bytes_received) {
+                if (!error && bytes_received > 0)
+                    processMessage(std::string(recv_buffer.begin(), recv_buffer.begin() + bytes_received), sender_endpoint);
+                else if (error != boost::asio::error::operation_aborted) {
+                    std::cerr << "Error on receive: " << error.message()
+                              << std::endl;
+                    this->getIoService().stop();
+                    is_running(1);
+                }
+                if (!is_running(0)) {
+                    return;
+                }
+                receiveAsync();
+            });
+    }
+    else {
+        this->getIoService().stop();
+        is_running(1);
+        _status = 1;
+    }
     getIoService().run();
 }
 
@@ -189,4 +205,9 @@ void Server::removeInputAt(int index)
 std::map<int, bool> Server::getIds() const
 {
     return _ids;
+}
+
+int Server::getStatus() const
+{
+    return _status;
 }

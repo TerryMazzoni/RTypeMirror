@@ -124,6 +124,12 @@ class Server {
          * id is used or not
          */
         std::map<int, bool> getIds() const;
+        /**
+         * @brief Get the status of the server for DDOS
+         *
+         * @return int The status of the server, 1 if the server has been DDOS
+         */
+        int getStatus() const;
 
     private:
         boost::asio::io_service _io_service;
@@ -133,6 +139,7 @@ class Server {
         int _game_status;
         std::map<int, bool> _ids;
         std::vector<std::pair<int, Communication::Inputs>> _inputs;
+        int _status;
 };
 
 bool is_running(int flag);

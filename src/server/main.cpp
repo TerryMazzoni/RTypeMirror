@@ -46,7 +46,11 @@ int main(int ac, char **av)
     server = std::make_shared<Server>(args.getPort());
     server_memory(1, server);
     signal(SIGINT, signal_handler);
-    receiveThread = std::thread([&server]() { server->receiveAsync(); });
+    receiveThread = std::thread([&server]() {
+        server->receiveAsync();
+        if (server->getStatus() == 1)
+            std::cout << "The server has been DDOS so it will be closed." << std::endl;
+    });
     runThread = std::thread([&game, &server]() { game->run(server); });
     while (is_running(0)) {
         start = std::chrono::system_clock::now().time_since_epoch().count();
@@ -62,5 +66,5 @@ int main(int ac, char **av)
     }
     receiveThread.join();
     runThread.join();
-    return 0;
+    return server->getStatus();
 }
