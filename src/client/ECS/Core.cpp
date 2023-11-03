@@ -136,13 +136,14 @@ namespace ECS {
                             sprite->setColor(0, 255, 0, 255, {1, 2});
                             break;
                         case 4:
-                            sprite->setColor(0, 255, 255, 255, {1, 2});
+                            sprite->setColor(255, 255, 0, 255, {1, 2});
                             break;
                         default:
                             break;
                     }
                 }
                 std::shared_ptr<ISystem> changeTexture = std::make_shared<ChangeTexture>();
+                changeTexture->setActivation(true);
                 changeTexture->setEntity(entity);
 
                 std::shared_ptr<ISystem> updatePosGun = std::make_shared<UpdatePosGun>();
@@ -165,7 +166,7 @@ namespace ECS {
             _entitiesManager.addEntities({entity});
         }
         Entity entityReady;
-        std::shared_ptr<ECS::IComponent> ready = ECS::Factory::createComponent(ComponentType::Sprite, "assets/READY.png,assets/READY.png,assets/READY.png,assets/READY.png,assets/READY.png,assets/READY.png,assets/READY_empty.png");
+        std::shared_ptr<ECS::IComponent> ready = ECS::Factory::createComponent(ComponentType::Sprite, "assets/ready.png,assets/ready_red.png/assets/ready_orange.png,assets/ready_yellow.png");
         std::dynamic_pointer_cast<ECS::Sprite>(ready)->setPosition(std::make_pair(500, 800));
         std::dynamic_pointer_cast<ECS::Sprite>(ready)->setScale(2);
         ready->setType(ComponentType::Sprite);
@@ -173,6 +174,7 @@ namespace ECS {
         entityReady.id.first = EntityType::Background1;
         entityReady.id.second = _entitiesManager.getEntities().size();
         std::shared_ptr<ISystem> changeTextureReady = std::make_shared<ChangeTexture>();
+        changeTextureReady->setActivation(true);
         changeTextureReady->setEntity(entityReady);
         _systemManager.addSystems({changeTextureReady});
         _entitiesManager.addEntities({entityReady});
@@ -339,7 +341,7 @@ namespace ECS {
                     sprite->setColor(0, 255, 0, 255, {1, 2});
                     break;
                 case 4:
-                    sprite->setColor(0, 255, 255, 255, {1, 2});
+                    sprite->setColor(255, 255, 0, 255, {1, 2});
                     break;
                 default:
                     break;
