@@ -11,6 +11,9 @@
 #include <iostream>
 #include <regex>
 
+/**
+ * @brief Class for the arguments of the server
+*/
 class Args {
     public:
         /**

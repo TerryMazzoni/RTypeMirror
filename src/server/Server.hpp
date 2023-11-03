@@ -20,6 +20,9 @@
 
 using boost::asio::ip::udp;
 
+/**
+ * @brief Class for the network side of the server
+*/
 class Server {
     public:
         /**

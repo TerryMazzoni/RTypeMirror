@@ -11,6 +11,10 @@
 
 using boost::asio::ip::udp;
 
+/**
+ * @brief Class for client in the server
+ * @brief This class is not on the client side but on the server side
+*/
 class Client {
     public:
         /**
