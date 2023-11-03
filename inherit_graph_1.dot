@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="Bonus",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classBonus.html",tooltip=" "];
+  Node0 [label="Client::UDPClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classClient_1_1UDPClient.html",tooltip="Class for the network side of the client."];
 }

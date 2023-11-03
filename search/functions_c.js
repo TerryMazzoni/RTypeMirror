@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['_7eargs_368',['~Args',['../classArgs.html#a088a9a2fefa90353aa53dc7980624e1e',1,'Args::~Args()'],['../classArgs.html#a088a9a2fefa90353aa53dc7980624e1e',1,'Args::~Args()']]],
-  ['_7ebonus_369',['~Bonus',['../classBonus.html#ace96cd91925b1f65b2c8596930fed6f5',1,'Bonus']]],
-  ['_7ebullet_370',['~Bullet',['../classBullet.html#aaeb5cb41d7db89f49007b08b41f1bfcf',1,'Bullet']]],
-  ['_7eclient_371',['~Client',['../classClient.html#a840e519ca781888cbd54181572ebe3a7',1,'Client::~Client()'],['../classClient.html#a840e519ca781888cbd54181572ebe3a7',1,'Client::~Client()']]],
-  ['_7egame_372',['~Game',['../classGame.html#ae3d112ca6e0e55150d2fdbc704474530',1,'Game']]],
-  ['_7eserver_373',['~Server',['../classServer.html#a4b3aa2579cb1c8cd1d069582c14d0fa6',1,'Server']]],
-  ['_7eship_374',['~Ship',['../classShip.html#a43cd6eeaffc11b49239b091621963a65',1,'Ship']]]
+  ['_7eargs_377',['~Args',['../classClient_1_1Args.html#ad771d51f5cab42c102e2dca34a8b1309',1,'Client::Args::~Args()'],['../classServer_1_1Args.html#a0bed9e836c437db0bb92a8d3f8d3d11a',1,'Server::Args::~Args()']]],
+  ['_7ebonus_378',['~Bonus',['../classServer_1_1Bonus.html#ad482971b0d41de743e8881ba78b525fc',1,'Server::Bonus']]],
+  ['_7ebullet_379',['~Bullet',['../classServer_1_1Bullet.html#a89c33d10406fed538077105ec2fd50bd',1,'Server::Bullet']]],
+  ['_7eclient_380',['~Client',['../classServer_1_1Client.html#a5134ac39bf240032e7e81495cf0b4743',1,'Server::Client']]],
+  ['_7egame_381',['~Game',['../classServer_1_1Game.html#afed3eabceba41feaf81c091c63ad100a',1,'Server::Game']]],
+  ['_7eship_382',['~Ship',['../classServer_1_1Ship.html#a5cbc01442b3c1b059caebc659e177c9b',1,'Server::Ship']]],
+  ['_7eudpclient_383',['~UDPClient',['../classClient_1_1UDPClient.html#a400a0b1e61bda9ed0c5ba8429771688f',1,'Client::UDPClient']]],
+  ['_7eudpserver_384',['~UDPServer',['../classServer_1_1UDPServer.html#a6b4a967c24a46a06f37212a9cd2ec5cf',1,'Server::UDPServer']]]
 ];

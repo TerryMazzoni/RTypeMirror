@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['header_85',['Header',['../structCommunication_1_1Header.html',1,'Communication']]]
+  ['header_87',['Header',['../structCommunication_1_1Header.html',1,'Communication::Header'],['../namespaceCommunication.html#a9ee4c528fae8b4d0b3fcc57541329353',1,'Communication::Header()']]]
 ];

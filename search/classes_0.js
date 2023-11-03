@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['any_184',['Any',['../classParser_1_1Any.html',1,'Parser']]],
-  ['args_185',['Args',['../classArgs.html',1,'']]],
-  ['asystem_186',['ASystem',['../classECS_1_1ASystem.html',1,'ECS']]]
+  ['any_189',['Any',['../classParser_1_1Any.html',1,'Parser']]],
+  ['args_190',['Args',['../classClient_1_1Args.html',1,'Client::Args'],['../classServer_1_1Args.html',1,'Server::Args']]],
+  ['asystem_191',['ASystem',['../classECS_1_1ASystem.html',1,'ECS']]]
 ];
