@@ -1,4 +1,4 @@
-/*
+/**
 ** EPITECH PROJECT, 2023
 ** RTypeMirror
 ** File description:
@@ -29,7 +29,7 @@ enum class BonusType {
     MAX_HEALTH
 };
 
-/*
+/**
  * @brief Namespace containing all communications structures
 */
 namespace Communication {
@@ -56,14 +56,14 @@ namespace Communication {
         DELETE
     };
 
-    /*
+    /**
      * @brief Structure where we cast the received message to know the type of it
     */
     typedef struct Header {
             CommunicationTypes type;
     } Header;
 
-    /*
+    /**
      * @brief Structure to stock position
     */
     typedef struct Position {
@@ -71,7 +71,7 @@ namespace Communication {
             float y;
     } Position;
 
-    /*
+    /**
      * @brief Structure to stock one spaceship
     */
     typedef struct SpaceShip {
@@ -83,7 +83,7 @@ namespace Communication {
             ShipType type;
     } SpaceShip;
 
-    /*
+    /**
      * @brief Structure to communicate a list of spaceships
     */
     typedef struct ShipsList {
@@ -92,7 +92,7 @@ namespace Communication {
             size_t nbrItems;
     } ShipsPosition;
 
-    /*
+    /**
      * @brief Structure to communicate an id
     */
     typedef struct Id {
@@ -100,14 +100,14 @@ namespace Communication {
             int id;
     } Id;
 
-    /*
+    /**
      * @brief Structure to communicate a quit signal
     */
     typedef struct Quit {
             CommunicationTypes code = CommunicationTypes::QUIT;
     } Quit;
 
-    /*
+    /**
      * @brief Structure to communicate a timer
     */
     typedef struct Timer {
@@ -115,7 +115,7 @@ namespace Communication {
             int time = 0;
     } Timer;
 
-    /*
+    /**
      * @brief Structure to communicate the ready signal
     */
     typedef struct Ready {
@@ -123,7 +123,7 @@ namespace Communication {
             bool is_ready = false;
     } Ready;
 
-    /*
+    /**
      * @brief Structure to stock one missile
     */
     typedef struct Missile {
@@ -135,7 +135,7 @@ namespace Communication {
             int id;
     } Missile;
 
-    /*
+    /**
      * @brief Structure to communicate a list of missiles
     */
     typedef struct MissilesPosition {
@@ -144,7 +144,7 @@ namespace Communication {
             size_t nbrItems;
     } MissilesPosition;
 
-    /*
+    /**
      * @brief Structure to communicate a colision
     */
     typedef struct Colision {
@@ -153,7 +153,7 @@ namespace Communication {
             int id2;
     } CollisionEntities;
 
-    /*
+    /**
      * @brief Structure to communicate a list of inputs
     */
     typedef struct Inputs {
@@ -162,7 +162,7 @@ namespace Communication {
             size_t nbrItems;
     } Inputs;
 
-    /*
+    /**
      * @brief Structure to stock a bonus
     */
     typedef struct Bonus {
@@ -171,7 +171,7 @@ namespace Communication {
             BonusType type;
     } Bonus;
 
-    /*
+    /**
      * @brief Structure to communicate a list of bonus
     */
     typedef struct BonusPosition {
@@ -180,7 +180,7 @@ namespace Communication {
             size_t nbrItems;
     } BonusPosition;
 
-    /*
+    /**
      * @brief Structure to communicate the delete signal
     */
     typedef struct Delete {

@@ -18,7 +18,7 @@ bool is_running(int flag)
     return (status);
 }
 
-Client::Client(const std::string &host, const std::string &port)
+Client::UDPClient::UDPClient(const std::string &host, const std::string &port)
     : _io_service(), _socket(_io_service), _id(0), _is_ready(false), _game_started(false),
       _endpoint(boost::asio::ip::address::from_string(host), std::stoi(port))
 
@@ -38,12 +38,12 @@ Client::Client(const std::string &host, const std::string &port)
                   << ":" << _socket.local_endpoint().port() << std::endl;
 }
 
-Client::~Client()
+Client::UDPClient::~UDPClient()
 {
     _socket.close();
 }
 
-void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> core)
+void Client::UDPClient::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> core)
 {
     char *data = const_cast<char *>(msg.c_str());
     Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
@@ -98,7 +98,7 @@ void Client::processMessage(const std::string &msg, std::shared_ptr<ECS::Core> c
     }
 }
 
-void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
+void Client::UDPClient::receiveAsync(std::shared_ptr<ECS::Core> core)
 {
     std::vector<char> recv_buffer(1500);
     udp::endpoint sender_endpoint;
@@ -127,7 +127,7 @@ void Client::receiveAsync(std::shared_ptr<ECS::Core> core)
     getIoService().run();
 }
 
-void Client::run()
+void Client::UDPClient::run()
 {
     unsigned long start, end = 0;
     unsigned long elapsed_seconds = 0;
@@ -172,51 +172,51 @@ void Client::run()
     this->getIoService().stop();
 }
 
-udp::socket &Client::getSocket()
+udp::socket &Client::UDPClient::getSocket()
 {
     return _socket;
 }
 
-boost::asio::io_service &Client::getIoService()
+boost::asio::io_service &Client::UDPClient::getIoService()
 {
     return _io_service;
 }
 
-int Client::getId() const
+int Client::UDPClient::getId() const
 {
     return _id;
 }
 
-bool Client::getIsReady() const
+bool Client::UDPClient::getIsReady() const
 {
     return _is_ready;
 }
 
-void Client::setIsReady(bool is_ready)
+void Client::UDPClient::setIsReady(bool is_ready)
 {
     _is_ready = is_ready;
 }
 
-void Client::setEvents(std::vector<EventInput> events)
+void Client::UDPClient::setEvents(std::vector<EventInput> events)
 {
     _events = events;
 }
 
-std::vector<Communication::ShipsPosition> Client::getShipsPositions()
+std::vector<Communication::ShipsPosition> Client::UDPClient::getShipsPositions()
 {
     std::vector<Communication::ShipsPosition> tmp = _shipsPositions;
     _shipsPositions.clear();
     return tmp;
 }
 
-std::vector<Communication::MissilesPosition> Client::getMissilesPositions()
+std::vector<Communication::MissilesPosition> Client::UDPClient::getMissilesPositions()
 {
     std::vector<Communication::MissilesPosition> tmp = _missilesPositions;
     _missilesPositions.clear();
     return tmp;
 }
 
-std::vector<int> Client::getEntitiesToDelete()
+std::vector<int> Client::UDPClient::getEntitiesToDelete()
 {
     std::vector<int> tmp = _entitiesToDelete;
     _entitiesToDelete.clear();

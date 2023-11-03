@@ -9,17 +9,17 @@
 #include "Communication.hpp"
 #include "TransformPath.hpp"
 
-Game::Game()
+Server::Game::Game()
     : _level(0), _score(0), _loop(0)
 {
     _init = false;
 }
 
-Game::~Game()
+Server::Game::~Game()
 {
 }
 
-void Game::run(std::shared_ptr<Server> server)
+void Server::Game::run(std::shared_ptr<Server::UDPServer> server)
 {
     boost::posix_time::milliseconds ms(100);
     boost::asio::deadline_timer t(server->getIoService(), ms);
@@ -59,27 +59,27 @@ void Game::run(std::shared_ptr<Server> server)
     server->getIoService().run();
 }
 
-void Game::setLevel(int level)
+void Server::Game::setLevel(int level)
 {
     _level = level;
 }
 
-void Game::setScore(int score)
+void Server::Game::setScore(int score)
 {
     _score = score;
 }
 
-int Game::getLevel() const
+int Server::Game::getLevel() const
 {
     return _level;
 }
 
-int Game::getScore() const
+int Server::Game::getScore() const
 {
     return _score;
 }
 
-void Game::initGame(std::string map_path)
+void Server::Game::initGame(std::string map_path)
 {
     _init = true;
     int _last_entity_id = 0;
@@ -104,7 +104,7 @@ void Game::initGame(std::string map_path)
     }
 }
 
-void Game::updateGame(std::shared_ptr<Server> server)
+void Server::Game::updateGame(std::shared_ptr<Server::UDPServer> server)
 {
     for (auto &entity : _entities) {
         if (!entity.has_value())
@@ -122,7 +122,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
     _loop++;
 }
 
-void Game::updateShips(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
+void Server::Game::updateShips(std::shared_ptr<Server::UDPServer> server, std::optional<Parser::entity_t> &entity)
 {
     int index = 0;
     if (!entity.has_value())
@@ -231,7 +231,7 @@ void Game::updateShips(std::shared_ptr<Server> server, std::optional<Parser::ent
     }
 }
 
-void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
+void Server::Game::updateColisions(std::shared_ptr<Server::UDPServer> server, std::optional<Parser::entity_t> &entity)
 {
     if (!entity.has_value())
         return;
@@ -304,7 +304,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
     }
 }
 
-void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
+void Server::Game::updateEntities(std::shared_ptr<Server::UDPServer> server, std::optional<Parser::entity_t> &entity)
 {
     if (!entity.has_value())
         return;
@@ -418,7 +418,7 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
     }
 }
 
-bool Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2)
+bool Server::Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2)
 {
     if (!entity1.has_value() || !entity2.has_value())
         return false;
@@ -438,11 +438,11 @@ bool Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<
     return false;
 }
 
-void Game::endGame()
+void Server::Game::endGame()
 {
 }
 
-void Game::sendShips(std::shared_ptr<Server> server)
+void Server::Game::sendShips(std::shared_ptr<Server::UDPServer> server)
 {
     Communication::ShipsPosition shipsPosition;
 
@@ -467,7 +467,7 @@ void Game::sendShips(std::shared_ptr<Server> server)
     }
 }
 
-void Game::sendBullets(std::shared_ptr<Server> server)
+void Server::Game::sendBullets(std::shared_ptr<Server::UDPServer> server)
 {
     Communication::MissilesPosition missilesPosition;
 
@@ -493,7 +493,7 @@ void Game::sendBullets(std::shared_ptr<Server> server)
     }
 }
 
-void Game::sendBonus(std::shared_ptr<Server> server)
+void Server::Game::sendBonus(std::shared_ptr<Server::UDPServer> server)
 {
     Communication::BonusPosition bonusPosition;
 
@@ -514,7 +514,7 @@ void Game::sendBonus(std::shared_ptr<Server> server)
     }
 }
 
-void Game::sendDelete(std::shared_ptr<Server> server, int id)
+void Server::Game::sendDelete(std::shared_ptr<Server::UDPServer> server, int id)
 {
     Communication::Delete idToDelete;
 
@@ -522,7 +522,7 @@ void Game::sendDelete(std::shared_ptr<Server> server, int id)
     server->sendToAll(idToDelete);
 }
 
-ShipType Game::getShipType(std::string type)
+ShipType Server::Game::getShipType(std::string type)
 {
     if (type == "enemy_1")
         return ShipType::ENEMY1;

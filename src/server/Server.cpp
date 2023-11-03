@@ -18,7 +18,7 @@ bool is_running(int flag)
     return (status);
 }
 
-Server::Server(int port)
+Server::UDPServer::UDPServer(int port)
     : _io_service(), _socket(_io_service), _game_status(0), _status(0)
 {
     _ids[1] = false;
@@ -26,16 +26,23 @@ Server::Server(int port)
     _ids[3] = false;
     _ids[4] = false;
     _socket.open(udp::v4());
+    try {
     _socket.bind(udp::endpoint(udp::v4(), port));
+    }
+    catch(...) {
+        std::cerr << "Error: port " << port << " already in use" << std::endl;
+        _status = 1;
+        return;
+    }
     _socket.non_blocking(true);
     std::cout << "Server listening on " << _socket.local_endpoint().port() << std::endl;
 }
 
-Server::~Server()
+Server::UDPServer::~UDPServer()
 {
 }
 
-void Server::processMessage(const std::string &msg, const udp::endpoint &client)
+void Server::UDPServer::processMessage(const std::string &msg, const udp::endpoint &client)
 {
     char *data = const_cast<char *>(msg.c_str());
     Communication::Header *header = reinterpret_cast<Communication::Header *>(data);
@@ -81,7 +88,7 @@ void Server::processMessage(const std::string &msg, const udp::endpoint &client)
         _game_status = 1;
 }
 
-void Server::receiveAsync()
+void Server::UDPServer::receiveAsync()
 {
     std::vector<char> recv_buffer(1500);
 
@@ -122,7 +129,7 @@ void Server::receiveAsync()
     getIoService().run();
 }
 
-void Server::addClient(const udp::endpoint &client)
+void Server::UDPServer::addClient(const udp::endpoint &client)
 {
     for (auto &c : _clients) {
         if (c.getEndpoint() == client)
@@ -139,7 +146,7 @@ void Server::addClient(const udp::endpoint &client)
     _clients.push_back(Client(client, id));
 }
 
-void Server::removeClient(const udp::endpoint &client)
+void Server::UDPServer::removeClient(const udp::endpoint &client)
 {
     Communication::Quit quit;
 
@@ -155,7 +162,7 @@ void Server::removeClient(const udp::endpoint &client)
     }
 }
 
-void Server::removeAllClients()
+void Server::UDPServer::removeAllClients()
 {
     Communication::Quit quit;
 
@@ -167,7 +174,7 @@ void Server::removeAllClients()
     _ids[4] = false;
 }
 
-void Server::close()
+void Server::UDPServer::close()
 {
     std::cout << "Server closing" << std::endl;
     removeAllClients();
@@ -176,38 +183,38 @@ void Server::close()
     _socket.close();
 }
 
-boost::asio::io_service &Server::getIoService()
+boost::asio::io_service &Server::UDPServer::getIoService()
 {
     return _io_service;
 }
 
-int Server::getGameStatus() const
+int Server::UDPServer::getGameStatus() const
 {
     return _game_status;
 }
 
-void Server::setGameStatus(int status)
+void Server::UDPServer::setGameStatus(int status)
 {
     _game_status = status;
 }
 
-std::vector<std::pair<int, Communication::Inputs>> &Server::getInput()
+std::vector<std::pair<int, Communication::Inputs>> &Server::UDPServer::getInput()
 {
     return _inputs;
 }
 
-void Server::removeInputAt(int index)
+void Server::UDPServer::removeInputAt(int index)
 {
     if (_inputs.size() > index)
         _inputs.erase(_inputs.begin() + index);
 }
 
-std::map<int, bool> Server::getIds() const
+std::map<int, bool> Server::UDPServer::getIds() const
 {
     return _ids;
 }
 
-int Server::getStatus() const
+int Server::UDPServer::getStatus() const
 {
     return _status;
 }

@@ -7,7 +7,7 @@
 
 #include "Ship.hpp"
 
-Ship::Ship()
+Server::Ship::Ship()
 {
     _pos = Communication::Position{0, 0};
     _speed = 0;
@@ -17,7 +17,7 @@ Ship::Ship()
     _type = ShipType::UNKNOW;
 }
 
-Ship::Ship(Communication::Position pos, int id, ShipType type, float scale)
+Server::Ship::Ship(Communication::Position pos, int id, ShipType type, float scale)
 {
     _pos = pos;
     _speed = 0;
@@ -28,71 +28,71 @@ Ship::Ship(Communication::Position pos, int id, ShipType type, float scale)
     _type = type;
 }
 
-Ship::~Ship()
+Server::Ship::~Ship()
 {
 }
 
-void Ship::setPos(Communication::Position pos)
+void Server::Ship::setPos(Communication::Position pos)
 {
     _pos = pos;
 }
 
-void Ship::setSpeed(float speed)
+void Server::Ship::setSpeed(float speed)
 {
     _speed = speed;
 }
 
-void Ship::setLife(float life)
+void Server::Ship::setLife(float life)
 {
     _life = life;
 }
 
-void Ship::setId(int id)
+void Server::Ship::setId(int id)
 {
     _id = id;
 }
 
-void Ship::setLevel(int level)
+void Server::Ship::setLevel(int level)
 {
     _level = level;
 }
 
-void Ship::setType(ShipType type)
+void Server::Ship::setType(ShipType type)
 {
     _type = type;
 }
 
-Communication::Position Ship::getPos() const
+Communication::Position Server::Ship::getPos() const
 {
     return _pos;
 }
 
-float Ship::getSpeed() const
+float Server::Ship::getSpeed() const
 {
     return _speed;
 }
 
-float Ship::getLife() const
+float Server::Ship::getLife() const
 {
     return _life;
 }
 
-int Ship::getId() const
+int Server::Ship::getId() const
 {
     return _id;
 }
 
-int Ship::getLevel() const
+int Server::Ship::getLevel() const
 {
     return _level;
 }
 
-float Ship::getScale() const
+float Server::Ship::getScale() const
 {
     return _scale;
 }
 
-ShipType Ship::getType() const
+ShipType Server::Ship::getType() const
 {
     return _type;
 }
