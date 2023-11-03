@@ -12,9 +12,9 @@
 #include <thread>
 #include "Parser.hpp"
 
-std::shared_ptr<Server> server_memory(int flag, std::shared_ptr<Server> server)
+std::shared_ptr<Server::UDPServer> server_memory(int flag, std::shared_ptr<Server::UDPServer> server)
 {
-    static std::shared_ptr<Server> server_memory = nullptr;
+    static std::shared_ptr<Server::UDPServer> server_memory = nullptr;
 
     if (flag == 1)
         server_memory = server;
@@ -25,25 +25,27 @@ static void signal_handler(int signal)
 {
     if (signal == SIGINT) {
         is_running(1);
-        std::shared_ptr<Server> server = server_memory(0, nullptr);
+        std::shared_ptr<Server::UDPServer> server = server_memory(0, nullptr);
         server->close();
     }
 }
 
 int main(int ac, char **av)
 {
-    Args args;
-    std::shared_ptr<Server> server;
+    Server::Args args;
+    std::shared_ptr<Server::UDPServer> server;
     std::thread receiveThread;
     std::thread runThread;
-    std::shared_ptr<Game> game = std::make_shared<Game>();
+    std::shared_ptr<Server::Game> game = std::make_shared<Server::Game>();
     std::vector<Parser::entity_t> players = {};
     unsigned long start, end = 0;
     unsigned long elapsed_seconds = 0;
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
-    server = std::make_shared<Server>(args.getPort());
+    server = std::make_shared<Server::UDPServer>(args.getPort());
+    if (server->getStatus() == 1)
+        return 1;
     server_memory(1, server);
     signal(SIGINT, signal_handler);
     receiveThread = std::thread([&server]() {

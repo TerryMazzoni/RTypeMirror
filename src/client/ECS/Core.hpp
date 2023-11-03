@@ -32,10 +32,10 @@ namespace ECS {
             /**
              * @brief Run the client loop
              *
-             * @param std::shared_ptr<Client>
+             * @param std::shared_ptr<Client::UDPClient>
              * @return int
              */
-            int run(std::shared_ptr<Client>);
+            int run(std::shared_ptr<Client::UDPClient>);
             /**
              * @brief Execute the Server Actions object
              *

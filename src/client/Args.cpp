@@ -7,38 +7,38 @@
 
 #include "Args.hpp"
 
-Args::Args()
+Client::Args::Args()
 {
     _port = 8080;
     _ip = "127.0.0.1";
     _mute = false;
 }
 
-Args::~Args()
+Client::Args::~Args()
 {
 }
 
-int Args::getPort() const
+int Client::Args::getPort() const
 {
     return _port;
 }
 
-std::string Args::getIp() const
+std::string Client::Args::getIp() const
 {
     return _ip;
 }
 
-void Args::setPort(int port)
+void Client::Args::setPort(int port)
 {
     _port = port;
 }
 
-void Args::setIp(const std::string &ip)
+void Client::Args::setIp(const std::string &ip)
 {
     _ip = ip;
 }
 
-int Args::setArgs(int ac, char **av)
+int Client::Args::setArgs(int ac, char **av)
 {
     std::string port = "8080";
     std::string ip = "localhost";
@@ -96,12 +96,12 @@ int Args::setArgs(int ac, char **av)
     return 0;
 }
 
-void Args::setMute()
+void Client::Args::setMute()
 {
     _mute = true;
 }
 
-bool Args::getMute() const
+bool Client::Args::getMute() const
 {
     return _mute;
 }
