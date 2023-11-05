@@ -3,7 +3,9 @@
     "tiles": [],
     "tile_size": 64,
     "textures": {
-      "#": ["assets/walls/Wall.png"]
+      "#": [
+        "assets/walls/Wall.png"
+      ]
     }
   },
   "all_entities": [
@@ -35,7 +37,12 @@
         "assets/player/Layer 4_5.png",
         "assets/player/Layer 4_6.png"
       ],
-      "index_textures": [0, 6, 12, 18],
+      "index_textures": [
+        0,
+        6,
+        12,
+        18
+      ],
       "instance": [
         {
           "x": 256.0,
@@ -130,42 +137,98 @@
       "instance": [
         {
           "x": 2216.0,
-          "y": 384.0,
+          "y": 184.0,
           "damage": 10,
           "speed": 1.0,
-          "hp": 20,
+          "hp": 15,
           "scale": 2
         },
         {
           "x": 2216.0,
-          "y": 512.0,
-          "damage": 20,
+          "y": 712.0,
+          "damage": 10,
           "speed": 1.0,
-          "hp": 50,
+          "hp": 15,
           "scale": 2
         },
         {
           "x": 2280.0,
           "y": 448.0,
-          "damage": 20,
+          "damage": 10,
           "speed": 1.0,
-          "hp": 50,
+          "hp": 15,
           "scale": 2
         },
         {
-          "x": 2344.0,
-          "y": 512.0,
-          "damage": 20,
+          "x": 2644.0,
+          "y": 712.0,
+          "damage": 10,
           "speed": 1.0,
-          "hp": 50,
+          "hp": 15,
           "scale": 2
         },
         {
-          "x": 2344.0,
-          "y": 384.0,
-          "damage": 20,
+          "x": 2644.0,
+          "y": 184.0,
+          "damage": 10,
           "speed": 1.0,
-          "hp": 50,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 4000.0,
+          "y": 200.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 4000.0,
+          "y": 500.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 4000.0,
+          "y": 800.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 6000.0,
+          "y": 150.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 6400.0,
+          "y": 400.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 6700.0,
+          "y": 800.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
+          "scale": 2
+        },
+        {
+          "x": 7000.0,
+          "y": 300.0,
+          "damage": 10,
+          "speed": 1.0,
+          "hp": 15,
           "scale": 2
         }
       ]
@@ -183,43 +246,107 @@
       "instance": [
         {
           "x": 3216.0,
-          "y": 384.0,
-          "damage": 20,
+          "y": 184.0,
+          "damage": 15,
           "speed": 0.5,
-          "hp": 20,
+          "hp": 25,
           "scale": 2
         },
         {
           "x": 3216.0,
-          "y": 512.0,
-          "damage": 20,
+          "y": 712.0,
+          "damage": 15,
           "speed": 0.5,
-          "hp": 20,
+          "hp": 25,
           "scale": 2
         },
         {
           "x": 3280.0,
           "y": 448.0,
-          "damage": 20,
+          "damage": 15,
           "speed": 0.5,
-          "hp": 20,
+          "hp": 25,
           "scale": 2
         },
         {
           "x": 3344.0,
-          "y": 512.0,
-          "damage": 20,
+          "y": 712.0,
+          "damage": 15,
           "speed": 0.5,
-          "hp": 20,
+          "hp": 25,
           "scale": 2
         },
         {
           "x": 3344.0,
-          "y": 384.0,
+          "y": 184.0,
+          "damage": 15,
+          "speed": 0.5,
+          "hp": 25,
+          "scale": 2
+        },
+        {
+          "x": 3800.0,
+          "y": 200.0,
+          "damage": 15,
+          "speed": 0.5,
+          "hp": 25,
+          "scale": 2
+        },
+        {
+          "x": 3800.0,
+          "y": 500.0,
+          "damage": 15,
+          "speed": 0.5,
+          "hp": 25,
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "type": "boss_1",
+      "textures": [
+        "assets/enemies/Boss1/00.png",
+        "assets/enemies/Boss1/01.png",
+        "assets/enemies/Boss1/02.png",
+        "assets/enemies/Boss1/03.png",
+        "assets/enemies/Boss1/04.png",
+        "assets/enemies/Boss1/05.png",
+        "assets/enemies/Boss1/06.png",
+        "assets/enemies/Boss1/07.png",
+        "assets/enemies/Boss1/08.png",
+        "assets/enemies/Boss1/09.png"
+      ],
+      "instance": [
+        {
+          "x": 3500.0,
+          "y": 256.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 200,
+          "scale": 4,
+          "y_status": 0
+        }
+      ]
+    },
+    {
+      "type": "bonus",
+      "textures": [
+        "assets/enemies/Enemy2/0.png",
+        "assets/enemies/Enemy2/1.png",
+        "assets/enemies/Enemy2/2.png",
+        "assets/enemies/Enemy2/3.png",
+        "assets/enemies/Enemy2/4.png",
+        "assets/enemies/Enemy2/5.png"
+      ],
+      "instance": [
+        {
+          "x": 1200.0,
+          "y": 128.0,
           "damage": 20,
           "speed": 0.5,
           "hp": 20,
-          "scale": 2
+          "scale": 2,
+          "b_type": "heal30"
         }
       ]
     }

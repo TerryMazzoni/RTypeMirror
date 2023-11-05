@@ -183,7 +183,7 @@ namespace ECS {
         _entitiesManager.addEntities({entityReady});
     }
 
-    int Core::run(std::shared_ptr<Client> client)
+    int Core::run(std::shared_ptr<Client::UDPClient> client)
     {
         Communication::Quit quit;
         Communication::Ready ready;

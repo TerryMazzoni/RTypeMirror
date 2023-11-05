@@ -7,26 +7,26 @@
 
 #include "Args.hpp"
 
-Args::Args()
+Server::Args::Args()
 {
     _port = 8080;
 }
 
-Args::~Args()
+Server::Args::~Args()
 {
 }
 
-int Args::getPort() const
+int Server::Args::getPort() const
 {
     return _port;
 }
 
-void Args::setPort(int port)
+void Server::Args::setPort(int port)
 {
     _port = port;
 }
 
-int Args::setArgs(int ac, char **av)
+int Server::Args::setArgs(int ac, char **av)
 {
     std::string port = "8080";
 

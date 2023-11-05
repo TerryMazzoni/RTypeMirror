@@ -13,9 +13,9 @@
 #include "Communication.hpp"
 #include "Core.hpp"
 
-std::shared_ptr<Client> client_memory(int flag, std::shared_ptr<Client> client)
+std::shared_ptr<Client::UDPClient> client_memory(int flag, std::shared_ptr<Client::UDPClient> client)
 {
-    static std::shared_ptr<Client> client_memory = nullptr;
+    static std::shared_ptr<Client::UDPClient> client_memory = nullptr;
 
     if (flag == 1)
         client_memory = client;
@@ -34,15 +34,15 @@ static void signal_handler(int signal)
 int main(int ac, char **av)
 {
     std::shared_ptr<ECS::Core> core = std::make_shared<ECS::Core>();
-    Args args;
-    std::shared_ptr<Client> client;
+    Client::Args args;
+    std::shared_ptr<Client::UDPClient> client;
     std::shared_ptr<std::thread> receiveThread;
     std::shared_ptr<std::thread> runThread;
     int status = 0;
 
     if (int r = args.setArgs(ac, av) != 0)
         return r - 1;
-    client = std::make_shared<Client>(args.getIp(), std::to_string(args.getPort()));
+    client = std::make_shared<Client::UDPClient>(args.getIp(), std::to_string(args.getPort()));
     if (!client->getSocket().is_open())
         return 84;
     client_memory(1, client);

@@ -7,7 +7,7 @@
 
 #include "Bullet.hpp"
 
-Bullet::Bullet()
+Server::Bullet::Bullet()
 {
     _pos = Communication::Position{0, 0};
     _direction = Communication::Position{0, 0};
@@ -16,7 +16,7 @@ Bullet::Bullet()
     _id = 0;
 }
 
-Bullet::Bullet(Communication::Position pos, Communication::Position direction, float speed, float damage, int id)
+Server::Bullet::Bullet(Communication::Position pos, Communication::Position direction, float speed, float damage, int id)
 {
     _pos = pos;
     _direction = direction;
@@ -25,66 +25,66 @@ Bullet::Bullet(Communication::Position pos, Communication::Position direction, f
     _id = id;
 }
 
-Bullet::~Bullet()
+Server::Bullet::~Bullet()
 {
 }
 
-void Bullet::setPos(Communication::Position pos)
+void Server::Bullet::setPos(Communication::Position pos)
 {
     _pos = pos;
 }
 
-void Bullet::setDirection(Communication::Position direction)
+void Server::Bullet::setDirection(Communication::Position direction)
 {
     _direction = direction;
 }
 
-void Bullet::setSpeed(float speed)
+void Server::Bullet::setSpeed(float speed)
 {
     _speed = speed;
 }
 
-void Bullet::setDamage(float damage)
+void Server::Bullet::setDamage(float damage)
 {
     _damage = damage;
 }
 
-void Bullet::setId(int id)
+void Server::Bullet::setId(int id)
 {
     _id = id;
 }
 
-void Bullet::setTeam(int team)
+void Server::Bullet::setTeam(int team)
 {
     _team = team;
 }
 
-Communication::Position Bullet::getPos() const
+Communication::Position Server::Bullet::getPos() const
 {
     return _pos;
 }
 
-Communication::Position Bullet::getDirection() const
+Communication::Position Server::Bullet::getDirection() const
 {
     return _direction;
 }
 
-float Bullet::getSpeed() const
+float Server::Bullet::getSpeed() const
 {
     return _speed;
 }
 
-float Bullet::getDamage() const
+float Server::Bullet::getDamage() const
 {
     return _damage;
 }
 
-int Bullet::getId() const
+int Server::Bullet::getId() const
 {
     return _id;
 }
 
-int Bullet::getTeam() const
+int Server::Bullet::getTeam() const
 {
     return _team;
 }

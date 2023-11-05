@@ -9,17 +9,17 @@
 #include "Communication.hpp"
 #include "TransformPath.hpp"
 
-Game::Game()
+Server::Game::Game()
     : _level(0), _score(0), _loop(0)
 {
     _init = false;
 }
 
-Game::~Game()
+Server::Game::~Game()
 {
 }
 
-void Game::run(std::shared_ptr<Server> server)
+void Server::Game::run(std::shared_ptr<Server::UDPServer> server)
 {
     boost::posix_time::milliseconds ms(100);
     boost::asio::deadline_timer t(server->getIoService(), ms);
@@ -59,27 +59,27 @@ void Game::run(std::shared_ptr<Server> server)
     server->getIoService().run();
 }
 
-void Game::setLevel(int level)
+void Server::Game::setLevel(int level)
 {
     _level = level;
 }
 
-void Game::setScore(int score)
+void Server::Game::setScore(int score)
 {
     _score = score;
 }
 
-int Game::getLevel() const
+int Server::Game::getLevel() const
 {
     return _level;
 }
 
-int Game::getScore() const
+int Server::Game::getScore() const
 {
     return _score;
 }
 
-void Game::initGame(std::string map_path)
+void Server::Game::initGame(std::string map_path)
 {
     _init = true;
     int _last_entity_id = 0;
@@ -104,7 +104,7 @@ void Game::initGame(std::string map_path)
     }
 }
 
-void Game::updateGame(std::shared_ptr<Server> server)
+void Server::Game::updateGame(std::shared_ptr<Server::UDPServer> server)
 {
     for (auto &entity : _entities) {
         if (!entity.has_value())
@@ -122,7 +122,7 @@ void Game::updateGame(std::shared_ptr<Server> server)
     _loop++;
 }
 
-void Game::updateShips(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
+void Server::Game::updateShips(std::shared_ptr<Server::UDPServer> server, std::optional<Parser::entity_t> &entity)
 {
     int index = 0;
     if (!entity.has_value())
@@ -231,7 +231,7 @@ void Game::updateShips(std::shared_ptr<Server> server, std::optional<Parser::ent
     }
 }
 
-void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
+void Server::Game::updateColisions(std::shared_ptr<Server::UDPServer> server, std::optional<Parser::entity_t> &entity)
 {
     if (!entity.has_value())
         return;
@@ -258,8 +258,51 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             Parser::setValue(entity.value().instance, "hp", entity.value().instance["hp"].getInt() - damage);
                         }
                         else {
-                            sendDelete(server, entity.value().id);
-                            entity = std::nullopt;
+                            if (entity.value().type == "enemy_1" || entity.value().type == "enemy_2") {
+                                // Random 1/3
+                                if (rand() % 3 == 0) {
+                                    Parser::entity_t newEntity;
+                                    newEntity.id = _entities.size();
+                                    newEntity.type = "bonus";
+                                    newEntity.textures = (std::pair<std::vector<std::string>, std::vector<int>>){};
+                                    newEntity.instance = {};
+                                    Parser::setValue(newEntity.instance, "x", (entity.value().instance["x"].getFloat()));
+                                    Parser::setValue(newEntity.instance, "y", (entity.value().instance["y"].getFloat()));
+                                    int b_type = rand() % 6;
+                                    switch (b_type) {
+                                        case 0:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("heal30"));
+                                            break;
+                                        case 1:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("heal50"));
+                                            break;
+                                        case 2:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("heal100"));
+                                            break;
+                                        case 3:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("max_hp"));
+                                            break;
+                                        case 4:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("gun1"));
+                                            break;
+                                        case 5:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("gun2"));
+                                            break;
+                                        case 6:
+                                            Parser::setValue(newEntity.instance, "b_type", std::string("gun3"));
+                                            break;
+                                    }
+                                    _entities.push_back(std::optional<Parser::entity_t>{newEntity});
+                                }
+                            }
+                            else if (entity.value().type == "boss_1") {
+                                server->sendToAll("quit");
+                                endGame();
+                            }
+                            else {
+                                sendDelete(server, entity.value().id);
+                                entity = std::nullopt;
+                            }
                         }
                         sendDelete(server, entity_colision.value().id);
                         entity_colision = std::nullopt;
@@ -270,7 +313,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
             else if (entity_colision.value().type == "bonus" && entity.value().type == "__player__") {
                 if ((entity.value().id) != (entity_colision.value().id)) {
                     if (checkColision(entity.value(), entity_colision.value())) {
-                        if (entity_colision.value().instance["b_type"].getString().find("heal")) {
+                        if (entity_colision.value().instance["b_type"].getString().find("heal") != std::string::npos) {
                             int hp = 0;
                             try {
                                 hp = std::stoi(entity_colision.value().instance["b_type"].getString().substr(4, 6));
@@ -278,13 +321,19 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             catch (std::exception &e) {
                                 std::cerr << "Bad bonus instance b_type " << e.what() << std::endl;
                             }
-                            int new_hp = entity.value().instance["hp"].getInt() + hp > entity.value().instance["max_hp"].getInt() ?: entity.value().instance["max_hp"].getInt();
-                            Parser::setValue(entity.value().instance, std::string("hp"), new_hp);
+                            if (!Parser::keyExists(entity.value().instance, "max_hp"))
+                                Parser::setValue(entity.value().instance, std::string("max_hp"), 100);
+                            if (Parser::keyExists(entity.value().instance, "hp") && entity.value().instance["hp"].getInt() + hp <= entity.value().instance["max_hp"].getInt()) {
+                                Parser::setValue(entity.value().instance, std::string("hp"), entity.value().instance["hp"].getInt() + hp);
+                            }
+                            else {
+                                Parser::setValue(entity.value().instance, std::string("hp"), entity.value().instance["max_hp"].getInt());
+                            }
                         }
-                        else if (entity_colision.value().instance["b_type"].getString().find("max_hp")) {
+                        else if (entity_colision.value().instance["b_type"].getString().find("max_hp") != std::string::npos) {
                             Parser::setValue(entity.value().instance, std::string("max_hp"), 200);
                         }
-                        else if (entity_colision.value().instance["b_type"].getString().find("gun")) {
+                        else if (entity_colision.value().instance["b_type"].getString().find("gun") != std::string::npos) {
                             int gun = 0;
                             try {
                                 gun = std::stoi(entity_colision.value().instance["b_type"].getString().substr(3, 4));
@@ -295,7 +344,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
                             Parser::setValue(entity.value().instance, std::string("gun"), gun);
                         }
                         sendDelete(server, entity_colision.value().id);
-                        entity = std::nullopt;
+                        entity_colision = std::nullopt;
                         return;
                     }
                 }
@@ -304,7 +353,7 @@ void Game::updateColisions(std::shared_ptr<Server> server, std::optional<Parser:
     }
 }
 
-void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::entity_t> &entity)
+void Server::Game::updateEntities(std::shared_ptr<Server::UDPServer> server, std::optional<Parser::entity_t> &entity)
 {
     if (!entity.has_value())
         return;
@@ -363,7 +412,9 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
                 Parser::setValue(newEntity.instance, "direction_x", (1.0));
                 Parser::setValue(newEntity.instance, "direction_y", (0.0));
                 Parser::setValue(newEntity.instance, "speed", (15.0));
-                Parser::setValue(newEntity.instance, "damage", (10.0));
+                if (!Parser::keyExists(entity.value().instance, "gun"))
+                    Parser::setValue(entity.value().instance, "gun", 1);
+                Parser::setValue(newEntity.instance, "damage", (10.0) * (entity.value().instance["gun"].getInt()));
                 Parser::setValue(newEntity.instance, "team", 0);
                 Parser::setValue(newEntity.instance, "scale", 0.1);
                 _entities.push_back(std::optional<Parser::entity_t>{newEntity});
@@ -416,9 +467,11 @@ void Game::updateEntities(std::shared_ptr<Server> server, std::optional<Parser::
             _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(newEntity.instance["x"].getFloat()), (newEntity.instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
         }
     }
+    if (entity.has_value() && entity.value().type == "bonus" && Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "b_type"))
+        _bonus.push_back(std::make_shared<Bonus>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getBonusType(entity.value().instance["b_type"].getString())));
 }
 
-bool Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2)
+bool Server::Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2)
 {
     if (!entity1.has_value() || !entity2.has_value())
         return false;
@@ -438,11 +491,11 @@ bool Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<
     return false;
 }
 
-void Game::endGame()
+void Server::Game::endGame()
 {
 }
 
-void Game::sendShips(std::shared_ptr<Server> server)
+void Server::Game::sendShips(std::shared_ptr<Server::UDPServer> server)
 {
     Communication::ShipsPosition shipsPosition;
 
@@ -467,7 +520,7 @@ void Game::sendShips(std::shared_ptr<Server> server)
     }
 }
 
-void Game::sendBullets(std::shared_ptr<Server> server)
+void Server::Game::sendBullets(std::shared_ptr<Server::UDPServer> server)
 {
     Communication::MissilesPosition missilesPosition;
 
@@ -493,7 +546,7 @@ void Game::sendBullets(std::shared_ptr<Server> server)
     }
 }
 
-void Game::sendBonus(std::shared_ptr<Server> server)
+void Server::Game::sendBonus(std::shared_ptr<Server::UDPServer> server)
 {
     Communication::BonusPosition bonusPosition;
 
@@ -514,7 +567,7 @@ void Game::sendBonus(std::shared_ptr<Server> server)
     }
 }
 
-void Game::sendDelete(std::shared_ptr<Server> server, int id)
+void Server::Game::sendDelete(std::shared_ptr<Server::UDPServer> server, int id)
 {
     Communication::Delete idToDelete;
 
@@ -522,7 +575,7 @@ void Game::sendDelete(std::shared_ptr<Server> server, int id)
     server->sendToAll(idToDelete);
 }
 
-ShipType Game::getShipType(std::string type)
+ShipType Server::Game::getShipType(std::string type)
 {
     if (type == "enemy_1")
         return ShipType::ENEMY1;
@@ -531,4 +584,23 @@ ShipType Game::getShipType(std::string type)
     if (type == "boss_1")
         return ShipType::BOSS1;
     return ShipType::PLAYER;
+}
+
+BonusType Server::Game::getBonusType(std::string type)
+{
+    if (type == "heal30")
+        return BonusType::HEAL30;
+    if (type == "heal50")
+        return BonusType::HEAL50;
+    if (type == "heal100")
+        return BonusType::HEAL100;
+    if (type == "max_hp")
+        return BonusType::MAX_HP;
+    if (type == "gun1")
+        return BonusType::GUN1;
+    if (type == "gun2")
+        return BonusType::GUN2;
+    if (type == "gun3")
+        return BonusType::GUN3;
+    return BonusType::UNKNOW;
 }

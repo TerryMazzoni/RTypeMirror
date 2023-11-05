@@ -9,7 +9,7 @@ echo "Using $threads_to_use threads to compile"
 
 mkdir -p build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Debug -Wno-dev
 
 if cmake --build . -- -j $threads_to_use; then
     echo "Compilation successful!"
