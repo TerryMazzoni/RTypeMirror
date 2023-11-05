@@ -299,6 +299,10 @@ void Server::Game::updateColisions(std::shared_ptr<Server::UDPServer> server, st
                                 server->sendToAll("quit");
                                 endGame();
                             }
+                            else {
+                                sendDelete(server, entity.value().id);
+                                entity = std::nullopt;
+                            }
                         }
                         sendDelete(server, entity_colision.value().id);
                         entity_colision = std::nullopt;
@@ -310,7 +314,6 @@ void Server::Game::updateColisions(std::shared_ptr<Server::UDPServer> server, st
                 if ((entity.value().id) != (entity_colision.value().id)) {
                     if (checkColision(entity.value(), entity_colision.value())) {
                         if (entity_colision.value().instance["b_type"].getString().find("heal") != std::string::npos) {
-                            std::cout << "HEAL" << std::endl;
                             int hp = 0;
                             try {
                                 hp = std::stoi(entity_colision.value().instance["b_type"].getString().substr(4, 6));
