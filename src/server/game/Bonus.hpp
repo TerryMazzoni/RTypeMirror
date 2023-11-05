@@ -73,4 +73,4 @@ namespace Server {
             int _id;
             BonusType _type;
     };
-}
+} // namespace Server

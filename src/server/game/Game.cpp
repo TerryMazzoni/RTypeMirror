@@ -299,6 +299,10 @@ void Server::Game::updateColisions(std::shared_ptr<Server::UDPServer> server, st
                                 server->sendToAll("quit");
                                 endGame();
                             }
+                            else {
+                                sendDelete(server, entity.value().id);
+                                entity = std::nullopt;
+                            }
                         }
                         sendDelete(server, entity_colision.value().id);
                         entity_colision = std::nullopt;
@@ -310,7 +314,6 @@ void Server::Game::updateColisions(std::shared_ptr<Server::UDPServer> server, st
                 if ((entity.value().id) != (entity_colision.value().id)) {
                     if (checkColision(entity.value(), entity_colision.value())) {
                         if (entity_colision.value().instance["b_type"].getString().find("heal") != std::string::npos) {
-                            std::cout << "HEAL" << std::endl;
                             int hp = 0;
                             try {
                                 hp = std::stoi(entity_colision.value().instance["b_type"].getString().substr(4, 6));
@@ -464,6 +467,8 @@ void Server::Game::updateEntities(std::shared_ptr<Server::UDPServer> server, std
             _bullets.push_back(std::make_shared<Bullet>(Communication::Position{(newEntity.instance["x"].getFloat()), (newEntity.instance["y"].getFloat())}, Communication::Position{(newEntity.instance["direction_x"].getFloat()), (newEntity.instance["direction_y"].getFloat())}, newEntity.instance["speed"].getFloat(), newEntity.instance["damage"].getFloat(), newEntity.id));
         }
     }
+    if (entity.has_value() && entity.value().type == "bonus" && Parser::keyExists(entity.value().instance, "x") && Parser::keyExists(entity.value().instance, "y") && Parser::keyExists(entity.value().instance, "b_type"))
+        _bonus.push_back(std::make_shared<Bonus>(Communication::Position{(entity.value().instance["x"].getFloat()), (entity.value().instance["y"].getFloat())}, entity.value().id, getBonusType(entity.value().instance["b_type"].getString())));
 }
 
 bool Server::Game::checkColision(std::optional<Parser::entity_t> entity1, std::optional<Parser::entity_t> entity2)
@@ -579,4 +584,23 @@ ShipType Server::Game::getShipType(std::string type)
     if (type == "boss_1")
         return ShipType::BOSS1;
     return ShipType::PLAYER;
+}
+
+BonusType Server::Game::getBonusType(std::string type)
+{
+    if (type == "heal30")
+        return BonusType::HEAL30;
+    if (type == "heal50")
+        return BonusType::HEAL50;
+    if (type == "heal100")
+        return BonusType::HEAL100;
+    if (type == "max_hp")
+        return BonusType::MAX_HP;
+    if (type == "gun1")
+        return BonusType::GUN1;
+    if (type == "gun2")
+        return BonusType::GUN2;
+    if (type == "gun3")
+        return BonusType::GUN3;
+    return BonusType::UNKNOW;
 }
