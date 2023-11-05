@@ -86,7 +86,9 @@ void Client::UDPClient::processMessage(const std::string &msg, std::shared_ptr<E
         Communication::MissilesPosition *missiles = reinterpret_cast<Communication::MissilesPosition *>(data);
         _missilesPositions.push_back(*missiles);
     }
-    else if (header->type == Communication::CommunicationTypes::COLISION) {
+    else if (header->type == Communication::CommunicationTypes::BONUS) {
+        return;
+    } else if (header->type == Communication::CommunicationTypes::COLISION) {
         Communication::Colision *colision = reinterpret_cast<Communication::Colision *>(data);
     }
     else if (header->type == Communication::CommunicationTypes::DELETE) {
