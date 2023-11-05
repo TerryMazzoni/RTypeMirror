@@ -137,6 +137,13 @@ namespace Server {
              * @return Ship::ShipType
              */
             ShipType getShipType(std::string type);
+            /**
+             * @brief Get the Bonus Type object
+             *
+             * @param type
+             * @return Bonus::BonusType
+             */
+            BonusType getBonusType(std::string type);
 
         private:
             int _level;
@@ -151,4 +158,4 @@ namespace Server {
             int _tile_size;
             unsigned int _loop;
     };
-}
+} // namespace Server

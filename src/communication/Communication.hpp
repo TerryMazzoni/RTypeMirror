@@ -26,7 +26,7 @@ enum class BonusType {
     GUN2,
     GUN3,
     SHIELD,
-    MAX_HEALTH
+    MAX_HP
 };
 
 /**
