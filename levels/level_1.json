@@ -3,7 +3,9 @@
     "tiles": [],
     "tile_size": 64,
     "textures": {
-      "#": ["assets/walls/Wall.png"]
+      "#": [
+        "assets/walls/Wall.png"
+      ]
     }
   },
   "all_entities": [
@@ -35,7 +37,12 @@
         "assets/player/Layer 4_5.png",
         "assets/player/Layer 4_6.png"
       ],
-      "index_textures": [0, 6, 12, 18],
+      "index_textures": [
+        0,
+        6,
+        12,
+        18
+      ],
       "instance": [
         {
           "x": 256.0,
@@ -220,6 +227,28 @@
           "speed": 0.5,
           "hp": 20,
           "scale": 2
+        }
+      ]
+    },
+    {
+      "type": "bonus",
+      "textures": [
+        "assets/enemies/Enemy2/0.png",
+        "assets/enemies/Enemy2/1.png",
+        "assets/enemies/Enemy2/2.png",
+        "assets/enemies/Enemy2/3.png",
+        "assets/enemies/Enemy2/4.png",
+        "assets/enemies/Enemy2/5.png"
+      ],
+      "instance": [
+        {
+          "x": 1200.0,
+          "y": 128.0,
+          "damage": 20,
+          "speed": 0.5,
+          "hp": 20,
+          "scale": 2,
+          "b_type": "heal30"
         }
       ]
     }
