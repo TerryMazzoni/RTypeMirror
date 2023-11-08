@@ -5,6 +5,7 @@ on:
     branches:
       - "dev"
       - "main"
+      - "*"
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2026/B-CPP-500-TLS-5-1-rtype-antonin.laudon.git"
@@ -44,6 +45,28 @@ jobs:
 
       - name: BuildWindows
         run: .\install.bat
+
+  CreateReleaseDev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d%m%y')"
+
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          draft: true
+          title: "R-Type v${{ steps.date.outputs.date }}"
+          files: |
+            download.sh
+            download.bat
 
   MirrorPush:
     runs-on: ubuntu-latest
