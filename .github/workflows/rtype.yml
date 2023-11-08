@@ -48,6 +48,9 @@ jobs:
 
   CreateReleaseDev:
     runs-on: ubuntu-latest
+    needs:
+      - BuildUbuntu
+      - BuildWindows
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -67,6 +70,10 @@ jobs:
           files: |
             download.sh
             download.bat
+            r-type_server
+            r-type_client
+            r-type_server.exe
+            r-type_client.exe
 
   MirrorPush:
     runs-on: ubuntu-latest
